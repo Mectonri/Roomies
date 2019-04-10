@@ -5,10 +5,10 @@ Vue.use(VueI18n);
 
 const messages ={
     'fr':{
-        welcomeMsg:'Bienvenue sur votre application Vus.js'
+        testMsg:'Bienvenue sur votre application Vus.js'
     },
     'en':{
-        welcomeMsg:'Welcome to your Vue.js app'
+        testMsg:'Welcome to your Vue.js app'
     }
 };
 
@@ -17,3 +17,4 @@ const i18n = new VueI18n({
     fallbackLocale:'en',
     messages,
 });
+export default i18n;
