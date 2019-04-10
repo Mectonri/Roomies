@@ -8,5 +8,4 @@ export async function getRoomieByIdAsync(roomieId) {
 
 export async function createRoomieAsync(model) {
     return await postAsync(endpoint, model);
-}
-
+} 
