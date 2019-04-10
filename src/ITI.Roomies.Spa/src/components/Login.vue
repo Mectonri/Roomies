@@ -3,11 +3,19 @@
         <div class="text-center">
             <h1 class="my-4">Bienvenue sur Roomies</h1>
 
-            <button type="button" @click="login('Google')" class="btn btn-lg btn-block btn-primary">
-                <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google</button>
+            <div class="container">
+                <h2>Creer votre compte</h2>
+                <button type="button" @click="login('Google')" class="btn btn-lg btn-block btn-primary">
+                    <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google</button>
             
-            <button type="button" @click="login('Base')" class="btn btn-lg btn-block btn-default">Se connecter via Roomies</button>
-        </div>
+                
+            </div>
+            <div class="container">
+                    <h2> Se connecter </h2>
+                    <button type="button" @click="login('Base')" class="btn btn-lg btn-block btn-primary">Se connecter via Roomies</button>
+            </div>
+
+        </div>>
     </div>
 </template>
 
