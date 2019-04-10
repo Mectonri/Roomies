@@ -19,9 +19,6 @@
                         <li class="nav-item">
                             <router-link class="nav-link" to="/teachers">Gestion des professeurs</router-link>
                         </li>
-                        <li class="nav-item" v-required-providers="['GitHub']">
-                            <router-link class="nav-link" to="/github/following">Elèves suivis sur GitHub</router-link>
-                        </li>
                     </ul>
 
                     <ul class="navbar-nav my-2 my-md-0">
