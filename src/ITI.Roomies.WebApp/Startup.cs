@@ -32,8 +32,6 @@ namespace ITI.Roomies.WebApp
             services.AddMvc();
             services.AddSingleton( _ => new UserGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             //services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
-            //services.AddSingleton( _ => new StudentGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
-            //services.AddSingleton( _ => new TeacherGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserService>();
             services.AddSingleton<TokenService>();

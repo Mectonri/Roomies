@@ -37,5 +37,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controllers\RoomiesController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
   
 </Project>
