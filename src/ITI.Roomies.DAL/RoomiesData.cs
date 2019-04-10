@@ -2,7 +2,7 @@ using System;
 
 namespace ITI.Roomies
 {
-    public class RoomieData
+    public class RoomiesData
     {
         public int RoomieId { get; set; }
 

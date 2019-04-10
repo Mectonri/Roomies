@@ -20,7 +20,7 @@ const routes = [
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
 
-    { path: '/createRoomies', component: RoomiesCreate, beforeEnter: requireAuth },
+    { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },
     
 ];

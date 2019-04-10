@@ -8,19 +8,19 @@ using Dapper;
 
 namespace ITI.Roomies.DAL
 {
-    public class RoomieGateway
+    public class RoomiesGateway
     {
         readonly string _connectionString;
 
-        public RoomieGateway( string connectionString )
+        public RoomiesGateway( string connectionString )
         {
             _connectionString = connectionString;
         }
-        public async Task<Result<RoomieData>> FindById( int roomieId )
+        public async Task<Result<RoomiesData>> FindById( int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
-            {
-                RoomieData student = await con.QueryFirstOrDefaultAsync<RoomieData>(
+            { 
+                RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
                     @"select s.RoomieId,
                              s.FirstName,
                              s.LastName,
@@ -31,12 +31,12 @@ namespace ITI.Roomies.DAL
                       where s.roomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
 
-                if( student == null ) return Result.Failure<RoomieData>( Status.NotFound, "Student not found." );
-                return Result.Success( student );
+                if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Student not found." );
+                return Result.Success( roomie );
             }
         }
 
-        public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, string Email )
+        public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string phone, int userId )
                 {
                     if( !IsNameValid( firstName ) ) return Result.Failure<int>( Status.BadRequest, "The first name is not valid." );
                     if( !IsNameValid( lastName ) ) return Result.Failure<int>( Status.BadRequest, "The last name is not valid." );
@@ -47,15 +47,14 @@ namespace ITI.Roomies.DAL
                         p.Add( "@FirstName", firstName );
                         p.Add( "@LastName", lastName );
                         p.Add( "@BirthDate", birthDate );
-                        p.Add( "@Phone", Phone ?? string.Empty );
-                        p.Add( "@Email", Phone ?? string.Empty );
+                        p.Add( "@Phone", phone);
+                        p.Add( "@userId", userId);
                         p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                         p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                        await con.ExecuteAsync( "rm.sRoomieCreate", p, commandType: CommandType.StoredProcedure );
+                        await con.ExecuteAsync( "rm.sRoomiesCreate", p, commandType: CommandType.StoredProcedure );
 
                         int status = p.Get<int>( "@Status" );
-                        if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A student with this name already exists." );
-                        if( status == 2 ) return Result.Failure<int>( Status.BadRequest, "A student with GitHub login already exists." );
+                        if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A roomie with this name already exists." );
 
                         Debug.Assert( status == 0 );
                         return Result.Success( Status.Created, p.Get<int>( "@RoomieId" ) );
