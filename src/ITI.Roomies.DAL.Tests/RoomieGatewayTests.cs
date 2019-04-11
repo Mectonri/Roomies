@@ -45,6 +45,7 @@ namespace ITI.Roomies.DAL.Tests
                 Assert.That( roomie.Status, Is.EqualTo( Status.NotFound ) );
             }
         }
+
         void CheckRoomie( Result<RoomieData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
         {
             Assert.That(roomie.Status, Is.EqualTo( Status.Ok ) );
