@@ -34,9 +34,14 @@ namespace ITI.Roomies.DAL.Tests
             }
         }
 
-        public static string RandomPhone() => _random.Next(99999, 9999999).ToString();
-
-        public static string RandomTestName() => string.Format( "Test-{0}", Guid.NewGuid().ToString().Substring( 24 ) );
+        //public static string RandomPhone()
+        //{
+        //     int phone = 0;
+        //    if(  phone = ((_random.Next( 100000, 999999 ) * 100000)).ToString().Length  == 10 ) { return phone; }
+        //    else RandomPhone();
+        //}
+        
+        public static string RandomTestName() => string.Format( "Test{0}", Guid.NewGuid().ToString().Substring( 24 ) );
 
         public static DateTime RandomBirthDate( int age ) => DateTime.UtcNow.AddYears( -age ).AddMonths( _random.Next( -11, 0 ) ).Date;
     }

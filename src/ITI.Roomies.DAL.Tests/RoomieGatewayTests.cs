@@ -16,7 +16,7 @@ namespace ITI.Roomies.DAL.Tests
             string firstName = TestHelpers.RandomTestName();
             string lastName = TestHelpers.RandomTestName();
             DateTime birthDate = TestHelpers.RandomBirthDate( _random.Next( 18, 25 ) );
-            string phone = TestHelpers.RandomPhone();
+            string phone = "0000000001";
             string email = string.Format( "roomies{0}@test.com", Guid.NewGuid() );
             string desc = string.Format( "patate{0}djgeofahgrajgran", Guid.NewGuid() );
 
@@ -33,15 +33,14 @@ namespace ITI.Roomies.DAL.Tests
 
             {
                 desc = string.Format( "azqethryssdsfhj{0}ygiaevsf<hifhpatte", Guid.NewGuid() );
-                phone = TestHelpers.RandomPhone();
-                email = string.Format( "roomies{0}@test.com", Guid.NewGuid() );
-                Result r = await sut.Update(roomieId, desc, phone);
+                phone = "0000000003";
+                Result r = await sut.Update( roomieId, desc, phone );
             }
 
             {
                 Result r = await sut.Delete( roomieId );
                 Assert.That( r.Status, Is.EqualTo( Status.Ok ) );
-                roomie = await sut.FindById(roomieId);
+                roomie = await sut.FindById( roomieId );
                 Assert.That( roomie.Status, Is.EqualTo( Status.NotFound ) );
             }
         }
