@@ -12,6 +12,8 @@ namespace ITI.Roomies.DAL
     {
         readonly string _connectionString;
 
+        
+
         public RoomieGateway( string connectionString )
         {
             _connectionString = connectionString;
@@ -20,7 +22,7 @@ namespace ITI.Roomies.DAL
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                RoomieData student = await con.QueryFirstOrDefaultAsync<RoomieData>(
+                RoomieData roomie = await con.QueryFirstOrDefaultAsync<RoomieData>(
                     @"select s.RoomieId,
                              s.FirstName,
                              s.LastName,
@@ -28,11 +30,11 @@ namespace ITI.Roomies.DAL
                              s.Phone,
                              s.Email
                       from rm.tRoomies s
-                      where s.roomieId = @RoomieId;",
+                      where s.RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
 
-                if( student == null ) return Result.Failure<RoomieData>( Status.NotFound, "Student not found." );
-                return Result.Success( student );
+                if( roomie == null ) return Result.Failure<RoomieData>( Status.NotFound, "Roomie not found." );
+                return Result.Success( roomie );
             }
         }
 
@@ -54,14 +56,49 @@ namespace ITI.Roomies.DAL
                         await con.ExecuteAsync( "rm.sRoomieCreate", p, commandType: CommandType.StoredProcedure );
 
                         int status = p.Get<int>( "@Status" );
-                        if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A student with this name already exists." );
-                        if( status == 2 ) return Result.Failure<int>( Status.BadRequest, "A student with GitHub login already exists." );
-
+                        if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A roomie with this name already exists." );
                         Debug.Assert( status == 0 );
                         return Result.Success( Status.Created, p.Get<int>( "@RoomieId" ) );
                     }
          
         }
+
+        public async Task<Result> Delete( int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@RoomieId", roomieId );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "iti.sRoomieDelete", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
+
+                Debug.Assert( status == 0 );
+                return Result.Success();
+            }
+        }
+
+        public async Task<Result> Update (int roomieId, string desc, string phone )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@RoomieId", roomieId );
+                p.Add( "@Description", desc );
+                p.Add( "@Phone", phone );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "iti.sRoomieUpdate", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
+                
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok );
+            }
+        }
+
         bool IsNameValid( string name ) => !string.IsNullOrWhiteSpace( name );
     }
 }
