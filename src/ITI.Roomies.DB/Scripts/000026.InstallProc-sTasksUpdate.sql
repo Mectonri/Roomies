@@ -2,8 +2,10 @@ create proc rm.sTasksUpdate
 (
 	@TaskId	 int, 
 	@TaskName   nvarchar(32),
-    @TaskDes	nvarchar(200),
-	@TaskDate	datetime2
+    @TaskDes	nvarchar(200) = null,
+	@TaskDate	datetime2,
+	@State		bit,
+	@CollocId int
 )
 as
 begin
@@ -23,7 +25,7 @@ begin
 	end;
 
 	update rm.tTasks
-	set TaskName = @TaskName, TaskDate = @TaskDate, TaskDes = @TaskDes
+	set TaskName = @TaskName, TaskDate = @TaskDate, TaskDes = @TaskDes, [State] = @State, CollocId = @CollocId
 	where TaskId = @TaskId;
 
 	commit;

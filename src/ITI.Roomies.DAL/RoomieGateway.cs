@@ -92,7 +92,6 @@ namespace ITI.Roomies.DAL
 
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
-                
                 Debug.Assert( status == 0 );
                 return Result.Success( Status.Ok );
             }

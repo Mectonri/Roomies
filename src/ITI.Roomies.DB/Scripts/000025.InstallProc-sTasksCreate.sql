@@ -1,20 +1,20 @@
 create procedure rm.sTasksCreate
 (
-	@TaskId int,
+	@TaskId int out,
     @TaskName   nvarchar(32),
-    @TaskDes	nvarchar(200),
-	@TaskDate	datetime2
+    @TaskDes	nvarchar(200) = null,
+	@TaskDate	datetime2,
+	@CollocId int
 )
 as
 begin
     set transaction isolation level serializable;
 	begin tran;
 
-
-	insert into rm.tTasks (TaskName, TaskDes, TaskDate)
-	                  values(@TaskName, @TaskDes, @TaskDate);
+	insert into rm.tTasks ( TaskName, TaskDate, TaskDes, CollocId)
+		values(@TaskName, @TaskDate, @TaskDes, @CollocId);
 	set @TaskId = scope_identity();
-	
+		
 	commit;
 	return 0;
 end;
