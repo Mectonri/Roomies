@@ -12,7 +12,7 @@ namespace ITI.Roomies.DAL.Tests
         [Test]
         public async Task can_create_find_and_delete_roomies()
         {
-            RoomieGateway sut = new RoomieGateway( TestHelpers.ConnectionString );
+            RoomiesGateway sut = new RoomiesGateway( TestHelpers.ConnectionString );
             string firstName = TestHelpers.RandomTestName();
             string lastName = TestHelpers.RandomTestName();
             DateTime birthDate = TestHelpers.RandomBirthDate( _random.Next( 18, 25 ) );
@@ -24,7 +24,7 @@ namespace ITI.Roomies.DAL.Tests
             Assert.That( roomieResult.Status, Is.EqualTo( Status.Created));
 
             int roomieId = roomieResult.Content;
-            Result<RoomieData> roomie;
+            Result<RoomiesData> roomie;
 
             {
                 roomie = await sut.FindById( roomieId );
@@ -47,7 +47,7 @@ namespace ITI.Roomies.DAL.Tests
             }
         }
 
-        void CheckRoomie( Result<RoomieData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
+        void CheckRoomie( Result<RoomiesData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
         {
             Assert.That(roomie.Status, Is.EqualTo( Status.Ok ) );
             Assert.That( roomie.Content.FirstName, Is.EqualTo( firstName) );

@@ -29,8 +29,8 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRoomie( [FromBody] RoomiesViewModel model )
         {
-            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-            Result<int> result = await _roomiesGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.Phone, userId );
+            string email = HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value;
+            Result<int> result = await _roomiesGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.Phone, email );
             return this.CreateResult( result, o =>
             {
                 o.RouteName = "GetRoomie";
