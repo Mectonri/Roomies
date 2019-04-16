@@ -37,7 +37,7 @@
         <input v-model="item.email" v-bind:value="AuthService.email">
       </div> -->
 
-      <button type="submit" class="btn btn-primary">Sauvegarder</button>
+      <el-button type="submit" class="btn btn-primary">Sauvegarder</el-button>
     </form>
   </div>
 </template>

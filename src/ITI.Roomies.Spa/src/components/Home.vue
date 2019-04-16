@@ -2,13 +2,15 @@
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">Bienvenue sur Roomies</h1>
-            <button @click="changeLocale('fr')">fr</button>
-            <button @click="changeLocale('en')">en</button>
+            <el-button @click="changeLocale('fr')">fr</el-button>
+            <el-button @click="changeLocale('en')">en</el-button>
             <p class="lead text-muted">{{$t('testMsg')}}</p>
         </div>
     </section>
 </template>
-
+<style lang="scss">
+@import "../styles/global.scss";
+</style>
 <script>
 import i18n from '../plugins/i18n';
 
@@ -22,5 +24,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss"> </style>

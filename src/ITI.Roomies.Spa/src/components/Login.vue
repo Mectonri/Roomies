@@ -1,14 +1,12 @@
 <template>
-    <div class="container p-3">
-        <div class="text-center">
-            <h1 class="my-4">Bienvenue sur Roomies</h1>
+    <el-container>
+            <el-header><h2>Bienvenue sur Roomies</h2></el-header>
 
-            <button type="button" @click="login('Google')" class="btn btn-lg btn-block btn-primary">
-                <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google</button>
-            
-            <button type="button" @click="login('Base')" class="btn btn-lg btn-block btn-default">Se connecter via Roomies</button>
-        </div>
-    </div>
+            <el-button  @click="login('Google')" class="btn btn-lg btn-block btn-primary">
+                <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google</el-button>
+            <br/>
+            <el-button  @click="login('Base')" class="btn btn-lg btn-block btn-default">Se connecter via Roomies</el-button>
+    </el-container>
 </template>
 
 <script>
