@@ -8,9 +8,9 @@ namespace ITI.Roomies.DAL
     {
         public int TransactId { get; set; }
 
-        public string TransacDes { get; set; }
+        public string TransacDesc { get; set; }
 
-        public int TransacTrice { get; set; }
+        public int TransacPrice { get; set; }
 
         public DateTime TransacDate { get; set; }
 

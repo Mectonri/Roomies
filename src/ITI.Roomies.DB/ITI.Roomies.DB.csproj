@@ -10,12 +10,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="appsetting.json" />
+    <None Remove="appsettings.json" />
     <None Remove="Scripts\000020.CreateProcedure-sRoomiesCreate.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsetting.json">
+    <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="dbup-sqlserver" Version="4.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
   </ItemGroup>
 

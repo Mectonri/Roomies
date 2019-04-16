@@ -22,14 +22,14 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 RoomieData roomie = await con.QueryFirstOrDefaultAsync<RoomieData>(
-                    @"select s.RoomieId,
-                             s.FirstName,
-                             s.LastName,
-                             s.BirthDate,
-                             s.Phone,
-                             s.Email
-                      from rm.tRoomies s
-                      where s.RoomieId = @RoomieId;",
+                    @"select r.RoomieId,
+                             r.FirstName,
+                             r.LastName,
+                             r.BirthDate,
+                             r.Phone,
+                             r.Email
+                      from rm.tRoomies r
+                      where r.RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
 
                 if( roomie == null ) return Result.Failure<RoomieData>( Status.NotFound, "Roomie not found." );

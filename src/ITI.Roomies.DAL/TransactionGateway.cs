@@ -1,4 +1,5 @@
 using Dapper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -24,10 +25,11 @@ namespace ITI.Roomies.DAL
                              t.TransacDesc,
                              t.TransacPrice,
                              t.TransacDate,
-                             t.CollodId
-                     from rm.tTansaction t
-                     where t.TransacId = @TransacId",
-                    new { TransacId = transacId });
+                             t.CollocId,
+                             t.RoomieId
+                     from rm.tTransaction t
+                     where t.TransacId = @TransacId;",
+                    new { TransacId = transacId } );
                 if( transac == null ) return Result.Failure<TransactionData>( Status.NotFound, "Transaction not found" );
                 return Result.Success( transac );
             }
