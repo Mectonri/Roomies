@@ -1,5 +1,9 @@
 <template>
+
     <div id="app">
+        <head>
+            <link rel="stylesheet" href="../styles/onepagescroll.css">
+        </head>
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <router-link class="navbar-brand" to="/">Roomies</router-link>
@@ -46,10 +50,11 @@
 </template>
 
 <script>
-
+import onepageScroll from '../styles/onepagescroll'
 import AuthService from '../services/AuthService'
 import '../directives/requiredProviders'
 import { state } from "../state"
+//onepageScroll(".main");
 
 export default {
     data() {
@@ -65,8 +70,10 @@ export default {
             return this.state.isLoading;
         }
     }
+    
 }
 </script>
+
 
 <style lang="scss" scoped>
 .progress {
