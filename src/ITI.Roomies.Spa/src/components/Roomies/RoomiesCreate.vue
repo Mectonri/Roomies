@@ -30,11 +30,14 @@
 
       <div class="form-group">
         <label>Phone</label>
-        <input type="text" v-model="item.gitHubLogin" class="form-control">
+        <input type="text" v-model="item.phone" class="form-control" required>
       </div>
 
+      <!-- <div class="form-group">
+        <input v-model="item.email" v-bind:value="AuthService.email">
+      </div> -->
 
-      <button type="submit" class="btn btn-primary">Sauvegarder</button>
+      <el-button type="submit" class="btn btn-primary">Sauvegarder</el-button>
     </form>
   </div>
 </template>
@@ -45,6 +48,7 @@ import {
   createRoomieAsync
 } from "../../api/RoomiesApi";
 import { DateTime } from "luxon";
+import AuthService from '../../services/AuthService'
 
 export default {
   data() {
@@ -59,6 +63,8 @@ export default {
   async mounted() {
     this.mode = this.$route.params.mode;
     this.id = this.$route.params.id;
+    //this.item.email = AuthService.email;
+
   },
 
   methods: {
