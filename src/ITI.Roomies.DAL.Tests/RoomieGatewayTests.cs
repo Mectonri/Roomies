@@ -35,6 +35,8 @@ namespace ITI.Roomies.DAL.Tests
                 desc = string.Format( "azqethryssdsfhj{0}ygiaevsf<hifhpatte", Guid.NewGuid() );
                 phone = "0000000003";
                 Result r = await sut.Update( roomieId, desc, phone );
+                roomie = await sut.FindById( roomieId );
+                Assert.That( roomie.Status, Is.EqualTo( Status.NotFound ) );
             }
 
             {

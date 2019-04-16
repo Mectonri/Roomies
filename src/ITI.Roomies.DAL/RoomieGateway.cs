@@ -89,7 +89,6 @@ namespace ITI.Roomies.DAL
                 p.Add( "@Phone", phone );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sRoomiesUpdate", p, commandType: CommandType.StoredProcedure );
-
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
                 Debug.Assert( status == 0 );
