@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <el-container>
             <el-header><h2>Bienvenue sur Roomies</h2></el-header>
 
@@ -7,6 +8,26 @@
             <br/>
             <el-button  @click="login('Base')" class="btn btn-lg btn-block btn-default">Se connecter via Roomies</el-button>
     </el-container>
+=======
+    <div class="container p-3">
+        <div class="text-center">
+            <h1 class="my-4">Bienvenue sur Roomies</h1>
+
+            <div class="container">
+                <h2>Creer votre compte</h2>
+                <button type="button" @click="login('Google')" class="btn btn-lg btn-block btn-primary">
+                    <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google</button>
+            
+                
+            </div>
+            <div class="container">
+                    <h2> Se connecter </h2>
+                    <button type="button" @click="login('Base')" class="btn btn-lg btn-block btn-primary">Se connecter via Roomies</button>
+            </div>
+
+        </div>>
+    </div>
+>>>>>>> Lexa
 </template>
 
 <script>
