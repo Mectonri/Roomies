@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -38,7 +37,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, string Email )
+        public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, string Email)
                 {
                     if( !IsNameValid( firstName ) ) return Result.Failure<int>( Status.BadRequest, "The first name is not valid." );
                     if( !IsNameValid( lastName ) ) return Result.Failure<int>( Status.BadRequest, "The last name is not valid." );
@@ -50,10 +49,10 @@ namespace ITI.Roomies.DAL
                         p.Add( "@LastName", lastName );
                         p.Add( "@BirthDate", birthDate );
                         p.Add( "@Phone", Phone ?? string.Empty );
-                        p.Add( "@Email", Phone ?? string.Empty );
+                        p.Add( "@Email", Email ?? string.Empty );
                         p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                         p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                        await con.ExecuteAsync( "rm.sRoomieCreate", p, commandType: CommandType.StoredProcedure );
+                        await con.ExecuteAsync( "rm.sRoomiesCreate", p, commandType: CommandType.StoredProcedure );
 
                         int status = p.Get<int>( "@Status" );
                         if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A roomie with this name already exists." );
@@ -70,7 +69,7 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@RoomieId", roomieId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                await con.ExecuteAsync( "iti.sRoomieDelete", p, commandType: CommandType.StoredProcedure );
+                await con.ExecuteAsync( "rm.sRoomiesDelete", p, commandType: CommandType.StoredProcedure );
 
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
@@ -89,11 +88,9 @@ namespace ITI.Roomies.DAL
                 p.Add( "@Description", desc );
                 p.Add( "@Phone", phone );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                await con.ExecuteAsync( "iti.sRoomieUpdate", p, commandType: CommandType.StoredProcedure );
-
+                await con.ExecuteAsync( "rm.sRoomiesUpdate", p, commandType: CommandType.StoredProcedure );
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
-                
                 Debug.Assert( status == 0 );
                 return Result.Success( Status.Ok );
             }

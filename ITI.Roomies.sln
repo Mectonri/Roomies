@@ -9,7 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITI.Roomies.DAL", "src\ITI.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITI.Roomies.WebApp", "src\ITI.Roomies.WebApp\ITI.Roomies.WebApp.csproj", "{B898D57C-E384-412D-91F6-29D345A7BF81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Roomies.DAL.Tests", "src\ITI.Roomies.DAL.Tests\ITI.Roomies.DAL.Tests.csproj", "{69962D8E-A7B9-49CD-B38A-71078762E674}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.Roomies.DAL.Tests", "src\ITI.Roomies.DAL.Tests\ITI.Roomies.DAL.Tests.csproj", "{020F2969-E503-40AA-9C0A-FC95E7D166D3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7EA86081-35B9-4C2C-A3AB-2522299520CE} = {7EA86081-35B9-4C2C-A3AB-2522299520CE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +36,10 @@ Global
 		{69962D8E-A7B9-49CD-B38A-71078762E674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69962D8E-A7B9-49CD-B38A-71078762E674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69962D8E-A7B9-49CD-B38A-71078762E674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020F2969-E503-40AA-9C0A-FC95E7D166D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020F2969-E503-40AA-9C0A-FC95E7D166D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020F2969-E503-40AA-9C0A-FC95E7D166D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020F2969-E503-40AA-9C0A-FC95E7D166D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
