@@ -36,7 +36,7 @@ namespace ITI.Roomies.DAL.Tests
                 phone = "0000000003";
                 Result r = await sut.Update( roomieId, desc, phone );
                 roomie = await sut.FindById( roomieId );
-                Assert.That( roomie.Status, Is.EqualTo( Status.Ok ) );
+                Assert.That( roomie.Status, Is.EqualTo( Status.NotFound ) );
             }
 
             {
