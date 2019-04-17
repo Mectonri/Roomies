@@ -38,7 +38,7 @@
       </el-menu-item>
       <el-menu-item index="5" @click="clickRoute('/roomies')">
         <i class="el-icon-setting"></i>
-        <span slot="title"><router-link class="nav-link" to="/roomies">/Roomies</router-link></span>
+        <span slot="title">/Roomies</span>
       </el-menu-item>
       <br>
       <br>
@@ -51,7 +51,7 @@
       <br>
       <el-menu-item @click="clickRoute('/logout')">
         <i class="el-icon-circle-close"></i>
-        <span slot="title"><router-link class="nav-link" to="/logout">Se déconnecter</router-link></span>
+        <span slot="title">Se déconnecter</span>
       
       </el-menu-item>
     </el-menu>
