@@ -10,12 +10,16 @@
   </ItemGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <None Remove="appsettings.json" />
+=======
+    <None Remove="appsetting.json" />
+>>>>>>> Scripts&Tests
     <None Remove="Scripts\000020.CreateProcedure-sRoomiesCreate.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
+    <Content Include="appsetting.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
