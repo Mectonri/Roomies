@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="mb-4">
+  <div class="container">
+    <div>
       <h1>S'inscrire</h1>
     </div>
 
@@ -44,7 +44,6 @@
 
 <script>
 import {
-  getRoomieAsync,
   createRoomieAsync
 } from "../../api/RoomiesApi";
 import { DateTime } from "luxon";
@@ -54,14 +53,12 @@ export default {
   data() {
     return {
       item: {},
-      mode: null,
       id: null,
       errors: []
     };
   },
 
   async mounted() {
-    this.mode = this.$route.params.mode;
     this.id = this.$route.params.id;
     //this.item.email = AuthService.email;
 
@@ -76,14 +73,14 @@ export default {
       if (!this.item.lastName) errors.push("Nom");
       if (!this.item.firstName) errors.push("Prénom");
       if (!this.item.birthDate) errors.push("Date de naissance");
+      if (!this.item.phone) errors.push("Téléphone");
 
       this.errors = errors;
 
       if (errors.length == 0) {
         try {
-           await createRoomieAsync(this.item);
-         
-          // this.$router.replace("/roomies");
+          var idRoomie = await createRoomieAsync(this.item);
+          this.$router.replace("/roomies/" + idRoomie);
         } catch (e) {
           console.error(e);
         //  window.alert(e);
@@ -95,4 +92,5 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../styles/global.scss";
 </style>
