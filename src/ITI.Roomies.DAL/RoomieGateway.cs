@@ -37,6 +37,26 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<Result<RoomieData>> FindByEmail( string email)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                RoomieData roomie = await con.QueryFirstOrDefaultAsync<RoomieData>(
+                    @"select r.RoomieId,
+                             r.FirstName,
+                             r.LastName,
+                             r.BirthDate,
+                             r.Phone,
+                             r.Email
+                      from rm.tRoomies r
+                      where r.Email = @Email;",
+                    new { Email = email } );
+
+                if( roomie == null ) return Result.Failure<RoomieData>( Status.NotFound, "Roomie not found." );
+                return Result.Success( roomie );
+            }
+        }
+
         public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, string Email)
                 {
                     if( !IsNameValid( firstName ) ) return Result.Failure<int>( Status.BadRequest, "The first name is not valid." );
