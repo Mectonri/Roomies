@@ -7,28 +7,28 @@
       @close="handleClose"
       :collapse="isCollapse"
     >
-      <el-button class="el-icon-star-on" @click="clickRoute('/')"></el-button><br><br>
+      <el-button class="el-icon-star-on" @click="clickRoute('/')"><span slot="title"> Accueil </span></el-button><br><br>
       <el-button @click.native="expand_collapse" ><span class="navbar-toggler-icon el-icon-more"></span></el-button>
 
-      <el-submenu index="2">
+      <el-submenu index="2" disabled>
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">Navigator One</span>
         </template>
-        <el-menu-item-group>
+        <el-menu-item-group disabled>
           <span slot="title">Group One</span>
           <el-menu-item index="2-1">item one</el-menu-item>
           <el-menu-item index="2-2">item two</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="Group Two">
+        <el-menu-item-group title="Group Two" disabled>
           <el-menu-item index="2-3">item three</el-menu-item>
         </el-menu-item-group>
-        <el-submenu index="2-4">
+        <el-submenu index="2-4" disabled>
           <span slot="title">item four</span>
           <el-menu-item index="2-4-1">item one</el-menu-item>
         </el-submenu>
       </el-submenu>
-      <el-menu-item index="3">
+      <el-menu-item index="3" disabled>
         <i class="el-icon-menu"></i>
         <span slot="title">Navigator Two</span>
       </el-menu-item>
@@ -37,8 +37,22 @@
         <span slot="title">Navigator Three</span>
       </el-menu-item>
       <el-menu-item index="5">
-        <i class="el-icon-setting" @click="clickRoute('/Roomies')"></i>
-        <span slot="title"><router-link class="nav-link" to="/Roomies">Roomies</router-link></span>
+        <i class="el-icon-setting" @click="clickRoute('/roomies')"></i>
+        <span slot="title"><router-link class="nav-link" to="/roomies">/Roomies</router-link></span>
+      </el-menu-item>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <el-menu-item @click="clickRoute('/logout')">
+        <i class="el-icon-circle-close"></i>
+        <span slot="title"><router-link class="nav-link" to="/logout">Se déconnecter</router-link></span>
+      
       </el-menu-item>
     </el-menu>
     <main role="main">
