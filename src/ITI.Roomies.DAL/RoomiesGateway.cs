@@ -21,7 +21,7 @@ namespace ITI.Roomies.DAL
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-<<<<<<< HEAD:src/ITI.Roomies.DAL/RoomiesGateway.cs
+
                 RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
                     @"select s.RoomieId,
                              s.FirstName,
@@ -31,17 +31,7 @@ namespace ITI.Roomies.DAL
                              s.Email
                       from rm.tRoomies s
                       where s.RoomieId = @RoomieId;",
-=======
-                RoomieData roomie = await con.QueryFirstOrDefaultAsync<RoomieData>(
-                    @"select r.RoomieId,
-                             r.FirstName,
-                             r.LastName,
-                             r.BirthDate,
-                             r.Phone,
-                             r.Email
-                      from rm.tRoomies r
-                      where r.RoomieId = @RoomieId;",
->>>>>>> Scripts&Tests:src/ITI.Roomies.DAL/RoomieGateway.cs
+
                     new { RoomieId = roomieId } );
 
                 if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
