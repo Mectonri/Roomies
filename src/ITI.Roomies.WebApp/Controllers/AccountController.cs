@@ -80,8 +80,16 @@ namespace ITI.Roomies.WebApp.Controllers
                     ModelState.AddModelError( string.Empty, result.ErrorMessage );
                     return View( model );
                 }
+                
+                Result<int> resultRoomie = await _userService.CreateRoomie(model.FirstName, model.LastName, model.BirthDate, model.PhoneNumber, model.Email );
                 await SignIn( model.Email, result.Content.ToString() );
                 return RedirectToAction( nameof( Authenticated ) );
+
+                if( resultRoomie.HasError )
+                {
+                    ModelState.AddModelError(string.Empty, result.ErrorMessage);
+                    return View(model);
+                }
             }
 
             return View( model );

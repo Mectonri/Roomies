@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace ITI.Roomies.WebApp.Models.AccountViewModels
 {
@@ -19,5 +20,19 @@ namespace ITI.Roomies.WebApp.Models.AccountViewModels
         [Display( Name = "Confirm password" )]
         [Compare( "Password", ErrorMessage = "The password and confirmation password do not match." )]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime BirthDate { get; set; }
+
+        [Required]
+        [StringLength (10, ErrorMessage ="You must have 10 digits.",MinimumLength =10)]
+        public string PhoneNumber { get; set; }
     }
 }
