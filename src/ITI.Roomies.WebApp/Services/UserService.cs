@@ -20,9 +20,9 @@ namespace ITI.Roomies.WebApp.Services
             return _userGateway.CreatePasswordUser(email, _passwordHasher.HashPassword(password));
         }
 
-        public Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, string email )
+        public Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, int userId )
         {
-            return _userGateway.CreateRoomie( firstName, lastName, birthDate, Phone, email );
+            return _userGateway.CreateRoomie( firstName, lastName, birthDate, Phone, userId );
         }
 
         public async Task<UserData> FindUser(string email, string password)
