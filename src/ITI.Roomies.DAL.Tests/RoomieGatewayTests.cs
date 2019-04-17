@@ -1,6 +1,6 @@
+using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
 
 namespace ITI.Roomies.DAL.Tests
 {
@@ -21,7 +21,7 @@ namespace ITI.Roomies.DAL.Tests
             string desc = string.Format( "patate{0}djgeofahgrajgran", Guid.NewGuid() );
 
             Result<int> roomieResult = await sut.CreateRoomie( firstName, lastName, birthDate, phone, email );
-            Assert.That( roomieResult.Status, Is.EqualTo( Status.Created));
+            Assert.That( roomieResult.Status, Is.EqualTo( Status.Created ) );
 
             int roomieId = roomieResult.Content;
             Result<RoomiesData> roomie;
@@ -49,12 +49,12 @@ namespace ITI.Roomies.DAL.Tests
 
         void CheckRoomie( Result<RoomiesData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
         {
-            Assert.That(roomie.Status, Is.EqualTo( Status.Ok ) );
-            Assert.That( roomie.Content.FirstName, Is.EqualTo( firstName) );
-            Assert.That( roomie.Content.LastName, Is.EqualTo( lastName) );
-            Assert.That( roomie.Content.BirthDate, Is.EqualTo( birthDate) );
+            Assert.That( roomie.Status, Is.EqualTo( Status.Ok ) );
+            Assert.That( roomie.Content.FirstName, Is.EqualTo( firstName ) );
+            Assert.That( roomie.Content.LastName, Is.EqualTo( lastName ) );
+            Assert.That( roomie.Content.BirthDate, Is.EqualTo( birthDate ) );
             Assert.That( roomie.Content.Phone, Is.EqualTo( phone ) );
-            Assert.That( roomie.Content.Email, Is.EqualTo( email) );
+            Assert.That( roomie.Content.Email, Is.EqualTo( email ) );
         }
     }
 }
