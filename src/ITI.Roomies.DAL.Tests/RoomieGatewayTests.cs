@@ -47,7 +47,29 @@ namespace ITI.Roomies.DAL.Tests
             }
         }
 
-        void CheckRoomie( Result<RoomiesData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
+        [Test]
+        public async Task can_find_by_email()
+        {
+            RoomieGateway sut = new RoomieGateway( TestHelpers.ConnectionString );
+            string firstName = TestHelpers.RandomTestName();
+            string lastName = TestHelpers.RandomTestName();
+            DateTime birthDate = TestHelpers.RandomBirthDate( _random.Next( 18, 25 ) );
+            string phone = "0000000001";
+            string email = string.Format( "roomies1{0}@test.com", Guid.NewGuid() );
+            string desc = string.Format( "patate{0}djgeofahgrajgran", Guid.NewGuid() );
+
+            Result<int> roomieResult = await sut.CreateRoomie( firstName, lastName, birthDate, phone, email );
+            Assert.That( roomieResult.Status, Is.EqualTo( Status.Created ) );
+
+            Result<RoomieData> roomie;
+
+            {
+                roomie = await sut.FindByEmail( email );
+                CheckRoomie( roomie, firstName, lastName, birthDate, phone, email );
+            }
+        }
+
+        void CheckRoomie( Result<RoomieData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
         {
             Assert.That( roomie.Status, Is.EqualTo( Status.Ok ) );
             Assert.That( roomie.Content.FirstName, Is.EqualTo( firstName ) );
