@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace ITI.Roomies.DAL.Tests
 {
+    [TestFixture]
     public class CollocGatewayTest
     {
         readonly Random _random = new Random();

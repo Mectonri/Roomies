@@ -21,6 +21,7 @@ namespace ITI.Roomies.DAL
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
+
                 RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
                     @"select s.RoomieId,
                              s.FirstName,
@@ -30,6 +31,7 @@ namespace ITI.Roomies.DAL
                              s.Email
                       from rm.tRoomies s
                       where s.RoomieId = @RoomieId;",
+
                     new { RoomieId = roomieId } );
 
                 if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
@@ -37,8 +39,8 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, string Email)
-                {
+        public async Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, int userId )
+        {
                     if( !IsNameValid( firstName ) ) return Result.Failure<int>( Status.BadRequest, "The first name is not valid." );
                     if( !IsNameValid( lastName ) ) return Result.Failure<int>( Status.BadRequest, "The last name is not valid." );
 
@@ -49,7 +51,7 @@ namespace ITI.Roomies.DAL
                         p.Add( "@LastName", lastName );
                         p.Add( "@BirthDate", birthDate );
                         p.Add( "@Phone", Phone ?? string.Empty );
-                        p.Add( "@Email", Email ?? string.Empty );
+                        p.Add( "@userId", userId);
                         p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                         p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                         await con.ExecuteAsync( "rm.sRoomiesCreate", p, commandType: CommandType.StoredProcedure );
