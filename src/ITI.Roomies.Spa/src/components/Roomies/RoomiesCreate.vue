@@ -29,7 +29,7 @@
       </div>
 
       <div class="form-group">
-        <label>Phone</label>
+        <label class="required">Phone</label>
         <input type="text" v-model="item.phone" class="form-control" required>
       </div>
 
@@ -37,7 +37,7 @@
         <input v-model="item.email" v-bind:value="AuthService.email">
       </div> -->
 
-      <el-button type="submit" class="btn btn-primary">Sauvegarder</el-button>
+      <el-button native-type="submit" class="btn btn-primary">Sauvegarder</el-button>
     </form>
   </div>
 </template>
