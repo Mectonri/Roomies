@@ -12,11 +12,11 @@ begin
     set transaction isolation level serializable;
 	begin tran;
 
-	if exists(select * from rm.tRoomies r where r.FirstName = @FirstName and r.LastName = @LastName)
-	begin
-		rollback;
-		return 1;
-	end;
+	--if exists(select * from rm.tRoomies r where r.FirstName = @FirstName and r.LastName = @LastName)
+	--begin
+	--	rollback;
+	--	return 1;
+	--end;
 
 	insert into rm.tRoomies(FirstName, LastName, BirthDate, Phone, Email)
 	                  values(@FirstName, @LastName, @BirthDate, @Phone, @Email);
