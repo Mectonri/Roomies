@@ -4,8 +4,7 @@ create procedure rm.sRoomiesCreate
     @LastName    nvarchar(64),
     @BirthDate   datetime2,
     @Phone       varchar(10),
-    @userId      nvarchar(64),
-	@roomieId   int out
+    @Email      nvarchar(64)
 )
 as
 begin
@@ -19,8 +18,7 @@ begin
 	end;
 
 	insert into rm.tRoomies(FirstName, LastName, BirthDate, Phone, Email)
-	                  values(@FirstName, @LastName, @BirthDate, @Phone, (select u.Email from rm.tUser u where userId = @userId ));
-	set @roomieId = scope_identity();
+	                  values(@FirstName, @LastName, @BirthDate, @Phone,@Email);
 	
 	commit;
 	return 0;
