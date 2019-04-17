@@ -67,7 +67,7 @@ namespace ITI.Roomies.DAL
 
             }
         }
-        public async Task<Result<int>> CreateRoomie (string firstName, string lastName, DateTime birthDate, string Phone, string email)
+        public async Task<Result<int>> CreateRoomie (string firstName, string lastName, DateTime birthDate, string Phone, int userId)
         {
             
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -76,7 +76,7 @@ namespace ITI.Roomies.DAL
                 
                 p.Add( "@FirstName", firstName );
                 p.Add( "@LastName", lastName );
-                p.Add("@Email", email);
+                p.Add( "@userId", userId );
                 p.Add( "@BirthDate", birthDate );
                 p.Add( "@Phone", Phone ?? string.Empty );
                 p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
@@ -89,6 +89,26 @@ namespace ITI.Roomies.DAL
                 return Result.Success( Status.Created, p.Get<int>( "@RoomieId" ) );
             }
         }
+        public async Task<Result<RoomiesData>> FindRoomieById( int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
+                    @"select s.RoomieId,
+                             s.FirstName,
+                             s.LastName,
+                             s.BirthDate,
+                             s.Phone,
+                             s.Email
+                      from rm.tRoomies s
+                      where s.RoomieId = @RoomieId;",
+                    new { RoomieId = roomieId } );
+
+                if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
+                return Result.Success( roomie );
+            }
+        }
+
 
         public async Task CreateOrUpdateGoogleUser(string email, string googleId, string refreshToken)
         {
