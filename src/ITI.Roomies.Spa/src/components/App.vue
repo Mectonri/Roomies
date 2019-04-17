@@ -7,7 +7,7 @@
       @close="handleClose"
       :collapse="isCollapse"
     >
-      <el-button class="el-icon-star-on" @click="clickRoute('/')"><span slot="title"> Accueil </span></el-button><br><br>
+      <el-menu-item @click="clickRoute('/')"><i class="el-icon-star-on"><span slot="title">Accueil </span></i></el-menu-item><br><br>
       <el-button @click.native="expand_collapse" ><span class="navbar-toggler-icon el-icon-more"></span></el-button>
 
       <el-submenu index="2" disabled>
@@ -36,8 +36,8 @@
         <i class="el-icon-document"></i>
         <span slot="title">Navigator Three</span>
       </el-menu-item>
-      <el-menu-item index="5">
-        <i class="el-icon-setting" @click="clickRoute('/roomies')"></i>
+      <el-menu-item index="5" @click="clickRoute('/roomies')">
+        <i class="el-icon-setting"></i>
         <span slot="title"><router-link class="nav-link" to="/roomies">/Roomies</router-link></span>
       </el-menu-item>
       <br>
