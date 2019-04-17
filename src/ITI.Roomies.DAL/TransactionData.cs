@@ -8,15 +8,9 @@ namespace ITI.Roomies.DAL
     {
         public int TransactId { get; set; }
 
-<<<<<<< HEAD
         public string TransacDesc { get; set; }
 
         public int TransacPrice { get; set; }
-=======
-        public string TransacDes { get; set; }
-
-        public int TransacTrice { get; set; }
->>>>>>> Scripts&Tests
 
         public DateTime TransacDate { get; set; }
 
