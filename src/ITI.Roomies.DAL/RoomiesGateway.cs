@@ -64,6 +64,28 @@ namespace ITI.Roomies.DAL
          
         }
 
+        public async Task<Result<RoomiesData>> FindByEmail( string email )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+
+                RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
+                    @"select s.RoomieId,
+                             s.FirstName,
+                             s.LastName,
+                             s.BirthDate,
+                             s.Phone,
+                             s.Email
+                      from rm.tRoomies s
+                      where s.Email = @Email;",
+
+                    new { Email = email } );
+
+                if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
+                return Result.Success( roomie );
+            }
+        }
+
         public async Task<Result> Delete( int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
