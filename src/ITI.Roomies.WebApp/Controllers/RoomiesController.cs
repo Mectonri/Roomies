@@ -1,3 +1,5 @@
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.Roomies.DAL;
@@ -9,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
-  
 
     [Route( "api/[controller]" )]
     [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
@@ -42,12 +43,53 @@ namespace ITI.Roomies.WebApp.Controllers
             } );
         }
 
-        [HttpGet]
-        async Task Invite( string email )
+        [HttpPost( "{email}/invite")]
+        public async Task<IActionResult> Invite( string email )
         {
-            EmailMessage message = new EmailMessage();
+            //EmailMessage message = new EmailMessage();
+            //EmailAddress emailAddress = new EmailAddress();
+            //emailAddress.Address = email ;
+            //emailAddress.Name = "";
+            //message.ToAddresses.Add( emailAddress);
+            //message.FromAddresses.Add( emailAddress );
+            //_emailService.Send( message );
+            //return Ok( 0 );
 
-            _emailService.Send( message );
+
+            string smtpAddress = "smtp.gmail.com";
+            int portNumber = 587;
+            bool enableSSL = true;
+            string emailFromAddress = "ITI.Roomies@gmail.com"; //Sender Email Address
+            string password = "0123456789A@"; //Sender Password
+            string subject = "Hello";
+            string body = "Test";
+
+            using( MailMessage mail = new MailMessage() )
+            {
+                mail.From = new MailAddress( emailFromAddress );
+                mail.To.Add( email );
+                mail.Subject = "Testing";
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+
+                using( SmtpClient smtp = new SmtpClient( smtpAddress, portNumber ) )
+                {
+
+                    smtp.Credentials = new NetworkCredential( emailFromAddress, password );
+                    smtp.EnableSsl = enableSSL;
+                    smtp.Send( mail );
+                }
+            }
+
+            return Ok( 0 );
+
+
+
+
+
+
+
+
 
         }
     }
