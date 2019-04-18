@@ -5,9 +5,11 @@ using ITI.Roomies.DAL;
 using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Controllers;
 using ITI.Roomies.WebApp.Services;
+using ITI.Roomies.WebApp.Services.Email;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -31,13 +33,17 @@ namespace ITI.Roomies.WebApp
 
             services.AddMvc();
             services.AddSingleton( _ => new UserGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton( _ => new CollocGateway( Configuration["ConnectionString:RoomiesDB"] ) );
             services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
-            //services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
-            //services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton( _ => new ItemGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton( _ => new TasksGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<UserService>();
             services.AddSingleton<TokenService>();
             services.AddSingleton<GoogleAuthenticationManager>();
+
+            services.AddSingleton<IEmailConfiguration>( Configuration.GetSection( "EmailConfiguration" ).Get<EmailConfiguration>() );
+            services.AddTransient<IEmailService, EmailService>();
 
             string secretKey = Configuration[ "JwtBearer:SigningKey" ];
             SymmetricSecurityKey signingKey = new SymmetricSecurityKey( Encoding.ASCII.GetBytes( secretKey ) );
@@ -53,6 +59,9 @@ namespace ITI.Roomies.WebApp
             {
                 o.Host = Configuration[ "Spa:Host" ];
             } );
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
 
             services.AddAuthentication(CookieAuthentication.AuthenticationScheme)
                 .AddCookie(CookieAuthentication.AuthenticationScheme, o =>

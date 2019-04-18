@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using ITI.Roomies.WebApp.Services.Email;
 
 namespace ITI.Roomies.WebApp.Controllers
 {

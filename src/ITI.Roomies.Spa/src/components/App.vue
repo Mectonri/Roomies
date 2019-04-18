@@ -62,6 +62,12 @@
         <span slot="title">Se déconnecter</span>
       </el-menu-item>
     </el-menu>
+    <div>
+      <form>
+        <input v-model="message" placeholder="email">
+        <button @click="clickRoute('/invite')"> email</button>
+      </form>
+    </div>
 
     <!-- Affihe le chemin demandé -->
     <main role="main">

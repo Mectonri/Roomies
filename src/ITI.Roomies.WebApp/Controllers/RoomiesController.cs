@@ -3,16 +3,20 @@ using System.Threading.Tasks;
 using ITI.Roomies.DAL;
 using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Models.RoomieModel;
+using ITI.Roomies.WebApp.Services.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
+  
+
     [Route( "api/[controller]" )]
     [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
     public class RoomiesController : Controller
     {
         readonly RoomiesGateway _roomiesGateway;
+        readonly IEmailService _emailService;
 
         public RoomiesController( RoomiesGateway roomiesGateway )
         {
@@ -36,6 +40,15 @@ namespace ITI.Roomies.WebApp.Controllers
                 o.RouteName = "GetRoomie";
                 o.RouteValues = id => new { id };
             } );
+        }
+
+        [HttpGet]
+        async Task Invite( string email )
+        {
+            EmailMessage message = new EmailMessage();
+
+            _emailService.Send( message );
+
         }
     }
 }
