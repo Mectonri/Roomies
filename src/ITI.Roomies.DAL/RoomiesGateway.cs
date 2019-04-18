@@ -21,7 +21,6 @@ namespace ITI.Roomies.DAL
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-
                 RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
                     @"select s.RoomieId,
                              s.FirstName,
@@ -31,7 +30,6 @@ namespace ITI.Roomies.DAL
                              s.Email
                       from rm.tRoomies s
                       where s.RoomieId = @RoomieId;",
-
                     new { RoomieId = roomieId } );
 
                 if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
