@@ -65,7 +65,7 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             return View();
         }
-
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -77,6 +77,14 @@ namespace ITI.Roomies.WebApp.Controllers
                 if( result.HasError )
                 {
                     ModelState.AddModelError( string.Empty, result.ErrorMessage );
+                    return View( model );
+                }
+                
+                 Result<int> resultRoomie = await _userGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.PhoneNumber, result.Content );
+
+                if( resultRoomie.HasError )
+                {
+                    ModelState.AddModelError( string.Empty, resultRoomie.ErrorMessage );
                     return View( model );
                 }
                 await SignIn( model.Email, result.Content.ToString() );

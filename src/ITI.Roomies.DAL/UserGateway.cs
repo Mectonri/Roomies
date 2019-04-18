@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Dapper;
+using System;
 
 namespace ITI.Roomies.DAL
 {
@@ -46,7 +47,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreatePasswordUser(string email, byte[] password)
+        public async Task<Result<int>> CreatePasswordUser( string email, byte[] password)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -57,13 +58,57 @@ namespace ITI.Roomies.DAL
                 p.Add("@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
                 await con.ExecuteAsync("rm.sPasswordUserCreate", p, commandType: CommandType.StoredProcedure);
 
+
                 int status = p.Get<int>("@Status");
                 if (status == 1) return Result.Failure<int>(Status.BadRequest, "An account with this email already exists.");
 
                 Debug.Assert(status == 0);
                 return Result.Success(p.Get<int>("@UserId"));
+
             }
         }
+        public async Task<Result<int>> CreateRoomie (string firstName, string lastName, DateTime birthDate, string Phone, int userId)
+        {
+            
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                
+                p.Add( "@FirstName", firstName );
+                p.Add( "@LastName", lastName );
+                p.Add( "@userId", userId );
+                p.Add( "@BirthDate", birthDate );
+                p.Add( "@Phone", Phone ?? string.Empty );
+                p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sRoomiesCreate", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A roomie with this name already exists." );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Created, p.Get<int>( "@RoomieId" ) );
+            }
+        }
+        public async Task<Result<RoomiesData>> FindRoomieById( int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
+                    @"select s.RoomieId,
+                             s.FirstName,
+                             s.LastName,
+                             s.BirthDate,
+                             s.Phone,
+                             s.Email
+                      from rm.tRoomies s
+                      where s.RoomieId = @RoomieId;",
+                    new { RoomieId = roomieId } );
+
+                if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
+                return Result.Success( roomie );
+            }
+        }
+
 
         public async Task CreateOrUpdateGoogleUser(string email, string googleId, string refreshToken)
         {
