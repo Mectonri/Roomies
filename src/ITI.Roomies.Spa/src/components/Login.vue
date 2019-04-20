@@ -41,10 +41,8 @@ export default {
         },
 
         onAuthenticated() {
-            // Affiche le menu de navigation
-            document.getElementById('navMenu').style.display = 'block';
-            
-            this.$router.replace('/');
+            // Envoie sur la page de vérification du profil Roomie
+            this.$router.replace('/checkRoomie');
         }
     }
 }

@@ -94,9 +94,6 @@ export default {
   },
   methods: {
     clickRoute(pathToRoute) {
-      // Cache le menu de navigation avant la déconnexion
-      if (pathToRoute == "/logout")
-        document.getElementById("navMenu").style.display = "none";
       this.$router.push(pathToRoute);
     },
     // handleOpen(key, keyPath) {
