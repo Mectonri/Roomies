@@ -19,6 +19,8 @@ const routes = [
     { path: '/login', component: Login },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
+    {path: '/roomies/invite', component: Login, beforeEnter: requireAuth},
+
 
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },

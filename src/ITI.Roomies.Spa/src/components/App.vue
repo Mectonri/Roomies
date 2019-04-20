@@ -65,7 +65,7 @@
     <div>
       <form>
         <input v-model="message" placeholder="email">
-        <button @click="clickRoute('/invite')"> email</button>
+        <button @click="invite()">invite</button>
       </form>
     </div>
 
@@ -80,10 +80,12 @@
 import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
+import {inviteRoomieAsync} from "../api/RoomiesApi.js"
 
 export default {
   data() {
     return {
+      message : "",
       state,
       isCollapse: true
     };
@@ -97,6 +99,11 @@ export default {
     }
   },
   methods: {
+
+    async invite() {
+      await inviteRoomieAsync(this.message);
+
+    },
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
     },
