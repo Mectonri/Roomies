@@ -9,6 +9,7 @@ import requireAuth from './helpers/requireAuth';
 import Home from   './components/Home.vue'
 import Login from  './components/Login.vue'
 import Logout from './components/Logout.vue'
+import Calendar from './components/Roomies/Calendar.vue'
 
 import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'
@@ -20,6 +21,8 @@ const routes = [
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
     {path: '/roomies/invite', component: Login, beforeEnter: requireAuth},
+
+    {path: '/roomies/calendar', component: Login, beforeEnter: requireAuth},
 
 
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
