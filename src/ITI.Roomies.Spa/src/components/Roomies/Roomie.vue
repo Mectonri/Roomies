@@ -3,7 +3,12 @@
   <el-aside width="200px">Menu</el-aside>
   <el-container>
     <el-header>Bienvenue Roomie</el-header>
-    <el-main>tableau de bord</el-main>
+  
+    <v-calendar
+  :columns="$screens({ default: 1, lg: 2 })"
+  :rows="$screens({ default: 1, lg: 2 })"
+  :is-expanded="$screens({ default: true, lg: false })"
+  />
   </el-container>
 </el-container>
 
@@ -13,20 +18,11 @@
 
 import ElementUI from 'element-ui';
 import VueI18n from 'vue-i18n';
+import VCalendar from 'v-calendar';
 
 export default {
-  data() {
-    return {};
-  },
 
-  async mounted() {
-   
-  },
-
-  methods: {
-
-  }
-};
+}
 </script>
 
 <style lang="scss">
