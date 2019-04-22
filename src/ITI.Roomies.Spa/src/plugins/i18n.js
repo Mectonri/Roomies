@@ -5,10 +5,12 @@ Vue.use(VueI18n);
 
 const messages ={
     'fr':{
-        testMsg:'Bienvenue sur votre application Vus.js'
+        testMsg:'Bienvenue sur votre application Vus.js',
+        greeting:"Bienvenue Roomie",
     },
     'en':{
-        testMsg:'Welcome to your Vue.js app'
+        testMsg:'Welcome to your Vue.js app',
+        greeting:"Welcome Rommie",
     }
 };
 
