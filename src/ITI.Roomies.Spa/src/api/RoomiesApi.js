@@ -10,6 +10,10 @@ export async function createRoomieAsync(model) {
     return await postAsync(endpoint, model);
 }
 
+
+export async function getRoomieByEmailAsync() {
+    return await getAsync(`${endpoint}/checkRoomie`);
+}
 export async function inviteRoomieAsync(email){
     return await postAsync((`${endpoint}/${email}/invite`));
 }

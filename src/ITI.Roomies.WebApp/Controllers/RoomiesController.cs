@@ -24,6 +24,16 @@ namespace ITI.Roomies.WebApp.Controllers
             _roomiesGateway = roomiesGateway;
         }
 
+
+        [HttpGet( "checkRoomie" )]
+        public async Task<IActionResult> GetRoomieByEmail()
+        {
+            string email = HttpContext.User.FindFirst( c => c.Type == ClaimTypes.Email ).Value;
+            Result<RoomiesData> result = await _roomiesGateway.FindByEmail( email );
+            return this.CreateResult( result );
+        }
+
+
         [HttpGet( "{id}", Name = "GetRoomie" )]
         public async Task<IActionResult> GetRoomieById( int id )
         {

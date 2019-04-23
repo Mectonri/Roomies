@@ -41,7 +41,8 @@ export default {
         },
 
         onAuthenticated() {
-            this.$router.replace('/');
+            // Envoie sur la page de vérification du profil Roomie
+            this.$router.replace('/checkRoomie');
         }
     }
 }
