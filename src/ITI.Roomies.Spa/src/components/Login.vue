@@ -12,13 +12,6 @@
 <script>
 import AuthService from '../services/AuthService'
 import Vue from 'vue'
-/*import onepagescroll from '../styles/onepagescroll'
-
-onepagescroll(".main", {
-     sectionContainer: "section",
-     loop: true,
-     responsiveFallback: false
-   });*/
 
 export default {
     data() {
@@ -41,8 +34,7 @@ export default {
         },
 
         onAuthenticated() {
-            // Envoie sur la page de vérification du profil Roomie
-            this.$router.replace('/checkRoomie');
+            this.$router.replace('/');
         }
     }
 }

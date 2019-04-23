@@ -26,8 +26,6 @@
 
         methods: {
             onSignedOut() {
-                // Cache le menu de navigation avant la déconnexion
-                document.getElementById("navMenu").style.display = "none";
                 this.$router.replace('/');
             }
         }
