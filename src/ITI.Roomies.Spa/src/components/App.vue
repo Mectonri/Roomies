@@ -1,10 +1,15 @@
 <template>
   <div id="app">
     <!-- Menu de navigation -->
-    <div>
+    <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
         <!-- <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"> -->
-        <el-menu-item @click="clickRoute('/')">
+        <!-- <el-menu-item @click="clickRoute('/')">
+          <i class="el-icon-star-on">
+            <span slot="title">Accueil</span>
+          </i>
+        </el-menu-item> -->
+        <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
           </i>
@@ -14,36 +19,21 @@
         <el-button @click.native="expand_collapse">
           <span class="navbar-toggler-icon el-icon-more"></span>
         </el-button>
-
-        <el-submenu index="2" disabled>
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span slot="title">Navigator One</span>
-          </template>
-          <el-menu-item-group disabled>
-            <span slot="title">Group One</span>
-            <el-menu-item index="2-1">item one</el-menu-item>
-            <el-menu-item index="2-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two" disabled>
-            <el-menu-item index="2-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="2-4" disabled>
-            <span slot="title">item four</span>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-menu-item index="3" disabled>
+        <el-menu-item  @click="clickRoute('/')" disabled>
           <i class="el-icon-menu"></i>
-          <span slot="title">Navigator Two</span>
+          <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item index="4" disabled>
+        <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-document"></i>
-          <span slot="title">Navigator Three</span>
+          <span slot="title">Tâches</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/roomies')">
+        <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-setting"></i>
-          <span slot="title">/Roomies</span>
+          <span slot="title">Dépense</span>
+        </el-menu-item>
+        <el-menu-item @click="clickRoute('/')" disabled>
+          <i class="el-icon-setting"></i>
+          <span slot="title">Paramètres</span>
         </el-menu-item>
         <br>
         <br>
@@ -59,11 +49,11 @@
           <span slot="title">Se déconnecter</span>
         </el-menu-item>
       </el-menu>
-    </div>
     <!-- Affihe le chemin demandé -->
-    <main role="main">
+    <main role="main" style="padding-left: 50px;">
       <router-view class="child"></router-view>
     </main>
+        </el-container>
   </div>
 </template>
 
@@ -121,8 +111,8 @@ export default {
 <style lang="scss" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
+  max-width: 200px;
   float: left;
-  min-height: 100vh;
 }
 .el-menu-vertical-demo {
   float: left;

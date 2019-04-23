@@ -1,42 +1,44 @@
 <template>
-  <div class="container">
-    <div>
-      <h1>S'inscrire</h1>
-    </div>
-
-    <form @submit="onSubmit($event)">
+    <el-container>
+    <el-header>
+      <h2>S'inscrire</h2>
+    </el-header>
+    <el-main>
+    <el-form @submit="onSubmit($event)">
       <div class="alert alert-danger" v-if="errors.length > 0">
         <b>Les champs suivants semblent invalides :</b>
 
       </div>
 
-      <div class="form-group">
+      <div>
         <label class="required">Nom</label>
-        <input type="text" v-model="item.lastName" class="form-control" required>
+        <el-input type="text" v-model="item.lastName" required />
       </div>
 
-      <div class="form-group">
+      <div>
         <label class="required">Prénom</label>
-        <input type="text" v-model="item.firstName" class="form-control" required>
+        <el-input type="text" v-model="item.firstName" required />
       </div>
 
-      <div class="form-group">
+      <div>
         <label class="required">Date de naissance</label>
-        <input type="date" v-model="item.birthDate" class="form-control" required>
+        <el-input type="date" v-model="item.birthDate" required />
       </div>
 
-      <div class="form-group">
+      <div>
         <label class="required">Phone</label>
-        <input type="text" v-model="item.phone" class="form-control" required>
+        <el-input type="text" v-model="item.phone" required />
       </div>
 
-      <!-- <div class="form-group">
-        <input v-model="item.email" v-bind:value="AuthService.email">
+      <!-- <div>
+        <el-input v-model="item.email" v-bind:value="AuthService.email">
       </div>-->
-
-      <el-button native-type="submit" class="btn btn-primary">Sauvegarder</el-button>
-    </form>
-  </div>
+      <br>
+      <br>
+      <el-button @click="onSubmit">Sauvegarder</el-button>
+    </el-form>
+    </el-main>
+    </el-container>  
 </template>
 
 <script>
@@ -59,7 +61,7 @@ export default {
   },
 
   methods: {
-    async onSubmit(event) {
+    async onSubmit() {
       event.preventDefault();
 
       var errors = [];
