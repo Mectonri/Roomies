@@ -27,7 +27,7 @@
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/')" disabled>
+        <el-menu-item @click="clickRoute('/task')" >
           <i class="el-icon-document"></i>
           <span slot="title">Tâches</span>
         </el-menu-item>

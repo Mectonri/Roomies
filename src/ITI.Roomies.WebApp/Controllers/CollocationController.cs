@@ -2,7 +2,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.Roomies.DAL;
 using ITI.Roomies.WebApp.Authentication;
-using ITI.Roomies.WebApp.Models.RoomieModel;
+using ITI.Roomies.WebApp.Models.CollocModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

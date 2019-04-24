@@ -17,6 +17,8 @@ import Collocation from './components/Collocation.vue'
 import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'
 
+import Task from './components/Task/Task.vue'
+
 const routes = [
     { path: '', component: Home, beforeEnter: requireAuth },
     
@@ -33,6 +35,8 @@ const routes = [
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },
     { path: '/roomies/:id?', component: RoomieProfil, beforeEnter: requireAuth },
+
+    { path: '/task', component: Task, beforeEnter: requireAuth },
     
 ];
 

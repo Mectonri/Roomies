@@ -16,7 +16,26 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-        public async Task<Result<TasksData>> FindById( int taskId)
+        public async Task<Result<TasksData>> FindByCollocId( int collocId)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                TasksData task = await con.QueryFirstOrDefaultAsync<TasksData>(
+                    @"select t.TaskId,
+                             t.TaskName,
+                             t.TaskDate,
+                             t.State,
+                             t.CollocId
+                      from rm.tTasks t
+                      where t.CollocId = @CollocId;",
+                    new { CollocId = collocId } );
+
+                if( task == null ) return Result.Failure<TasksData>( Status.NotFound, "No task found for this Collocation." );
+                return Result.Success( task );
+            }
+        }
+
+        public async Task<Result<TasksData>> FindByTaskId( int taskId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
