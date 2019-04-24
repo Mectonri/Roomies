@@ -14,10 +14,12 @@ namespace ITI.Roomies.WebApp.Controllers
     public class CollocationController : Controller
     {
         readonly CollocGateway _collocGateway;
+        readonly CollRoomGateway _collRoomGateway;
 
-        public CollocationController( CollocGateway collocGateway )
+        public CollocationController( CollocGateway collocGateway, CollRoomGateway collroomGateway )
         {
             _collocGateway = collocGateway;
+            _collRoomGateway = collroomGateway;
         }
 
 
@@ -25,7 +27,11 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<int> CreateColloc( [FromBody] CollocViewModel model )
         {
             Result<int> result = await _collocGateway.CreateColloc( model.CollocName );
+            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            Result<int> result2 = await _collRoomGateway.AddCollRoom( result.Content, userId );
+
             return  result.Content ;
+
         }
 
 

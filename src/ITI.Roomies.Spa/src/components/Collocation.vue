@@ -30,7 +30,6 @@
 
 <script>
 import {createCollocAsync} from "../api/CollocationApi";
-import {addCollRoomAsync}from "../api/CollocRoomApi";
 
 export default {
   data() {
@@ -44,7 +43,8 @@ export default {
   
 
   async mounted() {
-    this.UserId = this.$route.params.id;
+    this.idColloc = this.$route.params.id;
+
   },
 
   methods: {
@@ -61,12 +61,7 @@ export default {
       if (errors.length == 0) {
         try {
           idColloc = await createCollocAsync(this.item);
-          this.$router.replace("/roomies/collocation?id=" + idColloc);
-        } catch (e) {
-          console.error(e);
-        }
-        try {
-          var collroom = await addCollRoomAsync(idColloc);
+          this.$router.replace("/roomies/collocation/" + idColloc);
         } catch (e) {
           console.error(e);
         }
