@@ -8,6 +8,9 @@
       <div class="alert alert-danger" v-if="errors.length > 0">
         <b>Les champs suivants semblent invalides :</b>
 
+        <ul>
+          <li v-for="e of errors">{{e}}</li>
+        </ul>
       </div>
 
       <div>
@@ -42,9 +45,11 @@
 </template>
 
 <script>
-import { createRoomieAsync } from "../../api/RoomiesApi";
+import {
+  createRoomieAsync
+} from "../../api/RoomiesApi";
 import { DateTime } from "luxon";
-import AuthService from "../../services/AuthService";
+import AuthService from '../../services/AuthService'
 
 export default {
   data() {
@@ -58,6 +63,7 @@ export default {
   async mounted() {
     this.id = this.$route.params.id;
     //this.item.email = AuthService.email;
+
   },
 
   methods: {
@@ -76,13 +82,9 @@ export default {
       if (errors.length == 0) {
         try {
           var idRoomie = await createRoomieAsync(this.item);
-          // Affiche le menu de navigation
-          document.getElementById("navMenu").style.display = "block";
-          // Reroute le tableau de bord à partir de l'id
           this.$router.replace("/roomies/" + idRoomie);
         } catch (e) {
           console.error(e);
-          //  window.alert(e);
         }
       }
     }

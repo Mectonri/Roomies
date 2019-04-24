@@ -6,14 +6,15 @@ export async function getRoomieByIdAsync(roomieId) {
     return await getAsync(`${endpoint}/${roomieId}`);
 }
 
+export async function FindByEmail(model) {
+    return await getAsync(endpoint);
+}
+
 export async function createRoomieAsync(model) {
     return await postAsync(endpoint, model);
 }
 
-
-export async function getRoomieByEmailAsync() {
-    return await getAsync(`${endpoint}/checkRoomie`);
-}
 export async function inviteRoomieAsync(email){
     return await postAsync((`${endpoint}/${email}/invite`));
 }
+

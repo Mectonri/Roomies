@@ -49,6 +49,10 @@
           <span slot="title">Se déconnecter</span>
         </el-menu-item>
       </el-menu>
+      <el-menu-item index="3" @click="clickRoute('/roomies/collocation')">
+        <i class="el-icon-menu"></i>
+        <span slot="title">Create a collocation</span>
+      </el-menu-item>
     <!-- Affihe le chemin demandé -->
     <main role="main" style="padding-left: 50px;">
       <router-view class="child"></router-view>
@@ -70,11 +74,6 @@ export default {
       state,
       isCollapse: true
     };
-  },
-  mounted() {
-    // Cache le menu de navigation si l'utilisatuer n'est pas connecté
-    if (!AuthService.isConnected)
-      document.getElementById("navMenu").style.display = "none";
   },
 
   computed: {
@@ -102,7 +101,8 @@ export default {
     expand_collapse() {
       if (this.isCollapse) this.isCollapse = false;
       else this.isCollapse = true;
-    }
+    },
+    
   }
 };
 </script>
