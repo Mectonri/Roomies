@@ -33,7 +33,8 @@ namespace ITI.Roomies.WebApp
 
             services.AddMvc();
             services.AddSingleton( _ => new UserGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
-            services.AddSingleton( _ => new CollocGateway( Configuration["ConnectionString:RoomiesDB"] ) );
+            services.AddSingleton( _ => new CollocGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton( _ => new CollRoomGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new ItemGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new TasksGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
@@ -42,7 +43,7 @@ namespace ITI.Roomies.WebApp
             services.AddSingleton<TokenService>();
             services.AddSingleton<GoogleAuthenticationManager>();
 
-            services.AddSingleton<IEmailConfiguration>( Configuration.GetSection( "EmailConfiguration" ).Get<EmailConfiguration>() );
+            //services.AddSingleton<IEmailConfiguration>( Configuration.GetSection( "EmailConfiguration" ).Get<EmailConfiguration>() );
             services.AddTransient<IEmailService, EmailService>();
 
             string secretKey = Configuration[ "JwtBearer:SigningKey" ];
