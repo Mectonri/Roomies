@@ -42,7 +42,7 @@ namespace ITI.Roomies.WebApp
             services.AddSingleton<TokenService>();
             services.AddSingleton<GoogleAuthenticationManager>();
 
-            services.AddSingleton<IEmailConfiguration>( Configuration.GetSection( "EmailConfiguration" ).Get<EmailConfiguration>() );
+           // services.AddSingleton<IEmailConfiguration>( Configuration.GetSection( "EmailConfiguration" ).Get<EmailConfiguration>() );
             services.AddTransient<IEmailService, EmailService>();
 
             string secretKey = Configuration[ "JwtBearer:SigningKey" ];
