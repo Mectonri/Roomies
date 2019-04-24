@@ -29,26 +29,23 @@
 
 
 <script>
-
-import {
-  CreateColloc
-} from "../api/RoomiesApi";
-import {
-    AddColRoom
-} from "../api/RoomiesApi";
+import {createCollocAsync} from "../api/CollocationApi";
+import {addCollRoomAsync}from "../api/CollocRoomApi";
+import {getUsersByIdAsync}from "../api/UserApi";
+import {FindByEmail}from "../api/RoomiesApi";
 
 export default {
   data() {
     return {
       item: {},
-      id: null,
+      UserId: null,
       errors: []
     };
   },
+  
 
   async mounted() {
-    this.id = this.$route.params.id;
-
+    this.UserId = this.$route.params.id;
   },
 
   methods: {
@@ -60,13 +57,15 @@ export default {
       if (!this.item.CollocName) errors.push("CollocName");
 
       this.errors = errors;
-
+      var a =1;
       if (errors.length == 0) {
         try {
-          var idColloc = await CreateColloc(this.item);
-          this.$router.replace("/Home/");
+          var idColloc = await createCollocAsync(this.item);
+          item.idColloc = idColloc;
+          a=3;
         } catch (e) {
           console.error(e);
+          a=3
         }
       }
     }

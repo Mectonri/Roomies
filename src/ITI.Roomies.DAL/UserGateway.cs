@@ -17,13 +17,16 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-        public async Task<UserData> FindById(int userId)
+        public async Task<Result<UserData>> FindById(int userId)
         {
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                return await con.QueryFirstOrDefaultAsync<UserData>(
+                UserData user = await con.QueryFirstOrDefaultAsync<UserData>(
                     "select u.UserId, u.Email, u.[Password], u.GoogleRefreshToken, u.GoogleId from rm.vUser u where u.UserId = @UserId",
                     new { UserId = userId });
+
+                if( user == null ) return Result.Failure<UserData>( Status.NotFound, "User not found." );
+                return Result.Success( user );
             }
         }
 

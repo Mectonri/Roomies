@@ -6,6 +6,10 @@ export async function getRoomieByIdAsync(roomieId) {
     return await getAsync(`${endpoint}/${roomieId}`);
 }
 
+export async function FindByEmail(model) {
+    return await getAsync(endpoint);
+}
+
 export async function createRoomieAsync(model) {
     return await postAsync(endpoint, model);
 }
@@ -14,10 +18,3 @@ export async function inviteRoomieAsync(email){
     return await postAsync((`${endpoint}/${email}/invite`));
 }
 
-export async function CreateColloc(collocname){
-    return await postAsync(endpoint, collocname);
-}
-
-export async function AddCollRoom(model){
-    return await postAsync(endpoint, model);
-}

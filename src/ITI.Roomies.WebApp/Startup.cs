@@ -33,7 +33,8 @@ namespace ITI.Roomies.WebApp
 
             services.AddMvc();
             services.AddSingleton( _ => new UserGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
-            services.AddSingleton( _ => new CollocGateway( Configuration["ConnectionString:RoomiesDB"] ) );
+            services.AddSingleton( _ => new CollocGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton( _ => new CollRoomGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new ItemGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new TasksGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
