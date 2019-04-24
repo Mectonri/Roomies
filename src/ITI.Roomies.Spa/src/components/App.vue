@@ -19,6 +19,10 @@
         <el-button @click.native="expand_collapse">
           <span class="navbar-toggler-icon el-icon-more"></span>
         </el-button>
+        <el-menu-item @click="clickRoute('/roomies/collocation')">
+          <i class="el-icon-menu"></i>
+         <span slot="title">Create a collocation</span>
+        </el-menu-item>
         <el-menu-item  @click="clickRoute('/')" disabled>
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
@@ -49,10 +53,7 @@
           <span slot="title">Se déconnecter</span>
         </el-menu-item>
       </el-menu>
-      <el-menu-item index="3" @click="clickRoute('/roomies/collocation')">
-        <i class="el-icon-menu"></i>
-        <span slot="title">Create a collocation</span>
-      </el-menu-item>
+
     <!-- Affihe le chemin demandé -->
     <main role="main" style="padding-left: 50px;">
       <router-view class="child"></router-view>
