@@ -28,6 +28,7 @@ const routes = [
     {path: '/roomies/calendar', component: Calendar, beforeEnter: requireAuth},
 
     {path: '/roomies/collocation', component: Collocation, beforeEnter: requireAuth},
+    {path: '/roomies/collocation/:id?', component: Collocation, beforeEnter: requireAuth},
 
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },

@@ -22,11 +22,10 @@ namespace ITI.Roomies.WebApp.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateColloc( [FromBody] CollocViewModel model )
+        public async Task<int> CreateColloc( [FromBody] CollocViewModel model )
         {
-            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result<int> result = await _collocGateway.CreateColloc( model.CollocName );
-            return this.CreateResult( result );
+            return  result.Content ;
         }
 
 

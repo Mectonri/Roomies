@@ -31,15 +31,14 @@
 <script>
 import {createCollocAsync} from "../api/CollocationApi";
 import {addCollRoomAsync}from "../api/CollocRoomApi";
-import {getUsersByIdAsync}from "../api/UserApi";
-import {FindByEmail}from "../api/RoomiesApi";
 
 export default {
   data() {
     return {
       item: {},
       UserId: null,
-      errors: []
+      errors: [],
+      idColloc : 0
     };
   },
   
@@ -49,23 +48,27 @@ export default {
   },
 
   methods: {
+    
     async onSubmit(event) {
       event.preventDefault();
 
       var errors = [];
 
+      var idColloc = null;
       if (!this.item.CollocName) errors.push("CollocName");
 
       this.errors = errors;
-      var a =1;
       if (errors.length == 0) {
         try {
-          var idColloc = await createCollocAsync(this.item);
-          item.idColloc = idColloc;
-          a=3;
+          idColloc = await createCollocAsync(this.item);
+          this.$router.replace("/roomies/collocation?id=" + idColloc);
         } catch (e) {
           console.error(e);
-          a=3
+        }
+        try {
+          var collroom = await addCollRoomAsync(idColloc);
+        } catch (e) {
+          console.error(e);
         }
       }
     }

@@ -5,6 +5,6 @@ namespace ITI.Roomies.WebApp.Models.RoomieModel
 {
     public class CollocRoomViewModel
     {
-        public int CollocId;
+        public int idColloc;
     }
 }

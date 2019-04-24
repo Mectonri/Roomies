@@ -5,7 +5,6 @@ using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Models.RoomieModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ITI.Roomies;
 
 [Route( "api/[controller]" )]
 [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
@@ -20,9 +19,10 @@ public class CollocRoomController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> AddCollocationRoom( [FromBody] CollocRoomViewModel model, RoomiesData roomies )
+    public async Task<IActionResult> AddCollocationRoom( int idColloc)
     {
-        Result<int> result = await _collRoomGateway.AddCollRoom( model.CollocId, roomies.RoomieId );
+        int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+        Result<int> result = await _collRoomGateway.AddCollRoom( idColloc, userId );
         return Ok( result );
     }
 }
