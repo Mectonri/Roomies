@@ -1,45 +1,41 @@
 <template>
-    <el-container>
+  <el-container>
     <el-header>
       <h1>Tâches</h1>
     </el-header>
     <el-main v-if="taskData[0]">
-        <h2>{{taskData[0].collocId}}</h2>
+      <h2>{{taskData[0].collocId}}</h2>
 
-    <table>
+      <table>
         <tr>
-            <td>Nom</td>
-            <td>Echéance</td>
-            <td>Etat</td>
+          <td>Nom</td>
+          <td>Echéance</td>
+          <td>Etat</td>
         </tr>
         <tr v-for="task of taskData">
           <td>{{ task.taskName }}</td>
           <td>{{ task.taskDate }}</td>
           <td>{{ task.state }}</td>
         </tr>
-    </table>
-
+      </table>
     </el-main>
-    <el-main v-else>
-        Chargement en cours
-    </el-main>
-    </el-container>  
+    <el-main v-else>Chargement en cours</el-main>
+  </el-container>
 </template>
 
 <script>
 import { DateTime } from "luxon";
-import AuthService from '../../services/AuthService'
-import { getTasksByCollocIdAsync} from '../../api/TaskApi.js'
-import { state } from "../../state"
+import AuthService from "../../services/AuthService";
+import { getTasksByCollocIdAsync } from "../../api/TaskApi.js";
+import { state } from "../../state";
 
 export default {
   data() {
     return {
-    //   item: {},
-    //   id: null,
+      //   item: {},
+      //   id: null,
       errors: [],
-    taskData: []
-
+      taskData: []
     };
   },
   computed: {
@@ -50,18 +46,14 @@ export default {
     }
   },
   async mounted() {
-      console.log('yo');
+    console.log("yo");
     //   console.log(this.item);
-      console.log(getTasksByCollocIdAsync(0));
-    try{
-    this.taskData.push(await getTasksByCollocIdAsync(7));
-    console.log(this.taskData);
+    try {
+      this.taskData.push(await getTasksByCollocIdAsync(7));
+      console.log(this.taskData);
+    } catch (e) {
+      console.log(e);
     }
-    catch(e)
-    {
-        console.log(e)
-    }
-
   }
 };
 </script>

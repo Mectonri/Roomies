@@ -5,7 +5,8 @@
 // import { DateTime } from "luxon";
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
-import { getRoomieByEmailAsync } from "../../api/RoomiesApi";
+import { FindByEmail } from "../../api/RoomiesApi";
+import {getCollocByRoomieIdAsync} from "../../api/CollocationApi";
 
 export default {
   data() {
@@ -14,7 +15,12 @@ export default {
 
   async mounted() {
     try {
-      var dataToRoute = await getRoomieByEmailAsync();
+      var dataToRoute = await FindByEmail();
+      try {
+        this.$currColloc.setCollocId(await getCollocByRoomieIdAsync())
+      } catch (e) {
+        console.log(e);
+      }
       // Affiche le menu de navigation
       document.getElementById("navMenu").style.display = "block";
       this.$router.replace("/roomies/" + dataToRoute.roomieId);

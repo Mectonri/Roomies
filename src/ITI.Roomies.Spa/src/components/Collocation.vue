@@ -32,7 +32,7 @@
 
 
 <script>
-import {createCollocAsync} from "../api/CollocationApi";
+import {createCollocAsync,getCollocByRoomieIdAsync} from "../api/CollocationApi";
 
 export default {
   data() {
@@ -47,7 +47,7 @@ export default {
 
   async mounted() {
     this.idColloc = this.$route.params.id;
-
+    console.log('qsldqlsd : ' + await getCollocByRoomieIdAsync());
   },
 
   methods: {

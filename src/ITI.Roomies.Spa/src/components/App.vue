@@ -8,7 +8,9 @@
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
           </i>
-        </el-menu-item> -->
+        </el-menu-item>-->
+        <!-- TO DO Delete cette ligne -->
+        Colloc {{$currColloc.collocId}}
         <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
@@ -21,13 +23,13 @@
         </el-button>
         <el-menu-item @click="clickRoute('/roomies/collocation')">
           <i class="el-icon-menu"></i>
-         <span slot="title">Create a collocation</span>
+          <span slot="title">Create a collocation</span>
         </el-menu-item>
-        <el-menu-item  @click="clickRoute('/')" disabled>
+        <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/task')" >
+        <el-menu-item @click="clickRoute('/task')">
           <i class="el-icon-document"></i>
           <span slot="title">Tâches</span>
         </el-menu-item>
@@ -54,11 +56,11 @@
         </el-menu-item>
       </el-menu>
 
-    <!-- Affihe le chemin demandé -->
-    <main role="main" style="padding-left: 50px;">
-      <router-view class="child"></router-view>
-    </main>
-        </el-container>
+      <!-- Affihe le chemin demandé -->
+      <main role="main" style="padding-left: 50px;">
+        <router-view class="child"></router-view>
+      </main>
+    </el-container>
   </div>
 </template>
 
@@ -66,19 +68,16 @@
 import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
-import {inviteRoomieAsync} from "../api/RoomiesApi.js";
-import { global_var} from "../global_var";
+import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 
 export default {
   data() {
     return {
-      message : "",
+      message: "",
       state,
-      isCollapse: true,
-      // global_var
+      isCollapse: true
     };
   },
-
   computed: {
     auth: () => AuthService,
 
@@ -86,11 +85,17 @@ export default {
       return this.state.isLoading;
     }
   },
-  methods: {
+  mounted() {
+    //Cache le menu de navigation si l'utilisateur n'est pas connecté
+    if(!AuthService.isConnected){
+      document.getElementById("navMenu").style.display = "none";
+    }
 
+  },
+
+  methods: {
     async invite() {
       await inviteRoomieAsync(this.message);
-
     },
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
@@ -104,9 +109,7 @@ export default {
     expand_collapse() {
       if (this.isCollapse) this.isCollapse = false;
       else this.isCollapse = true;
-      console.log(this.global_var);
-    },
-    
+    }
   }
 };
 </script>

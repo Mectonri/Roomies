@@ -68,5 +68,20 @@ namespace ITI.Roomies.DAL
                 return Result.Success();
             }
         }
+
+        public async Task<Result<int>> FindCollocByRoomieId( int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                int colloc = await con.QueryFirstOrDefaultAsync<int>(
+                    @"select i.CollocId
+                        from rm.tiCollRoom i
+                        where i.RoomieId = @RoomieId;",
+                    new { RoomieId = roomieId } );
+
+                //if( task == null ) return Result.Failure<int>( Status.NotFound, "No collocation was found for this Roomie." );
+                return Result.Success( colloc );
+            }
+        }
     }
 }

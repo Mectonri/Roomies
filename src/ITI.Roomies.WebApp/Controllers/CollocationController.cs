@@ -34,6 +34,14 @@ namespace ITI.Roomies.WebApp.Controllers
 
         }
 
+        // Renvoie les id des collocs dans lesquelles le roomie est présent
+        [HttpGet]
+        public async Task<IActionResult> GetCollocByRoomieIdAsync( int id )
+        {
+            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            Result<int> result = await _collRoomGateway.FindCollocByRoomieId( userId );
+            return this.CreateResult( result );
+        }
 
     }
 }
