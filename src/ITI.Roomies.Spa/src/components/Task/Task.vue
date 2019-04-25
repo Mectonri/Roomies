@@ -52,7 +52,7 @@ export default {
   async mounted() {
       console.log('yo');
     //   console.log(this.item);
-      console.log(getTasksByCollocIdAsync(7));
+      console.log(getTasksByCollocIdAsync(0));
     try{
     this.taskData.push(await getTasksByCollocIdAsync(7));
     console.log(this.taskData);

@@ -66,14 +66,16 @@
 import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
-import {inviteRoomieAsync} from "../api/RoomiesApi.js"
+import {inviteRoomieAsync} from "../api/RoomiesApi.js";
+import { global_var} from "../global_var";
 
 export default {
   data() {
     return {
       message : "",
       state,
-      isCollapse: true
+      isCollapse: true,
+      // global_var
     };
   },
 
@@ -102,6 +104,7 @@ export default {
     expand_collapse() {
       if (this.isCollapse) this.isCollapse = false;
       else this.isCollapse = true;
+      console.log(this.global_var);
     },
     
   }
