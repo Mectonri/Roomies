@@ -21,7 +21,7 @@ import checkRoomie from './components/Roomies/checkRoomie.vue'
 import Task from './components/Task/Task.vue'
 
 const routes = [
-    { path: '/Home', component: Home, beforeEnter: requireAuth },
+    { path: '/', component: Home, beforeEnter: requireAuth },
     
     { path: '/login', component: Login },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
