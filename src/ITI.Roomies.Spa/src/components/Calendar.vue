@@ -1,5 +1,5 @@
 <template>
-  <v-calendar :attributes='attrs'>
+  <v-calendar color="red" is-dark is-expanded :rows="3" :columns="4" >
   </v-calendar>
 </template>
 
@@ -25,6 +25,8 @@ export default {
             backgroundColor: '#ff8080',
             // Other properties are available too, like `height` & `borderRadius`
           },
+          rows : 3,
+          columns: 4,
           dates: new Date(now),
         }
       ],

@@ -2,7 +2,6 @@
 
 
 <script>
-// import { DateTime } from "luxon";
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
 import { getRoomieByEmailAsync } from "../../api/RoomiesApi";

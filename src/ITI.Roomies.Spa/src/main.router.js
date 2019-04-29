@@ -18,7 +18,7 @@ import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'
 
 const routes = [
-    { path: '', component: Home, beforeEnter: requireAuth },
+    { path: '/Home', component: Home, beforeEnter: requireAuth },
     
     { path: '/login', component: Login },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
