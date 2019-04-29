@@ -6,7 +6,7 @@
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
 import { FindByEmail } from "../../api/RoomiesApi";
-import {getCollocNameIdByRoomieIdAsync} from "../../api/CollocationApi";
+import { getCollocNameIdByRoomieIdAsync } from "../../api/CollocationApi";
 
 export default {
   data() {

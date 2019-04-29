@@ -32,8 +32,6 @@ import { state } from "../../state";
 export default {
   data() {
     return {
-      //   item: {},
-      //   id: null,
       errors: [],
       taskData: []
     };
@@ -46,11 +44,8 @@ export default {
     }
   },
   async mounted() {
-    console.log("yo");
-    //   console.log(this.item);
     try {
       this.taskData.push(await getTasksByCollocIdAsync(7));
-      console.log(this.taskData);
     } catch (e) {
       console.log(e);
     }

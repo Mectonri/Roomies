@@ -3,13 +3,8 @@
     <!-- Menu de navigation -->
     <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
-        <!-- <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"> -->
-        <!-- <el-menu-item @click="clickRoute('/')">
-          <i class="el-icon-star-on">
-            <span slot="title">Accueil</span>
-          </i>
-        </el-menu-item>-->
-        <!-- TO DO Delete cette ligne -->
+
+        <!-- TO DO : A styliser -->
         Colloc {{$currColloc.collocName}}
         <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
@@ -69,7 +64,6 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
-// import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi.js";
 
 export default {
   data() {
@@ -101,12 +95,6 @@ export default {
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
     },
-    // handleOpen(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
-    // handleClose(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
     expand_collapse() {
       if (this.isCollapse) this.isCollapse = false;
       else this.isCollapse = true;

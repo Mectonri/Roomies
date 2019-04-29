@@ -19,7 +19,6 @@
 
       <div class="form-group">
         <label class="required">Nom de collocation</label>
-        <!-- <input type="text" v-model="item.CollocName" class="form-control" required> -->
         <el-input type="text" v-model="item.CollocName" required />
       </div>
 
@@ -63,6 +62,8 @@ export default {
       if (errors.length == 0) {
         try {
           idColloc = await createCollocAsync(this.item);
+
+          // Ajout à la colloc en utilisation
           this.$currColloc.setCollocId(idColloc);
           this.$currColloc.setCollocName(this.item.CollocName);
      
