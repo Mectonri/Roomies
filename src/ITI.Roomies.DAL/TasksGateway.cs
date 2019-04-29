@@ -1,5 +1,6 @@
 using Dapper;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -16,11 +17,11 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-        public async Task<Result<TasksData>> FindTaskByCollocId( int collocId)
+        public async Task<IEnumerable<TasksData>> FindTaskByCollocId( int collocId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                TasksData task = await con.QueryFirstOrDefaultAsync<TasksData>(
+                IEnumerable<TasksData> task = await con.QueryAsync<TasksData>(
                     @"select t.TaskId,
                              t.TaskName,
                              t.TaskDate,
@@ -30,8 +31,7 @@ namespace ITI.Roomies.DAL
                       where t.CollocId = @CollocId;",
                     new { CollocId = collocId } );
 
-                if( task == null ) return Result.Failure<TasksData>( Status.NotFound, "No task found for this Collocation." );
-                return Result.Success( task );
+                return task;
             }
         }
 

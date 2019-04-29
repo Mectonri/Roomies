@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.Roomies.DAL;
@@ -25,8 +26,8 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTasksByCollocIdAsync( int id )
         {
-            Result<TasksData> result = await _tasksGateway.FindTaskByCollocId(id );
-            return this.CreateResult( result );
+            IEnumerable<TasksData> result = await _tasksGateway.FindTaskByCollocId(id );
+            return this.Ok( result );
         }
 
         //[HttpPost]

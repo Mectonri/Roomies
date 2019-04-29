@@ -35,8 +35,7 @@ class currentColloc {
 
 Vue.use(VueGlobalVariable, {
   globals: {
-  $collocName: '',
-  $currColloc: new currentColloc(0,'')
+  $currColloc: new currentColloc(0,'')  
   },
   });
 

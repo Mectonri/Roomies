@@ -45,7 +45,7 @@ export default {
   },
   async mounted() {
     try {
-      this.taskData.push(await getTasksByCollocIdAsync(7));
+      this.taskData.push(await getTasksByCollocIdAsync(this.$currColloc.collocId));
     } catch (e) {
       console.log(e);
     }
