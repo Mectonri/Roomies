@@ -6,7 +6,7 @@
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
 import { FindByEmail } from "../../api/RoomiesApi";
-import {getCollocByRoomieIdAsync} from "../../api/CollocationApi";
+import {getCollocNameIdByRoomieIdAsync} from "../../api/CollocationApi";
 
 export default {
   data() {
@@ -17,7 +17,10 @@ export default {
     try {
       var dataToRoute = await FindByEmail();
       try {
-        this.$currColloc.setCollocId(await getCollocByRoomieIdAsync())
+        // Récupère la premère collocation du Roomie
+        var collocData = await getCollocNameIdByRoomieIdAsync();
+        this.$currColloc.setCollocId(collocData.collocId);
+        this.$currColloc.setCollocName(collocData.collocName);
       } catch (e) {
         console.log(e);
       }

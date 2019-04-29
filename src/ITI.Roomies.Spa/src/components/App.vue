@@ -10,7 +10,7 @@
           </i>
         </el-menu-item>-->
         <!-- TO DO Delete cette ligne -->
-        Colloc {{$currColloc.collocId}}
+        Colloc {{$currColloc.collocName}}
         <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
@@ -69,7 +69,7 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
-import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi.js";
+// import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi.js";
 
 export default {
   data() {
@@ -91,7 +91,6 @@ export default {
     if(!AuthService.isConnected){
       document.getElementById("navMenu").style.display = "none";
     }
-    console.log(getCollocNameIdByRoomieIdAsync());
 
   },
 
