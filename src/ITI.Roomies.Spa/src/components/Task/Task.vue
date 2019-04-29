@@ -4,7 +4,7 @@
       <h1>Tâches</h1>
     </el-header>
     <el-main v-if="taskData[0]">
-      <h2>{{taskData[0].collocId}}</h2>
+      <h2>{{$currColloc.collocName}}</h2>
 
       <table>
         <tr>

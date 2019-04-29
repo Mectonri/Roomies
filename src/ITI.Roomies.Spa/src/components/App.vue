@@ -69,6 +69,7 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
+import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi.js";
 
 export default {
   data() {
@@ -90,6 +91,7 @@ export default {
     if(!AuthService.isConnected){
       document.getElementById("navMenu").style.display = "none";
     }
+    console.log(getCollocNameIdByRoomieIdAsync());
 
   },
 
