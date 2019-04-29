@@ -23,11 +23,6 @@ export default {
 
 }
 </script>
-
-<style lang="scss">
-@import "../../styles/global.scss";
-</style>
-
 <style lang="scss" scoped>
   .el-header, .el-footer {
     background-color: #B3C0D1;

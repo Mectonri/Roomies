@@ -1,4 +1,3 @@
-import './main.vendors'
 import './main.auth'
 import AuthService from './services/AuthService'
 import Vue from 'vue'

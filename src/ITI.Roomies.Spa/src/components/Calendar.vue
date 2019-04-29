@@ -27,7 +27,7 @@ export default {
           },
           rows : 3,
           columns: 4,
-          dates: new Date(now),
+          // dates: new Date(),
         }
       ],
     };
