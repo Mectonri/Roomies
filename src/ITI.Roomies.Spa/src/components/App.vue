@@ -3,7 +3,6 @@
     <!-- Menu de navigation -->
     <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
-
         <!-- TO DO : A styliser -->
         Colloc {{$currColloc.collocName}}
         <el-menu-item @click="clickRoute('/roomies')">
@@ -20,7 +19,7 @@
           <i class="el-icon-menu"></i>
           <span slot="title">Create a collocation</span>
         </el-menu-item>
-        <el-menu-item  @click="clickRoute('/roomies/calendar')" >
+        <el-menu-item @click="clickRoute('/roomies/calendar')">
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
@@ -64,6 +63,7 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
+import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
 
 export default {
   data() {
@@ -80,12 +80,19 @@ export default {
       return this.state.isLoading;
     }
   },
-  mounted() {
+  async mounted() {
     //Cache le menu de navigation si l'utilisateur n'est pas connecté
-    if(!AuthService.isConnected){
+    if (!AuthService.isConnected) {
       document.getElementById("navMenu").style.display = "none";
+    } else {
+      // Récupère la premère collocation du Roomie
+      var collocData = await getCollocNameIdByRoomieIdAsync();
+      console.log(collocData);
+      if (collocData != undefined) {
+        this.$currColloc.setCollocId(collocData.collocId);
+        this.$currColloc.setCollocName(collocData.collocName);
+      }
     }
-
   },
 
   methods: {
