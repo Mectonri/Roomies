@@ -4,9 +4,7 @@ using NUnit.Framework;
 
 namespace ITI.Roomies.DAL.Tests
 {
-    [TestFixture]
-    public class ClassGatewayTests
-    {
+   
         [TestFixture]
         public class UserGatewayTests
         {
@@ -73,4 +71,4 @@ namespace ITI.Roomies.DAL.Tests
             }
         }
     }
-}
+

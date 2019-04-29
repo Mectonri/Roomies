@@ -26,7 +26,7 @@ namespace ITI.Roomies.DAL.Tests
             Result<TasksData> task;
 
             {
-                task = await sut.FindById( taskId );
+                task = await sut.FindByTaskId( taskId );
                 CheckTask( task, taskName, taskDate, taskId );
             }
 
@@ -41,7 +41,7 @@ namespace ITI.Roomies.DAL.Tests
             {
                 Result r = await sut.Delete( taskId );
                 Assert.That( r.Status, Is.EqualTo( Status.Ok ) );
-                task = await sut.FindById( taskId );
+                task = await sut.FindByTaskId( taskId );
                 Assert.That( task.Status, Is.EqualTo( Status.NotFound ) );
             }
         }

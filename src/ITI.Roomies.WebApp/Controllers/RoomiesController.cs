@@ -92,15 +92,6 @@ namespace ITI.Roomies.WebApp.Controllers
             }
 
             return Ok( 0 );
-
-
-
-
-
-
-
-
-
         }
     }
 }
