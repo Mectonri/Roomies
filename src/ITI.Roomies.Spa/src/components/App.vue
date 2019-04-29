@@ -3,7 +3,10 @@
     <!-- Menu de navigation -->
     <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
-        <el-menu-item @click="clickRoute('/Home')">
+
+        <!-- TO DO : A styliser -->
+        Colloc {{$currColloc.collocName}}
+        <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
           </i>
@@ -15,13 +18,13 @@
         </el-button>
         <el-menu-item @click="clickRoute('/roomies/collocation')">
           <i class="el-icon-menu"></i>
-         <span slot="title">Create a collocation</span>
+          <span slot="title">Create a collocation</span>
         </el-menu-item>
         <el-menu-item  @click="clickRoute('/roomies/calendar')" >
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/')" disabled>
+        <el-menu-item @click="clickRoute('/task')">
           <i class="el-icon-document"></i>
           <span slot="title">Tâches</span>
         </el-menu-item>
@@ -48,11 +51,11 @@
         </el-menu-item>
       </el-menu>
 
-    <!-- Affihe le chemin demandé -->
-    <main role="main" style="padding-left: 50px;">
-      <router-view class="child"></router-view>
-    </main>
-        </el-container>
+      <!-- Affihe le chemin demandé -->
+      <main role="main" style="padding-left: 50px;">
+        <router-view class="child"></router-view>
+      </main>
+    </el-container>
   </div>
 </template>
 
@@ -60,17 +63,16 @@
 import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
-import {inviteRoomieAsync} from "../api/RoomiesApi.js"
+import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 
 export default {
   data() {
     return {
-      message : "",
+      message: "",
       state,
       isCollapse: true
     };
   },
-
   computed: {
     auth: () => AuthService,
 
@@ -78,11 +80,17 @@ export default {
       return this.state.isLoading;
     }
   },
-  methods: {
+  mounted() {
+    //Cache le menu de navigation si l'utilisateur n'est pas connecté
+    if(!AuthService.isConnected){
+      document.getElementById("navMenu").style.display = "none";
+    }
 
+  },
+
+  methods: {
     async invite() {
       await inviteRoomieAsync(this.message);
-
     },
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
@@ -90,8 +98,7 @@ export default {
     expand_collapse() {
       if (this.isCollapse) this.isCollapse = false;
       else this.isCollapse = true;
-    },
-    
+    }
   }
 };
 </script>

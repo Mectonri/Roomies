@@ -6,3 +6,9 @@ export async function createCollocAsync(collocname){
     return await postAsync(endpoint, collocname);
 }
 
+// export async function getCollocByRoomieIdAsync() {
+//     return await getAsync(endpoint);
+// }
+export async function getCollocNameIdByRoomieIdAsync() {
+    return await getAsync(`${endpoint}/getNameId`);
+}

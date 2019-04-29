@@ -58,8 +58,6 @@ export default {
 
   async mounted() {
     this.id = this.$route.params.id;
-    //this.item.email = AuthService.email;
-
   },
 
   methods: {

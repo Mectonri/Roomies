@@ -6,7 +6,7 @@ export async function getRoomieByIdAsync(roomieId) {
     return await getAsync(`${endpoint}/${roomieId}`);
 }
 
-export async function FindByEmail(model) {
+export async function FindByEmail() {
     return await getAsync(endpoint);
 }
 

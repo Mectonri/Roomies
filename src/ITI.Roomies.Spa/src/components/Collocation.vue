@@ -1,4 +1,5 @@
 <template>
+  <el-container>
     <div class="container">
 
         <div class="form-group">
@@ -16,12 +17,13 @@
 
       <div class="form-group">
         <label class="required">Nom de collocation</label>
-        <input type="text" v-model="item.CollocName" class="form-control" required>
+        <el-input type="text" v-model="item.CollocName" required />
       </div>
 
-      <el-button native-type="submit" class="btn btn-primary">Sauvegarder</el-button>
+      <el-button native-type="submit">Sauvegarder</el-button>
     </form>
   </div>
+  </el-container>
 
 </template>
 
@@ -42,7 +44,6 @@ export default {
 
   async mounted() {
     this.idColloc = this.$route.params.id;
-
   },
 
   methods: {
@@ -59,7 +60,12 @@ export default {
       if (errors.length == 0) {
         try {
           idColloc = await createCollocAsync(this.item);
-          this.$router.replace("/");
+
+          // Ajout à la colloc en utilisation
+          this.$currColloc.setCollocId(idColloc);
+          this.$currColloc.setCollocName(this.item.CollocName);
+     
+          this.$router.replace("/roomies/collocation/" + idColloc);
         } catch (e) {
           console.error(e);
         }

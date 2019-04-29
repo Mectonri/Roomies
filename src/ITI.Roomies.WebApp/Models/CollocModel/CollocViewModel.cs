@@ -1,7 +1,7 @@
 using System;
 
 
-namespace ITI.Roomies.WebApp.Models.RoomieModel
+namespace ITI.Roomies.WebApp.Models.CollocModel
 {
     public class CollocViewModel
     {

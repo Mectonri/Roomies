@@ -4,7 +4,8 @@
 <script>
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
-import { getRoomieByEmailAsync } from "../../api/RoomiesApi";
+import { FindByEmail } from "../../api/RoomiesApi";
+import { getCollocNameIdByRoomieIdAsync } from "../../api/CollocationApi";
 
 export default {
   data() {
@@ -13,7 +14,15 @@ export default {
 
   async mounted() {
     try {
-      var dataToRoute = await getRoomieByEmailAsync();
+      var dataToRoute = await FindByEmail();
+      try {
+        // Récupère la premère collocation du Roomie
+        var collocData = await getCollocNameIdByRoomieIdAsync();
+        this.$currColloc.setCollocId(collocData.collocId);
+        this.$currColloc.setCollocName(collocData.collocName);
+      } catch (e) {
+        console.log(e);
+      }
       // Affiche le menu de navigation
       document.getElementById("navMenu").style.display = "block";
       this.$router.replace("/roomies/" + dataToRoute.roomieId);
