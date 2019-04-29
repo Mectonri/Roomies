@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div>
-        hello this is supposed to be the creation page for a collocation.
-        </div>
+
         <div class="form-group">
 
       </div>
@@ -61,7 +59,7 @@ export default {
       if (errors.length == 0) {
         try {
           idColloc = await createCollocAsync(this.item);
-          this.$router.replace("/roomies/collocation/" + idColloc);
+          this.$router.replace("/");
         } catch (e) {
           console.error(e);
         }

@@ -3,13 +3,7 @@
     <!-- Menu de navigation -->
     <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
-        <!-- <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse"> -->
-        <!-- <el-menu-item @click="clickRoute('/')">
-          <i class="el-icon-star-on">
-            <span slot="title">Accueil</span>
-          </i>
-        </el-menu-item> -->
-        <el-menu-item @click="clickRoute('/roomies')">
+        <el-menu-item @click="clickRoute('/Home')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
           </i>
@@ -23,7 +17,7 @@
           <i class="el-icon-menu"></i>
          <span slot="title">Create a collocation</span>
         </el-menu-item>
-        <el-menu-item  @click="clickRoute('/')" disabled>
+        <el-menu-item  @click="clickRoute('/roomies/calendar')" >
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
@@ -93,12 +87,6 @@ export default {
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
     },
-    // handleOpen(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
-    // handleClose(key, keyPath) {
-    //   console.log(key, keyPath);
-    // },
     expand_collapse() {
       if (this.isCollapse) this.isCollapse = false;
       else this.isCollapse = true;

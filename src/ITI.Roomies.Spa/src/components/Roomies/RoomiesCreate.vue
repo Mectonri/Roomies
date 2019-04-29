@@ -32,10 +32,6 @@
         <label class="required">Phone</label>
         <el-input type="text" v-model="item.phone" required />
       </div>
-
-      <!-- <div>
-        <el-input v-model="item.email" v-bind:value="AuthService.email">
-      </div>-->
       <br>
       <br>
       <el-button @click="onSubmit">Sauvegarder</el-button>
