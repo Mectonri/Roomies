@@ -51,7 +51,9 @@
       </el-menu>
 
       <!-- Affihe le chemin demandé -->
-      <main role="main" style="padding-left: 50px;">
+
+      <main v-if="state == true" role="main" style="padding-left: 50px;">Chargement en cours</main>
+      <main v-else>
         <router-view class="child"></router-view>
       </main>
     </el-container>
@@ -69,7 +71,7 @@ export default {
   data() {
     return {
       message: "",
-      state,
+      state: true,
       isCollapse: true
     };
   },
@@ -81,17 +83,24 @@ export default {
     }
   },
   async mounted() {
+    this.state = true;
     //Cache le menu de navigation si l'utilisateur n'est pas connecté
-    if (!AuthService.isConnected) {
-      document.getElementById("navMenu").style.display = "none";
-    } else {
-      // Récupère la premère collocation du Roomie
-      var collocData = await getCollocNameIdByRoomieIdAsync();
-      console.log(collocData);
-      if (collocData != undefined) {
-        this.$currColloc.setCollocId(collocData.collocId);
-        this.$currColloc.setCollocName(collocData.collocName);
+    try {
+      if (!AuthService.isConnected) {
+        document.getElementById("navMenu").style.display = "none";
+      } else {
+        // Récupère la premère collocation du Roomie
+        var collocData = await getCollocNameIdByRoomieIdAsync();
+        if (collocData != undefined) {
+          this.$currColloc.setCollocId(collocData.collocId);
+          this.$currColloc.setCollocName(collocData.collocName);
+
+        }
+        this.state = false;
       }
+    } catch (e) {
+      console.log(e);
+      state.isLoading = false;
     }
   },
 
