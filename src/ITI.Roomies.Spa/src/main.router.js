@@ -19,6 +19,7 @@ import RoomieProfil from './components/Roomies/Roomie.vue'
 import checkRoomie from './components/Roomies/checkRoomie.vue'
 
 import Task from './components/Task/Task.vue'
+import TaskCreate from './components/Task/TaskCreate.vue'
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -39,6 +40,7 @@ const routes = [
     { path: '/checkRoomie', component: checkRoomie, beforeEnter: requireAuth },
 
     { path: '/task', component: Task, beforeEnter: requireAuth },
+    { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
     
 ];
 

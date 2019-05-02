@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.Roomies.DAL;
@@ -45,12 +46,21 @@ namespace ITI.Roomies.WebApp.Controllers
 
         // Renvoie les id des collocs dans lesquelles le roomie est présent
         [HttpGet( "getNameId" )]
-        public async Task<IActionResult> GetCollocNameIdByRoomieIdAsync( int id )
+        public async Task<IActionResult> GetCollocNameIdByRoomieIdAsync()
         {
             int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result <CollocData> result = await _collRoomGateway.FindCollocNameByRoomieId( userId );
             return this.CreateResult( result );
         }
+
+        // Renvoie les ids, noms et prénoms des roomies d'une colloc
+        [HttpGet( "getRoomieIdNames/{collocId}" )]
+        public async Task<IActionResult> GetRoomiesIdNamesByCollocIdAsync( int collocId )
+        {
+            IEnumerable<RoomiesData> result = await _collRoomGateway.FindRoomiesIdNamesByCollocId( collocId );
+            return this.Ok( result );
+        }
+
 
     }
 }

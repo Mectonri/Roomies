@@ -27,6 +27,10 @@
           <i class="el-icon-document"></i>
           <span slot="title">Tâches</span>
         </el-menu-item>
+        <el-menu-item @click="clickRoute('/task/create')">
+          <i class="el-icon-document"></i>
+          <span slot="title">Ajouter tâche Temp</span>
+        </el-menu-item>
         <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-setting"></i>
           <span slot="title">Dépense</span>
@@ -96,11 +100,11 @@ export default {
           this.$currColloc.setCollocName(collocData.collocName);
 
         }
-        this.state = false;
       }
     } catch (e) {
       console.log(e);
-      state.isLoading = false;
+    } finally{
+      this.state = false;
     }
   },
 

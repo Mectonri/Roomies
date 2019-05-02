@@ -41,6 +41,23 @@ namespace ITI.Roomies.WebApp.Controllers
 
         //}
 
+        // Création de tâches depuis le modèle, ne prend pas en compte la description
+        [HttpPost("createTaskSansDesc")]
+        public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
+        {
+            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDate, model.collocId);
 
+            // Si aucune erreur d'exécution, ajoute la tâches avec les roomies à tiTaskRoom
+            if( !result.HasError )
+            {
+                for( int i = 0; i < model.roomiesId.Length; i++ )
+                {
+                    await _taskRoomGateway.AddTaskRoom( result.Content, model.roomiesId[i] );
+                }
+            }
+
+            // TO DO : mettre le bon return
+            return Ok( 0 );
+        }
     }
 }

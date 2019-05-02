@@ -8,6 +8,8 @@ namespace ITI.Roomies.DAL
 
         public string TaskName { get; set; }
 
+        public string TaskDes { get; set; }
+
         public DateTime TaskDate { get; set; }
 
         public bool State { get; set; }
