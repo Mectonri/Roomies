@@ -28,7 +28,7 @@ namespace ITI.Roomies.WebApp.Models.AccountViewModels
         public string FirstName { get; set; }
 
         [Required]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
         [Required]
