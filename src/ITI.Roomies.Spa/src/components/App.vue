@@ -23,13 +23,17 @@
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/task')">
+        <el-menu-item @click="clickRoute('/task/colloc')">
           <i class="el-icon-document"></i>
-          <span slot="title">Tâches</span>
+          <span slot="title">Tâches Collocation active</span>
+        </el-menu-item>
+        <el-menu-item @click="clickRoute('/task/roomie')">
+          <i class="el-icon-document"></i>
+          <span slot="title">Tâches Collocation active</span>
         </el-menu-item>
         <el-menu-item @click="clickRoute('/task/create')">
           <i class="el-icon-document"></i>
-          <span slot="title">Ajouter tâche Temp</span>
+          <span slot="title">Ajouter tâche</span>
         </el-menu-item>
         <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-setting"></i>

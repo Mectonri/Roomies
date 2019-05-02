@@ -23,10 +23,20 @@ namespace ITI.Roomies.WebApp.Controllers
             _taskRoomGateway = taskRoomGateway;
         }
 
-        [HttpGet("{id}")]
+        // Renvoie toutes les tâches liées à une collocation
+        [HttpGet( "getByCollocId/{id}" )]
         public async Task<IActionResult> GetTasksByCollocIdAsync( int id )
         {
             IEnumerable<TasksData> result = await _tasksGateway.FindTaskByCollocId(id );
+            return this.Ok( result );
+        }
+
+        // Renvoie toutes les tâches liées à un Roomie
+        [HttpGet( "getByRoomieId" )]
+        public async Task<IActionResult> GetTasksByRoomieIdAsync()
+        {
+            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            IEnumerable<TasksData> result = await _tasksGateway.FindTaskByRoomieId( userId );
             return this.Ok( result );
         }
 

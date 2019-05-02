@@ -21,7 +21,7 @@ namespace ITI.Roomies.DAL
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                IEnumerable<TasksData> task = await con.QueryAsync<TasksData>(
+                IEnumerable<TasksData> tasks = await con.QueryAsync<TasksData>(
                     @"select t.TaskId,
                              t.TaskName,
                              t.TaskDate,
@@ -31,7 +31,26 @@ namespace ITI.Roomies.DAL
                       where t.CollocId = @CollocId;",
                     new { CollocId = collocId } );
 
-                return task;
+                return tasks;
+            }
+        }
+        
+        public async Task<IEnumerable<TasksData>> FindTaskByRoomieId( int roomieId)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                IEnumerable<TasksData> tasks = await con.QueryAsync<TasksData>(
+                    @"select t.TaskId,
+                             t.TaskName,
+                             t.TaskDate,
+                             t.State,
+                             t.CollocId
+                      from rm.tTasks t
+						inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
+                      where tr.RoomieId = @RoomieId;",
+                    new { RoomieId = roomieId } );
+
+                return tasks;
             }
         }
 
