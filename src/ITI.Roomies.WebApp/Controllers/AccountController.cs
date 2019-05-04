@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
-using ITI.Roomies.WebApp.Services.Email;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
@@ -74,14 +73,14 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             if( ModelState.IsValid )
             {
-                Result<int> result = await _userService.CreatePasswordUser( model.Email, model.Password );
+                Result<int> result = await _userService.CreatePasswordUser( model.LastName, model.FirstName, model.BirthDate, model.PhoneNumber, model.Email, model.Password );
                 if( result.HasError )
                 {
                     ModelState.AddModelError( string.Empty, result.ErrorMessage );
                     return View( model );
                 }
                 
-                 Result<int> resultRoomie = await _userGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.PhoneNumber, result.Content );
+                 Result<int> resultRoomie = await _userGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.PhoneNumber);
 
                 if( resultRoomie.HasError )
                 {

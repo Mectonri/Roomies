@@ -41,9 +41,7 @@
 </template>
 
 <script>
-import {
-  createRoomieAsync
-} from "../../api/RoomiesApi";
+import { createRoomieAsync } from "../../api/RoomiesApi";
 import { DateTime } from "luxon";
 import AuthService from '../../services/AuthService'
 

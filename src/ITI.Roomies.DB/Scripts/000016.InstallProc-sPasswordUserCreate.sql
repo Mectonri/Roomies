@@ -1,8 +1,12 @@
 create procedure rm.sPasswordUserCreate
-(
-    @Email    nvarchar(64),
-    @Password varbinary(128),
-	@UserId   int out
+(   
+    @FirstName nvarchar(32),
+    @LastName  nvarchar(32),
+    @Email     nvarchar(64),
+    @BirthDate datetime2,
+    @Phone     char(10),
+    @Password  varbinary(128),
+	@UserId    int out
 )
 as
 begin
@@ -15,10 +19,11 @@ begin
 		return 1;
 	end;
 
-    insert into rm.tUser(Email) values(@Email);
+    insert into rm.tUser(FirstName, LastName, Email, BirthDate, Phone) 
+				  values(@FirstName, @LastName, @Email, @BirthDate, @Phone);
     select @UserId = scope_identity();
     insert into rm.tPasswordUser(UserId,  [Password])
-                           values(@UserId, @Password);
+                          values(@UserId, @Password);
 	commit;
     return 0;
 end;

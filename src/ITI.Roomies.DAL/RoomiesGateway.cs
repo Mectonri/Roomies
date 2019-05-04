@@ -17,11 +17,11 @@ namespace ITI.Roomies.DAL
         {
             _connectionString = connectionString;
         }
-        public async Task<Result<RoomiesData>> FindById( int roomieId )
+        public async Task<Result<UserData>> FindById( int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
+                UserData roomie = await con.QueryFirstOrDefaultAsync<UserData>(
                     @"select s.RoomieId,
                              s.FirstName,
                              s.LastName,
@@ -32,7 +32,7 @@ namespace ITI.Roomies.DAL
                       where s.RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
 
-                if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
+                if( roomie == null ) return Result.Failure<UserData>( Status.NotFound, "Roomie not found." );
                 return Result.Success( roomie );
             }
         }
@@ -61,12 +61,12 @@ namespace ITI.Roomies.DAL
          
         }
 
-        public async Task<Result<RoomiesData>> FindByEmail( string email )
+        public async Task<Result<UserData>> FindByEmail( string email )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
 
-                RoomiesData roomie = await con.QueryFirstOrDefaultAsync<RoomiesData>(
+                UserData roomie = await con.QueryFirstOrDefaultAsync<UserData>(
                     @"select s.RoomieId,
                              s.FirstName,
                              s.LastName,
@@ -78,7 +78,7 @@ namespace ITI.Roomies.DAL
 
                     new { Email = email } );
 
-                if( roomie == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
+                if( roomie == null ) return Result.Failure<UserData>( Status.NotFound, "Roomie not found." );
                 return Result.Success( roomie );
             }
         }

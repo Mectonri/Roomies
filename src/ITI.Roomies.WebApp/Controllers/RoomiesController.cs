@@ -16,10 +16,9 @@ namespace ITI.Roomies.WebApp.Controllers
     [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
     public class RoomiesController : Controller
     {
-        readonly RoomiesGateway _roomiesGateway;
-        readonly IEmailService _emailService;
+        readonly UserGateway _roomiesGateway;
 
-        public RoomiesController( RoomiesGateway roomiesGateway )
+        public RoomiesController( UserGateway roomiesGateway )
         {
             _roomiesGateway = roomiesGateway;
         }
@@ -29,7 +28,7 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<IActionResult> GetRoomieByEmail()
         {
             string email = HttpContext.User.FindFirst( c => c.Type == ClaimTypes.Email ).Value;
-            Result<RoomiesData> result = await _roomiesGateway.FindByEmail( email );
+            Result<UserData> result = await _roomiesGateway.FindRoomieByEmail( email );
             return this.CreateResult( result );
         }
 
@@ -37,7 +36,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet( "checkRoomie" )]
         public async Task<IActionResult> GetRoomieById( int id )
         {
-            Result<RoomiesData> result = await _roomiesGateway.FindById( id );
+            Result<UserData> result = await _roomiesGateway.FindRoomieById( id );
             return this.CreateResult( result );
         }
 
@@ -45,7 +44,7 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<IActionResult> CreateRoomie( [FromBody] RoomiesViewModel model )
         {
             int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-            Result<int> result = await _roomiesGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.Phone, userId );
+            Result<int> result = await _roomiesGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.Phone );
             return this.CreateResult( result, o =>
             {
                 o.RouteName = "GetRoomie";
@@ -56,16 +55,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost( "{email}/invite")]
         public async Task<IActionResult> Invite( string email )
         {
-            //EmailMessage message = new EmailMessage();
-            //EmailAddress emailAddress = new EmailAddress();
-            //emailAddress.Address = email ;
-            //emailAddress.Name = "";
-            //message.ToAddresses.Add( emailAddress);
-            //message.FromAddresses.Add( emailAddress );
-            //_emailService.Send( message );
-            //return Ok( 0 );
-
-
+           
             string smtpAddress = "smtp.gmail.com";
             int portNumber = 587;
             bool enableSSL = true;

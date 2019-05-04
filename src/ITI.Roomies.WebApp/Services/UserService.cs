@@ -15,14 +15,14 @@ namespace ITI.Roomies.WebApp.Services
             _passwordHasher = passwordHasher;
         }
 
-        public Task<Result<int>> CreatePasswordUser( string email, string password )
+        public Task<Result<int>> CreatePasswordUser( string firstName, string lastName, DateTime birthDate, string phone, string email, string password )
         {
-            return _userGateway.CreatePasswordUser(email, _passwordHasher.HashPassword(password));
+            return _userGateway.CreatePasswordUser(firstName, lastName, birthDate, phone, email, _passwordHasher.HashPassword(password));
         }
 
         public Task<Result<int>> CreateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, int userId )
         {
-            return _userGateway.CreateRoomie( firstName, lastName, birthDate, Phone, userId );
+            return _userGateway.CreateRoomie( firstName, lastName, birthDate, Phone);
         }
 
         public async Task<UserData> FindUser(string email, string password)
