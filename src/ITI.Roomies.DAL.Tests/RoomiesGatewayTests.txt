@@ -61,7 +61,7 @@ namespace ITI.Roomies.DAL.Tests
             //Result<int> roomieResult = await sut.CreateRoomie( firstName, lastName, birthDate, phone, email );
             //Assert.That( roomieResult.Status, Is.EqualTo( Status.Created ) );
 
-            Result<UserData> roomie;
+            Result<RoomiesData> roomie;
 
             {
                 roomie = await sut.FindByEmail( email );
@@ -69,7 +69,7 @@ namespace ITI.Roomies.DAL.Tests
             }
         }
 
-        void CheckRoomie( Result<UserData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
+        void CheckRoomie( Result<RoomiesData> roomie, string firstName, string lastName, DateTime birthDate, string phone, string email )
         {
             Assert.That( roomie.Status, Is.EqualTo( Status.Ok ) );
             Assert.That( roomie.Content.FirstName, Is.EqualTo( firstName ) );

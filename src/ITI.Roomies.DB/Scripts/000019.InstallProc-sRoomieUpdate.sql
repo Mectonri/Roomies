@@ -1,12 +1,12 @@
 create procedure rm.sUserUpdate
 (
-    @UserId int,
+    @RoomieId int,
     @Email  nvarchar(64)
 )
 as
 begin
-    update rm.tUser
+    update rm.tRoomie
     set Email = @Email
-    where UserId = @UserId;
+    where RoomieId = @RoomieId;
     return 0;
 end;

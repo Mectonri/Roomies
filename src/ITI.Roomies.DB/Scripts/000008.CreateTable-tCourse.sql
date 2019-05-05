@@ -10,4 +10,4 @@ create table rm.tCourse
 	constraint FK_rm_tCourse_CollocId foreign key (CollocId) references rm.tColloc(CollocId)
 );
 
-insert into rm.tCourse( CourseDate, CoursePrice, CollocId) values ( '20190101',0, 0);
+insert into rm.tCourse( CourseDate, CoursePrice, CollocId) values ( '20190101', 0, 0);

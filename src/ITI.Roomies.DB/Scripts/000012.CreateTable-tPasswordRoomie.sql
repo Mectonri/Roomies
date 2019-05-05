@@ -1,6 +1,6 @@
-create table rm.tPasswordUser
+create table rm.tPasswordRoomie
 (
-    UserId     int,
+    RoomieId     int,
     FirstName  nvarchar(32) collate Latin1_General_100_CI_AS NOT NULL,
 	LastName   nvarchar(32) collate Latin1_General_100_CI_AS NOT NULL,
     Email  nvarchar(64) collate Latin1_General_CI_AI not null,
@@ -10,9 +10,9 @@ create table rm.tPasswordUser
 	RoomiePic nvarchar(45),
     [Password] varbinary(128) not null,
 
-    constraint PK_tPasswordUser primary key(UserId),
-    constraint FK_tPasswordUser_UserId foreign key(UserId) references rm.tUser(UserId)
+    constraint PK_tPasswordRoomie primary key(RoomieId),
+    constraint FK_tPasswordRoomie_RoomieId foreign key(RoomieId) references rm.tRoomie(RoomieId)
 );
 
-insert into rm.tPasswordUser(UserId, FirstName, LastName, Email, BirthDate, Phone, [Password])
+insert into rm.tPasswordRoomie(RoomieId, FirstName, LastName, Email, BirthDate, Phone, [Password])
                       values(0, left(convert(nvarchar(36), newid()), 32), left(convert(nvarchar(36), newid()), 32), N'', '20190101', '0000000000', convert(varbinary(128), newid()));

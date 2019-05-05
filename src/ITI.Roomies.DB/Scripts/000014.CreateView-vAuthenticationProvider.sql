@@ -1,11 +1,11 @@
 create view rm.vAuthenticationProvider
 as
-    select usr.UserId, usr.ProviderName
-    from (select UserId = u.UserId,
+    select usr.RoomieId, usr.ProviderName
+    from (select RoomieId = r.RoomieId,
               ProviderName = 'Roomies'
-          from rm.tPasswordUser u
+          from rm.tPasswordRoomie r
           union all
-          select UserId = u.UserId,
+          select RoomieId = r.RoomieId,
               ProviderName = 'Google'
-          from rm.tGoogleUser u) usr
-    where usr.UserId <> 0;
+          from rm.tGoogleRoomie r) usr
+    where usr.RoomieId <> 0;

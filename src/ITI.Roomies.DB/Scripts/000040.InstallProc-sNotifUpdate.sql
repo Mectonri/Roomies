@@ -1,7 +1,7 @@
 Create procedure rm.sNotifUpdate
 (
 	@NotifId	int,
-	@UserId		int,
+	@RoomieId	int,
 	@Message	nvarchar(max),
 	@Seen		bit
 )
@@ -23,7 +23,7 @@ begin
 	end;
 
 	update rm.tNotif
-	set UserId = @UserId, [Message]= @Message, Seen = @Seen
+	set RoomieId = @RoomieId, [Message]= @Message, Seen = @Seen
 	where NotifId = @NotifId;
 
 	commit;

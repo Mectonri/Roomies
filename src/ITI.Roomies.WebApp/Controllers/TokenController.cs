@@ -12,10 +12,10 @@ namespace ITI.Roomies.WebApp.Controllers
     [Route("/api/[controller]")]
     public class TokenController : Controller
     {
-        readonly UserGateway _userGateway;
+        readonly RoomiesGateway _userGateway;
         readonly TokenService _tokenService;
 
-        public TokenController(UserGateway userGateway, TokenService tokenService)
+        public TokenController(RoomiesGateway userGateway, TokenService tokenService)
         {
             _userGateway = userGateway;
             _tokenService = tokenService;

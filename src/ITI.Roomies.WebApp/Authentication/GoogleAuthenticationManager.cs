@@ -7,9 +7,9 @@ namespace ITI.Roomies.WebApp.Authentication
 {
     public class GoogleAuthenticationManager : AuthenticationManager<GoogleUserInfo>
     {
-        readonly UserGateway _userGateway;
+        readonly RoomiesGateway _userGateway;
 
-        public GoogleAuthenticationManager(UserService userService, UserGateway userGateway)
+        public GoogleAuthenticationManager(RoomiesService userService, RoomiesGateway userGateway)
         {
             _userGateway = userGateway;
         }
@@ -22,7 +22,7 @@ namespace ITI.Roomies.WebApp.Authentication
             }
         }
 
-        protected override Task<UserData> FindUser(GoogleUserInfo userInfo)
+        protected override Task<RoomiesData> FindUser(GoogleUserInfo userInfo)
         {
             return _userGateway.FindByGoogleId(userInfo.GoogleId);
         }

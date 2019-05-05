@@ -1,15 +1,15 @@
 create procedure rm.sNotifCreate
 (
 	@NotifId int out,
-	@UserId int ,
+	@RoomieId int ,
 	@Message nvarchar(max)
 )
 as
 begin
 	set transaction isolation level serializable;
 	begin tran;
-	insert into rm.tNotif(UserId, [Message]) 
-				   values(@UserId, @Message)
+	insert into rm.tNotif(RoomieId, [Message]) 
+				   values(@RoomieId, @Message)
 	set @NotifId = SCOPE_IDENTITY();
 	
 	commit;
