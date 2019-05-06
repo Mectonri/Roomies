@@ -75,6 +75,7 @@ export default {
         try {
           var idRoomie = await createRoomieAsync(this.item);
           this.$router.replace("/roomies/" + idRoomie);
+          document.getElementById("navMenu").style.display = "block";
         } catch (e) {
           console.error(e);
         }

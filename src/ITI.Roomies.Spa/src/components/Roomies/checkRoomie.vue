@@ -14,18 +14,28 @@ export default {
 
   async mounted() {
     try {
+      // Vérifie si le roomie existe
       var dataToRoute = await FindByEmail();
-      try {
-        // Récupère la premère collocation du Roomie
-        var collocData = await getCollocNameIdByRoomieIdAsync();
-        this.$currColloc.setCollocId(collocData.collocId);
-        this.$currColloc.setCollocName(collocData.collocName);
-      } catch (e) {
-        console.log(e);
+      if (dataToRoute.firstName == null) {
+        this.$router.replace("/roomies/create");
+      } else {
+        try {
+          // Récupère la premère collocation du Roomie
+          var collocData = await getCollocNameIdByRoomieIdAsync();
+          this.$currColloc.setCollocId(collocData.collocId);
+          this.$currColloc.setCollocName(collocData.collocName);
+        } catch (e) {
+          console.log(e);
+        }
+        finally{
+          // A voir si ça reste.
+        this.$checked = true;
+        // Affiche le menu de navigation
+        document.getElementById("navMenu").style.display = "block";
+        this.$router.replace("/roomies/" + dataToRoute.roomieId);
+        }
+
       }
-      // Affiche le menu de navigation
-      document.getElementById("navMenu").style.display = "block";
-      this.$router.replace("/roomies/" + dataToRoute.roomieId);
     } catch (e) {
       console.error(e);
       this.$router.replace("/roomies/create");
@@ -35,7 +45,3 @@ export default {
   methods: {}
 };
 </script>
-
-<style lang="scss">
-@import "../../styles/global.scss";
-</style>

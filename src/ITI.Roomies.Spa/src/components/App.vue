@@ -4,8 +4,8 @@
     <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
         <!-- TO DO : A styliser -->
-        Colloc {{$currColloc.collocName}}
-        Colloc {{$currColloc.collocId}}
+        Name : {{$currColloc.collocName}}
+        Id : {{$currColloc.collocId}}
         <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
@@ -98,17 +98,22 @@ export default {
       if (!AuthService.isConnected) {
         document.getElementById("navMenu").style.display = "none";
       } else {
-        // Récupère la premère collocation du Roomie
-        var collocData = await getCollocNameIdByRoomieIdAsync();
-        if (collocData != undefined) {
-          this.$currColloc.setCollocId(collocData.collocId);
-          this.$currColloc.setCollocName(collocData.collocName);
-
-        }
+        if (checkedGoogle) {
+          // Récupère la premère collocation du Roomie
+          var collocData = await getCollocNameIdByRoomieIdAsync();
+          if (collocData != undefined) {
+            this.$currColloc.setCollocId(collocData.collocId);
+            this.$currColloc.setCollocName(collocData.collocName);
+          }
+        } else {
+        document.getElementById("navMenu").style.display = "none";
+          this.$router.replace("/checkRoomie");
       }
+      }
+
     } catch (e) {
       console.log(e);
-    } finally{
+    } finally {
       this.state = false;
     }
   },
