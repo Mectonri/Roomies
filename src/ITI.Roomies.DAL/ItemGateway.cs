@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ using Dapper;
 namespace ITI.Roomies.DAL
 {
     public class ItemGateway
-    {
+    { 
         readonly string _connectionString;
 
         public ItemGateway( string connectionString)
@@ -26,7 +27,7 @@ namespace ITI.Roomies.DAL
                              i.CourseId,
                              i.RoomieId
                       from rm.tItem i
-                      where I.ItemId = @ItemId;",
+                      where i.ItemId = @ItemId;",
                     new { ItemId = itemId } );
 
                 if( item == null ) return Result.Failure<ItemData>( Status.NotFound, "Item not found." );
@@ -34,8 +35,25 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<IEnumerable<ItemData>> GetAll( int courseId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<ItemData>(
+                    @"select i.ItemId,
+                             i.ItemPrice,
+                             i.ItemName,
+                       from rm.tItem i
+                       where i.CourseId = @courseId"
+
+                    );
+            }
+        }
+
         public async Task<Result<int>> CreateItem( int itemPrice, string itemName, int courseId, int roomieId )
         {
+            if( !IsNameValid( itemName ) ) return Result.Failure<int>( Status.BadRequest, "The item name is not valid." );
+
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
@@ -72,6 +90,8 @@ namespace ITI.Roomies.DAL
 
         public async Task<Result> Update(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
         {
+            if( !IsNameValid( itemName ) ) return Result.Failure( Status.BadRequest, "The item name is not valid." );
+
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
@@ -89,5 +109,6 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        bool IsNameValid( string name ) => !string.IsNullOrWhiteSpace( name );
     }
 }
