@@ -10,23 +10,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
-using ITI.Roomies.WebApp.Services.Email;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
     public class AccountController : Controller
     {
-        readonly UserGateway _userGateway;
-        readonly UserService _userService;
+        readonly RoomiesGateway _roomiesGateway;
+        readonly RoomiesService _roomiesService;
         readonly TokenService _tokenService;
         readonly IAuthenticationSchemeProvider _authenticationSchemeProvider;
         readonly Random _random;
         readonly IOptions<SpaOptions> _spaOptions;
 
-        public AccountController( UserGateway userGateway, UserService userService, TokenService tokenService, IAuthenticationSchemeProvider authenticationSchemeProvider, IOptions<SpaOptions> spaOptions )
+        public AccountController( RoomiesGateway rooomiesGateway, RoomiesService roomiesService, TokenService tokenService, IAuthenticationSchemeProvider authenticationSchemeProvider, IOptions<SpaOptions> spaOptions )
         {
-            _userGateway = userGateway;
-            _userService = userService;
+            _roomiesGateway = rooomiesGateway;
+            _roomiesService = roomiesService;
             _tokenService = tokenService;
             _authenticationSchemeProvider = authenticationSchemeProvider;
             _spaOptions = spaOptions;
@@ -47,13 +46,13 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             if( ModelState.IsValid )
             {
-                UserData user = await _userService.FindUser( model.Email, model.Password );
-                if( user == null )
+                RoomiesData roomie = await _roomiesService.FindUser( model.Email, model.Password );
+                if( roomie == null )
                 {
                     ModelState.AddModelError( string.Empty, "Invalid login attempt." );
                     return View( model );
                 }
-                await SignIn( user.Email, user.UserId.ToString() );
+                await SignIn( roomie.Email, roomie.RoomieId.ToString() );
                 return RedirectToAction( nameof( Authenticated ) );
             }
 
@@ -74,18 +73,10 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             if( ModelState.IsValid )
             {
-                Result<int> result = await _userService.CreatePasswordUser( model.Email, model.Password );
+                Result<int> result = await _roomiesService.CreatePasswordUser(model.FirstName, model.LastName, model.Email, model.BirthDate, model.Password, model.PhoneNumber );
                 if( result.HasError )
                 {
                     ModelState.AddModelError( string.Empty, result.ErrorMessage );
-                    return View( model );
-                }
-                
-                 Result<int> resultRoomie = await _userGateway.CreateRoomie( model.FirstName, model.LastName, model.BirthDate, model.PhoneNumber, result.Content );
-
-                if( resultRoomie.HasError )
-                {
-                    ModelState.AddModelError( string.Empty, resultRoomie.ErrorMessage );
                     return View( model );
                 }
                 await SignIn( model.Email, result.Content.ToString() );
@@ -139,10 +130,10 @@ namespace ITI.Roomies.WebApp.Controllers
         [Authorize( AuthenticationSchemes = CookieAuthentication.AuthenticationScheme )]
         public async Task<IActionResult> Authenticated()
         {
-            string userId = User.FindFirst( ClaimTypes.NameIdentifier ).Value;
+            string roomieId = User.FindFirst( ClaimTypes.NameIdentifier ).Value;
             string email = User.FindFirst( ClaimTypes.Email ).Value;
-            Token token = _tokenService.GenerateToken( userId, email );
-            IEnumerable<string> providers = await _userGateway.GetAuthenticationProviders( userId );
+            Token token = _tokenService.GenerateToken( roomieId, email );
+            IEnumerable<string> providers = await _roomiesGateway.GetAuthenticationProviders( roomieId );
             ViewData[ "SpaHost" ] = _spaOptions.Value.Host;
             ViewData[ "BreachPadding" ] = GetBreachPadding(); // Mitigate BREACH attack. See http://www.breachattack.com/
             ViewData[ "Token" ] = token;
@@ -152,12 +143,12 @@ namespace ITI.Roomies.WebApp.Controllers
             return View();
         }
 
-        async Task SignIn( string email, string userId )
+        async Task SignIn( string email, string roomieId )
         {
             List<Claim> claims = new List<Claim>
             {
                 new Claim( ClaimTypes.Email, email, ClaimValueTypes.String ),
-                new Claim( ClaimTypes.NameIdentifier, userId.ToString(), ClaimValueTypes.String )
+                new Claim( ClaimTypes.NameIdentifier, roomieId.ToString(), ClaimValueTypes.String )
             };
             ClaimsIdentity identity = new ClaimsIdentity( claims, CookieAuthentication.AuthenticationType, ClaimTypes.Email, string.Empty );
             ClaimsPrincipal principal = new ClaimsPrincipal( identity );

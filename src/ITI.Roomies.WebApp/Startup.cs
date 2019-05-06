@@ -32,7 +32,7 @@ namespace ITI.Roomies.WebApp
             services.AddOptions();
 
             services.AddMvc();
-            services.AddSingleton( _ => new UserGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new CollocGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new CollRoomGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new RoomiesGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
@@ -40,7 +40,7 @@ namespace ITI.Roomies.WebApp
             services.AddSingleton( _ => new TasksGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new TaskRoomGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton<PasswordHasher>();
-            services.AddSingleton<UserService>();
+            services.AddSingleton<RoomiesService>();
             services.AddSingleton<TokenService>();
             services.AddSingleton<GoogleAuthenticationManager>();
 

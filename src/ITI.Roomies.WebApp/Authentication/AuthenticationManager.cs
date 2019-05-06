@@ -11,22 +11,22 @@ namespace ITI.Roomies.WebApp.Authentication
         {
             TUserInfo userInfo = await GetUserInfoFromContext(ctx);
             await CreateOrUpdateUser(userInfo);
-            UserData user = await FindUser(userInfo);
-            ctx.Principal = CreatePrincipal(user);
+            RoomiesData roomie = await FindUser(userInfo);
+            ctx.Principal = CreatePrincipal(roomie);
         }
 
         protected abstract Task<TUserInfo> GetUserInfoFromContext(OAuthCreatingTicketContext ctx);
 
         protected abstract Task CreateOrUpdateUser(TUserInfo userInfo);
 
-        protected abstract Task<UserData> FindUser(TUserInfo userInfo);
+        protected abstract Task<RoomiesData> FindUser(TUserInfo userInfo);
 
-        ClaimsPrincipal CreatePrincipal(UserData user)
+        ClaimsPrincipal CreatePrincipal(RoomiesData roomie)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim( ClaimTypes.NameIdentifier, user.UserId.ToString(), ClaimValueTypes.String ),
-                new Claim( ClaimTypes.Email, user.Email )
+                new Claim( ClaimTypes.NameIdentifier, roomie.RoomieId.ToString(), ClaimValueTypes.String ),
+                new Claim( ClaimTypes.Email, roomie.Email)
             };
             ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthentication.AuthenticationType, ClaimTypes.Email, string.Empty));
             return principal;

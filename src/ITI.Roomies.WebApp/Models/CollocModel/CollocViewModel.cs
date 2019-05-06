@@ -1,6 +1,3 @@
-using System;
-
-
 namespace ITI.Roomies.WebApp.Models.CollocModel
 {
     public class CollocViewModel
