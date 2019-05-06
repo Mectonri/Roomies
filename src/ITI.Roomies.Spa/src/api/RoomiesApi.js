@@ -11,7 +11,7 @@ export async function FindByEmail() {
 }
 
 export async function createRoomieAsync(model) {
-    return await postAsync(endpoint, model);
+    return await postAsync(`${endpoint}/createRoomie`, model);
 }
 
 export async function inviteRoomieAsync(email){

@@ -18,7 +18,9 @@ import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'
 import checkRoomie from './components/Roomies/checkRoomie.vue'
 
-import Task from './components/Task/Task.vue'
+import TaskColloc from './components/Task/TaskColloc.vue'
+import TaskRoomie from './components/Task/TaskRoomie.vue'
+import TaskCreate from './components/Task/TaskCreate.vue'
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -38,7 +40,9 @@ const routes = [
     { path: '/roomies/:id?', component: RoomieProfil, beforeEnter: requireAuth },
     { path: '/checkRoomie', component: checkRoomie, beforeEnter: requireAuth },
 
-    { path: '/task', component: Task, beforeEnter: requireAuth },
+    { path: '/task/colloc', component: TaskColloc, beforeEnter: requireAuth },
+    { path: '/task/roomie', component: TaskRoomie, beforeEnter: requireAuth },
+    { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
     
 ];
 

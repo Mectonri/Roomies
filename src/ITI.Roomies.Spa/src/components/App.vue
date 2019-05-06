@@ -3,9 +3,9 @@
     <!-- Menu de navigation -->
     <el-container>
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
-
         <!-- TO DO : A styliser -->
         Colloc {{$currColloc.collocName}}
+        Colloc {{$currColloc.collocId}}
         <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
@@ -20,13 +20,21 @@
           <i class="el-icon-menu"></i>
           <span slot="title">Create a collocation</span>
         </el-menu-item>
-        <el-menu-item  @click="clickRoute('/roomies/calendar')" >
+        <el-menu-item @click="clickRoute('/roomies/calendar')">
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/task')">
+        <el-menu-item @click="clickRoute('/task/colloc')">
           <i class="el-icon-document"></i>
-          <span slot="title">Tâches</span>
+          <span slot="title">Tâches Collocation active</span>
+        </el-menu-item>
+        <el-menu-item @click="clickRoute('/task/roomie')">
+          <i class="el-icon-document"></i>
+          <span slot="title">Tâches Roomie</span>
+        </el-menu-item>
+        <el-menu-item @click="clickRoute('/task/create')">
+          <i class="el-icon-document"></i>
+          <span slot="title">Ajouter tâche</span>
         </el-menu-item>
         <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-setting"></i>
@@ -52,7 +60,9 @@
       </el-menu>
 
       <!-- Affihe le chemin demandé -->
-      <main role="main" style="padding-left: 50px;">
+
+      <main v-if="state == true" role="main" style="padding-left: 50px;">Chargement en cours</main>
+      <main v-else>
         <router-view class="child"></router-view>
       </main>
     </el-container>
@@ -64,12 +74,13 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
+import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
 
 export default {
   data() {
     return {
       message: "",
-      state,
+      state: true,
       isCollapse: true
     };
   },
@@ -80,12 +91,26 @@ export default {
       return this.state.isLoading;
     }
   },
-  mounted() {
+  async mounted() {
+    this.state = true;
     //Cache le menu de navigation si l'utilisateur n'est pas connecté
-    if(!AuthService.isConnected){
-      document.getElementById("navMenu").style.display = "none";
-    }
+    try {
+      if (!AuthService.isConnected) {
+        document.getElementById("navMenu").style.display = "none";
+      } else {
+        // Récupère la premère collocation du Roomie
+        var collocData = await getCollocNameIdByRoomieIdAsync();
+        if (collocData != undefined) {
+          this.$currColloc.setCollocId(collocData.collocId);
+          this.$currColloc.setCollocName(collocData.collocName);
 
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    } finally{
+      this.state = false;
+    }
   },
 
   methods: {

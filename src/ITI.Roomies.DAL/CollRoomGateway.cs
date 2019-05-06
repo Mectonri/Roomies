@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -15,6 +16,7 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
+
         public async Task<Result<CollRoomData>> FindById( int collocId, int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -23,8 +25,6 @@ namespace ITI.Roomies.DAL
                     @"select i.CollocId,
                              i.RoomieId
                         from rm.tiCollRoom i
-                            inner join rm.tColloc c on i.CollocId = c.CollocId
-                            left outer join rm.tRoomies r on i.RoomieId = r.RoomieId
                         where i.CollocId = @CollocId and i.RoomieId = @RoomieId;",
                 new { CollocId = collocId } );
 
@@ -33,12 +33,12 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> AddCollRoom(int collocId, int roomieId)
+        public async Task<Result<int>> AddCollRoom( int collocId, int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@CollocId", collocId);
+                p.Add( "@CollocId", collocId );
                 p.Add( "@RoomieId", roomieId );
                 //p.Add( "@CollocId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 //p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
@@ -51,7 +51,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Delete( int collocId ,int roomieId)
+        public async Task<Result> Delete( int collocId, int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -97,6 +97,23 @@ namespace ITI.Roomies.DAL
 
                 //if( task == null ) return Result.Failure<int>( Status.NotFound, "No collocation was found for this Roomie." );
                 return Result.Success( collocName );
+            }
+        }
+
+        // TO DO : ajouter type Result proprement
+        public async Task<IEnumerable<RoomiesData>> FindRoomiesIdNamesByCollocId( int collocId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                IEnumerable<RoomiesData> CR = await con.QueryAsync<RoomiesData>(
+                    @"select i.RoomieId, r.FirstName, r.LastName
+                      from rm.tiCollRoom i
+	                     inner join rm.tRoomies r on i.RoomieId = r.RoomieId
+                      where i.CollocId = @CollocId;",
+                new { CollocId = collocId } );
+
+                //if( CR == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Not found." );
+                return CR;
             }
         }
     }

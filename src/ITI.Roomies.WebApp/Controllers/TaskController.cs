@@ -23,10 +23,20 @@ namespace ITI.Roomies.WebApp.Controllers
             _taskRoomGateway = taskRoomGateway;
         }
 
-        [HttpGet("{id}")]
+        // Renvoie toutes les tâches liées à une collocation
+        [HttpGet( "getByCollocId/{id}" )]
         public async Task<IActionResult> GetTasksByCollocIdAsync( int id )
         {
             IEnumerable<TasksData> result = await _tasksGateway.FindTaskByCollocId(id );
+            return this.Ok( result );
+        }
+
+        // Renvoie toutes les tâches liées à un Roomie
+        [HttpGet( "getByRoomieId" )]
+        public async Task<IActionResult> GetTasksByRoomieIdAsync()
+        {
+            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            IEnumerable<TasksData> result = await _tasksGateway.FindTaskByRoomieId( userId );
             return this.Ok( result );
         }
 
@@ -41,6 +51,31 @@ namespace ITI.Roomies.WebApp.Controllers
 
         //}
 
+        // Création de tâches depuis le modèle, ne prend pas en compte la description
+        [HttpPost("createTaskSansDesc")]
+        public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
+        {
+            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId);
 
+            // Si aucune erreur d'exécution, ajoute la tâches avec les roomies à tiTaskRoom
+            if( !result.HasError )
+            {
+                for( int i = 0; i < model.roomiesId.Length; i++ )
+                {
+                    await _taskRoomGateway.AddTaskRoom( result.Content, model.roomiesId[i] );
+                }
+            }
+
+            // TO DO : mettre le bon return
+            return Ok( 0 );
+        }
+
+        // Met à jour l'état de la tâche renseignée
+        [HttpPost("updateTaskState/{id}/{state}")]
+        public async Task<IActionResult> updateTaskStateAsync(int id, bool state )
+        {
+            Result result = await _tasksGateway.UpdateTaskState( id, state );
+            return this.Ok(result);
+        }
     }
 }
