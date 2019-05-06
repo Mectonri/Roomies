@@ -183,5 +183,17 @@ namespace ITI.Roomies.DAL
                 return Result.Success( roomie );
             }
         }
+
+        public async Task AddImageOfRoomie( int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                await con.ExecuteAsync(
+                    "rm.sRoomieImage",
+                    new { RoomieId = roomieId },
+                    commandType: CommandType.StoredProcedure );
+            }
+
+        }
     }
 }
