@@ -17,3 +17,7 @@ export async function inviteRoomieAsync(email){
     return await postAsync((`${endpoint}/${email}/invite`));
 }
 
+export async function uploadImage( image ){
+    return await postAsync((`${endpoint}/${image}`));
+}
+
