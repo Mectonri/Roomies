@@ -5,6 +5,7 @@
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
         <!-- TO DO : A styliser -->
         Colloc {{$currColloc.collocName}}
+        Colloc {{$currColloc.collocId}}
         <el-menu-item @click="clickRoute('/roomies')">
           <i class="el-icon-star-on">
             <span slot="title">Accueil</span>
@@ -29,7 +30,7 @@
         </el-menu-item>
         <el-menu-item @click="clickRoute('/task/roomie')">
           <i class="el-icon-document"></i>
-          <span slot="title">Tâches Collocation active</span>
+          <span slot="title">Tâches Roomie</span>
         </el-menu-item>
         <el-menu-item @click="clickRoute('/task/create')">
           <i class="el-icon-document"></i>

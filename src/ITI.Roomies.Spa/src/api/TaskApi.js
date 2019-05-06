@@ -13,3 +13,7 @@ export async function GetTasksByRoomieIdAsync() {
 export async function createTaskSansDescAsync(model) {
    return await postAsync(`${endpoint}/createTaskSansDesc`, model);
 }
+
+export async function UpdateTaskStateAsync(taskId, taskState) {
+   return await postAsync(`${endpoint}/updateTaskState/${taskId}/${taskState}`);
+}

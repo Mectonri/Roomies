@@ -110,6 +110,7 @@ export default {
           this.item.collocId = this.$currColloc.collocId;
           console.log(this.item);
           await createTaskSansDescAsync(this.item);
+          this.$router.replace("/task/colloc");
         } catch (e) {
           console.error(e);
         }

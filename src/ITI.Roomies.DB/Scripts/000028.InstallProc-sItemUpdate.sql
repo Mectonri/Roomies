@@ -18,7 +18,7 @@ begin
 		return 1;
 	end;
 
-	if exists(select * from rm.tItem t where t.ItemId <> @ItemId)
+	if exists(select * from rm.tItem t where t.ItemId <> @ItemId and t.ItemName = @ItemName and t.CourseId = @CourseId)
 	begin
 		rollback;
 		return 2;

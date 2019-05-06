@@ -55,7 +55,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost("createTaskSansDesc")]
         public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
         {
-            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDate, model.collocId);
+            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId);
 
             // Si aucune erreur d'exécution, ajoute la tâches avec les roomies à tiTaskRoom
             if( !result.HasError )
@@ -68,6 +68,14 @@ namespace ITI.Roomies.WebApp.Controllers
 
             // TO DO : mettre le bon return
             return Ok( 0 );
+        }
+
+        // Met à jour l'état de la tâche renseignée
+        [HttpPost("updateTaskState/{id}/{state}")]
+        public async Task<IActionResult> updateTaskStateAsync(int id, bool state )
+        {
+            Result result = await _tasksGateway.UpdateTaskState( id, state );
+            return this.Ok(result);
         }
     }
 }

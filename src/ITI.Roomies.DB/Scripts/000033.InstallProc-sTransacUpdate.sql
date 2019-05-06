@@ -18,12 +18,6 @@ begin
 		return 1;
 	end;
 
-	if exists(select * from rm.tTransaction t where t.TransacId <> @TransacId)
-	begin
-		rollback;
-		return 2;
-	end;
-
 	update rm.tTransaction
 	set @TransacDesc = @TransacDesc, TransacPrice = @TransacPrice, RoomieId = @RoomieId, CollocId = @CollocId
 	where TransacId = @TransacId;

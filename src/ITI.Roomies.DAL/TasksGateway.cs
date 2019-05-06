@@ -12,18 +12,19 @@ namespace ITI.Roomies.DAL
     {
         readonly string _connectionString;
 
-        public TasksGateway(string connectionString)
+        public TasksGateway( string connectionString )
         {
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<TasksData>> FindTaskByCollocId( int collocId)
+        public async Task<IEnumerable<TasksData>> FindTaskByCollocId( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 IEnumerable<TasksData> tasks = await con.QueryAsync<TasksData>(
                     @"select t.TaskId,
                              t.TaskName,
+                             t.TaskDes,
                              t.TaskDate,
                              t.State,
                              t.CollocId
@@ -34,14 +35,15 @@ namespace ITI.Roomies.DAL
                 return tasks;
             }
         }
-        
-        public async Task<IEnumerable<TasksData>> FindTaskByRoomieId( int roomieId)
+
+        public async Task<IEnumerable<TasksData>> FindTaskByRoomieId( int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 IEnumerable<TasksData> tasks = await con.QueryAsync<TasksData>(
                     @"select t.TaskId,
                              t.TaskName,
+                             t.TaskDes,
                              t.TaskDate,
                              t.State,
                              t.CollocId
@@ -54,7 +56,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<TasksData>> FindByTaskId( int taskId)
+        public async Task<Result<TasksData>> FindByTaskId( int taskId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -73,12 +75,13 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreateTask (string taskName, DateTime taskDate, int collocId )
+        public async Task<Result<int>> CreateTask( string taskName, string taskDes, DateTime taskDate, int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
                 p.Add( "@TaskName", taskName );
+                p.Add( "@TaskDes", taskDes );
                 p.Add( "@TaskDate", taskDate );
                 p.Add( "@CollocId", collocId );
                 p.Add( "@TaskId", dbType: DbType.Int32, direction: ParameterDirection.Output );
@@ -92,7 +95,8 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Update (int taskId, string taskName, DateTime taskDate, bool state, int collocId, string taskDes)
+        // Inutile ?
+        public async Task<Result> Update( int taskId, string taskName, DateTime taskDate, bool state, int collocId, string taskDes )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -129,5 +133,20 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<Result> UpdateTaskState( int taskId, bool taskState )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@TaskId", taskId );
+                p.Add( "@State", taskState );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sTasksUpdateState", p, commandType: CommandType.StoredProcedure );
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Task not found." );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok );
+            }
+        }
     }
 }

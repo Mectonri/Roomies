@@ -15,12 +15,6 @@ begin
 		return 1;
 	end;
 
-	if exists(select * from rm.tRoomies r where r.RoomieId <> @RoomieId)
-	begin
-		rollback;
-		return 2;
-	end;
-
 	update rm.tRoomies
 	set [Description] = @Description, Phone = @Phone
 	where RoomieId = @RoomieId;

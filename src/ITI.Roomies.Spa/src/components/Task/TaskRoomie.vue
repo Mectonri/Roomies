@@ -5,23 +5,32 @@
     </el-header>
 
     <el-main v-if="taskData[0]">
-      <div v-for="taskColloc of taskData" :key="taskColloc.collocId">
-        <h2>{{taskColloc.collocId}}</h2>
+      <div v-if="taskData !='Nada'">
+        <div v-for="taskColloc of taskData" :key="taskColloc.collocId">
+          <h2>{{taskColloc.collocId}}</h2>
 
-        <table v-if="taskData !='Nada'">
-          <tr>
-            <td>Nom</td>
-            <td>Echéance</td>
-            <td>Etat</td>
-          </tr>
-          <tr v-for="task of taskColloc.taskArray" :key="task.taskId">
-            <td>{{ task.taskName }}</td>
-            <td>{{ task.taskDate }}</td>
-            <td>{{ task.state }}</td>
-          </tr>
-        </table>
-        <div v-else>Aune tâche à afficher</div>
+          <table v-if="taskData !='Nada'">
+            <tr>
+              <td>Nom</td>
+              <td>Description</td>
+              <td>Echéance</td>
+              <td>Etat</td>
+            </tr>
+            <tr v-for="task of taskColloc.taskArray" :key="task.taskId">
+              <td>{{ task.taskName }}</td>
+              <td>{{ task.taskDes }}</td>
+              <td>{{ task.taskDate }}</td>
+              <td v-if="!task.state">
+                <el-button @click="updateState(task.taskId, true)">{{ task.state }}</el-button>
+              </td>
+              <td v-else>
+                <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
+      <div v-else>Aucune tâche à afficher</div>
     </el-main>
     <el-main v-else>Chargement en cours</el-main>
   </el-container>
@@ -30,7 +39,7 @@
 <script>
 import { DateTime } from "luxon";
 import AuthService from "../../services/AuthService";
-import { GetTasksByRoomieIdAsync } from "../../api/TaskApi.js";
+import { GetTasksByRoomieIdAsync, UpdateTaskStateAsync } from "../../api/TaskApi.js";
 // import { state } from "../../state";
 
 export default {
@@ -38,7 +47,7 @@ export default {
     return {
       errors: [],
       taskData: [],
-      taskColloc: ''
+      taskColloc: ""
     };
   },
   computed: {
@@ -48,31 +57,50 @@ export default {
       return this.state.isLoading;
     }
   },
-  async mounted() {
-    try {
-      this.futureTaskData = await GetTasksByRoomieIdAsync();
-      if (this.taskData.length == this.futureTaskData) {
-        this.taskData = "Nada";
-      } else {
-        var currTaskDataColloc;
-        var tempArray = [];
-        for( var task in this.futureTaskData){
-          if(this.futureTaskData[task].collocId != currTaskDataColloc){
-            if(task != 0) {
-              this.taskData.push({ collocId : currTaskDataColloc, taskArray : tempArray});
-              tempArray = [];
-            }
-            currTaskDataColloc = this.futureTaskData[task].collocId;
-          }
-          tempArray.push(this.futureTaskData[task]);
-        }
-        this.taskData.push({ collocId : this.futureTaskData[task].collocId, taskArray : tempArray});
 
-        console.log(this.taskData);
+  async mounted() {
+    this.getTasks();
+  },
+  
+  methods: {
+    async updateState(taskIdToUpdate, taskNewState){
+      await UpdateTaskStateAsync(taskIdToUpdate, taskNewState);
+      // TO DO : Changer la ligne suivante en actualisation des données affichées.
+      document.location.reload(true);
+    },
+
+    async getTasks(){
+      try {
+        this.futureTaskData = await GetTasksByRoomieIdAsync();
+        if (this.taskData.length == this.futureTaskData) {
+          this.taskData = 'Nada';
+          console.log(this.taskData);
+        } else {
+          var currTaskDataColloc;
+          var tempArray = [];
+          for (var task in this.futureTaskData) {
+            if (this.futureTaskData[task].collocId != currTaskDataColloc) {
+              if (task != 0) {
+                this.taskData.push({
+                  collocId: currTaskDataColloc,
+                  taskArray: tempArray
+                });
+                tempArray = [];
+              }
+              currTaskDataColloc = this.futureTaskData[task].collocId;
+            }
+            tempArray.push(this.futureTaskData[task]);
+          }
+          this.taskData.push({
+            collocId: this.futureTaskData[task].collocId,
+            taskArray: tempArray
+          });
+
+          console.log(this.taskData);
+        }
+      } catch (e) {
+        console.log(e);
       }
-      
-    } catch (e) {
-      console.log(e);
     }
   }
 };
