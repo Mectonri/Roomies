@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ITI.Roomies.WebApp.Models.GroceryModel
+namespace ITI.Roomies.WebApp.Models.CourseViewModels
 {
-    public class GroceryViewModel
+    public class CourseViewModel
     {
         public int CourseId { get; set; }
 

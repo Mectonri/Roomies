@@ -20,6 +20,11 @@ import checkRoomie from './components/Roomies/checkRoomie.vue'
 
 import Task from './components/Task/Task.vue'
 
+import GroceryList from './components/GroceryList/Grocery.vue'
+import GroceryCreate from './components/GroceryList/GroceryCreate.vue'
+import GroceryEdit from './components/GroceryList/GroceryEdit.vue'
+import GroceryInfo from './components/GroceryList/GroceryInfo.vue'
+
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
     
@@ -39,7 +44,12 @@ const routes = [
     { path: '/checkRoomie', component: checkRoomie, beforeEnter: requireAuth },
 
     { path: '/task', component: Task, beforeEnter: requireAuth },
-    
+
+    { path: '/course', component: GroceryList, beforeEnter: requireAuth},
+    { path: '/course/edit', component: GroceryEdit, beforeEnter: requireAuth},
+    { path: '/course/info/:id', component: GroceryInfo, beforeEnter: requireAuth},
+    { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
+
 ];
 
 export default new VueRouter({
