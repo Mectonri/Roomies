@@ -15,6 +15,7 @@
               <td>Description</td>
               <td>Echéance</td>
               <td>Etat</td>
+              <td></td>
             </tr>
             <tr v-for="task of taskColloc.taskArray" :key="task.taskId">
               <td>{{ task.taskName }}</td>
@@ -26,6 +27,9 @@
               <td v-else>
                 <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
               </td>
+          <td>
+            <el-button @click="deleteTask(task.taskId)">X</el-button>
+          </td>
             </tr>
           </table>
         </div>
@@ -39,7 +43,7 @@
 <script>
 import { DateTime } from "luxon";
 import AuthService from "../../services/AuthService";
-import { GetTasksByRoomieIdAsync, UpdateTaskStateAsync } from "../../api/TaskApi.js";
+import { GetTasksByRoomieIdAsync, UpdateTaskStateAsync, DeleteTaskByIdAsync } from "../../api/TaskApi.js";
 // import { state } from "../../state";
 
 export default {
@@ -65,6 +69,12 @@ export default {
   methods: {
     async updateState(taskIdToUpdate, taskNewState){
       await UpdateTaskStateAsync(taskIdToUpdate, taskNewState);
+      // TO DO : Changer la ligne suivante en actualisation des données affichées.
+      document.location.reload(true);
+    },
+
+    async deleteTask(taskId) {
+      await DeleteTaskByIdAsync(taskId);
       // TO DO : Changer la ligne suivante en actualisation des données affichées.
       document.location.reload(true);
     },
