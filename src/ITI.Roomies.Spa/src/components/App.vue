@@ -63,7 +63,7 @@
 
       <main v-if="state == true" role="main" style="padding-left: 50px;">Chargement en cours</main>
       <main v-else>
-        <router-view class="child"></router-view>
+        <router-view class="child" style="padding-left: 50px;"></router-view>
       </main>
     </el-container>
   </div>
@@ -98,17 +98,17 @@ export default {
       if (!AuthService.isConnected) {
         document.getElementById("navMenu").style.display = "none";
       } else {
-        if (checkedGoogle) {
+        //if (this.$checkedGoogle) {
           // Récupère la premère collocation du Roomie
           var collocData = await getCollocNameIdByRoomieIdAsync();
           if (collocData != undefined) {
             this.$currColloc.setCollocId(collocData.collocId);
             this.$currColloc.setCollocName(collocData.collocName);
           }
-        } else {
-        document.getElementById("navMenu").style.display = "none";
-          this.$router.replace("/checkRoomie");
-      }
+        //} else {
+        // document.getElementById("navMenu").style.display = "none";
+          // this.$router.replace("/checkRoomie");
+     // }
       }
 
     } catch (e) {
