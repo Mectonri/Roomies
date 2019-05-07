@@ -116,7 +116,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Delete( int taskId )
+        public async Task<Result> DeleteTaskById( int taskId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {

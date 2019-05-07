@@ -67,5 +67,40 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<Result> DeleteTaskRoomByTaskId( int taskId)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@TaskId", taskId );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sTaskRoomDeleteByTaskId", p, commandType: CommandType.StoredProcedure );
+
+                //int status = p.Get<int>( "@Status" );
+                //if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
+
+                //Debug.Assert( status == 0 );
+                return Result.Success();
+            }
+        }
+
+        //public async Task<Result> Delete( int taskId, int roomieId )
+        //{
+        //    using( SqlConnection con = new SqlConnection( _connectionString ) )
+        //    {
+        //        var p = new DynamicParameters();
+        //        p.Add( "@TaskId", taskId );
+        //        p.Add( "@RoomieId", roomieId );
+        //        p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+        //        await con.ExecuteAsync( "rm.sTaskRoomDelete", p, commandType: CommandType.StoredProcedure );
+
+        //        int status = p.Get<int>( "@Status" );
+        //        if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
+
+        //        Debug.Assert( status == 0 );
+        //        return Result.Success();
+        //    }
+        //}
+
     }
 }

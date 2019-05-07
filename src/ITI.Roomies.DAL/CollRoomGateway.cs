@@ -108,7 +108,7 @@ namespace ITI.Roomies.DAL
                 IEnumerable<RoomiesData> CR = await con.QueryAsync<RoomiesData>(
                     @"select i.RoomieId, r.FirstName, r.LastName
                       from rm.tiCollRoom i
-	                     inner join rm.tRoomies r on i.RoomieId = r.RoomieId
+	                     inner join rm.tRoomie r on i.RoomieId = r.RoomieId
                       where i.CollocId = @CollocId;",
                 new { CollocId = collocId } );
 

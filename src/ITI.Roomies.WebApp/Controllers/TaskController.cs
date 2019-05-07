@@ -27,7 +27,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet( "getByCollocId/{id}" )]
         public async Task<IActionResult> GetTasksByCollocIdAsync( int id )
         {
-            IEnumerable<TasksData> result = await _tasksGateway.FindTaskByCollocId(id );
+            IEnumerable<TasksData> result = await _tasksGateway.FindTaskByCollocId( id );
             return this.Ok( result );
         }
 
@@ -52,10 +52,10 @@ namespace ITI.Roomies.WebApp.Controllers
         //}
 
         // Création de tâches depuis le modèle, ne prend pas en compte la description
-        [HttpPost("createTaskSansDesc")]
+        [HttpPost( "createTaskSansDesc" )]
         public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
         {
-            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId);
+            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId );
 
             // Si aucune erreur d'exécution, ajoute la tâches avec les roomies à tiTaskRoom
             if( !result.HasError )
@@ -71,11 +71,28 @@ namespace ITI.Roomies.WebApp.Controllers
         }
 
         // Met à jour l'état de la tâche renseignée
-        [HttpPost("updateTaskState/{id}/{state}")]
-        public async Task<IActionResult> updateTaskStateAsync(int id, bool state )
+        [HttpPost( "updateTaskState/{id}/{state}" )]
+        public async Task<IActionResult> updateTaskStateAsync( int id, bool state )
         {
             Result result = await _tasksGateway.UpdateTaskState( id, state );
-            return this.Ok(result);
+            return this.Ok( result );
+        }
+
+        // Suppression d'un tâche depuis son id
+        // TO DO : changer quand la procédure sera correcte
+        [HttpDelete( "deleteTask/{taskId}" )]
+        public async Task<IActionResult> deleteTaskByIdAsync( int taskId )
+        {
+            Result result = await _taskRoomGateway.DeleteTaskRoomByTaskId( taskId );
+
+            // Si aucune erreur d'exécution, supprime la tâche de rm.tTasks
+            if( !result.HasError )
+            {
+                await _tasksGateway.DeleteTaskById( taskId );
+            }
+
+            // TO DO : mettre le bon return
+            return Ok( 0 );
         }
     }
 }
