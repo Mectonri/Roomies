@@ -13,6 +13,7 @@
           <td>Description</td>
           <td>Echéance</td>
           <td>Etat</td>
+          <td>Participant(s)</td>
           <td></td>
         </tr>
         <tr v-for="task of taskData" :key="task.taskId">
@@ -25,6 +26,7 @@
           <td v-else>
             <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
           </td>
+          <td>{{task.firstName}}</td>
           <td>
             <el-button @click="deleteTask(task.taskId)">X</el-button>
           </td>
@@ -70,8 +72,35 @@ export default {
       );
       if (this.taskData.length == this.futureTaskData) {
         this.taskData = "Nada";
-      } else {
-        this.taskData = this.futureTaskData;
+      } else { 
+          // TO DO : LE FAIRE EN SQL BORDEL
+          // Prend la valeur de la première tâche
+          var currTaskDataTaskId = this.futureTaskData[0].taskId;
+          var tempArray = [];
+          var tempRoomieList = [];
+          // Pour chaque ligne
+          for (var task in this.futureTaskData) {
+            
+            // Si la tâche est différente de la précédente
+            if (this.futureTaskData[task].taskId != currTaskDataTaskId) {
+              // Ajoute la tâche précédente à un tableau temporaire possédant toutes les tâches de la collocation
+              this.futureTaskData[task-1].firstName = tempRoomieList;
+              tempArray.push(this.futureTaskData[task-1]);
+
+              tempRoomieList = [];
+              // Change la tâche précédente
+              currTaskDataTaskId = this.futureTaskData[task].taskId;
+            }
+
+            tempRoomieList.push(this.futureTaskData[task].firstName);
+
+          }
+
+          // Ajoute la dernière tâche
+          this.futureTaskData[task].firstName = tempRoomieList;
+          tempArray.push(this.futureTaskData[task]);
+
+          this.taskData = tempArray;
       }
       // console.log(this.taskData);
       // console.log(this.taskData.length);
