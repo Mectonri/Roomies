@@ -9,13 +9,14 @@ import { Button, Select } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VCalendar from 'v-calendar';
 import VueGlobalVariable from 'vue-global-var';
+import axios from 'axios';
 
 Vue.config.productionTip = false;
 
 Vue.component(Button.name, Button);
 Vue.component(Select.name, Select);
 Vue.use(ElementUI);
-Vue.use(VCalendar);
+Vue.use(VCalendar, axios);
 
 class currentColloc {
 
