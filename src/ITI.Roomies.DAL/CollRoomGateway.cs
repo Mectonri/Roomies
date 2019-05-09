@@ -40,8 +40,6 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@CollocId", collocId);
                 p.Add( "@RoomieId", roomieId );
-                //p.Add( "@CollocId", dbType: DbType.Int32, direction: ParameterDirection.Output );
-                //p.Add( "@RoomieId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCollRoomAdd", p, commandType: CommandType.StoredProcedure );
 
