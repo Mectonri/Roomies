@@ -3,9 +3,9 @@
     <div class="container">
 
       <div class="button">
-        <el-button @click="changeCreate()">création</el-button>
+        <el-button @click="changeCreate()" >création</el-button>
         <el-button @click="changeInvite()">inviter</el-button>
-        <el-button @click="changeJoin()">joindre</el-button>
+        <el-button @click="changeJoin()" >joindre</el-button>
       </div>
     <div v-if="show1">
     <form @submit="onSubmit($event)">
@@ -22,7 +22,8 @@
         <el-input type="text" v-model="item.CollocName" required />
       </div>
 
-      <el-button native-type="submit">Sauvegarder</el-button>
+      <el-button native-type="submit" v-if="this.collocName==''">Sauvegarder</el-button>
+      <p v-if="this.collocName!='' ">Vous avez déjà une collocation.</p>
     </form>
     </div>
     <div v-if="show3">
@@ -40,7 +41,8 @@
         <el-input type="text" v-model="item.InviteKey" required />
       </div>
 
-      <el-button native-type="submit">Rejoindre</el-button>
+      <el-button native-type="submit" v-if="this.collocName==''">Rejoindre</el-button>
+      <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
     </form>
     </div>
 
@@ -77,7 +79,6 @@ export default {
       item: {},
       UserId: null,
       errors: [],
-      idColloc : 0,
       show1: true,
       show2: false,
       show3: false
@@ -87,6 +88,7 @@ export default {
 
   async mounted() {
     this.idColloc = this.$route.params.id;
+    this.collocName= $currColloc.collocName;
   },
 
   methods: {
