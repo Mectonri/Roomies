@@ -40,6 +40,18 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
+
+        // Renvoie la tâche correspondant à l'id de la tâche
+        [HttpGet( "getByTaskId/{id}" )]
+        public async Task<IActionResult> GetTaskByTaskIdAsync( int id)
+        {
+            IEnumerable<TasksData> result = await _tasksGateway.FindTaskByTaskId( id );
+            // TO DO : mettre le bon return
+            return this.Ok( result );
+        }
+
+
+
         //[HttpPost]
         //public async Task<int> CreateTask( [FromBody] CollocViewModel model )
         //{
@@ -52,7 +64,7 @@ namespace ITI.Roomies.WebApp.Controllers
         //}
 
         // Création de tâches depuis le modèle, ne prend pas en compte la description
-        [HttpPost( "createTaskSansDesc" )]
+        [HttpPost( "createTask" )]
         public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
         {
             Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId );
@@ -77,6 +89,29 @@ namespace ITI.Roomies.WebApp.Controllers
             Result result = await _tasksGateway.UpdateTaskState( id, state );
             return this.Ok( result );
         }
+
+        // Mise à joru d'une tâche
+        [HttpPost( "updateTask/{taskId}" )]
+        public async Task<IActionResult> createTaskSansDescAsync(int taskId, [FromBody] TaskViewModel model )
+        {
+            Result result = await _tasksGateway.UpdateTask( taskId, model.TaskName, model.TaskDate, model.TaskDes );
+
+            // Si aucune erreur d'exécution, supprime puis ajoute la tâche avec les roomies à tiTaskRoom
+            if( !result.HasError )
+            {
+                await _taskRoomGateway.DeleteTaskRoomByTaskId( taskId );
+                for( int i = 0; i < model.roomiesId.Length; i++ )
+                {
+
+                    await _taskRoomGateway.AddTaskRoom( taskId, model.roomiesId[i] );
+                }
+            }
+
+            // TO DO : mettre le bon return
+            return Ok( result );
+        }
+
+
 
         // Suppression d'un tâche depuis son id
         // TO DO : changer quand la procédure sera correcte

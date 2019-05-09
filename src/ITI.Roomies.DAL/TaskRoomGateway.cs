@@ -16,7 +16,7 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-        public async Task<Result<TaskRoomData>> FindById( int taskId )
+        public async Task<Result<TaskRoomData>> FindByTaskId( int taskId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {

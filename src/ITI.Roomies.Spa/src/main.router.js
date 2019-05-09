@@ -20,7 +20,7 @@ import checkRoomie from './components/Roomies/checkRoomie.vue'
 
 import TaskColloc from './components/Task/TaskColloc.vue'
 import TaskRoomie from './components/Task/TaskRoomie.vue'
-import TaskCreate from './components/Task/TaskCreate.vue'
+import TaskCreate from './components/Task/TaskCreateEdit.vue'
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -43,6 +43,7 @@ const routes = [
     { path: '/task/colloc', component: TaskColloc, beforeEnter: requireAuth },
     { path: '/task/roomie', component: TaskRoomie, beforeEnter: requireAuth },
     { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
+    { path: '/task/edit/:id?', component: TaskCreate, beforeEnter: requireAuth },
     
 ];
 

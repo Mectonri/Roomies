@@ -30,6 +30,9 @@
               </td>
               <td>{{task.firstName}}</td>
               <td>
+                <el-button @click="modifierTâche(task.taskId)">Modifier</el-button>
+              </td>
+              <td>
                 <el-button @click="deleteTask(task.taskId)">X</el-button>
               </td>
             </tr>
@@ -39,8 +42,7 @@
       <div v-else>Aucune tâche à afficher</div>
     </el-main>
     <el-main v-else>Chargement en cours</el-main>
-    
-    
+
     <el-header>
       <h2>Historique</h2>
     </el-header>
@@ -65,6 +67,9 @@
             <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
           </td>
           <td>{{task.firstName}}</td>
+          <td>
+            <el-button @click="modifierTâche(task.taskId)">Modifier</el-button>
+          </td>
           <td>
             <el-button @click="deleteTask(task.taskId)">X</el-button>
           </td>
@@ -117,6 +122,10 @@ export default {
       await DeleteTaskByIdAsync(taskId);
       // TO DO : Changer la ligne suivante en actualisation des données affichées.
       document.location.reload(true);
+    },
+
+    async modifierTâche(taskId) {
+      this.$router.push("/task/edit/" + taskId);
     },
 
     async getTasks() {

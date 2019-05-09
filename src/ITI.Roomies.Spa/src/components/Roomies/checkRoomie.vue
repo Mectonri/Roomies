@@ -29,7 +29,7 @@ export default {
         }
         finally{
           // A voir si ça reste.
-        this.$checked = true;
+        // this.$checked = true;
         // Affiche le menu de navigation
         document.getElementById("navMenu").style.display = "block";
         this.$router.replace("/roomies/" + dataToRoute.roomieId);

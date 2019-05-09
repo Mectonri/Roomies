@@ -17,6 +17,7 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
+        // TO DO : Type et return avec Result
         public async Task<IEnumerable<TasksData>> FindTaskByCollocId( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -32,13 +33,18 @@ namespace ITI.Roomies.DAL
                 //  where t.CollocId = @CollocId;",
                 //new { CollocId = collocId } );
 
-                @"select t.TaskId, t.TaskName, t.TaskDes, t.TaskDate, t.State, t.CollocId, tr.RoomieId, r.FirstName, r.LastName from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId inner join rm.tRoomie r on tr.RoomieId = r.RoomieId where t.CollocId = @CollocId; "
+                @"select t.TaskId, t.TaskName, t.TaskDes, t.TaskDate, t.State, t.CollocId, tr.RoomieId, r.FirstName, r.LastName
+                  from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
+                                   inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
+                  where t.CollocId = @CollocId
+                  order by t.TaskId, r.FirstName;"
                 , new { CollocId = collocId } );
 
                 return tasks;
             }
         }
 
+        // TO DO : Type et return avec Result
         public async Task<IEnumerable<TasksData>> FindTaskByRoomieId( int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -71,29 +77,30 @@ namespace ITI.Roomies.DAL
 						inner join rm.tTasks t on t.TaskId = tr.TaskId
 						inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
 					where t.TaskId in (select ti.TaskId from rm.tiTaskRoom ti where ti.RoomieId = @RoomieId)
-					ORDER BY t.CollocId, t.TaskId;",
+					ORDER BY t.CollocId, t.TaskId, r.FirstName;",
                     new { RoomieId = roomieId } );
 
                 return tasks;
             }
         }
 
-        public async Task<Result<TasksData>> FindByTaskId( int taskId )
+        // TO DO : Type et return avec Result
+        // TO DO : Return avec un tableau de Roomie plutôt que plusieurs requêtes
+        public async Task<IEnumerable<TasksData>> FindTaskByTaskId( int taskId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                TasksData task = await con.QueryFirstOrDefaultAsync<TasksData>(
-                    @"select t.TaskId,
-                             t.TaskName,
-                             t.TaskDate,
-                             t.State,
-                             t.CollocId
-                      from rm.tTasks t
-                      where t.TaskId = @TaskId;",
+                IEnumerable<TasksData> task = await con.QueryAsync<TasksData>(
+                  @"select t.TaskId, t.TaskName, t.TaskDes, t.TaskDate, t.State, t.CollocId, tr.RoomieId, r.FirstName, r.LastName
+                  from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
+                                   inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
+                  where t.TaskId = @TaskId
+                  order by r.FirstName",
                     new { TaskId = taskId } );
 
-                if( task == null ) return Result.Failure<TasksData>( Status.NotFound, "Task not found." );
-                return Result.Success( task );
+                //if( task == null ) return Result.Failure<TasksData>( Status.NotFound, "Task not found." );
+                //return Result.Success( task );
+                return task;
             }
         }
 
@@ -117,8 +124,8 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        // Inutile ?
-        public async Task<Result> Update( int taskId, string taskName, DateTime taskDate, bool state, int collocId, string taskDes )
+
+        public async Task<Result> UpdateTask( int taskId, string taskName, DateTime taskDate, string taskDes )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -126,8 +133,6 @@ namespace ITI.Roomies.DAL
                 p.Add( "@TaskId", taskId );
                 p.Add( "@TaskName", taskName );
                 p.Add( "@TaskDate", taskDate );
-                p.Add( "@State", state );
-                p.Add( "@CollocId", collocId );
                 p.Add( "@TaskDes", taskDes );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sTasksUpdate", p, commandType: CommandType.StoredProcedure );

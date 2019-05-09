@@ -10,12 +10,20 @@ export async function GetTasksByRoomieIdAsync() {
     return await getAsync(`${endpoint}/getByRoomieId`);
 }
 
-export async function createTaskSansDescAsync(model) {
-    return await postAsync(`${endpoint}/createTaskSansDesc`, model);
+export async function GetTaskByTaskIdAsync(taskId) {
+    return await getAsync(`${endpoint}/getByTaskId/${taskId}`);
+}
+
+export async function createTaskAsync(model) {
+    return await postAsync(`${endpoint}/createTask`, model);
 }
 
 export async function UpdateTaskStateAsync(taskId, taskState) {
     return await postAsync(`${endpoint}/updateTaskState/${taskId}/${taskState}`);
+}
+
+export async function UpdateTaskAsync(taskId, model) {
+    return await postAsync(`${endpoint}/updateTask/${taskId}`, model);
 }
 
 export async function DeleteTaskByIdAsync(taskId) {
