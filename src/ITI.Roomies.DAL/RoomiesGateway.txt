@@ -28,7 +28,7 @@ namespace ITI.Roomies.DAL
                              s.BirthDate,
                              s.Phone,
                              s.Email
-                      from rm.tRoomies s
+                      from rm.tRoomie s
                       where s.RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
 
@@ -73,7 +73,7 @@ namespace ITI.Roomies.DAL
                              s.BirthDate,
                              s.Phone,
                              s.Email
-                      from rm.tRoomies s
+                      from rm.tRoomie s
                       where s.Email = @Email;",
 
                     new { Email = email } );

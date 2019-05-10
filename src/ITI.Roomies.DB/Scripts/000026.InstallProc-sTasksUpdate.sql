@@ -3,9 +3,7 @@ create proc rm.sTasksUpdate
 	@TaskId	 int, 
 	@TaskName   nvarchar(32),
     @TaskDes	nvarchar(200) = null,
-	@TaskDate	datetime2,
-	@State		bit,
-	@CollocId int
+	@TaskDate	datetime2
 )
 as
 begin
@@ -18,14 +16,8 @@ begin
 		return 1;
 	end;
 
-	if exists(select * from rm.tTasks t where t.TaskId <> @TaskId)
-	begin
-		rollback;
-		return 2;
-	end;
-
 	update rm.tTasks
-	set TaskName = @TaskName, TaskDate = @TaskDate, TaskDes = @TaskDes, [State] = @State, CollocId = @CollocId
+	set TaskName = @TaskName, TaskDate = @TaskDate, TaskDes = @TaskDes
 	where TaskId = @TaskId;
 
 	commit;

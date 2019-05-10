@@ -15,5 +15,11 @@ namespace ITI.Roomies.DAL
         public bool State { get; set; }
 
         public int CollocId { get; set; }
+
+        public int RoomieId { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
     }
 }
