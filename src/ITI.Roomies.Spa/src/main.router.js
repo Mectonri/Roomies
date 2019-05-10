@@ -22,6 +22,12 @@ import TaskColloc from './components/Task/TaskColloc.vue'
 import TaskRoomie from './components/Task/TaskRoomie.vue'
 import TaskCreate from './components/Task/TaskCreate.vue'
 
+import GroceryList from './components/GroceryList/Grocery.vue'
+import GroceryCreate from './components/GroceryList/GroceryCreate.vue'
+import GroceryEdit from './components/GroceryList/GroceryEdit.vue'
+import GroceryInfo from './components/GroceryList/GroceryInfo.vue'
+import Item from './components/Item/Item.vue'
+
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
     
@@ -44,6 +50,15 @@ const routes = [
     { path: '/task/roomie', component: TaskRoomie, beforeEnter: requireAuth },
     { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
     
+    { path: '/task', component: Task, beforeEnter: requireAuth },
+
+    {path: '/item', component: Item, beforeEnter: requireAuth},
+
+    { path: '/course', component: GroceryList, beforeEnter: requireAuth},
+    { path: '/course/edit/id?', component: GroceryEdit, beforeEnter: requireAuth},
+    { path: '/course/info/:id?', component: GroceryInfo, beforeEnter: requireAuth},
+    { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
+
 ];
 
 export default new VueRouter({

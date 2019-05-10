@@ -44,9 +44,8 @@ namespace ITI.Roomies.DAL
                              i.ItemPrice,
                              i.ItemName,
                        from rm.tItem i
-                       where i.CourseId = @courseId"
-
-                    );
+                       where i.CourseId = @CourseId",
+                    new {CourseId = courseId} );
             }
         }
 

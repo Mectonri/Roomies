@@ -36,6 +36,10 @@
           <i class="el-icon-document"></i>
           <span slot="title">Ajouter tâche</span>
         </el-menu-item>
+        <el-menu-item @click="clickRoute('/course')" >
+          <i class="el-icon-cherry"></i>
+          <span slot="title">GroceryList</span>
+        </el-menu-item>
         <el-menu-item @click="clickRoute('/')" disabled>
           <i class="el-icon-setting"></i>
           <span slot="title">Dépense</span>

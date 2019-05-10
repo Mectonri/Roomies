@@ -36,7 +36,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<IEnumerable<CourseData>> GetAll()
+        public async Task<IEnumerable<CourseData>> GetAll(int collocId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -46,11 +46,13 @@ namespace ITI.Roomies.DAL
                               c.CourseDate,
                               c.CoursePrice,
                               c.CollocId
-                        from rm.tCourse c " );
+                        from rm.tCourse c
+                         where c.CollocId = @CollocId;",
+                     new { CollocId = collocId } );
             }
         }
 
-        public async Task<Result<int>> CreateGroceryList( string courseName, DateTime courseDate, int coursePrice, int collocId )
+        public async Task<Result<int>> CreateGroceryList( string courseName, DateTime courseDate, int collocId )
         {
             if( !IsNameValid( courseName ) ) return Result.Failure<int>( Status.BadRequest, "The Name is not valid." );
 
@@ -59,7 +61,6 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@CourseName", courseName);
                 p.Add( "@CourseDate", courseDate );
-                p.Add( "@CoursePrice", coursePrice );
                 p.Add( "@CollocId", collocId );
                 p.Add( "@CourseId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );

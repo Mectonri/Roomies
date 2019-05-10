@@ -1,6 +1,6 @@
 import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
 
-const endpoint = process.env.VUE_APP_BACKEND + "/api/Groceries";
+const endpoint = process.env.VUE_APP_BACKEND + "/api/course";
 
 
 export async function getGroceryListByIdAsync(courseId) {
@@ -9,4 +9,17 @@ export async function getGroceryListByIdAsync(courseId) {
 
 export async function createGroceryListAsync(model) {
   return await postAsync(endpoint, model);
+}
+
+
+export async function getAllAsync(collocId) {
+  return await getAsync(`${endpoint}/${collocId}`);
+}
+
+export async function updateAgroceryListAsync( model ) {
+  return await putAsync(`${endpoint}/${model.courseId}`, model);
+}
+
+export async function deleteAGroceryListAsync(courseId){
+  return await deleteAsync(`${endpoint}/${courseId}`);
 }
