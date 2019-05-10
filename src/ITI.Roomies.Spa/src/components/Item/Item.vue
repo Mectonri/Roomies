@@ -26,7 +26,7 @@
         <td>{{i.roomieId}}</td>
         <td>
           <router-link :to="`item/edit/${i.itemId}`"><i>edit</i></router-link>
-         
+          <!-- <router-link :to="`item/delete/${i.itemId}`"><i>delete</i></router-link> -->
           <a href="#" @click="deleteItem(i.itemId)">
             <i>delete</i>
           </a>
@@ -43,34 +43,45 @@
 
 import { getItemListAsync, deleteItemAsync} from "../../api/ItemApi";
 import {getGroceryListByIdAsync} from "../../api/GroceriesApi";
-import { deleteAsync } from '../../helpers/apiHelper';
+
 
 export default {
   data() {
-    return {
+    return { 
       itemList: [],
       courseName: '', 
       courseId: null,
       item: {},
+
     }
   },
 
   async mounted(){
     this.courseId = this.$route.params.id;
+    console.log(this.courseId);
     await this.refreshList();
     
   },
 
   methods:{
     async refreshList(){
+      console.log(this.courseId);
       this.itemList = await getItemListAsync(this.courseId);
+      console.log(this.item);
       this.courseName = await getGroceryListByIdAsync(this.courseId).courseName;
-      console.log(await getGroceryListByIdAsync(this.courseId));
-      console.log(await getGroceryListByIdAsync(this.courseId).courseName);
+      //console.log(await getGroceryListByIdAsync(this.courseId));
+      //console.log(await getGroceryListByIdAsync(this.courseId).courseName);
     },
 
-    async deleteAsync(itemId){
+    async deleteItem(itemId){
+      try{
       await deleteItemAsync(itemId);
+      await refreshList();
+      }catch(e){
+        console.log(e);
+      }finally{
+        await refreshList();
+      }
     },
     
   },

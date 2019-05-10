@@ -21,14 +21,14 @@ namespace ITI.Roomies.WebApp.Controllers
             _courseGateway = courseGateway;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetLists([FromBody] int collocId)
+        [HttpGet("getList/{id}")]
+        public async Task<IActionResult> GetLists(int id)
         {
-            IEnumerable<CourseData> result = await _courseGateway.GetAll( collocId);
+            IEnumerable<CourseData> result = await _courseGateway.GetAll(id);
             return Ok( result );
         }
 
-        [HttpGet( "{id}", Name = "GetAGroceryList")]
+        [HttpGet( "GetAGroceryList/{id}", Name = "GetAGroceryList")]
         public async Task<IActionResult> GetGroceryListById(int courseId)
         {
             Result<CourseData> result = await _courseGateway.FindById( courseId );

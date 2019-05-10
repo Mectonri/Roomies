@@ -4,7 +4,7 @@ const endpoint = process.env.VUE_APP_BACKEND + "/api/course";
 
 
 export async function getGroceryListByIdAsync(courseId) {
-  return await getAsync(`${endpoint}/${courseId}`);
+  return await getAsync(`${endpoint}/GetAGroceryList/${courseId}`);
 }
 
 export async function createGroceryListAsync(model) {
@@ -13,7 +13,7 @@ export async function createGroceryListAsync(model) {
 
 
 export async function getAllAsync(collocId) {
-  return await getAsync(`${endpoint}/${collocId}`);
+  return await getAsync(`${endpoint}/getList/${collocId}`);
 }
 
 export async function updateAgroceryListAsync( model ) {

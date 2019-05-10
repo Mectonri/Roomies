@@ -17,11 +17,11 @@
       </thead>
 
       <tbody>
-        <tr v-if="groceryList.legth == 0 ">
+        <tr v-if="groceryList.length == 0 ">
           <td>Il n'y as pas de liste de courses</td>
         </tr>
 
-        <tr v-for="g of groceryList" :key="g.groceryId">
+        <tr v-else v-for="g of groceryList" :key="g.courseId">
           <td> {{ g.courseName }} </td>
           <td> {{ g.courseDate}} </td>
           <td> {{g.coursePrice}} </td>

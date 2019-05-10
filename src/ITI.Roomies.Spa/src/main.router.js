@@ -51,8 +51,6 @@ const routes = [
     { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
     { path: '/task/edit/:id?', component: TaskCreate, beforeEnter: requireAuth },
     
-    { path: '/task', component: Task, beforeEnter: requireAuth },
-
     {path: '/item', component: Item, beforeEnter: requireAuth},
 
     { path: '/course', component: GroceryList, beforeEnter: requireAuth},

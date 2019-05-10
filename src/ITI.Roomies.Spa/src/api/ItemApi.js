@@ -5,7 +5,7 @@ const endpoint = process.env.VUE_APP_BACKEND + "/api/item";
 
 ///get the list of items of a specific grocery list
 export async function getItemListAsync(courseId) {
-  return await getAsync(`${endpoint}/${courseId}`);
+  return await getAsync(`${endpoint}/getItemList/${courseId}`);
 }
 export async function createItemAsync(model) {
   return await postAsync(endpoint, model);
@@ -21,5 +21,5 @@ export async function updateItemAsync(model){
 }
 
 export async function deleteItemAsync(itemId){
-  return await deleteAsync(`${endpoint}/${itemId}`);
+  return await deleteAsync(`${endpoint}/delete/${itemId}`);
 }

@@ -22,8 +22,8 @@ namespace ITI.Roomies.WebApp.Controllers
             _itemGateway = itemGateway;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetList(int courseId)
+        [HttpGet( "getItemList/{courseId}" )]
+        public async Task<IActionResult> GetList(int courseId )
         {
             IEnumerable<ItemData> result = await _itemGateway.GetAll( courseId );
             return Ok( result );
@@ -33,6 +33,13 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<IActionResult> AddItem( [FromBody] ItemViewModel model )
         {
             Result<int> result = await _itemGateway.CreateItem( model.RoomieId, model.ItemName, model.ItemPrice, model.CourseId);
+            return this.CreateResult( result );
+        }
+
+        [HttpDelete("delete/{itemId}")]
+        public async Task<IActionResult> DeleteItem(int itemId)
+        {
+            Result result = await _itemGateway.Delete(itemId);
             return this.CreateResult( result );
         }
     }

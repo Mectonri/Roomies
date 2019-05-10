@@ -42,7 +42,7 @@ namespace ITI.Roomies.DAL
                 return await con.QueryAsync<ItemData>(
                     @"select i.ItemId,
                              i.ItemPrice,
-                             i.ItemName,
+                             i.ItemName
                        from rm.tItem i
                        where i.CourseId = @CourseId",
                     new {CourseId = courseId} );
