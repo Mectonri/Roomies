@@ -22,6 +22,13 @@ namespace ITI.Roomies.WebApp.Controllers
             _itemGateway = itemGateway;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetList(int courseId)
+        {
+            IEnumerable<ItemData> result = await _itemGateway.GetAll( courseId );
+            return Ok( result );
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddItem( [FromBody] ItemViewModel model )
         {

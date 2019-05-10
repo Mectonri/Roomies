@@ -3,7 +3,7 @@
     <div>
       <h1>Liste de Courses</h1>
       <div>
-      <router-link :to="`grocery/create`"> <i> Add </i> </router-link>
+        <router-link :to="`course/create`"> <i> Add </i> </router-link>
       </div>
     </div>
     <table>
@@ -17,13 +17,17 @@
       </thead>
 
       <tbody>
-        <tr v-for="g of GroceryList" :key="g.groceryId">
+        <tr v-if="groceryList.legth == 0 ">
+          <td>Il n'y as pas de liste de courses</td>
+        </tr>
+
+        <tr v-for="g of groceryList" :key="g.groceryId">
           <td> {{ g.courseName }} </td>
           <td> {{ g.courseDate}} </td>
           <td> {{g.coursePrice}} </td>
           <td>
-                        <router-link :to="`grocery/edit/${g.courseId}`"><i class="fa fa-pencil"></i> </router-link>
-                        <router-link :to="`grocery/info/${g.courseId}`"><i class="fa fa-info-circle"></i></router-link>
+                        <router-link :to="`course/edit/${g.courseId}`"><i>edit</i> </router-link>
+                        <router-link :to="`course/info/${g.courseId}`"><i>info</i></router-link>
                         <a href="#" @click="deleteList(g.courseId)">
                             <i class="fa fa-trash"></i>
                         </a>
@@ -39,36 +43,31 @@
 
 <script>
 
-import { getAllAsync, getGroceryListByIdAsync, deleteAGroceryListAsync, createGroceryListAsync} from "../../api/GroceriesApi";
-import { deleteAsync } from '../../helpers/apiHelper';
+import { getAllAsync, getGroceryListByIdAsync, deleteAGroceryListAsync} from "../../api/GroceriesApi";
+
 
 export default {
   data() {
     return {
-      grocery: {},
+      
       groceryList:[],
-    };
+    }
   },
 
   async mounted() {
     await this.refreshList();
+    this.$currColloc.collocId;
 
   },
 
   methods: {
     async refreshList() {
-      this.groceryList = await getAllAsync();
+      this.groceryList = await getAllAsync(this.$currColloc.collocId);
     },
 
     async deleteList(courseId) {
       await deleteAGroceryListAsync(courseId);
     },
-
-    async addAList(){
-
-      await createGroceryListAsync();
-    }
-
   },
   
 }

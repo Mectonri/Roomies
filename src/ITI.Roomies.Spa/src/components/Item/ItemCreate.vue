@@ -1,16 +1,21 @@
 <template>
   <div>
     <div>
-      <h1 > Creer une liste  de course</h1>
+      <h1 > Creer un Item</h1>
     </div>
 
     <div>
       <form @submit="onSubmit($event)">
         <label>Nom</label>
-        <input type="text" v-model="course.courseName">
+        <input type="text" v-model="item.itemName">
+        <label>Prix</label>
+        <input type="text" v-model="item.itemName">
+        <label>Liste</label>
+        <input type="text" v-model="item.itemName">
+        <label>Roomie</label>
+        <input type="text" v-model="item.roomieId">
 
-        <label>Date</label>
-        <input type="date" v-model="course.courseDate">
+       
         <button type="submit">Sauvegarder</button>
       </form>
       
@@ -20,33 +25,24 @@
 </template>
 
 <script>
-
-import {createGroceryListAsync, getGroceryListByIdAsync} from "../../api/GroceriesApi"
-
 export default {
   data() {
     return{
-      course: {},
+      item: {},
       id: null,
     }
   },
 
   async mounted() {
     this.id = this.$route.params.id;
-    try{
-      this.course = await getGroceryListByIdAsync(this.id);
-    }catch{
-
-    }finally{
-
-    }
 
   },
 
   methods: {
     async onSubmit(event) {
       try{
-        await createGroceryListAsync(this.course);
+        await create
+                
       }
       finally{
 

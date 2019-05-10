@@ -36,7 +36,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<IEnumerable<CourseData>> GetAll()
+        public async Task<IEnumerable<CourseData>> GetAll(int collocId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -46,7 +46,9 @@ namespace ITI.Roomies.DAL
                               c.CourseDate,
                               c.CoursePrice,
                               c.CollocId
-                        from rm.tCourse c " );
+                        from rm.tCourse c
+                         where c.CollocId = @CollocId;",
+                     new { CollocId = collocId } );
             }
         }
 
