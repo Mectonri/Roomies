@@ -149,6 +149,8 @@ export default {
     async onSubmitQuit(event){
       try {
         await quitCollocAsync(this.idColloc);
+        this.$currColloc.setCollocId(0);
+        this.$currColloc.setCollocName("");
         this.$router.replace("/roomies");
       }catch(e) {
         console.error(e);
