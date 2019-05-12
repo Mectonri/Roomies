@@ -85,7 +85,6 @@ export default {
   data() {
     return {
       item: {},
-      UserId: null,
       errors: [],
       show1: false,
       show2: false,
