@@ -69,5 +69,7 @@ namespace ITI.Roomies.DAL
                 return Result.Success( Status.Ok );
             }
         }
+
+        
     }
 }

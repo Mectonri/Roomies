@@ -114,5 +114,22 @@ namespace ITI.Roomies.DAL
                 return CR;
             }
         }
+        public async Task<Result> LeaveCollocation( int collocId, int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@CollocId", collocId );
+                p.Add( "@RoomieId", roomieId );
+
+
+                await con.ExecuteAsync( "rm.sCollRoomDelete", p, commandType: CommandType.StoredProcedure );
+
+                return Result.Success(  );
+
+            }
+
+
+        }
     }
 }
