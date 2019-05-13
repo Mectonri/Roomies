@@ -139,9 +139,12 @@ export default {
           tempArray.push(this.futureTaskData[task]);
         else tempArray2.push(this.futureTaskData[task]);
 
-        this.taskData = tempArray;
+        if(tempArray != 0) this.taskData = tempArray;
+        else this.taskData = "Nada";
         if (tempArray2.length != 0) this.taskHistoriqueData = tempArray2;
         else this.taskHistoriqueData = "Nada";
+
+        
       }
     } catch (e) {
       console.log(e);
