@@ -53,10 +53,6 @@
         <br>
         <br>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
         <el-menu-item @click="clickRoute('/logout')">
           <i class="el-icon-circle-close"></i>
           <span slot="title">Se déconnecter</span>
