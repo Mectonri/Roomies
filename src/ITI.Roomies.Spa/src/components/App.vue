@@ -24,20 +24,20 @@
           <i class="el-icon-menu"></i>
           <span slot="title">Calendrier</span>
         </el-menu-item>
-        <el-menu-item @click="clickRoute('/task/colloc')">
-          <i class="el-icon-document"></i>
-          <span slot="title">Tâches Collocation active</span>
-        </el-menu-item>
-        <el-menu-item @click="clickRoute('/task/roomie')">
-          <i class="el-icon-document"></i>
-          <span slot="title">Tâches Roomie</span>
-        </el-menu-item>
-        <el-menu-item @click="clickRoute('/task/create')">
-          <i class="el-icon-document"></i>
-          <span slot="title">Ajouter tâche</span>
-        </el-menu-item>
-        <el-menu-item @click="clickRoute('/course')" >
-          <i class="el-icon-cherry"></i>
+
+        <el-submenu  index="1">
+          <template slot="title">
+            <i class="el-icon-document"/>
+            <span>Tâches</span>
+          </template>
+
+          <el-menu-item  index="1-1" @click="clickRoute('/task/colloc')">Tâche Collocation active</el-menu-item>
+          <el-menu-item  index="1-2" @click="clickRoute('/task/roomie')">Tâches Roomie</el-menu-item>
+          <el-menu-item  index="1-3"@click="clickRoute('/task/create')">Ajouter tâche</el-menu-item>
+        </el-submenu>
+
+        <el-menu-item @click="clickRoute('/course')">
+          <i class="el-icon-location"></i>
           <span slot="title">GroceryList</span>
         </el-menu-item>
         <el-menu-item @click="clickRoute('/')" disabled>
@@ -99,18 +99,17 @@ export default {
         document.getElementById("navMenu").style.display = "none";
       } else {
         //if (this.$checkedGoogle) {
-          // Récupère la premère collocation du Roomie
-          var collocData = await getCollocNameIdByRoomieIdAsync();
-          if (collocData != undefined) {
-            this.$currColloc.setCollocId(collocData.collocId);
-            this.$currColloc.setCollocName(collocData.collocName);
-          }
+        // Récupère la premère collocation du Roomie
+        var collocData = await getCollocNameIdByRoomieIdAsync();
+        if (collocData != undefined) {
+          this.$currColloc.setCollocId(collocData.collocId);
+          this.$currColloc.setCollocName(collocData.collocName);
+        }
         //} else {
         // document.getElementById("navMenu").style.display = "none";
-          // this.$router.replace("/checkRoomie");
-     // }
+        // this.$router.replace("/checkRoomie");
+        // }
       }
-
     } catch (e) {
       console.log(e);
     } finally {
@@ -133,6 +132,9 @@ export default {
 };
 </script>
 
+<style lang="scss">
+@import "../styles/global.scss";
+</style>
 
 <style lang="scss" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -144,8 +146,4 @@ export default {
   float: left;
   min-height: 100vh;
 }
-</style>
-
-<style lang="scss">
-@import "../styles/global.scss";
 </style>
