@@ -1,15 +1,15 @@
 <template>
-  <el-container>
-    <el-header>
+  <div id="container">
+    <header>
       <h2>Tâches</h2>
-    </el-header>
+    </header>
 
-    <el-main v-if="taskData[0]">
+    <main v-if="taskData[0]">
       <div v-if="taskData !='Nada'">
         <div v-for="taskColloc of taskData" :key="taskColloc.collocId">
           <h2>{{taskColloc.collocId}}</h2>
 
-          <table v-if="taskData !='Nada'">
+          <table class="table table-dark" v-if="taskData !='Nada'">
             <tr>
               <td>Nom</td>
               <td>Description</td>
@@ -23,31 +23,31 @@
               <td>{{ task.taskDes }}</td>
               <td>{{ task.taskDate }}</td>
               <td v-if="!task.state">
-                <el-button @click="updateState(task.taskId, true)">{{ task.state }}</el-button>
+                <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
               </td>
               <td v-else>
-                <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
+                <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
               </td>
               <td>{{task.firstName}}</td>
               <td>
-                <el-button @click="modifierTâche(task.taskId)">Modifier</el-button>
+                <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
               </td>
               <td>
-                <el-button @click="deleteTask(task.taskId)">X</el-button>
+                <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
               </td>
             </tr>
           </table>
         </div>
       </div>
       <div v-else>Aucune tâche à afficher</div>
-    </el-main>
-    <el-main v-else>Chargement en cours</el-main>
+    </main>
+    <main v-else>Chargement en cours</main>
 
-    <el-header>
+    <header>
       <h2>Historique</h2>
-    </el-header>
-    <el-main v-if="taskHistoriqueData[0]">
-      <table v-if="taskHistoriqueData !='Nada'">
+    </header>
+    <main v-if="taskHistoriqueData[0]">
+      <table class="table table-dark" v-if="taskHistoriqueData !='Nada'">
         <tr>
           <td>Nom</td>
           <td>Description</td>
@@ -61,24 +61,24 @@
           <td>{{ task.taskDes }}</td>
           <td>{{ task.taskDate }}</td>
           <td v-if="!task.state">
-            <el-button @click="updateState(task.taskId, true)">{{ task.state }}</el-button>
+            <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
           </td>
           <td v-else>
-            <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
+            <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
           </td>
           <td>{{task.firstName}}</td>
           <td>
-            <el-button @click="modifierTâche(task.taskId)">Modifier</el-button>
+            <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
           </td>
           <td>
-            <el-button @click="deleteTask(task.taskId)">X</el-button>
+            <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
           </td>
         </tr>
       </table>
       <div v-else>Aune tâche à afficher</div>
-    </el-main>
-    <el-main v-else>Chargement en cours</el-main>
-  </el-container>
+    </main>
+    <main v-else>Chargement en cours</main>
+  </div>
 </template>
 
 <script>
@@ -184,11 +184,13 @@ export default {
           else tempArray2.push(this.futureTaskData[task]);
 
           // Ajoute la dernière collocation
-          this.taskData.push({
-            collocId: this.futureTaskData[task].collocId,
-            taskArray: tempArray
-          });
-
+          if (tempArray != 0)
+            this.taskData.push({
+              collocId: this.futureTaskData[task].collocId,
+              taskArray: tempArray
+            });
+          else this.taskData = "Nada";
+          
           if (tempArray2.length != 0) this.taskHistoriqueData = tempArray2;
           else this.taskHistoriqueData = "Nada";
           console.log(this.taskData);

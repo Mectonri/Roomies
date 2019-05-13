@@ -1,13 +1,13 @@
 <template>
-  <el-container>
-    <el-header>
+  <div id="container">
+    <header>
       <h1>Tâches</h1>
-    </el-header>
+    </header>
 
-    <el-main v-if="taskData[0]">
+    <main v-if="taskData[0]">
       <h2>{{$currColloc.collocName}}</h2>
 
-      <table v-if="taskData !='Nada'">
+      <table class="table table-dark" v-if="taskData !='Nada'">
         <tr>
           <td>Nom</td>
           <td>Description</td>
@@ -22,28 +22,28 @@
           <td>{{ task.taskDes }}</td>
           <td>{{ task.taskDate }}</td>
           <td v-if="!task.state">
-            <el-button @click="updateState(task.taskId, true)">{{ task.state }}</el-button>
+            <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
           </td>
           <td v-else>
-            <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
+            <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
           </td>
           <td>{{task.firstName}}</td>
           <td>
-            <el-button @click="modifierTâche(task.taskId)">Modifier</el-button>
+            <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
           </td>
           <td>
-            <el-button @click="deleteTask(task.taskId)">X</el-button>
+            <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
           </td>
         </tr>
       </table>
       <div v-else>Aune tâche à afficher</div>
-    </el-main>
-    <el-main v-else>Chargement en cours</el-main>
+    </main>
+    <main v-else>Chargement en cours</main>
 
-    <el-main v-if="taskHistoriqueData[0]">
+    <main v-if="taskHistoriqueData[0]">
       <h2>Historique</h2>
 
-      <table v-if="taskHistoriqueData !='Nada'">
+      <table class="table table-dark" v-if="taskHistoriqueData !='Nada'">
         <tr>
           <td>Nom</td>
           <td>Description</td>
@@ -58,24 +58,24 @@
           <td>{{ task.taskDes }}</td>
           <td>{{ task.taskDate }}</td>
           <td v-if="!task.state">
-            <el-button @click="updateState(task.taskId, true)">{{ task.state }}</el-button>
+            <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
           </td>
           <td v-else>
-            <el-button @click="updateState(task.taskId, false)">{{ task.state }}</el-button>
+            <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
           </td>
           <td>{{task.firstName}}</td>
           <td>
-            <el-button @click="modifierTâche(task.taskId)">Modifier</el-button>
+            <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
           </td>
           <td>
-            <el-button @click="deleteTask(task.taskId)">X</el-button>
+            <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
           </td>
         </tr>
       </table>
       <div v-else>Aune tâche à afficher</div>
-    </el-main>
-    <el-main v-else>Chargement en cours</el-main>
-  </el-container>
+    </main>
+    <main v-else>Chargement en cours</main>
+  </div>
 </template>
 
 <script>

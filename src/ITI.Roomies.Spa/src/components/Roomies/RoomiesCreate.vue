@@ -1,49 +1,50 @@
 <template>
-    <div>
+  <div class="container">
+  <!-- <div> -->
     <header>
       <h2>S'inscrire</h2>
     </header>
-    <el-main>
-    <el-form @submit="onSubmit($event)">
-      <div class="alert alert-danger" v-if="errors.length > 0">
-        <b>Les champs suivants semblent invalides :</b>
+    <main>
+      <form @submit="onSubmit($event)">
+        <div class="alert alert-danger" v-if="errors.length > 0">
+          <b>Les champs suivants semblent invalides :</b>
 
-        <ul>
-          <li v-for="e of errors">{{e}}</li>
-        </ul>
-      </div>
+          <ul>
+            <li v-for="e of errors">{{e}}</li>
+          </ul>
+        </div>
 
-      <div>
-        <label class="required">Nom</label>
-        <el-input type="text" v-model="item.lastName" required />
-      </div>
+        <div>
+          <label class="required">Nom</label>
+          <input class="form-control" type="text" v-model="item.lastName" required/>
+        </div>
 
-      <div>
-        <label class="required">Prénom</label>
-        <el-input type="text" v-model="item.firstName" required />
-      </div>
+        <div>
+          <label class="required">Prénom</label>
+          <input class="form-control" type="text" v-model="item.firstName" required/>
+        </div>
 
-      <div>
-        <label class="required">Date de naissance</label>
-        <el-input type="date" v-model="item.birthDate" required />
-      </div>
+        <div>
+          <label class="required">Date de naissance</label>
+          <input class="form-control" type="date" v-model="item.birthDate" required/>
+        </div>
 
-      <div>
-        <label class="required">Phone</label>
-        <el-input type="text" v-model="item.phone" required />
-      </div>
-      <br>
-      <br>
-      <el-button @click="onSubmit">Sauvegarder</el-button>
-    </el-form>
-    </el-main>
-    </div>  
+        <div>
+          <label class="required">Phone</label>
+          <input class="form-control" type="text" v-model="item.phone" required/>
+        </div>
+        <br>
+        <br>
+        <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
+      </form>
+    </main>
+  </div>
 </template>
 
 <script>
 import { createRoomieAsync } from "../../api/RoomiesApi";
 import { DateTime } from "luxon";
-import AuthService from '../../services/AuthService'
+import AuthService from "../../services/AuthService";
 
 export default {
   data() {
@@ -84,3 +85,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+
+
+.container{
+  margin-left: 0;
+  // margin-left: 0;
+  margin-right: 0;
+}
+</style>
