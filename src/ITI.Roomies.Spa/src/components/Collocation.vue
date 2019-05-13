@@ -27,7 +27,7 @@
       </form>
     </div>
     <div v-if="show3">
-      <form @submit="onSubmitInvite($event)">
+      <form @submit="onSubmitJoin($event)">
         <div class="alert alert-danger" v-if="errors.length > 0">
           <b>Les champs suivants semblent invalides :</b>
 
@@ -43,6 +43,7 @@
 
         <el-button native-type="submit" v-if="this.collocName==''">Rejoindre</el-button>
         <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
+        <p v-if="this.checkjoin==0">Une erreur s'est produite.</p>
       </form>
     </div>
 
@@ -63,6 +64,7 @@
 
       <el-button native-type="submit" v-if="this.collocName!=''">Envoyer</el-button>
       <p v-if="this.collocName==''">Veuillez d'abords créer une collocation avant de chercher à inviter des personnes.</p>
+      <p v-if="this.checkInvite==0">Une erreur s'est produite.</p>
       </form>
     </div>
 
@@ -79,8 +81,9 @@
 
 
 <script>
-import {createCollocAsync, quitCollocAsync} from "../api/CollocationApi";
+import {createCollocAsync, quitCollocAsync, InviteAsync, JoinAsync} from "../api/CollocationApi";
 import { state } from "../state";
+import { error } from 'util';
 export default {
   data() {
     return {
@@ -91,7 +94,11 @@ export default {
       show3: false, 
       show4:false,
       collocName:'',
-      collocid:''
+      collocid:'',
+      mail:'',
+      InviteKey:'',
+      checkInvite :2,
+      checkjoin : 2
     };
   },
   
@@ -160,10 +167,28 @@ export default {
       event.preventDefault();
 
       var errors = [];
-      if(!this.item.mail) error.push("mail")
+      if(!this.item.mail) error.push("mail");
       if(errors.length==0){
         try{
+          this.checkInvite = await InviteAsync(this.item.mail,this.idColloc);
+          if(this.checkInvite==1){
 
+          }
+        }catch(e){
+          console.error(e);
+        }
+      }
+    },
+
+    async onSubmitJoin(event){
+      event.preventDefault();
+      if(!this.item.InviteKey)error.push("InviteKey");
+      if(error.length==0){
+        try{
+          checkJoin = await JoinAsync(this.item.InviteKey);
+          if (this.checkJoin == 1){
+            this.$router.replace("/roomies");
+          }else
         }catch(e){
           console.error(e);
         }

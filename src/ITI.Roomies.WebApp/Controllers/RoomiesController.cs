@@ -56,16 +56,6 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost( "{email}/invite" )]
         public async Task<IActionResult> Invite( string email )
         {
-            //EmailMessage message = new EmailMessage();
-            //EmailAddress emailAddress = new EmailAddress();
-            //emailAddress.Address = email ;
-            //emailAddress.Name = "";
-            //message.ToAddresses.Add( emailAddress);
-            //message.FromAddresses.Add( emailAddress );
-            //_emailService.Send( message );
-            //return Ok( 0 );
-
-
             string smtpAddress = "smtp.gmail.com";
             int portNumber = 587;
             bool enableSSL = true;

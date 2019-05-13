@@ -16,4 +16,12 @@ export async function GetRoomiesIdNamesByCollocIdAsync(collocId) {
 
 export async function quitCollocAsync(collocId){
     return await deleteAsync(`${endpoint}/quitColloc/${collocId}`);
-}
+};
+
+export async function InviteAsync(email, collocId){
+    return await postAsync(`${endpoint}/${email}/invite/${collocId}`)
+};
+
+export async function JoinAsync(invitationKey){
+    return await postAsync(`${endpoint}/join/${invitationKey}`);
+};

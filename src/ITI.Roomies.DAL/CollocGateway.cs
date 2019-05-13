@@ -70,6 +70,64 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        
+        public async Task<int> getRoomieIdByEmail( string email )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                int result = await con.QueryFirstOrDefaultAsync<int>(
+                     "select r.RoomieId, r.FirstName from rm.tRoomie r where r.Email = @Email",
+                     new { Email = email } );
+                
+                return result;
+
+            }
+        }
+
+        public async Task<Result> Invitation( string guid, int idReceiver, int idSender, int idColloc)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@InvitationKey", guid );
+                p.Add( "IdReceiver", idReceiver );
+                p.Add( "IdSender", idSender );
+                p.Add( "IdColloc", idColloc );
+
+                await con.ExecuteAsync( "rm.sInvitation", p, commandType: CommandType.StoredProcedure );
+                
+                return Result.Success( Status.Ok );
+
+
+            }
+            
+        }
+
+        public async Task<int> CheckInvitaion(string invitationKey)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@InvitationKey", invitationKey );
+                int result = await con.QueryFirstOrDefault("rm.sCheckInvite",p,commandType:CommandType.StoredProcedure);
+
+
+                return result;
+            }
+
+        }
+
+        public async Task<Result> DeleteInvite(string invitationKey )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@InvitationKey", invitationKey );
+                int result = await con.QueryFirstOrDefault( "rm.sDeleteInvite", p, commandType: CommandType.StoredProcedure );
+
+                return Result.Success( Status.Ok );
+            }
+            
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 create table rm.tInvitation
 (
-    InvitationKey nvarchar (32),
+    InvitationKey nvarchar (64),
     IdColloc int,
     IdSender int,
     IdReceiver int,
