@@ -9,6 +9,7 @@ import { Button, Select } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VCalendar from 'v-calendar';
 import VueGlobalVariable from 'vue-global-var';
+import 'bootstrap/dist/css/bootstrap.css';
 
 Vue.config.productionTip = false;
 

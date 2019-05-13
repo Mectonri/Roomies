@@ -1,8 +1,8 @@
 <template>
-    <el-container>
-    <el-header>
+    <div>
+    <header>
       <h2>S'inscrire</h2>
-    </el-header>
+    </header>
     <el-main>
     <el-form @submit="onSubmit($event)">
       <div class="alert alert-danger" v-if="errors.length > 0">
@@ -37,7 +37,7 @@
       <el-button @click="onSubmit">Sauvegarder</el-button>
     </el-form>
     </el-main>
-    </el-container>  
+    </div>  
 </template>
 
 <script>

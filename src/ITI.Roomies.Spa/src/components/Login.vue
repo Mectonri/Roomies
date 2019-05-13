@@ -1,18 +1,18 @@
 <template>
-  <el-container>
-    <el-header>
+  <div id="centered_container">
+    <header class="centered">
       <h2>Bienvenue sur Roomies</h2>
-    </el-header>
+    </header>
 
-    <el-button @click="login('Google')" class="btn btn-lg btn-block btn-primary">
+    <button @click="login('Google')" class="btn btn-lg btn-block btn-primary">
       <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google
-    </el-button>
+    </button>
     <br>
-    <el-button
+    <button
       @click="login('Base')"
-      class="btn btn-lg btn-block btn-default"
-    >Se connecter via Roomies</el-button>
-  </el-container>
+      class="btn btn-block btn-lg btn-dark"
+    >Se connecter via Roomies</button>
+  </div>
 </template>
 
 <script>
@@ -47,9 +47,19 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 iframe {
   width: 100%;
   height: 600px;
 }
+#centered_container{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40em;
+}
+.centered{
+   text-align:center;
+}
+
+
 </style>

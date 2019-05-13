@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- Menu de navigation -->
-    <el-container>
+    <!-- <div> -->
       <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
         <!-- TO DO : A styliser -->
         Name : {{$currColloc.collocName}}
@@ -65,7 +65,7 @@
       <main v-else>
         <router-view class="child" style="padding-left: 50px;"></router-view>
       </main>
-    </el-container>
+    <!-- </container> -->
   </div>
 </template>
 
