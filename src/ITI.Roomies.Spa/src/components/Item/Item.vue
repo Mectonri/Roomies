@@ -9,30 +9,36 @@
   </div>
   
   <table>
+
+    <div v-if="itemList == 0">
+        <tr>
+          <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
+        </tr>
+      </div>
+
     <thead>
       <tr>
         <th>Name</th>
         <th>Price</th>
         <th>Owner</th>
+        <th>Options</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
-      </tr>
+      
+      <div>
       <tr v-for="i of itemList" :key="i.itemId">
         <td>{{i.itemName}}</td>
         <td>{{i.itemPrice}}</td>
         <td>{{i.roomieId}}</td>
         <td>
           <router-link :to="`item/edit/${i.itemId}`"><i>edit</i></router-link>
-          <!-- <router-link :to="`item/delete/${i.itemId}`"><i>delete</i></router-link> -->
           <a href="#" @click="deleteItem(i.itemId)">
             <i>delete</i>
           </a>
-          
         </td>
       </tr>
+      </div>
     </tbody>
   </table>
  
@@ -43,6 +49,7 @@
 
 import { getItemListAsync, deleteItemAsync} from "../../api/ItemApi";
 import {getGroceryListByIdAsync} from "../../api/GroceriesApi";
+import { getRoomieByIdAsync} from "../../api/RoomiesApi.js";
 
 
 export default {
@@ -52,25 +59,30 @@ export default {
       courseName: '', 
       courseId: null,
       item: {},
+      roomieName: "",
 
     }
   },
 
   async mounted(){
     this.courseId = this.$route.params.id;
-    console.log(this.courseId);
+    //console.log("the course Id is:" +this.courseId);
     await this.refreshList();
     
   },
 
   methods:{
     async refreshList(){
-      console.log(this.courseId);
+      console.log("the course Id is:" +this.courseId);
+      debugger;
       this.itemList = await getItemListAsync(this.courseId);
-      console.log(this.item);
+    
       this.courseName = await getGroceryListByIdAsync(this.courseId).courseName;
-      //console.log(await getGroceryListByIdAsync(this.courseId));
-      //console.log(await getGroceryListByIdAsync(this.courseId).courseName);
+      
+      console.log("this is the course id");
+      console.log(await getGroceryListByIdAsync(this.courseId));
+      debugger;
+     
     },
 
     async deleteItem(itemId){

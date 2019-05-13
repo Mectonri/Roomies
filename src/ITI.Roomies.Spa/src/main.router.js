@@ -26,7 +26,10 @@ import GroceryList from './components/GroceryList/Grocery.vue'
 import GroceryCreate from './components/GroceryList/GroceryCreate.vue'
 import GroceryEdit from './components/GroceryList/GroceryEdit.vue'
 import GroceryInfo from './components/GroceryList/GroceryInfo.vue'
+
 import Item from './components/Item/Item.vue'
+import ItemCreate from './components/Item/ItemCreateEdit.vue'
+
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -51,10 +54,13 @@ const routes = [
     { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
     { path: '/task/edit/:id?', component: TaskCreate, beforeEnter: requireAuth },
     
-    {path: '/item', component: Item, beforeEnter: requireAuth},
+    { path: '/item', component: Item, beforeEnter: requireAuth},
+    { path: '/item/create', component: ItemCreate, beforeEnter: requireAuth },
+    { path: '/item/edit/:id?', component: ItemCreate, beforeEnter: requireAuth },
+
 
     { path: '/course', component: GroceryList, beforeEnter: requireAuth},
-    { path: '/course/edit/id?', component: GroceryEdit, beforeEnter: requireAuth},
+    { path: '/course/edit/:id?', component: GroceryEdit, beforeEnter: requireAuth},
     { path: '/course/info/:id?', component: GroceryInfo, beforeEnter: requireAuth},
     { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
 
