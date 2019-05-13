@@ -90,7 +90,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
-        // Mise à joru d'une tâche
+        // Mise à jour d'une tâche
         [HttpPost( "updateTask/{taskId}" )]
         public async Task<IActionResult> createTaskSansDescAsync(int taskId, [FromBody] TaskViewModel model )
         {

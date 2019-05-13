@@ -77,6 +77,7 @@ namespace ITI.Roomies.DAL
                         where i.RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
 
+                // Return et procédure correctes
                 //if( task == null ) return Result.Failure<int>( Status.NotFound, "No collocation was found for this Roomie." );
                 return Result.Success( colloc );
             }
@@ -92,7 +93,7 @@ namespace ITI.Roomies.DAL
                             inner join rm.tColloc c on i.CollocId = c.CollocId
                         where i.RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
-
+                // Return et procédure correctes
                 //if( task == null ) return Result.Failure<int>( Status.NotFound, "No collocation was found for this Roomie." );
                 return Result.Success( collocName );
             }
@@ -110,6 +111,7 @@ namespace ITI.Roomies.DAL
                       where i.CollocId = @CollocId;",
                 new { CollocId = collocId } );
 
+                // Return et procédure correctes
                 //if( CR == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Not found." );
                 return CR;
             }
