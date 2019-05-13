@@ -36,7 +36,7 @@
 
         <el-button native-type="submit" v-if="this.collocName==''">Rejoindre</el-button>
         <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
-        <p v-if="this.checkjoin==0">Une erreur s'est produite.</p>
+        <p v-if="this.checkjoin==0">le code que vous avez rentré n'est pas valide.</p>
       </form>
     </div>
 
@@ -57,7 +57,8 @@
 
       <el-button native-type="submit" v-if="this.collocName!=''">Envoyer</el-button>
       <p v-if="this.collocName==''">Veuillez d'abords créer une collocation avant de chercher à inviter des personnes.</p>
-      <p v-if="this.checkInvite==0">Une erreur s'est produite.</p>
+      <p v-if="this.checkInvite==0">Le mail que vous avez rentré ne correspond à aucun roomie.</p>
+      <p v-if="this.checkInvite==1">L'invitation a été envoyé</p>
       </form>
     </div>
 
@@ -107,6 +108,7 @@ export default {
       this.show2 = false;
       this.show3 = false;
       this.show4 = true;
+      this.checkInvite =2;
     },
     changeInvite(){
       this.show1 = false;
@@ -119,6 +121,7 @@ export default {
       this.show2 = false;
       this.show3 = true;
       this.show4 = true;
+      this.checkInvite =2;
     },
     
     async onSubmit(event){
@@ -164,9 +167,7 @@ export default {
       if(errors.length==0){
         try{
           this.checkInvite = await InviteAsync(this.item.mail,this.idColloc);
-          if(this.checkInvite==1){
 
-          }
         }catch(e){
           console.error(e);
         }
