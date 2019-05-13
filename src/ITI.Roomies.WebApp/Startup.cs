@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Security.Claims;
 using System.Text;
 using ITI.Roomies.DAL;
@@ -9,9 +10,11 @@ using ITI.Roomies.WebApp.Services.Email;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ITI.Roomies.WebApp
@@ -40,6 +43,7 @@ namespace ITI.Roomies.WebApp
             services.AddSingleton( _ => new TasksGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton( _ => new TaskRoomGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton(_ => new CourseGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
+            services.AddSingleton(_ => new ImageGateway( Configuration["ConnectionStrings:RoomiesDB"] ) );
             services.AddSingleton<PasswordHasher>();
             services.AddSingleton<RoomiesService>();
             services.AddSingleton<TokenService>();
@@ -110,6 +114,7 @@ namespace ITI.Roomies.WebApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+              
             }
 
             app.UseCors(c =>

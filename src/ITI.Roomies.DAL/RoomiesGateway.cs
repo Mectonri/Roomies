@@ -139,18 +139,6 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task AddImageOfRoomie( int roomieId )
-        {
-            using( SqlConnection con = new SqlConnection( _connectionString ) )
-            {
-                await con.ExecuteAsync(
-                    "rm.sRoomieImage",
-                    new { RoomieId = roomieId },
-                    commandType: CommandType.StoredProcedure );
-            }
-
-        }
-
         public async Task<Result<int>> CreateUpdateRoomie( string firstName, string lastName, DateTime birthDate, string Phone, int userId )
         {
             if( !IsNameValid( firstName ) ) return Result.Failure<int>( Status.BadRequest, "The first name is not valid." );
