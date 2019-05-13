@@ -1,6 +1,5 @@
 create proc rm.sInvitation
 (
-	@CourseId int,
     @InvitationKey nvarchar(64),
     @IdReceiver int,
     @IdSender int,
@@ -8,8 +7,9 @@ create proc rm.sInvitation
 )
 as
 begin
-	
-    insert into rm.tInvitation (InvitationKey,IdColloc,IdReceiver,IdSender,IdColloc)
-    values (@InvitationKey,@IdColloc,@IdReceiver,@IdSender,@IdColloc);
-	
+
+    insert into rm.tInvitation (InvitationKey,IdColloc,IdReceiver,IdSender)
+    values (@InvitationKey,@IdColloc,@IdReceiver,@IdSender);
+	commit;
+    return 0;
 end;

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
+
 namespace ITI.Roomies.DAL
 {
 
@@ -102,15 +103,11 @@ namespace ITI.Roomies.DAL
             
         }
 
-        public async Task<int> CheckInvitaion(string invitationKey)
+        public async Task<int> CheckInvitation(string invitationKey)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                var p = new DynamicParameters();
-                p.Add( "@InvitationKey", invitationKey );
-                int result = await con.QueryFirstOrDefault("rm.sCheckInvite",p,commandType:CommandType.StoredProcedure);
-
-
+                int result = await con.QueryFirstOrDefaultAsync<int>( @"select IdColloc from rm.tInvitation where InvitationKey = @InvitationKey;", new { InvitationKey = invitationKey } );
                 return result;
             }
 
@@ -122,7 +119,7 @@ namespace ITI.Roomies.DAL
             {
                 var p = new DynamicParameters();
                 p.Add( "@InvitationKey", invitationKey );
-                int result = await con.QueryFirstOrDefault( "rm.sDeleteInvite", p, commandType: CommandType.StoredProcedure );
+                int result = await con.ExecuteAsync( "rm.sDeleteInvite", p, commandType: CommandType.StoredProcedure );
 
                 return Result.Success( Status.Ok );
             }

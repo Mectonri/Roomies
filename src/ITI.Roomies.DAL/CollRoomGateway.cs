@@ -33,7 +33,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> AddCollRoom( int collocId, int roomieId )
+        public async Task<Result<int>> AddCollRoom( int roomieId, int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {

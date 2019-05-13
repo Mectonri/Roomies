@@ -109,7 +109,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost( "join/{invitationKey}" )]
         public async Task<int> InviteAsync( string invitationKey )
         {
-            int result = await _collocGateway.CheckInvitaion( invitationKey );
+            int result = await _collocGateway.CheckInvitation( invitationKey );
             if (result != 0 )
             {
                 int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );

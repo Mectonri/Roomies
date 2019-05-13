@@ -28,13 +28,6 @@
     </div>
     <div v-if="show3">
       <form @submit="onSubmitJoin($event)">
-        <div class="alert alert-danger" v-if="errors.length > 0">
-          <b>Les champs suivants semblent invalides :</b>
-
-          <ul>
-            <li v-for="e of errors">{{e}}</li>
-          </ul>
-        </div>
 
         <div class="form-group">
           <label class="required">Clé : </label>
@@ -128,7 +121,7 @@ export default {
       this.show4 = true;
     },
     
-    async onSubmit(event) {
+    async onSubmit(event){
       event.preventDefault();
 
       var errors = [];
@@ -145,7 +138,7 @@ export default {
           this.$currColloc.setCollocId(idColloc);
           this.$currColloc.setCollocName(this.item.CollocName);
      
-          this.$router.replace("/roomies/collocation/" + idColloc);
+          this.$router.replace("/roomies");
         } catch (e) {
           console.error(e);
         }
@@ -183,16 +176,15 @@ export default {
     async onSubmitJoin(event){
       event.preventDefault();
       if(!this.item.InviteKey)error.push("InviteKey");
-      if(error.length==0){
         try{
           checkJoin = await JoinAsync(this.item.InviteKey);
           if (this.checkJoin == 1){
             this.$router.replace("/roomies");
-          }else
+          }
         }catch(e){
           console.error(e);
         }
-      }
+
     }
   }
 };
