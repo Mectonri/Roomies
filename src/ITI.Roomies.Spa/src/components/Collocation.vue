@@ -177,7 +177,7 @@ export default {
       event.preventDefault();
       if(!this.item.InviteKey)error.push("InviteKey");
         try{
-          checkJoin = await JoinAsync(this.item.InviteKey);
+          this.checkJoin = await JoinAsync(this.item.InviteKey);
           if (this.checkJoin == 1){
             this.$router.replace("/roomies");
           }
