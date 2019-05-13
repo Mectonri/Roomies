@@ -5,6 +5,5 @@ create proc rm.sDeleteInvite
 as
 begin
     delete from rm.tInvitation where InvitationKey = @InvitationKey;
-	commit;
     return 0;
 end;

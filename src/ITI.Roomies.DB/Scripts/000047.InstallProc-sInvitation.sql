@@ -10,6 +10,5 @@ begin
 
     insert into rm.tInvitation (InvitationKey,IdColloc,IdReceiver,IdSender)
     values (@InvitationKey,@IdColloc,@IdReceiver,@IdSender);
-	commit;
     return 0;
 end;
