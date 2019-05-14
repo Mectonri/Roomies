@@ -1,59 +1,62 @@
 <template>
   <div>
-    <div>
-      <h1 > Creer une liste  de course</h1>
-    </div>
+    <header>
+      <h2>Creer une liste de courses</h2>
+    </header>
 
     <div>
-      <form @submit="onSubmit($event)">
-        <label>Nom</label>
-        <input type="text" v-model="course.courseName">
-
-        <label>Date</label>
-        <input type="date" v-model="course.courseDate">
-        <button type="submit">Sauvegarder</button>
+      <form>
+        <div>
+          <label class="required">Nom</label>
+          <br>
+          <input class="form-control" type="text" v-model="course.courseName" required>
+        </div>
+        <br>
+        <div>
+          <label class="required">Date</label>
+          <br>
+          <input class="form-control" type="datetime-local" v-model="course.courseDate" required>
+        </div>
+        <br>
+        <button class="btn btn-dark" type="submit" @click="onSubmit">Sauvegarder</button>
       </form>
-      
     </div>
-
   </div>
 </template>
 
 <script>
-
-import {createGroceryListAsync, getGroceryListByIdAsync} from "../../api/GroceriesApi"
+import AuthService from "../../services/AuthService";
+import {
+  createGroceryListAsync,
+  getGroceryListByIdAsync
+} from "../../api/GroceriesApi";
 
 export default {
   data() {
-    return{
-      course: {},
-      id: null,
-    }
-  },
-
-  async mounted() {
-    this.id = this.$route.params.id;
-    try{
-      this.course = await getGroceryListByIdAsync(this.id);
-    }catch{
-
-    }finally{
-
-    }
-
+    return {
+      course: {}
+    };
   },
 
   methods: {
-    async onSubmit(event) {
-      try{
+    // async onSubmit(event) {
+    //   try {
+    //     await createGroceryListAsync(this.course);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // },
+
+    async onSubmit() {
+      event.preventDefault();
+
+      try {
         await createGroceryListAsync(this.course);
+        this.$router.push("/course");
+      } catch (e) {
+        console.log(e);
       }
-      finally{
-
-      }
-
-    },
-
-  },
-}
+    }
+  }
+};
 </script>

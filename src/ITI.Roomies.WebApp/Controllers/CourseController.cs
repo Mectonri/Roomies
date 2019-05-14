@@ -35,7 +35,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result );
         }
 
-        [HttpPost]
+        [HttpPost("createGroceryList")]
         public async Task<IActionResult> CreateGroceryList( [FromBody] CourseViewModel model)
         {
             Result<int> result = await _courseGateway.CreateGroceryList( model.CourseName, model.CourseDate, model.CollocId);

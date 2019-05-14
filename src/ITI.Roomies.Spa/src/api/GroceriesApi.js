@@ -8,7 +8,7 @@ export async function getGroceryListByIdAsync(courseId) {
 }
 
 export async function createGroceryListAsync(model) {
-  return await postAsync(endpoint, model);
+  return await postAsync(`${endpoint}/createGroceryList`, model);
 }
 
 
