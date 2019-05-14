@@ -29,7 +29,7 @@ export default {
       // Cache le menu de navigation avant la déconnexion
       document.getElementById("navMenu").style.display = "none";
       // Reset les variable globales
-      this.$currColloc.setCollocId(0);
+      this.$currColloc.setCollocId(-1);
       this.$currColloc.setCollocName("");
       this.$router.replace("/");
     }
