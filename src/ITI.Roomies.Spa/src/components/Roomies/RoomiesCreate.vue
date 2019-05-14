@@ -5,7 +5,7 @@
       <h2>S'inscrire</h2>
     </header>
     <main>
-      <form @submit="onSubmit($event)">
+      <form>
         <div class="alert alert-danger" v-if="errors.length > 0">
           <b>Les champs suivants semblent invalides :</b>
 

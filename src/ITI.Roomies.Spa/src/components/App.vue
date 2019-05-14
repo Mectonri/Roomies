@@ -20,23 +20,23 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Create a collocation</span>
       </el-menu-item>
-      <el-menu-item @click="clickRoute('/roomies/calendar')">
+      <el-menu-item @click="clickRoute('/roomies/calendar')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
 
-      <el-submenu index="1">
+      <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
           <i class="el-icon-document"/>
           <span>Tâches</span>
         </template>
 
-        <el-menu-item index="1-1" @click="clickRoute('/task/colloc')">Tâche Collocation active</el-menu-item>
-        <el-menu-item index="1-2" @click="clickRoute('/task/roomie')">Tâches Roomie</el-menu-item>
-        <el-menu-item index="1-3" @click="clickRoute('/task/create')">Ajouter tâche</el-menu-item>
+        <el-menu-item index="1-1" @click="clickRoute('/task/colloc')" :disabled="$setMenuItemDisabled.disableState">Tâche Collocation active</el-menu-item>
+        <el-menu-item index="1-2" @click="clickRoute('/task/roomie')" :disabled="$setMenuItemDisabled.disableState">Tâches Roomie</el-menu-item>
+        <el-menu-item index="1-3" @click="clickRoute('/task/create')" :disabled="$setMenuItemDisabled.disableState">Ajouter tâche</el-menu-item>
       </el-submenu>
 
-      <el-menu-item @click="clickRoute('/course')">
+      <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-location"></i>
         <span slot="title">GroceryList</span>
       </el-menu-item>
@@ -104,6 +104,7 @@ export default {
         if (collocData != undefined) {
           this.$currColloc.setCollocId(collocData.collocId);
           this.$currColloc.setCollocName(collocData.collocName);
+          this.$setMenuItemDisabled.setDisableState(false);
         }
         //} else {
         // document.getElementById("navMenu").style.display = "none";
@@ -144,8 +145,8 @@ export default {
 
 <style lang="scss" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  max-width: 200px;
+  width: 12em;
+  max-width: 12em;
     border-right: 1px solid #000000;
   float: left;
 }

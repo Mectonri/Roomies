@@ -35,9 +35,19 @@ class currentColloc {
   }
 }
 
+class MenuItem{
+  constructor(stateMenuItem){
+    this.disableState = stateMenuItem
+  }
+
+  setDisableState(newState){
+    this.disableState = newState
+  }
+}
 Vue.use(VueGlobalVariable, {
   globals: {
-  $currColloc: new currentColloc(0,''),
+  $currColloc: new currentColloc(-1,''),
+  $setMenuItemDisabled: new MenuItem(true)
   //$checkedGoogle : false
   },
   });

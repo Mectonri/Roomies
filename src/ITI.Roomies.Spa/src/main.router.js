@@ -52,7 +52,6 @@ const routes = [
 
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },
-    { path: '/roomies/:id?', component: RoomieProfil, beforeEnter: requireAuth },
     { path: '/checkRoomie', component: checkRoomie, beforeEnter: requireAuth },
 
     { path: '/task/colloc', component: TaskColloc, beforeEnter: requireAuth },

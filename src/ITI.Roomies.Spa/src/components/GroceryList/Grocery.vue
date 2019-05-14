@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div>
-      <h1>Liste de Courses</h1>
-      <div>
-        <router-link :to="`course/create`"> <i> Add </i> </router-link>
-      </div>
-    </div>
-    <table>
+  <div id="container">
+    <header>
+      <h2>Liste de Courses</h2>
+    </header>
+    <br>
+    <table class="table table-dark">
       <thead>
         <tr>
           <th>Name</th>
@@ -18,56 +16,70 @@
 
       <tbody>
         <tr v-if="groceryList.length == 0 ">
-          <td>Il n'y as pas de liste de courses</td>
+          <td>Il n'y a pas de liste de courses</td>
         </tr>
 
         <tr v-else v-for="g of groceryList" :key="g.courseId">
-          <td> {{ g.courseName }} </td>
-          <td> {{ g.courseDate}} </td>
-          <td> {{g.coursePrice}} </td>
+          <td>{{ g.courseName }}</td>
+          <td>{{ g.courseDate}}</td>
+          <td>{{g.coursePrice}}</td>
           <td>
-                        <router-link :to="`course/edit/${g.courseId}`"><i>edit</i> </router-link>
-                        <router-link :to="`course/info/${g.courseId}`"><i>info</i></router-link>
-                        <a href="#" @click="deleteList(g.courseId)">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    </td>
+            <router-link :to="`course/edit/${g.courseId}`">
+              <i>edit</i>
+            </router-link>
+            <router-link :to="`course/info/${g.courseId}`">
+              <i>info</i>
+            </router-link>
+            <a href="#" @click="deleteList(g.courseId)">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
-    <div>
+    <br>
+    <router-link :to="`course/create`">
+      <button class="btn btn-dark">Nouvelle liste</button>
+    </router-link>
   </div>
-</div>
-  
 </template>
 
 <script>
-
-import { getAllAsync, getGroceryListByIdAsync, deleteAGroceryListAsync} from "../../api/GroceriesApi";
-
+import {
+  getAllAsync,
+  getGroceryListByIdAsync,
+  deleteAGroceryListAsync
+} from "../../api/GroceriesApi";
 
 export default {
   props: [],
   data() {
     return {
-      groceryList:[],
-    }
+      groceryList: []
+    };
   },
 
   async mounted() {
     await this.refreshList();
-    this.$currColloc.collocId;
-
   },
 
   methods: {
     async refreshList() {
-      this.groceryList = await getAllAsync(this.$currColloc.collocId);
+      try {
+        this.groceryList = await getAllAsync(this.$currColloc.collocId);
+      } catch (e) {
+        console.log(e);
+      }
     },
 
     async deleteList(courseId) {
-      await deleteAGroceryListAsync(courseId);
-    },
-  },
-}
+      try {
+        await deleteAGroceryListAsync(courseId);
+        await this.refreshList();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+};
 </script>
