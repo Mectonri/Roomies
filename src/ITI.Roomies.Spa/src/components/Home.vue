@@ -1,6 +1,6 @@
 <template>
     <section class="jumbotron text-center">
-        <div class="container">
+        <div>
             <h1 class="jumbotron-heading">Bienvenue sur Roomies</h1>
             <el-button @click="changeLocale('fr')">fr</el-button>
             <el-button @click="changeLocale('en')">en</el-button>
@@ -8,9 +8,6 @@
         </div>
     </section>
 </template>
-<style lang="scss">
-@import "../styles/global.scss";
-</style>
 <script>
 import i18n from '../plugins/i18n';
 

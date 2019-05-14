@@ -1,4 +1,5 @@
 import './main.auth'
+import './main.vendors'
 import AuthService from './services/AuthService'
 import Vue from 'vue'
 import App from './components/App.vue'
@@ -9,6 +10,7 @@ import { Button, Select } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VCalendar from 'v-calendar';
 import VueGlobalVariable from 'vue-global-var';
+import 'bootstrap/dist/css/bootstrap.css';
 
 Vue.config.productionTip = false;
 

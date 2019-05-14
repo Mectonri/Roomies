@@ -12,7 +12,8 @@ import Home from   './components/Home.vue'
 import Login from  './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Calendar from './components/Calendar.vue'
-import Collocation from './components/Collocation.vue'
+
+import Collocation from './components/Collocation/Collocation.vue'
 
 import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'

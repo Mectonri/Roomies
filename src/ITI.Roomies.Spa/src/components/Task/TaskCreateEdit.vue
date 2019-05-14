@@ -1,14 +1,14 @@
 <template>
-  <el-container v-if="state == false">
-    <el-main v-if="idIsUndefined == false">
-      <el-header v-if="route == 'create'">
+  <div id="container" v-if="state == false">
+    <main v-if="idIsUndefined == false">
+      <header v-if="route == 'create'">
         <h2>Créer une tâche</h2>
-      </el-header>
-      <el-header v-if="route == 'edit'">
+      </header>
+      <header v-if="route == 'edit'">
         <h2>Modifier la tâche</h2>
-      </el-header>
+      </header>
 
-      <el-form @submit="onSubmit($event)">
+      <form @submit="onSubmit($event)">
         <!-- <div class="alert alert-danger" v-if="errors.length > 0">
         <b>Les champs suivants semblent invalides :</b>
 
@@ -19,21 +19,21 @@
 
         <div>
           <label class="required">Nom</label> <br>
-          <input class="input_border" type="text" v-model="item.TaskName" required/>
+          <input class="form-control" type="text" v-model="item.TaskName" required/>
         </div>
 
         <div>
           <label>Description</label>
           <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
           <br>
-          <textarea class="input_border" v-model="item.TaskDes"/>
+          <textarea  class="form-control textarea_width" v-model="item.TaskDes"/>
         </div>
 
         <div>
           <label class="required">Echéance</label>
           <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
           <br>
-          <input class="input_border" type="datetime-local" id="echeance" v-model="item.TaskDate" required/>
+          <input  class="form-control" type="datetime-local" id="echeance" v-model="item.TaskDate" required/>
         </div>
         <br>
         <br>
@@ -46,12 +46,12 @@
         </tr>
         <br>
         <br>
-        <el-button @click="onSubmit">Sauvegarder</el-button>
-      </el-form>
-    </el-main>
-    <el-main v-else>Erreur</el-main>
-  </el-container>
-  <el-container v-else>Chargement en cours</el-container>
+        <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
+      </form>
+    </main>
+    <main v-else>Erreur</main>
+  </div>
+  <div id="container" v-else>Chargement en cours</div>
 </template>
 
 <script>
@@ -166,8 +166,3 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.input_border {
-  border-width: 1px;
-  }
-</style>
