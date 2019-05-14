@@ -41,6 +41,15 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result );
         }
 
+        [HttpGet("getRoomiePic/{roomieId}")]
+        public async Task<IActionResult> getRoomiePic(int roomieId)
+        {
+            Result<string> roomiePic = await _roomiesGateway.GetRoomiePicAsync( roomieId );
+
+            return this.CreateResult( roomiePic );
+
+        } 
+
         [HttpPost( "createRoomie" )]
         public async Task<IActionResult> CreateRoomie( [FromBody] RoomiesViewModel model )
         {

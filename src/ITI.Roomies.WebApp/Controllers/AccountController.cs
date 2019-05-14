@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
@@ -153,6 +155,31 @@ namespace ITI.Roomies.WebApp.Controllers
             ClaimsIdentity identity = new ClaimsIdentity( claims, CookieAuthentication.AuthenticationType, ClaimTypes.Email, string.Empty );
             ClaimsPrincipal principal = new ClaimsPrincipal( identity );
             await HttpContext.SignInAsync( CookieAuthentication.AuthenticationScheme, principal );
+        }
+
+        [HttpPost( "upload" )]
+        [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
+        public async Task<IActionResult> ImageUpload( IFormFile image )
+        {
+            //image.GetType();
+            long size = image.Length;
+
+            //string userId = User.FindFirst(  ClaimTypes.NameIdentifier).Value;
+            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+
+
+            string imgPath = @"..\Roomies\src\ITI.Roomies.DB\Pics\" + userId;
+            if( size > 0 )
+            {
+                using( var stream = new FileStream( imgPath, FileMode.Create ) )
+                {
+                    await image.CopyToAsync( stream );
+                }
+            }
+
+            await _roomiesGateway.AddImageOfRoomie( userId );
+
+            return Ok( new { size, imgPath } );
         }
 
         string GetBreachPadding()

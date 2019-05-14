@@ -17,7 +17,12 @@ async function toJSON(resp) {
     if(result) return JSON.parse(result);
 }
 
-async function send(url, method, data, contentType, isRetrying) {
+async function notJSON(resp) {
+    const result = await resp.text();
+    if(result) return result;
+}
+
+async function send(url, method, data, contentType, isRetrying, notJSON) {
     let options = {
         method: method,
         headers: {
@@ -36,7 +41,12 @@ async function send(url, method, data, contentType, isRetrying) {
     }
 
     await checkErrors(result);
-    return await toJSON(result);
+    if( notJSON != true) {
+        return await toJSON(result);        
+    }
+    
+    else { return await result.text();}
+    
 }
 
 export function postAsync(url, data) {
@@ -49,6 +59,10 @@ export function putAsync(url, data) {
 
 export function getAsync(url) {
     return send(url, 'GET');
+}
+
+export function getStringAsync(url) {
+    return send(url, 'GET', null, null, false, true);
 }
 
 export function deleteAsync(url) {

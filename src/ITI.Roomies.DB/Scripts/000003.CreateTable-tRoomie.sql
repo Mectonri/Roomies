@@ -7,7 +7,7 @@ create table rm.tRoomie
 	BirthDate Datetime2,
 	Phone	  char(10),
 	[Description] nvarchar(200),
-	RoomiePic nvarchar(45),
+	RoomiePic nvarchar(max),
 
     constraint PK_tUser primary key(RoomieId),
     constraint UK_tUser_Email unique(Email),

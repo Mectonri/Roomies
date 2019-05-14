@@ -15,6 +15,9 @@ import Calendar from './components/Calendar.vue'
 
 import Collocation from './components/Collocation.vue'
 
+import ImageUploader from './components/Roomies/ImageUploader.vue'
+
+
 import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'
 import checkRoomie from './components/Roomies/checkRoomie.vue'
@@ -41,6 +44,8 @@ const routes = [
     {path: '/roomies/invite', component: Login, beforeEnter: requireAuth},
 
     {path: '/roomies/calendar', component: Calendar, beforeEnter: requireAuth},
+
+    {path: '/roomies/upload/:id?', component: ImageUploader, beforeEnter: requireAuth},
 
     {path: '/roomies/collocation', component: Collocation, beforeEnter: requireAuth},
     {path: '/roomies/collocation/:id?', component: Collocation, beforeEnter: requireAuth},
