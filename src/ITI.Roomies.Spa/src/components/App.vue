@@ -145,8 +145,8 @@ export default {
 
 <style lang="scss" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  max-width: 200px;
+  width: 12em;
+  max-width: 12em;
     border-right: 1px solid #000000;
   float: left;
 }
