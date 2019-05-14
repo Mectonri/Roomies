@@ -1,9 +1,12 @@
 <template>
   <div>
+      
     <div>
-      <item ref="item"></item>
+      <h1>Liste de course {{courseName}}</h1>
     </div>
-
+    <div>
+      <item :courseId="courseId"></item>
+    </div>
 
   </div>
 </template>
@@ -13,10 +16,17 @@
 import item from "../Item/Item.vue"
 
 export default {
+  props: {
+    courseId: {
+      type: Number,
+      required: true,
+      // default: null
+    }
+  },
   components:{
     item,
-
   },
+
   data(){
     return{
 

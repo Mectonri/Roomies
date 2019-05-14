@@ -47,9 +47,9 @@ import { getAllAsync, getGroceryListByIdAsync, deleteAGroceryListAsync} from "..
 
 
 export default {
+  props: [],
   data() {
     return {
-      
       groceryList:[],
     }
   },
@@ -69,6 +69,5 @@ export default {
       await deleteAGroceryListAsync(courseId);
     },
   },
-  
 }
 </script>
