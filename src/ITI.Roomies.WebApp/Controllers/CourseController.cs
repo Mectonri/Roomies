@@ -46,10 +46,10 @@ namespace ITI.Roomies.WebApp.Controllers
             } );
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAGroceryList( int courseId, [FromBody] CourseViewModel model )
+        [HttpPut("updateGroceryList")]
+        public async Task<IActionResult> UpdateAGroceryList([FromBody] CourseViewModel model )
         {
-            Result result = await _courseGateway.UpdateGroceryList( courseId, model.CourseName, model.CourseDate, model.CollocId );
+            Result result = await _courseGateway.UpdateGroceryList( model.CourseId, model.CourseName, model.CourseDate, model.CollocId );
             return this.CreateResult( result );
         }
 

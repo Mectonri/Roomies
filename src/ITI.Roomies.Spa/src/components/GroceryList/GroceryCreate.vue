@@ -45,11 +45,6 @@
 </template>
 
 <script>
-import AuthService from "../../services/AuthService";
-import {
-  createGroceryListAsync,
-  getGroceryListByIdAsync
-} from "../../api/GroceriesApi";
 
 import {createGroceryListAsync, getGroceryListByIdAsync, updateAgroceryListAsync} from "../../api/GroceriesApi"
 import AuthService from "../../services/AuthService";
@@ -89,10 +84,10 @@ export default {
 
       }else{
 
-        this.id = this.$route.params.id;
+        this.course.courseId = this.$route.params.id;
 
         try{
-          this.course = await getGroceryListByIdAsync(this.id);
+          this.course = await updateAgroceryListAsync(this.course);
           
            
         } catch(e) {
@@ -118,6 +113,7 @@ export default {
         try{
 
           if(this.route == "create"){
+            this.course.collocId = this.$currColloc.collocId;
             await createGroceryListAsync(this.course);
           }
         }catch(e){

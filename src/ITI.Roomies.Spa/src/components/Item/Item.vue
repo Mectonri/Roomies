@@ -74,14 +74,14 @@ export default {
   methods:{
     async refreshList(){
       console.log("the course Id is:" +this.courseId);
-      debugger;
+      // debugger;
       this.itemList = await getItemListAsync(this.courseId);
     
       this.courseName = await getGroceryListByIdAsync(this.courseId).courseName;
       
       console.log("this is the course id");
       console.log(await getGroceryListByIdAsync(this.courseId));
-      debugger;
+      // debugger;
      
     },
 

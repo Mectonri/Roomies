@@ -17,7 +17,7 @@ export async function getAllAsync(collocId) {
 }
 
 export async function updateAgroceryListAsync( model ) {
-  return await putAsync(`${endpoint}/${model.courseId}`, model);
+  return await putAsync(`${endpoint}/updateGroceryList`, model);
 }
 
 export async function deleteAGroceryListAsync(courseId){

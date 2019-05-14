@@ -95,7 +95,7 @@ namespace ITI.Roomies.DAL
 
         public async Task<Result> UpdateGroceryList( int courseId, string courseName, DateTime courseDate, int collocId)
         {
-            if( !IsNameValid( courseName ) ) return Result.Failure( Status.BadRequest, "The first name is not valid." );
+            if( !IsNameValid( courseName ) ) return Result.Failure( Status.BadRequest, "The course name is not valid." );
 
 
             using( SqlConnection con = new SqlConnection( _connectionString ) )
