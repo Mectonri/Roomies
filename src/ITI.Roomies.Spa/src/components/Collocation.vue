@@ -69,8 +69,8 @@
 
 
 <script>
-import {createCollocAsync} from "../../api/CollocationApi";
-import { state } from "../../state";
+import {createCollocAsync} from "../api/CollocationApi";
+import { state } from "../state";
 export default {
   data() {
     return {
