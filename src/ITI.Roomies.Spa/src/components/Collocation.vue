@@ -3,45 +3,41 @@
     <div class="container">
 
       <div class="button">
-        <el-button @click="changeCreate()">création</el-button>
+        <el-button @click="changeCreate()" >création</el-button>
         <el-button @click="changeInvite()">inviter</el-button>
-        <el-button @click="changeJoin()">joindre</el-button>
+        <el-button @click="changeJoin()" >joindre</el-button>
       </div>
     <div v-if="show1">
-    <form @submit="onSubmit($event)">
-      <div class="alert alert-danger" v-if="errors.length > 0">
-        <b>Les champs suivants semblent invalides :</b>
+      <form @submit="onSubmit($event)">
+        <div class="alert alert-danger" v-if="errors.length > 0">
+          <b>Les champs suivants semblent invalides :</b>
 
-        <ul>
-          <li v-for="e of errors">{{e}}</li>
-        </ul>
-      </div>
+          <ul>
+            <li v-for="e of errors">{{e}}</li>
+          </ul>
+        </div>
 
-      <div class="form-group">
-        <label class="required">Nom de collocation</label>
-        <el-input type="text" v-model="item.CollocName" required />
-      </div>
+        <div class="form-group">
+          <label class="required">Nom de collocation</label>
+          <el-input type="text" v-model="item.CollocName" required />
+        </div>
 
-      <el-button native-type="submit">Sauvegarder</el-button>
-    </form>
+        <el-button native-type="submit" v-if="this.collocName==''">Sauvegarder</el-button>
+        <p v-if="this.collocName!='' ">Vous avez déjà une collocation.</p>
+      </form>
     </div>
     <div v-if="show3">
-      <form @submit="onSubmitInvite($event)">
-      <div class="alert alert-danger" v-if="errors.length > 0">
-        <b>Les champs suivants semblent invalides :</b>
+      <form @submit="onSubmitJoin($event)">
 
-        <ul>
-          <li v-for="e of errors">{{e}}</li>
-        </ul>
-      </div>
+        <div class="form-group">
+          <label class="required">Clé : </label>
+          <el-input type="text" v-model="item.InviteKey" required />
+        </div>
 
-      <div class="form-group">
-        <label class="required">Clé : </label>
-        <el-input type="text" v-model="item.InviteKey" required />
-      </div>
-
-      <el-button native-type="submit">Rejoindre</el-button>
-    </form>
+        <el-button native-type="submit" v-if="this.collocName==''">Rejoindre</el-button>
+        <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
+        <p v-if="this.checkjoin==0">le code que vous avez rentré n'est pas valide.</p>
+      </form>
     </div>
 
     <div v-if="show2">
@@ -59,9 +55,19 @@
         <el-input type="text" v-model="item.mail" required />
       </div>
 
-      <el-button native-type="submit">Envoyer</el-button>
-    </form>
+      <el-button native-type="submit" v-if="this.collocName!=''">Envoyer</el-button>
+      <p v-if="this.collocName==''">Veuillez d'abords créer une collocation avant de chercher à inviter des personnes.</p>
+      <p v-if="this.checkInvite==0">Le mail que vous avez rentré ne correspond à aucun roomie.</p>
+      <p v-if="this.checkInvite==1">L'invitation a été envoyé</p>
+      </form>
     </div>
+
+    <div v-if='this.collocName!="" && show4'>
+      <br>
+      <el-button @click="onSubmitQuit($event)" native-type="submit">Quitter la collocation</el-button>
+    </div>
+
+
   </div>
   </el-container>
 
@@ -69,24 +75,31 @@
 
 
 <script>
-import {createCollocAsync} from "../api/CollocationApi";
+import {createCollocAsync, quitCollocAsync, InviteAsync, JoinAsync} from "../api/CollocationApi";
 import { state } from "../state";
+import { error } from 'util';
 export default {
   data() {
     return {
       item: {},
-      UserId: null,
       errors: [],
-      idColloc : 0,
-      show1: true,
+      show1: false,
       show2: false,
-      show3: false
+      show3: false, 
+      show4:false,
+      collocName:'',
+      collocid:'',
+      mail:'',
+      InviteKey:'',
+      checkInvite :2,
+      checkjoin : 2
     };
   },
   
 
   async mounted() {
-    this.idColloc = this.$route.params.id;
+    this.idColloc = this.$currColloc.collocId;
+    this.collocName= this.$currColloc.collocName;
   },
 
   methods: {
@@ -94,18 +107,24 @@ export default {
       this.show1 = true;
       this.show2 = false;
       this.show3 = false;
+      this.show4 = true;
+      this.checkInvite =2;
     },
     changeInvite(){
       this.show1 = false;
       this.show2 = true;
       this.show3 = false;
+      this.show4 = true;
     },
     changeJoin(){
       this.show1 = false;
       this.show2 = false;
       this.show3 = true;
+      this.show4 = true;
+      this.checkInvite =2;
     },
-    async onSubmit(event) {
+    
+    async onSubmit(event){
       event.preventDefault();
 
       var errors = [];
@@ -122,24 +141,51 @@ export default {
           this.$currColloc.setCollocId(idColloc);
           this.$currColloc.setCollocName(this.item.CollocName);
      
-          this.$router.replace("/roomies/collocation/" + idColloc);
+          this.$router.replace("/roomies");
         } catch (e) {
           console.error(e);
         }
       }
     },
+
+    async onSubmitQuit(event){
+      try {
+        await quitCollocAsync(this.idColloc);
+        this.$currColloc.setCollocId(0);
+        this.$currColloc.setCollocName("");
+        this.$router.replace("/roomies");
+      }catch(e) {
+        console.error(e);
+      }
+    },
+
     async onSubmitInvite(event){
       event.preventDefault();
 
       var errors = [];
-      if(!this.item.mail) error.push("mail")
+      if(!this.item.mail) error.push("mail");
       if(errors.length==0){
         try{
+          this.checkInvite = await InviteAsync(this.item.mail,this.idColloc);
 
         }catch(e){
           console.error(e);
         }
       }
+    },
+
+    async onSubmitJoin(event){
+      event.preventDefault();
+      if(!this.item.InviteKey)error.push("InviteKey");
+        try{
+          this.checkJoin = await JoinAsync(this.item.InviteKey);
+          if (this.checkJoin == 1){
+            this.$router.replace("/roomies");
+          }
+        }catch(e){
+          console.error(e);
+        }
+
     }
   }
 };

@@ -18,7 +18,7 @@
         </el-button>
         <el-menu-item @click="clickRoute('/roomies/collocation')">
           <i class="el-icon-menu"></i>
-          <span slot="title">Create a collocation</span>
+          <span slot="title">Collocation</span>
         </el-menu-item>
         <el-menu-item @click="clickRoute('/roomies/calendar')">
           <i class="el-icon-menu"></i>
@@ -48,8 +48,6 @@
           <i class="el-icon-setting"></i>
           <span slot="title">Paramètres</span>
         </el-menu-item>
-        <br>
-        <br>
         <br>
         <br>
         <br>

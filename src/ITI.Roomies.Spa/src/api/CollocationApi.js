@@ -6,13 +6,22 @@ export async function createCollocAsync(collocname){
     return await postAsync(endpoint, collocname);
 }
 
-// export async function getCollocByRoomieIdAsync() {
-//     return await getAsync(endpoint);
-// }
 export async function getCollocNameIdByRoomieIdAsync() {
     return await getAsync(`${endpoint}/getNameId`);
 }
 
 export async function GetRoomiesIdNamesByCollocIdAsync(collocId) {
     return await getAsync(`${endpoint}/getRoomieIdNames/${collocId}`);
-}
+};
+
+export async function quitCollocAsync(collocId){
+    return await deleteAsync(`${endpoint}/quitColloc/${collocId}`);
+};
+
+export async function InviteAsync(email, collocId){
+    return await postAsync(`${endpoint}/${email}/invite/${collocId}`)
+};
+
+export async function JoinAsync(invitationKey){
+    return await postAsync(`${endpoint}/join/${invitationKey}`);
+};

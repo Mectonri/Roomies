@@ -33,7 +33,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> AddCollRoom( int collocId, int roomieId )
+        public async Task<Result<int>> AddCollRoom( int roomieId, int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -115,6 +115,23 @@ namespace ITI.Roomies.DAL
                 //if( CR == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Not found." );
                 return CR;
             }
+        }
+        public async Task<Result> LeaveCollocation( int collocId, int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@CollocId", collocId );
+                p.Add( "@RoomieId", roomieId );
+
+
+                await con.ExecuteAsync( "rm.sCollRoomDelete", p, commandType: CommandType.StoredProcedure );
+
+                return Result.Success(  );
+
+            }
+
+
         }
     }
 }

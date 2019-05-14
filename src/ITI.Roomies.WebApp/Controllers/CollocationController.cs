@@ -6,6 +6,9 @@ using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Models.CollocModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
+using System.Net;
+using System;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
@@ -35,14 +38,14 @@ namespace ITI.Roomies.WebApp.Controllers
 
         }
 
-        // Renvoie l'id de la première colloc dans laquelle le roomie est présent
-        //[HttpGet]
-        //public async Task<IActionResult> GetCollocIdByRoomieIdAsync( int id )
-        //{
-        //    int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-        //    Result<int> result = await _collRoomGateway.FindCollocByRoomieId( userId );
-        //    return this.CreateResult( result );
-        //}
+        [HttpDelete("quitColloc/{collocId}")]
+        public async Task<IActionResult> LeaveCollocation(int collocId)
+        {
+
+            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            Result result = await _collRoomGateway.LeaveCollocation(collocId, roomieId);
+            return this.Ok( result );
+        }
 
         // Renvoie les id des collocs dans lesquelles le roomie est présent
         [HttpGet( "getNameId" )]
@@ -61,6 +64,62 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
+        [HttpPost( "{email}/invite/{idColloc}" )]
+        public async Task<int> Invite( string email ,int idColloc)
+        {
 
+            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            string invitationKey = Guid.NewGuid().ToString();
+
+            int receiverId = await _collocGateway.getRoomieIdByEmail(email);
+
+            if(receiverId != 0)
+            {
+                string smtpAddress = "smtp.gmail.com";
+                int portNumber = 587;
+                bool enableSSL = true;
+                string emailFromAddress = "ITI.Roomies@gmail.com"; //Sender Email Address
+                string password = "0123456789A@"; //Sender Password
+                string body = "Voici le code d'invitation " + invitationKey;
+
+                using( MailMessage mail = new MailMessage() )
+                {
+                    mail.From = new MailAddress( emailFromAddress );
+                    mail.To.Add( email );
+                    mail.Subject = "Invitation à une collocation";
+                    mail.Body = body;
+                    mail.IsBodyHtml = true;
+
+                    using( SmtpClient smtp = new SmtpClient( smtpAddress, portNumber ) )
+                    {
+
+                        smtp.Credentials = new NetworkCredential( emailFromAddress, password );
+                        smtp.EnableSsl = enableSSL;
+                        smtp.Send( mail );
+                    }
+                }
+                await _collocGateway.Invitation(invitationKey,receiverId,roomieId,idColloc);
+
+
+                return 1;
+            }
+            return 0;
+        }
+
+        [HttpPost( "join/{invitationKey}" )]
+        public async Task<int> InviteAsync( string invitationKey )
+        {
+            int result = await _collocGateway.CheckInvitation( invitationKey );
+            if (result != 0 )
+            {
+                int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+                await _collRoomGateway.AddCollRoom( roomieId, result );
+                await _collocGateway.DeleteInvite(invitationKey);
+                return result;
+            }
+
+
+            return result;
+        }
     }
 }

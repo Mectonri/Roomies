@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
+
 namespace ITI.Roomies.DAL
 {
 
@@ -69,5 +70,61 @@ namespace ITI.Roomies.DAL
                 return Result.Success( Status.Ok );
             }
         }
+
+        public async Task<int> getRoomieIdByEmail( string email )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                int result = await con.QueryFirstOrDefaultAsync<int>(
+                     "select r.RoomieId, r.FirstName from rm.tRoomie r where r.Email = @Email",
+                     new { Email = email } );
+                
+                return result;
+
+            }
+        }
+
+        public async Task<Result> Invitation( string guid, int idReceiver, int idSender, int idColloc)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@InvitationKey", guid );
+                p.Add( "IdReceiver", idReceiver );
+                p.Add( "IdSender", idSender );
+                p.Add( "IdColloc", idColloc );
+
+                await con.ExecuteAsync( "rm.sInvitation", p, commandType: CommandType.StoredProcedure );
+                
+                return Result.Success( Status.Ok );
+
+
+            }
+            
+        }
+
+        public async Task<int> CheckInvitation(string invitationKey)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                int result = await con.QueryFirstOrDefaultAsync<int>( @"select IdColloc from rm.tInvitation where InvitationKey = @InvitationKey;", new { InvitationKey = invitationKey } );
+                return result;
+            }
+
+        }
+
+        public async Task<Result> DeleteInvite(string invitationKey )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@InvitationKey", invitationKey );
+                int result = await con.ExecuteAsync( "rm.sDeleteInvite", p, commandType: CommandType.StoredProcedure );
+
+                return Result.Success( Status.Ok );
+            }
+            
+        }
+
     }
 }
