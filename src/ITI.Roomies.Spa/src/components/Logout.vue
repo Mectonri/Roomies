@@ -31,6 +31,7 @@ export default {
       // Reset les variable globales
       this.$currColloc.setCollocId(-1);
       this.$currColloc.setCollocName("");
+      this.$setMenuItemDisabled.setDisableState(true);
       this.$router.replace("/");
     }
   }
