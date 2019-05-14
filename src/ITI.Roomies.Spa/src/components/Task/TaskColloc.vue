@@ -109,7 +109,9 @@ export default {
         this.$currColloc.collocId
       );
       if (this.taskData.length == this.futureTaskData) {
-        this.taskData = "Nada";
+          this.taskData = "Nada";
+          this.taskHistoriqueData = "Nada";
+        
       } else {
         // TO DO : LE FAIRE EN SQL BORDEL
         // Prend la valeur de la première tâche
@@ -141,9 +143,9 @@ export default {
 
         if(tempArray != 0) this.taskData = tempArray;
         else this.taskData = "Nada";
+        
         if (tempArray2.length != 0) this.taskHistoriqueData = tempArray2;
         else this.taskHistoriqueData = "Nada";
-
         
       }
     } catch (e) {

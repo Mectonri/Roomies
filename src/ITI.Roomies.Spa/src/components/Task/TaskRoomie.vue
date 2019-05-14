@@ -23,10 +23,16 @@
               <td>{{ task.taskDes }}</td>
               <td>{{ task.taskDate }}</td>
               <td v-if="!task.state">
-                <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
+                <button
+                  class="btn btn-dark"
+                  @click="updateState(task.taskId, true)"
+                >{{ task.state }}</button>
               </td>
               <td v-else>
-                <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
+                <button
+                  class="btn btn-dark"
+                  @click="updateState(task.taskId, false)"
+                >{{ task.state }}</button>
               </td>
               <td>{{task.firstName}}</td>
               <td>
@@ -134,7 +140,7 @@ export default {
 
         if (this.taskData.length == this.futureTaskData) {
           this.taskData = "Nada";
-          console.log(this.taskData);
+          this.taskHistoriqueData = "Nada";
         } else {
           // TO DO : LE FAIRE EN SQL BORDEL
           // Prend la valeur de la première colloc
@@ -190,10 +196,9 @@ export default {
               taskArray: tempArray
             });
           else this.taskData = "Nada";
-          
+
           if (tempArray2.length != 0) this.taskHistoriqueData = tempArray2;
           else this.taskHistoriqueData = "Nada";
-          console.log(this.taskData);
         }
       } catch (e) {
         console.log(e);
