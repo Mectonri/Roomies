@@ -37,7 +37,7 @@ class currentColloc {
 
 Vue.use(VueGlobalVariable, {
   globals: {
-  $currColloc: new currentColloc(-1,''),
+  $currColloc: new currentColloc(0,''),
   //$checkedGoogle : false
   },
   });
