@@ -75,8 +75,8 @@
 
 
 <script>
-import {createCollocAsync, quitCollocAsync, InviteAsync, JoinAsync} from "../api/CollocationApi";
-import { state } from "../state";
+import {createCollocAsync, quitCollocAsync, InviteAsync, JoinAsync} from "../../api/CollocationApi";
+import { state } from "../../state";
 import { error } from 'util';
 export default {
   data() {
