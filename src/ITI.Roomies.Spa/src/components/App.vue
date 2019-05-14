@@ -2,69 +2,69 @@
   <div id="app">
     <!-- Menu de navigation -->
     <!-- <div> -->
-      <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
-        <!-- TO DO : A styliser -->
-        Name : {{$currColloc.collocName}}
-        Id : {{$currColloc.collocId}}
-        <el-menu-item @click="clickRoute('/roomies')">
-          <i class="el-icon-star-on">
-            <span slot="title">Accueil</span>
-          </i>
-        </el-menu-item>
-        <br>
-        <br>
-        <el-button @click.native="expand_collapse">
-          <span class="navbar-toggler-icon el-icon-more"></span>
-        </el-button>
-        <el-menu-item @click="clickRoute('/roomies/collocation')">
-          <i class="el-icon-menu"></i>
-          <span slot="title">Create a collocation</span>
-        </el-menu-item>
-        <el-menu-item @click="clickRoute('/roomies/calendar')">
-          <i class="el-icon-menu"></i>
-          <span slot="title">Calendrier</span>
-        </el-menu-item>
+    <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
+      <!-- TO DO : Remplacer par l'image de la Colloc -->
+      Name : {{$currColloc.collocName}} <br>
+      Id : {{$currColloc.collocId}}
+      <el-menu-item @click="clickRoute('/roomies')">
+        <i class="el-icon-star-on">
+          <span slot="title">Accueil</span>
+        </i>
+      </el-menu-item>
+      <br>
+      <br>
+      <el-button @click.native="expand_collapse">
+        <span class="navbar-toggler-icon el-icon-more"></span>
+      </el-button>
+      <el-menu-item @click="clickRoute('/roomies/collocation')">
+        <i class="el-icon-menu"></i>
+        <span slot="title">Create a collocation</span>
+      </el-menu-item>
+      <el-menu-item @click="clickRoute('/roomies/calendar')">
+        <i class="el-icon-menu"></i>
+        <span slot="title">Calendrier</span>
+      </el-menu-item>
 
-        <el-submenu  index="1">
-          <template slot="title">
-            <i class="el-icon-document"/>
-            <span>Tâches</span>
-          </template>
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-document"/>
+          <span>Tâches</span>
+        </template>
 
-          <el-menu-item  index="1-1" @click="clickRoute('/task/colloc')">Tâche Collocation active</el-menu-item>
-          <el-menu-item  index="1-2" @click="clickRoute('/task/roomie')">Tâches Roomie</el-menu-item>
-          <el-menu-item  index="1-3"@click="clickRoute('/task/create')">Ajouter tâche</el-menu-item>
-        </el-submenu>
+        <el-menu-item index="1-1" @click="clickRoute('/task/colloc')">Tâche Collocation active</el-menu-item>
+        <el-menu-item index="1-2" @click="clickRoute('/task/roomie')">Tâches Roomie</el-menu-item>
+        <el-menu-item index="1-3" @click="clickRoute('/task/create')">Ajouter tâche</el-menu-item>
+      </el-submenu>
 
-        <el-menu-item @click="clickRoute('/course')">
-          <i class="el-icon-location"></i>
-          <span slot="title">GroceryList</span>
-        </el-menu-item>
-        <el-menu-item @click="clickRoute('/')" disabled>
-          <i class="el-icon-setting"></i>
-          <span slot="title">Dépense</span>
-        </el-menu-item>
-        <el-menu-item @click="clickRoute('/')" disabled>
-          <i class="el-icon-setting"></i>
-          <span slot="title">Paramètres</span>
-        </el-menu-item>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <el-menu-item @click="clickRoute('/logout')">
-          <i class="el-icon-circle-close"></i>
-          <span slot="title">Se déconnecter</span>
-        </el-menu-item>
-      </el-menu>
+      <el-menu-item @click="clickRoute('/course')">
+        <i class="el-icon-location"></i>
+        <span slot="title">GroceryList</span>
+      </el-menu-item>
+      <el-menu-item @click="clickRoute('/')" disabled>
+        <i class="el-icon-setting"></i>
+        <span slot="title">Dépense</span>
+      </el-menu-item>
+      <el-menu-item @click="clickRoute('/')" disabled>
+        <i class="el-icon-setting"></i>
+        <span slot="title">Paramètres</span>
+      </el-menu-item>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <el-menu-item @click="clickRoute('/logout')">
+        <i class="el-icon-circle-close"></i>
+        <span slot="title">Se déconnecter</span>
+      </el-menu-item>
+    </el-menu>
 
-      <!-- Affihe le chemin demandé -->
+    <!-- Affihe le chemin demandé -->
 
-      <main v-if="state == true" role="main" style="padding-left: 50px;">Chargement en cours</main>
-      <main v-else>
-        <router-view class="child" style="padding-left: 50px;"></router-view>
-      </main>
+    <main v-if="state == true" role="main" style="padding-left: 100px;">Chargement en cours</main>
+    <main v-else>
+      <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
+    </main>
     <!-- </container> -->
   </div>
 </template>
@@ -125,8 +125,14 @@ export default {
       this.$router.push(pathToRoute);
     },
     expand_collapse() {
-      if (this.isCollapse) this.isCollapse = false;
-      else this.isCollapse = true;
+      if (this.isCollapse) {
+        this.isCollapse = false;
+        document.getElementById("pageContent").style.paddingLeft = "236px";
+      } else {
+        this.isCollapse = true;
+        document.getElementById("pageContent").style.paddingLeft = "100px";
+      
+      }
     }
   }
 };
@@ -140,10 +146,25 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   max-width: 200px;
+    border-right: 1px solid #000000;
   float: left;
 }
 .el-menu-vertical-demo {
   float: left;
   min-height: 100vh;
+    border-right: 1px solid #000000;
+}
+
+.el-menu{
+  background-color: rgb(102,102,102);
+  }
+
+.el-menu-item i, .el-submenu i, .el-menu-item.is-active, .el-submenu-item.is-active{
+color: black;
+}
+
+.el-button{
+    background: rgb(102,102,102);
+    border: 1px solid #000000;
 }
 </style>
