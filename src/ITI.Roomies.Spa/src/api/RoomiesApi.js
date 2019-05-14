@@ -1,4 +1,4 @@
-import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
+import { getAsync, postAsync, putAsync, deleteAsync, getStringAsync } from '../helpers/apiHelper'
 
 const endpoint = process.env.VUE_APP_BACKEND + "/api/Roomies";
 
@@ -19,5 +19,8 @@ export async function inviteRoomieAsync(email){
 
 export async function uploadImage( image ){
     return await postAsync((`${endpoint}/${image}`));
+}
+export async function getRoomiePicAsync(roomieId) {
+    return await getStringAsync(`${endpoint}/getRoomiePic/${roomieId}`);
 }
 

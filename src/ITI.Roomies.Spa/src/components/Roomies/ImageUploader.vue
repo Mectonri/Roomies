@@ -10,8 +10,9 @@
 
       </div>
 
-      <div v-if="picPath != null">
-        <img :src="env + this.picPath" class="imagePhoto">
+      <div>
+        <img :src="this.env+'/'+this.picPath"  width="30em" height="30vh">
+
       </div>
 
     </div>
@@ -21,29 +22,33 @@
 
 import axios from "axios"
 import AuthService from '../../services/AuthService'
+import {getRoomiePicAsync, getRoomieByIdAsync} from "../../api/RoomiesApi"
 
 
 
 export default {
+  // width em
+  // height vh
     data(){
         return {
+
             file : new FormData(),
             env : process.env.VUE_APP_BACKEND,
             roomieId: null,
-            picPath: null,
-            
+            picPath: null,            
         }
     },
 
     async mounted(){
       this.roomieId = this.$route.params.id;
-      this.picPath =  "/Pictures/" + this.roomieId + "/" + this.roomieId + ".jpg";      
+      this.picPath =  await getRoomiePicAsync(this.roomieId);
     },
 
     methods:{
         async submitImage() {
+          
             const endpoint = process.env.VUE_APP_BACKEND + "/api/image";
-
+           
             const file = this.file;
             file.append("roomieId", parseInt(this.roomieId));
             

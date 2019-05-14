@@ -1,6 +1,10 @@
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 
 namespace ITI.Roomies.DAL
@@ -30,15 +34,36 @@ namespace ITI.Roomies.DAL
             string fileName = file.FileName;
 
             fileName = file.FileName.Substring( fileName.LastIndexOf( "." ) );
+            string name = roomieId.ToString() + fileName;
 
-            string filePath = Path.Combine( path, roomieId.ToString()+fileName);
+            string filePath = Path.Combine( path, name);
             
             using( var fileStream = new FileStream( filePath, FileMode.Create ) )
             {
                 await file.CopyToAsync( fileStream );
                 System.Console.WriteLine("PASSED");
             }
+            string serverLink = "Pictures/" + roomieId + "/" + name;
+
+            await UpdateRoomiePic(roomieId, serverLink  );
             return message;
+            
+        }
+
+        public async Task<Result> UpdateRoomiePic(int roomieId, string roomiePic)
+        {
+            using( SqlConnection con = new SqlConnection( _connectingString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@RoomieId", roomieId );
+                p.Add("@RoomiePic", roomiePic);
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sRoomiePicUpdate", p, commandType: CommandType.StoredProcedure );
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Roomie not found." );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok );
+            }
         }
 
         public async Task<MemoryStream> DownloadImage( string imageName )

@@ -41,13 +41,26 @@ namespace ITI.Roomies.DAL
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
+
                 return await con.QueryFirstOrDefaultAsync<RoomiesData>(
                     "select r.RoomieId, r.Email, r.[Password], r.GoogleRefreshToken, r.GoogleId from rm.vRoomie r where r.GoogleId = @GoogleId",
                     new { GoogleId = googleId } );
             }
         }
 
+        public async Task<Result<string>> GetRoomiePicAsync( int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                string result = await con.QueryFirstAsync<string>(
+                    "select p.RoomiePic from rm.vRoomiesPic p where p.RoomieId = @RoomieId",
+                new { RoomieId = roomieId });
 
+                if( result == null ) return Result.Failure<string>( Status.NotFound, "Roomie has no pictures" );
+
+                return Result.Success(result);
+            }
+        }
 
         public async Task<Result<RoomiesData>> getRoomieIdByEmail( string email )
         {
@@ -57,7 +70,7 @@ namespace ITI.Roomies.DAL
                      "select r.RoomieId, r.FirstName from rm.tRoomie r where r.Email = @Email",
                      new { Email = email } );
 
-                if( result == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Task not found." );
+                if( result == null ) return Result.Failure<RoomiesData>( Status.NotFound, "Roomie not found." );
                 return Result.Success( result );
 
             }

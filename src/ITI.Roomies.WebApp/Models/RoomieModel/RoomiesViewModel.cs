@@ -16,6 +16,8 @@ namespace ITI.Roomies.WebApp.Models.RoomieModel
 
         public string Phone { get; set; }
 
+        public string RoomiePic { get; set; }
+
         //public string Email { get; set; }
 
         //public string Description { get; set; }
