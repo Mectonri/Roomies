@@ -20,19 +20,20 @@ namespace ITI.Roomies.WebApp.Controllers
         readonly CollocGateway _collocGateway;
         readonly CollRoomGateway _collRoomGateway;
 
-        public CollocationController( CollocGateway collocGateway, CollRoomGateway collroomGateway )
+        public CollocationController( CollocGateway collocGateway, CollRoomGateway collRoomGateway)
         {
             _collocGateway = collocGateway;
-            _collRoomGateway = collroomGateway;
+            _collRoomGateway = collRoomGateway;
         }
 
 
         [HttpPost]
         public async Task<int> CreateColloc( [FromBody] CollocViewModel model )
         {
-            Result<int> result = await _collocGateway.CreateColloc( model.CollocName );
-            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-            Result<int> result2 = await _collRoomGateway.AddCollRoom( result.Content, userId );
+            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+
+            Result<int> result = await _collocGateway.CreateColloc( model.CollocName, roomieId );
+          
 
             return  result.Content ;
 
