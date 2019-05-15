@@ -1,6 +1,5 @@
 create procedure rm.sItemCreate
 (
-	@ItemId		int out,
 	@CourseId	int,
 	@RoomieId	int,
     @ItemName   nvarchar(32),
@@ -13,7 +12,6 @@ begin
 
 	insert into rm.tItem(ItemName, ItemPrice, RoomieId, CourseId)
 	                  values(@ItemName, @ItemPrice, @RoomieId, @CourseId);
-	set @ItemId = scope_identity();
 	
 	commit;
 	return 0;

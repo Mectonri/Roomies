@@ -93,7 +93,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> UpdateGroceryList( int courseId, string courseName, DateTime courseDate, int collocId)
+        public async Task<Result> UpdateGroceryList( int courseId, string courseName, DateTime courseDate)
         {
             if( !IsNameValid( courseName ) ) return Result.Failure( Status.BadRequest, "The course name is not valid." );
 
@@ -104,14 +104,12 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@CourseName", courseName );
                 p.Add( "@CourseDate", courseDate );
-                p.Add( "@CollocId", collocId );
-                p.Add( "@CourseId", dbType: DbType.Int32, direction: ParameterDirection.Output );
+                p.Add( "@CourseId", courseId, dbType: DbType.Int32);
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseUpdate", p, commandType: CommandType.StoredProcedure );
 
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Grocery List not found." );
-                if( status == 2 ) return Result.Failure( Status.BadRequest, "A Grocery List with this name already exists." );
                
                 Debug.Assert( status == 0 );
                 return Result.Success( Status.Ok );

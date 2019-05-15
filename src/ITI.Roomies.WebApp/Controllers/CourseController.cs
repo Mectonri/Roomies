@@ -28,7 +28,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
         }
 
-        [HttpGet( "GetAGroceryList/{id}", Name = "GetAGroceryList")]
+        [HttpGet( "GetAGroceryList/{courseId}", Name = "GetAGroceryList")]
         public async Task<IActionResult> GetGroceryListById(int courseId)
         {
             Result<CourseData> result = await _courseGateway.FindById( courseId );
@@ -42,14 +42,14 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result, o =>
             {
                 o.RouteName = "GetAGroceryList";
-                o.RouteValues = id => new { id };
+                o.RouteValues = courseId => new { courseId };
             } );
         }
 
         [HttpPut("updateGroceryList")]
         public async Task<IActionResult> UpdateAGroceryList([FromBody] CourseViewModel model )
         {
-            Result result = await _courseGateway.UpdateGroceryList( model.CourseId, model.CourseName, model.CourseDate, model.CollocId );
+            Result result = await _courseGateway.UpdateGroceryList( model.CourseId, model.CourseName, model.CourseDate);
             return this.CreateResult( result );
         }
 

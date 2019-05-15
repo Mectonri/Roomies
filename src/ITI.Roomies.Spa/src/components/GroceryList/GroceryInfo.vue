@@ -4,27 +4,26 @@
     <div>
       <h1>Liste de course {{courseName}}</h1>
     </div>
-    <div>
+    <!-- <div>
       <item :courseId="courseId"></item>
-    </div>
+    </div> -->
 
   </div>
 </template>
 
 <script>
 
-import item from "../Item/Item.vue"
+// import item from "../Item/Item.vue"
 
 export default {
-  props: {
-    courseId: {
-      type: Number,
-      required: true,
-      // default: null
-    }
+  props: [],
+  data() {
+    return {
+      
+    };
   },
   components:{
-    item,
+    // item,
   },
 
   data(){

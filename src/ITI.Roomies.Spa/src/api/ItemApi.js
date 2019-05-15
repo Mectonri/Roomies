@@ -11,10 +11,12 @@ export async function createItemAsync(model) {
   return await postAsync(endpoint, model);
 }
 
-
-export async function getAllAsync(){
-  return await getAsync(`${endpoint}`);
+export async function getItemByItemIdAsync(itemId) {
+  return await getAsync(`${endpoint}/getItemByItemId/${itemId}`);
 }
+// export async function getAllAsync(){
+//   return await getAsync(`${endpoint}`);
+// }
 
 export async function updateItemAsync(model){
   return await putAsync(`${endpoint}/${model.itemId}`, model);

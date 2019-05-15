@@ -12,31 +12,32 @@
         <button type="submit">Sauvegarder</button>
       </form>
     </div>
-  </div> -->
+  </div>-->
 
-  <el-container v-if="state == false">
-    <el-main v-if="idIsUndefined == false">
-      <el-hearder v-if="route == 'create'">
+  <el-container v-if="!state">
+    <el-main v-if="!idIsUndefined">
+      <header v-if="route == 'create'">
         <h2>Créer une liste de course</h2>
-      </el-hearder>
+      </header>
 
-      <el-header v-if="route == 'edit'">
+      <header v-if="route == 'edit'">
         <h2>Modifier la liste de course</h2>
-      </el-header>
+      </header>
 
-      <el-form @submit="onSubmit($event)">
-
+      <el-form>
         <div>
-          <label class="required">Nom</label> <br>
+          <label class="required">Nom</label>
+          <br>
           <input class="input_border" type="text" v-model="course.courseName" required>
         </div>
 
         <div>
-          <label> Date </label> <br>
+          <label>Date</label>
+          <br>
           <input class="input_border" type="date" v-model="course.courseDate">
         </div>
 
-        <el-button @click="onSubmit">Sauvegarder</el-button>
+        <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
       </el-form>
     </el-main>
     <el-main v-else>Erreur</el-main>
@@ -45,55 +46,53 @@
 </template>
 
 <script>
-
-import {createGroceryListAsync, getGroceryListByIdAsync, updateAgroceryListAsync} from "../../api/GroceriesApi"
+import {
+  createGroceryListAsync,
+  getGroceryListByIdAsync,
+  updateAgroceryListAsync
+} from "../../api/GroceriesApi";
 import AuthService from "../../services/AuthService";
-import {state} from "../../state";
+import { state } from "../../state";
 
 export default {
   data() {
-    return{
+    return {
       errors: [],
       course: {},
-      checkedRoomiesList:[],
+      checkedRoomiesList: [],
       route: null,
       idIsUndefined: true,
       state: true,
-      id: null,
-    }
+      id: null
+    };
   },
 
   computed: {
-    auth: () =>AuthService,
+    auth: () => AuthService,
 
     isLoading() {
       return this.state.isLoading;
     }
   },
   async mounted() {
-
-      //route
-    if(this.$route.fullPath.replace("/course/","") == "create") {
+    //route
+    if (this.$route.fullPath.replace("/course/", "") == "create") {
       this.route = "create";
       this.idIsUndefined = false;
-    }else {
+    } else {
       this.route = "edit";
 
-      if( this.$route.params.id == undefined) {
+      if (this.$route.params.id == undefined) {
         this.idIsUndefined = true;
-
-      }else{
-
+      } else {
         this.course.courseId = this.$route.params.id;
 
-        try{
-          this.course = await updateAgroceryListAsync(this.course);
-          
-           
-        } catch(e) {
+        try {
+          this.course = await getGroceryListByIdAsync(this.course.courseId);
+          this.idIsUndefined = false;
+        } catch (e) {
           console.log(e);
           this.idIsUndefined = true;
-
         }
       }
     }
@@ -101,33 +100,34 @@ export default {
   },
 
   methods: {
-    async onSubmit(event) {
+    async onSubmit() {
       event.preventDefault();
 
       var errors = [];
 
-      if(!this.course.courseName) errors.push("Nom");
-      if(!this.course.courseDate) errors.push("Date");
+      if (!this.course.courseName) errors.push("Nom");
+      if (!this.course.courseDate) errors.push("Date");
 
-      if(errors.length == 0){
-        try{
-
-          if(this.route == "create"){
+      if (errors.length == 0) {
+        try {
+          if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
             await createGroceryListAsync(this.course);
           }
-        }catch(e){
+          if (this.route == "edit") {
+            await updateAgroceryListAsync(this.course);
+          }
+        } catch (e) {
           console.error(e);
         }
-      }else {
-        for (var j = 0; j<errors.length; j++) {
+      } else {
+        for (var j = 0; j < errors.length; j++) {
           console.log(errors[j]);
         }
       }
-    },
-
-  },
-}
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

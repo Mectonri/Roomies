@@ -1,101 +1,93 @@
 <template>
-
-<div>
   <div>
-    <h1> Item dans le liste {{courseName}}({{courseId}})</h1>
     <div>
-      <router-link :to="`item/create`"><i>Add</i></router-link>
+      <h1>Objet dans le liste {{courseName}}</h1>
+      <div>
+          <button class="btn btn-dark" @click="clickRoute('/course/info/'+ courseId + '/item/create')">Ajouter un objet à la liste</button>
+      </div>
     </div>
-  </div>
-  
-  <table>
 
-    <div v-if="itemList == 0">
+    <table>
+      <div v-if="itemList == 0">
         <tr>
           <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
         </tr>
       </div>
 
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Owner</th>
-        <th>Options</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      <div>
-      <tr v-for="i of itemList" :key="i.itemId">
-        <td>{{i.itemName}}</td>
-        <td>{{i.itemPrice}}</td>
-        <td>{{i.roomieId}}</td>
-        <td>
-          <router-link :to="`item/edit/${i.itemId}`"><i>edit</i></router-link>
-          <a href="#" @click="deleteItem(i.itemId)">
-            <i>delete</i>
-          </a>
-        </td>
-      </tr>
-      </div>
-    </tbody>
-  </table>
- 
-</div>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Owner</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <div>
+          <tr v-for="i of itemList" :key="i.itemId">
+            <td>{{i.itemName}}</td>
+            <td>{{i.itemPrice}}</td>
+            <td>{{i.roomieId}}</td>
+            <td>
+              <button class="btn btn-dark" @click="clickRoute('/course/info/'+ courseId + '/item/edit/' + i.itemId)"> edit </button>
+              <a href="#" @click="deleteItem(i.itemId)">
+                <i>delete</i>
+              </a>
+            </td>
+          </tr>
+        </div>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
-
-import { getItemListAsync, deleteItemAsync} from "../../api/ItemApi";
-import {getGroceryListByIdAsync} from "../../api/GroceriesApi";
-import { getRoomieByIdAsync} from "../../api/RoomiesApi.js";
-
+import { getItemListAsync, deleteItemAsync } from "../../api/ItemApi";
+import { getGroceryListByIdAsync } from "../../api/GroceriesApi";
+import { getRoomieByIdAsync } from "../../api/RoomiesApi.js";
 
 export default {
   data() {
-    return { 
+    return {
       itemList: [],
-      courseName: '', 
+      courseName: "",
       courseId: null,
       item: {},
-      roomieName: "",
-
-    }
+      roomieName: ""
+    };
   },
 
-  async mounted(){
+  async mounted() {
     this.courseId = this.$route.params.id;
-    //console.log("the course Id is:" +this.courseId);
     await this.refreshList();
-    
   },
 
-  methods:{
-    async refreshList(){
-      console.log("the course Id is:" +this.courseId);
-      // debugger;
-      this.itemList = await getItemListAsync(this.courseId);
-    
-      this.courseName = await getGroceryListByIdAsync(this.courseId).courseName;
-      
-      console.log("this is the course id");
-      console.log(await getGroceryListByIdAsync(this.courseId));
-      // debugger;
-     
+  methods: {
+    async refreshList() {
+      try {
+        this.itemList = await getItemListAsync(this.courseId);
+        this.tooMuchData = await getGroceryListByIdAsync(this.courseId);
+        this.courseName = this.tooMuchData.courseName;
+      } catch (e) {
+        console.log(e);
+      }
     },
 
-    async deleteItem(itemId){
-      try{
-      await deleteItemAsync(itemId);
-      await refreshList();
-      }catch(e){
+    async deleteItem(itemId) {
+      try {
+        await deleteItemAsync(itemId);
+        await this.refreshList();
+      } catch (e) {
         console.log(e);
-      }finally{
-        await refreshList();
+      } finally {
+        await this.refreshList();
       }
     },
     
-  },
-}
+    clickRoute(pathToRoute) {
+      this.$router.push(pathToRoute);
+    },
+
+  }
+};
 </script>
