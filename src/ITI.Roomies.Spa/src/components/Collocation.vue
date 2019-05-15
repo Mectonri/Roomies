@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="container">
     <header>
       <button class="btn btn-dark" @click="changeCreate()">création</button>
       <button class="btn btn-dark" @click="changeInvite()">inviter</button>
@@ -200,6 +200,6 @@ export default {
 
 <style scoped>
 .form-control {
-  max-width: 200em;
+  max-width: 60em;
 }
 </style>

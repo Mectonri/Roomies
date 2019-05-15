@@ -4,7 +4,8 @@
     <!-- <div> -->
     <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
       <!-- TO DO : Remplacer par l'image de la Colloc -->
-      Name : {{$currColloc.collocName}} <br>
+      Name : {{$currColloc.collocName}}
+      <br>
       Id : {{$currColloc.collocId}}
       <el-menu-item @click="clickRoute('/roomies')">
         <i class="el-icon-star-on">
@@ -20,7 +21,10 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Create a collocation</span>
       </el-menu-item>
-      <el-menu-item @click="clickRoute('/roomies/calendar')" :disabled="$setMenuItemDisabled.disableState">
+      <el-menu-item
+        @click="clickRoute('/roomies/calendar')"
+        :disabled="$setMenuItemDisabled.disableState"
+      >
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
@@ -31,9 +35,21 @@
           <span>Tâches</span>
         </template>
 
-        <el-menu-item index="1-1" @click="clickRoute('/task/colloc')" :disabled="$setMenuItemDisabled.disableState">Tâche Collocation active</el-menu-item>
-        <el-menu-item index="1-2" @click="clickRoute('/task/roomie')" :disabled="$setMenuItemDisabled.disableState">Tâches Roomie</el-menu-item>
-        <el-menu-item index="1-3" @click="clickRoute('/task/create')" :disabled="$setMenuItemDisabled.disableState">Ajouter tâche</el-menu-item>
+        <el-menu-item
+          index="1-1"
+          @click="clickRoute('/task/colloc')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Tâche Collocation active</el-menu-item>
+        <el-menu-item
+          index="1-2"
+          @click="clickRoute('/task/roomie')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Tâches Roomie</el-menu-item>
+        <el-menu-item
+          index="1-3"
+          @click="clickRoute('/task/create')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Ajouter tâche</el-menu-item>
       </el-submenu>
 
       <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
@@ -60,11 +76,19 @@
     </el-menu>
 
     <!-- Affihe le chemin demandé -->
-
-    <main v-if="state == true" role="main" style="padding-left: 100px;">Chargement en cours</main>
-    <main v-else>
-      <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
-    </main>
+    <template v-if="isCollapse">
+      <main v-if="state == true " role="main" style="padding-left: 100px;">Chargement en cours</main>
+      <main v-else>
+        <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
+      </main>
+    </template>
+    <!-- </container> -->
+    <template v-else>
+      <main v-if="state == true " role="main" style="padding-left: 236px;">Chargement en cours</main>
+      <main v-else>
+        <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
+      </main>
+    </template>
     <!-- </container> -->
   </div>
 </template>
@@ -128,11 +152,10 @@ export default {
     expand_collapse() {
       if (this.isCollapse) {
         this.isCollapse = false;
-        document.getElementById("pageContent").style.paddingLeft = "236px";
+        // document.getElementById("pageContent").style.paddingLeft = "236px";
       } else {
         this.isCollapse = true;
-        document.getElementById("pageContent").style.paddingLeft = "100px";
-      
+        // document.getElementById("pageContent").style.paddingLeft = "100px";
       }
     }
   }
@@ -147,25 +170,28 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 12em;
   max-width: 12em;
-    border-right: 1px solid #000000;
+  border-right: 1px solid #000000;
   float: left;
 }
 .el-menu-vertical-demo {
   float: left;
   min-height: 100vh;
-    border-right: 1px solid #000000;
+  border-right: 1px solid #000000;
 }
 
-.el-menu{
-  background-color: rgb(142,142,142);
-  }
-
-.el-menu-item i, .el-submenu i, .el-menu-item.is-active, .el-submenu-item.is-active{
-color: black;
+.el-menu {
+  background-color: rgb(142, 142, 142);
 }
 
-.el-button{
-    background: rgb(102,102,102);
-    border: 1px solid #000000;
+.el-menu-item i,
+.el-submenu i,
+.el-menu-item.is-active,
+.el-submenu-item.is-active {
+  color: black;
+}
+
+.el-button {
+  background: rgb(102, 102, 102);
+  border: 1px solid #000000;
 }
 </style>
