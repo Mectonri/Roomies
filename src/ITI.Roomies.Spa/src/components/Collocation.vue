@@ -1,11 +1,10 @@
 <template>
-  <el-container>
     <div class="container">
-      <div class="button">
-        <el-button @click="changeCreate()">création</el-button>
-        <el-button @click="changeInvite()">inviter</el-button>
-        <el-button @click="changeJoin()">joindre</el-button>
-      </div>
+      <header>
+        <button class="btn btn-dark" @click="changeCreate()">création</button>
+        <button class="btn btn-dark" @click="changeInvite()">inviter</button>
+        <button class="btn btn-dark" @click="changeJoin()">joindre</button>
+      </header>
       <div v-if="show1">
         <form @submit="onSubmit($event)">
           <div class="alert alert-danger" v-if="errors.length > 0">
@@ -18,10 +17,11 @@
 
           <div class="form-group">
             <label class="required">Nom de collocation</label>
-            <el-input type="text" v-model="item.CollocName" required/>
+            <input class="form-control" type="text" v-model="item.CollocName" required/>
           </div>
 
-          <el-button native-type="submit" v-if="this.collocName==''">Sauvegarder</el-button>
+          <br>
+          <button class="btn btn-dark" native-type="submit" v-if="this.collocName==''">Sauvegarder</button>
           <p v-if="this.collocName!='' ">Vous avez déjà une collocation.</p>
         </form>
       </div>
@@ -29,10 +29,11 @@
         <form @submit="onSubmitJoin($event)">
           <div class="form-group">
             <label class="required">Clé :</label>
-            <el-input type="text" v-model="item.InviteKey" required/>
+            <input class="form-control" type="text" v-model="item.InviteKey" required/>
           </div>
 
-          <el-button native-type="submit" v-if="this.collocName==''">Rejoindre</el-button>
+          <br>
+          <button class="btn btn-dark" native-type="submit" v-if="this.collocName==''">Rejoindre</button>
           <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
           <p v-if="this.checkjoin==0">le code que vous avez rentré n'est pas valide.</p>
         </form>
@@ -50,10 +51,10 @@
 
           <div class="form-group">
             <label class="required">Mail</label>
-            <el-input type="text" v-model="item.mail" required/>
+            <input class="form-control" type="text" v-model="item.mail" required/>
           </div>
 
-          <el-button native-type="submit" v-if="this.collocName!=''">Envoyer</el-button>
+          <button class="form-control" native-type="submit" v-if="this.collocName!=''">Envoyer</button>
           <p
             v-if="this.collocName==''"
           >Veuillez d'abords créer une collocation avant de chercher à inviter des personnes.</p>
@@ -64,10 +65,9 @@
 
       <div v-if="this.collocName!='' && show4">
         <br>
-        <el-button @click="onSubmitQuit($event)" native-type="submit">Quitter la collocation</el-button>
+        <button class="btn btn-dark" @click="onSubmitQuit($event)" native-type="submit">Quitter la collocation</button>
       </div>
     </div>
-  </el-container>
 </template>
 
 

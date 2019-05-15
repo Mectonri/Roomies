@@ -7,8 +7,9 @@ const endpoint = process.env.VUE_APP_BACKEND + "/api/item";
 export async function getItemListAsync(courseId) {
   return await getAsync(`${endpoint}/getItemList/${courseId}`);
 }
+
 export async function createItemAsync(model) {
-  return await postAsync(endpoint, model);
+  return await postAsync(`${endpoint}/addItem`, model);
 }
 
 export async function getItemByItemIdAsync(itemId) {
@@ -19,7 +20,7 @@ export async function getItemByItemIdAsync(itemId) {
 // }
 
 export async function updateItemAsync(model){
-  return await putAsync(`${endpoint}/${model.itemId}`, model);
+  return await postAsync(`${endpoint}/updateItem`, model);
 }
 
 export async function deleteItemAsync(itemId){

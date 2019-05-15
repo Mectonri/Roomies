@@ -1,11 +1,11 @@
 <template>
   <div id="container">
     <header>
-      <h1>Tâches</h1>
+      <h2>Tâches</h2>
     </header>
 
     <main v-if="taskData[0]">
-      <h2>{{$currColloc.collocName}}</h2>
+      <h3>{{$currColloc.collocName}}</h3>
 
       <table class="table table-dark" v-if="taskData !='Nada'">
         <tr>
@@ -40,8 +40,9 @@
     </main>
     <main v-else>Chargement en cours</main>
 
+    <br>
     <main v-if="taskHistoriqueData[0]">
-      <h2>Historique</h2>
+      <h3>Historique</h3>
 
       <table class="table table-dark" v-if="taskHistoriqueData !='Nada'">
         <tr>

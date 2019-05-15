@@ -37,7 +37,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
         }
 
-        [HttpPost]
+        [HttpPost("addItem")]
         public async Task<IActionResult> AddItem( [FromBody] ItemViewModel model )
         {
 
@@ -50,6 +50,14 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<IActionResult> DeleteItem( int itemId )
         {
             Result result = await _itemGateway.Delete( itemId );
+            return this.CreateResult( result );
+        }
+
+        [HttpPost( "updateItem" )]
+        public async Task<IActionResult> updateItemAsync([FromBody] ItemViewModel model)
+        {
+            int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            Result result = await _itemGateway.UpdateItem( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, userId );
             return this.CreateResult( result );
         }
     }

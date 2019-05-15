@@ -4,7 +4,7 @@ namespace ITI.Roomies.WebApp.Models.ItemModel
 {
     public class ItemViewModel
     {
-        public string ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [Required]
         public int ItemPrice { get; set; }

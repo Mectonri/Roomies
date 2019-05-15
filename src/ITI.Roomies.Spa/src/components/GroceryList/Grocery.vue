@@ -11,6 +11,7 @@
           <th>Date</th>
           <th>Price</th>
           <th>Options</th>
+          <th></th>
         </tr>
       </thead>
 
@@ -24,15 +25,16 @@
           <td>{{ g.courseDate}}</td>
           <td>{{g.coursePrice}}</td>
           <td>
-            <router-link :to="`course/edit/${g.courseId}`">
-              <i>edit</i>
-            </router-link>
             <router-link :to="`course/info/${g.courseId}`">
-              <i>info</i>
+              <button class="btn btn-dark">info</button>
             </router-link>
-            <a href="#" @click="deleteList(g.courseId)">
-              <i class="fa fa-trash"></i>
-            </a>
+          </td>
+          <td>
+            <router-link :to="`course/edit/${g.courseId}`">
+              <button class="btn btn-dark">edit</button>
+            </router-link>
+            <button class="btn btn-dark" @click="deleteList(g.courseId)"> Supprimer </button>
+            
           </td>
         </tr>
       </tbody>

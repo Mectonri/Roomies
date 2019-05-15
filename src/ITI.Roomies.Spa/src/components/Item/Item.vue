@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div id="template">
     <div>
-      <h1>Objet dans le liste {{courseName}}</h1>
-      <div>
-          <button class="btn btn-dark" @click="clickRoute('/course/info/'+ courseId + '/item/create')">Ajouter un objet à la liste</button>
-      </div>
+      <header>
+        <h1>Objet dans le liste {{courseName}}</h1>
+      </header>
     </div>
+    <br>
 
-    <table>
+    <table class="table table-dark">
       <div v-if="itemList == 0">
         <tr>
           <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
@@ -20,24 +20,33 @@
           <th>Price</th>
           <th>Owner</th>
           <th>Options</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <div>
-          <tr v-for="i of itemList" :key="i.itemId">
-            <td>{{i.itemName}}</td>
-            <td>{{i.itemPrice}}</td>
-            <td>{{i.roomieId}}</td>
-            <td>
-              <button class="btn btn-dark" @click="clickRoute('/course/info/'+ courseId + '/item/edit/' + i.itemId)"> edit </button>
-              <a href="#" @click="deleteItem(i.itemId)">
-                <i>delete</i>
-              </a>
-            </td>
-          </tr>
-        </div>
+        <tr v-for="i of itemList" :key="i.itemId">
+          <td>{{i.itemName}}</td>
+          <td>{{i.itemPrice}}</td>
+          <td>{{i.roomieId}}</td>
+          <td>
+            <button
+              class="btn btn-dark"
+              @click="clickRoute('/course/info/'+ courseId + '/item/edit/' + i.itemId)"
+            >edit</button>
+          </td>
+          <td>
+            <button class="btn btn-dark" @click="deleteItem(i.itemId)">Supprimer</button>
+          </td>
+        </tr>
       </tbody>
     </table>
+    <br>
+    <div>
+      <button
+        class="btn btn-dark"
+        @click="clickRoute('/course/info/'+ courseId + '/item/create')"
+      >Ajouter un objet à la liste</button>
+    </div>
   </div>
 </template>
 
@@ -66,6 +75,7 @@ export default {
     async refreshList() {
       try {
         this.itemList = await getItemListAsync(this.courseId);
+        console.log(this.itemList);
         this.tooMuchData = await getGroceryListByIdAsync(this.courseId);
         this.courseName = this.tooMuchData.courseName;
       } catch (e) {
@@ -83,11 +93,10 @@ export default {
         await this.refreshList();
       }
     },
-    
+
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
-    },
-
+    }
   }
 };
 </script>

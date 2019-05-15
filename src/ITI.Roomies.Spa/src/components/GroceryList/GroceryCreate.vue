@@ -14,8 +14,8 @@
     </div>
   </div>-->
 
-  <el-container v-if="!state">
-    <el-main v-if="!idIsUndefined">
+  <div id="container" v-if="!state">
+    <main v-if="!idIsUndefined">
       <header v-if="route == 'create'">
         <h2>Créer une liste de course</h2>
       </header>
@@ -24,25 +24,26 @@
         <h2>Modifier la liste de course</h2>
       </header>
 
-      <el-form>
+      <form>
         <div>
           <label class="required">Nom</label>
           <br>
-          <input class="input_border" type="text" v-model="course.courseName" required>
+          <input class="form-control" type="text" v-model="course.courseName" required>
         </div>
 
         <div>
           <label>Date</label>
           <br>
-          <input class="input_border" type="date" v-model="course.courseDate">
+          <input class="form-control" type="date" v-model="course.courseDate">
         </div>
 
+        <br>
         <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
-      </el-form>
-    </el-main>
-    <el-main v-else>Erreur</el-main>
-  </el-container>
-  <el-container v-else>Chargement en cours</el-container>
+      </form>
+    </main>
+    <main v-else>Erreur</main>
+  </div>
+  <div id="container" v-else>Chargement en cours</div>
 </template>
 
 <script>
@@ -113,9 +114,11 @@ export default {
           if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
             await createGroceryListAsync(this.course);
+            this.$router.push('/course');
           }
           if (this.route == "edit") {
             await updateAgroceryListAsync(this.course);
+            this.$router.push('/course');
           }
         } catch (e) {
           console.error(e);

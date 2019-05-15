@@ -1,23 +1,23 @@
 <template>
-  <el-container v-if="state == false">
-    <el-main v-if="idIsUndefined == false">
-      <el-header v-if="route == 'create'">
+  <div id="container" v-if="state == false">
+    <main v-if="idIsUndefined == false">
+      <header v-if="route == 'create'">
         <h2>Ajouter un Item a la liste de course {{item.courseId}}</h2>
-      </el-header>
-      <el-header v-if="route == 'edit'">
+      </header>
+      <header v-if="route == 'edit'">
         <h2>Modifier l'item {{itemNameToShow}}</h2>
-      </el-header>
+      </header>
 
-      <el-form>
+      <form>
         <div>
           <label class="required">Nom</label>
           <br>
-          <input class="input_border" type="text" v-model="item.itemName" required>
+          <input class="form-control" type="text" v-model="item.itemName" required>
         </div>
 
         <div>
           <label class="required">Prix</label>
-          <input class="input_border" type="number" v-model="item.itemPrice" required>
+          <input class="form-control" type="number" v-model="item.itemPrice" required>
         </div>
 
         <!-- /!\ TO DO : faire tune liste deffilantes avex le nom des liste/!\-->
@@ -30,13 +30,13 @@
         <label class="required">Roomie</label>
         <input class="input_border" type="text" v-model="item.roomieId" required>
         </div>-->
-
+        <br>
         <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
-      </el-form>
-    </el-main>
-    <el-main v-else>Erreur</el-main>
-  </el-container>
-  <el-container v-else>Chargement en cours</el-container>
+      </form>
+    </main>
+    <main v-else>Erreur</main>
+  </div>
+  <div id="container" v-else>Chargement en cours</div>
 </template>
 
 <script>
@@ -113,10 +113,12 @@ export default {
         try {
           if (this.route == "create") {
             await createItemAsync(this.item);
+            this.$router.push('/course/info/'+ this.item.courseId);
           }
           if (this.route == "edit") {
+            this.item.itemId = parseInt(this.$route.params.itemId);
             await updateItemAsync(this.item);
-            this.$router.push('/course/info/'+ courseId);
+            this.$router.push('/course/info/'+ this.item.courseId);
           }
         } catch (e) {
           console.error(e);

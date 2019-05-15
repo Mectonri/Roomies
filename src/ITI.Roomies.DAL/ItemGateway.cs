@@ -42,7 +42,8 @@ namespace ITI.Roomies.DAL
                 return await con.QueryAsync<ItemData>(
                     @"select i.ItemId,
                              i.ItemPrice,
-                             i.ItemName
+                             i.ItemName,
+                             i.RoomieId
                        from rm.tItem i
                        where i.CourseId = @CourseId",
                     new {CourseId = courseId} );
@@ -86,7 +87,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Update(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
+        public async Task<Result> UpdateItem(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
         {
             if( !IsNameValid( itemName ) ) return Result.Failure( Status.BadRequest, "The item name is not valid." );
 
