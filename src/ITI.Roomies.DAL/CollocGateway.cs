@@ -16,7 +16,11 @@ namespace ITI.Roomies.DAL
         {
             _connectionString = connectionString;
         }
-
+        /// <summary>
+        /// Find a colloc by it Id
+        /// </summary>
+        /// <param name="collocId"></param>
+        /// <returns></returns>
         public async Task<Result<CollocData>> FindById( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -34,7 +38,12 @@ namespace ITI.Roomies.DAL
             }
         }
 
-
+        /// <summary>
+        /// Create a collocation
+        /// </summary>
+        /// <param name="collocName"></param>
+        /// <param name="roomieId"></param>
+        /// <returns></returns>
         public async Task<Result<int>> CreateColloc(string collocName, int roomieId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )

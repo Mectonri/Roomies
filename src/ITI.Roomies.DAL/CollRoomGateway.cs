@@ -88,7 +88,7 @@ namespace ITI.Roomies.DAL
             {
                 CollocData collocName = await con.QueryFirstOrDefaultAsync<CollocData>(
                     @"select CollocName, CollocId
-                        from rm.vRoomieInfo 
+                        from rm.vCollocInfo 
                         where RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
                 // Return et procédure correctes

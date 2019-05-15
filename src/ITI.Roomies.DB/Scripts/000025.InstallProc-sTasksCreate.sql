@@ -4,6 +4,7 @@ create procedure rm.sTasksCreate
     @TaskName   nvarchar(32),
     @TaskDes	nvarchar(200) = null,
 	@TaskDate	datetime2,
+	@RoomieId int,
 	@CollocId int
 )
 as
@@ -14,6 +15,9 @@ begin
 	insert into rm.tTasks ( TaskName, TaskDate, TaskDes, CollocId)
 		values(@TaskName, @TaskDate, @TaskDes, @CollocId);
 	set @TaskId = scope_identity();
+	--insertes into the intermidiate table
+	insert into rm.tiTaskRoom(TaskId, RoomieId)
+		values(@TaskId, @RoomieId); 
 		
 	commit;
 	return 0;

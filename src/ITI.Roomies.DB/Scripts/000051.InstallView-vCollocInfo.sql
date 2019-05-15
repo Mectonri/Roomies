@@ -1,6 +1,7 @@
 create view rm.vCollocInfo
 as
-	select 
+	select
+		c.CollocId,
 		CollocPic = c.CollocPic,
 		CollocName = c.CollocName,
 		CreationDate = c.CreationDate,

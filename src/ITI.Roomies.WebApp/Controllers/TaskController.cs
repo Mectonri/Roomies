@@ -23,7 +23,11 @@ namespace ITI.Roomies.WebApp.Controllers
             _taskRoomGateway = taskRoomGateway;
         }
 
-        // Renvoie toutes les tâches liées à une collocation
+        /// <summary>
+        /// Renvoie toutes les tâches liées à une collocation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet( "getByCollocId/{id}" )]
         public async Task<IActionResult> GetTasksByCollocIdAsync( int id )
         {
@@ -31,7 +35,10 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
-        // Renvoie toutes les tâches liées à un Roomie
+        /// <summary>
+        /// Renvoie toutes les tâches liées à un Roomie
+        /// </summary>
+        /// <returns></returns>
         [HttpGet( "getByRoomieId" )]
         public async Task<IActionResult> GetTasksByRoomieIdAsync()
         {
@@ -40,8 +47,11 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
-
-        // Renvoie la tâche correspondant à l'id de la tâche
+        /// <summary>
+        /// Renvoie la tâche correspondant à l'id de la tâche
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet( "getByTaskId/{id}" )]
         public async Task<IActionResult> GetTaskByTaskIdAsync( int id)
         {
@@ -49,8 +59,6 @@ namespace ITI.Roomies.WebApp.Controllers
             // TO DO : mettre le bon return
             return this.Ok( result );
         }
-
-
 
         //[HttpPost]
         //public async Task<int> CreateTask( [FromBody] CollocViewModel model )
@@ -67,22 +75,18 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost( "createTask" )]
         public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
         {
-            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId );
+            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            Result<int> result = await _tasksGateway.CreateTask( model.TaskName, model.TaskDes, model.TaskDate, model.collocId, roomieId);
 
-            // Si aucune erreur d'exécution, ajoute la tâches avec les roomies à tiTaskRoom
-            if( !result.HasError )
-            {
-                for( int i = 0; i < model.roomiesId.Length; i++ )
-                {
-                    await _taskRoomGateway.AddTaskRoom( result.Content, model.roomiesId[i] );
-                }
-            }
-
-            // TO DO : mettre le bon return
-            return Ok( 0 );
+            return this.CreateResult( result);
         }
 
-        // Met à jour l'état de la tâche renseignée
+        /// <summary>
+        /// Met à jour l'état de la tâche renseignée
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         [HttpPost( "updateTaskState/{id}/{state}" )]
         public async Task<IActionResult> updateTaskStateAsync( int id, bool state )
         {
@@ -90,7 +94,12 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
-        // Mise à jour d'une tâche
+        /// <summary>
+        /// Mise à jour d'une tâche
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost( "updateTask/{taskId}" )]
         public async Task<IActionResult> createTaskSansDescAsync(int taskId, [FromBody] TaskViewModel model )
         {
@@ -111,23 +120,16 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
         }
 
-
-
-        // Suppression d'un tâche depuis son id
-        // TO DO : changer quand la procédure sera correcte
+        /// <summary>
+        /// Delete a task unsing it Id
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         [HttpDelete( "deleteTask/{taskId}" )]
-        public async Task<IActionResult> deleteTaskByIdAsync( int taskId )
+        public async Task<IActionResult> DeleteTaskByIdAsync( int taskId )
         {
-            Result result = await _taskRoomGateway.DeleteTaskRoomByTaskId( taskId );
-
-            // Si aucune erreur d'exécution, supprime la tâche de rm.tTasks
-            if( !result.HasError )
-            {
-                await _tasksGateway.DeleteTaskById( taskId );
-            }
-
-            // TO DO : mettre le bon return
-            return Ok( 0 );
+            Result result =  await _tasksGateway.DeleteTaskById( taskId );
+            return this.CreateResult( result );
         }
     }
 }
