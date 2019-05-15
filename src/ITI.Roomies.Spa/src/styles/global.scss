@@ -17,13 +17,13 @@ header{
 //     background-color: rgb(102,102,102);
 // }
 
-html{
-    background-color: rgb(80,80,80);
+html, main{
+    background-color: rgb(120,120,120);
 }
 
-main{
-    background-color: rgb(80,80,80);
-}
+// main{
+//     background-color: rgb(80,80,80);
+// }
 
 body *{
     // color: rgb(255,56,140);
@@ -44,6 +44,8 @@ body *{
 
 .table-dark{
     max-width: 60em;
+    background-color: rgb(60,60,60) !important;
+    // border-top-color: rgb(240,240,190) !important;
 }
 
 .textarea_width{

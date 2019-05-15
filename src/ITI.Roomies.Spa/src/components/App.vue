@@ -157,7 +157,7 @@ export default {
 }
 
 .el-menu{
-  background-color: rgb(102,102,102);
+  background-color: rgb(142,142,142);
   }
 
 .el-menu-item i, .el-submenu i, .el-menu-item.is-active, .el-submenu-item.is-active{
