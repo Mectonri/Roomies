@@ -123,7 +123,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return result;
         }
 
-        [HttpGet( 'getCollocInformation/{collocId}' )]
+        [HttpGet( "getCollocInformation/{collocId}" )]
         public async Task<IActionResult> getCollocInformation( int collocId )
         {
             IEnumerable<CollocData> result = await _collocGateway.getCollocInformation(collocId);

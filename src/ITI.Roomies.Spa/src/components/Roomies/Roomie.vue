@@ -11,7 +11,10 @@
       />
   </div>
   <div v-if="this.collocName!=''">
-    <p>imagine some informations</p>
+    <h1>Collocation : {{collocName}}</h1>
+    <td><tr>Membres </tr>
+    <tr v-for="collocInfo in collocInfo">{{collocInfo.roomiesName}}</tr>
+    </td>
   </div>
 </div>
 </template>
@@ -25,10 +28,13 @@ import { getCollocInformation } from "../../api/CollocationApi";
 export default {
   data(){
     return {
-      collocInfo : []
+      collocInfo : [],
+      collocName : "",
+      idColloc:-1
+
     };
   },
-  async mouted(){
+  async mounted(){
     this.idColloc = this.$currColloc.collocId;
     this.collocName = this.$currColloc.collocName;
     this.collocInfo = await getCollocInformation(this.idColloc);
