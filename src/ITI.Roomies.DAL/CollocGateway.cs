@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
 
 namespace ITI.Roomies.DAL
 {
@@ -124,6 +124,23 @@ namespace ITI.Roomies.DAL
                 return Result.Success( Status.Ok );
             }
             
+        }
+        public async Task<IEnumerable<CollocData>> getCollocInformation( int collocId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                IEnumerable<CollocData> colloc = await con.QueryAsync<CollocData>(
+
+
+                @"select t.TaskId, t.TaskName, t.TaskDes, t.TaskDate, t.State, t.CollocId, tr.RoomieId, r.FirstName, r.LastName
+                  from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
+                                   inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
+                  where t.CollocId = @CollocId
+                  order by t.TaskId, r.FirstName;"
+                , new { CollocId = collocId } );
+
+                return colloc;
+            }
         }
 
     }

@@ -1,5 +1,6 @@
 <template>
-  <div id="container">
+<div>
+  <div v-if="this.collocName==''">
     <!-- <el-aside width="200px">Menu</el-aside> -->
       <header><h2>Bienvenue Roomie</h2></header>
 
@@ -9,14 +10,33 @@
         :is-expanded="$screens({ default: true, lg: false })"
       />
   </div>
+  <div v-if="this.collocName!=''">
+    <p>imagine some informations</p>
+  </div>
+</div>
 </template>
 
 <script>
 import ElementUI from "element-ui";
 import VueI18n from "vue-i18n";
 import VCalendar from "v-calendar";
+import { getCollocInformation } from "../../api/CollocationApi";
 
-export default {};
+export default {
+  data(){
+    return {
+      collocInfo : []
+    };
+  },
+  async mouted(){
+    this.idColloc = this.$currColloc.collocId;
+    this.collocName = this.$currColloc.collocName;
+    this.collocInfo = await getCollocInformation(this.idColloc);
+  },
+  methods :{
+
+  }
+};
 </script>
 <style lang="scss" scoped>
 .el-header,
