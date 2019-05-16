@@ -1,5 +1,6 @@
 <template>
-  <div id="container">
+<div>
+  <div v-if="this.collocName==''">
     <!-- <el-aside width="200px">Menu</el-aside> -->
       <header><h2>Bienvenue Roomie</h2></header>
 
@@ -9,14 +10,39 @@
         :is-expanded="$screens({ default: true, lg: false })"
       />
   </div>
+  <div v-if="this.collocName!=''">
+    <h1>Collocation : {{collocName}}</h1>
+    <td><tr>Membres </tr>
+    <tr v-for="collocInfo in collocInfo">{{collocInfo.roomiesName}}</tr>
+    </td>
+  </div>
+</div>
 </template>
 
 <script>
 import ElementUI from "element-ui";
 import VueI18n from "vue-i18n";
 import VCalendar from "v-calendar";
+import { getCollocInformation } from "../../api/CollocationApi";
 
-export default {};
+export default {
+  data(){
+    return {
+      collocInfo : [],
+      collocName : "",
+      idColloc:-1
+
+    };
+  },
+  async mounted(){
+    this.idColloc = this.$currColloc.collocId;
+    this.collocName = this.$currColloc.collocName;
+    this.collocInfo = await getCollocInformation(this.idColloc);
+  },
+  methods :{
+
+  }
+};
 </script>
 <style lang="scss" scoped>
 .el-header,

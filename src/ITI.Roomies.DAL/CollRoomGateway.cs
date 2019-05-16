@@ -16,7 +16,6 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-
         public async Task<Result<CollRoomData>> FindById( int collocId, int roomieId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -88,10 +87,9 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 CollocData collocName = await con.QueryFirstOrDefaultAsync<CollocData>(
-                    @"select c.CollocName, c.CollocId
-                        from rm.tiCollRoom i
-                            inner join rm.tColloc c on i.CollocId = c.CollocId
-                        where i.RoomieId = @RoomieId;",
+                    @"select CollocName, CollocId
+                        from rm.vCollocInfo 
+                        where RoomieId = @RoomieId;",
                     new { RoomieId = roomieId } );
                 // Return et procédure correctes
                 //if( task == null ) return Result.Failure<int>( Status.NotFound, "No collocation was found for this Roomie." );
@@ -105,10 +103,9 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 IEnumerable<RoomiesData> CR = await con.QueryAsync<RoomiesData>(
-                    @"select i.RoomieId, r.FirstName, r.LastName
-                      from rm.tiCollRoom i
-	                     inner join rm.tRoomie r on i.RoomieId = r.RoomieId
-                      where i.CollocId = @CollocId;",
+                    @"select RoomieId, FirstName, LastName
+                      from rm.vRoomieInfo 
+                      where CollocId = @CollocId;",
                 new { CollocId = collocId } );
 
                 // Return et procédure correctes

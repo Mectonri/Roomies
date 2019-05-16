@@ -27,6 +27,20 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<Result<RoomieProfileData>> GetProfile(int roomieId)
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                RoomieProfileData roomie =  await con.QueryFirstAsync<RoomieProfileData>(
+                    "select * from rm.tRoomie where RoomieId = @RoomieId",
+                    new { RoomieId = roomieId } );
+
+                Console.WriteLine(Result.Success(roomie));
+                return Result.Success( roomie );
+            }
+            
+        }
+
         public async Task<RoomiesData> FindByEmail( string email )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -75,8 +89,6 @@ namespace ITI.Roomies.DAL
 
             }
         }
-
-
 
         public async Task<Result<int>> CreatePasswordUser(string firstName, string lastName,  string email, DateTime birthDate, byte[] password, string phone )
         {

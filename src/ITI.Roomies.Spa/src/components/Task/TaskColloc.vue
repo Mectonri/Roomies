@@ -87,7 +87,6 @@ import {
   getTasksByCollocIdAsync,
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
-// import { state } from "../../state";
 
 export default {
   data() {
