@@ -135,13 +135,7 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 IEnumerable<CollocData> colloc = await con.QueryAsync<CollocData>(
-
-
-                @"select t.TaskId, t.TaskName, t.TaskDes, t.TaskDate, t.State, t.CollocId, tr.RoomieId, r.FirstName, r.LastName
-                  from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
-                                   inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
-                  where t.CollocId = @CollocId
-                  order by t.TaskId, r.FirstName;"
+                @"select * from rm.vCollocInfo where CollocId=@CollocId"
                 , new { CollocId = collocId } );
 
                 return colloc;
