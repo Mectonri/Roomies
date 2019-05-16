@@ -41,9 +41,18 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result );
         }
 
-        [HttpGet("getRoomiePic/{roomieId}")]
+        [HttpGet("GetProfile")]
+        public async Task<IActionResult> GetProfileData()
+        {
+            int roomieId = int.Parse(HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier).Value);
+            Result<RoomieProfileData> result  = await _roomiesGateway.GetProfile( roomieId );
+            return this.CreateResult( result );
+        }
+
+        [HttpGet("getRoomiePic")]
         public async Task<IActionResult> getRoomiePic(int roomieId)
         {
+             roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result<string> roomiePic = await _roomiesGateway.GetRoomiePicAsync( roomieId );
 
             return this.CreateResult( roomiePic );
