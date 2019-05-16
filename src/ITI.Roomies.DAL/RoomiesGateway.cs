@@ -76,8 +76,6 @@ namespace ITI.Roomies.DAL
             }
         }
 
-
-
         public async Task<Result<int>> CreatePasswordUser(string firstName, string lastName,  string email, DateTime birthDate, byte[] password, string phone )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )

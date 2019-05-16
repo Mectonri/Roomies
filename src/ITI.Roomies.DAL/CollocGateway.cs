@@ -16,7 +16,11 @@ namespace ITI.Roomies.DAL
         {
             _connectionString = connectionString;
         }
-
+        /// <summary>
+        /// Find a colloc by it Id
+        /// </summary>
+        /// <param name="collocId"></param>
+        /// <returns></returns>
         public async Task<Result<CollocData>> FindById( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -34,13 +38,19 @@ namespace ITI.Roomies.DAL
             }
         }
 
-
-        public async Task<Result<int>> CreateColloc(string collocName )
+        /// <summary>
+        /// Create a collocation
+        /// </summary>
+        /// <param name="collocName"></param>
+        /// <param name="roomieId"></param>
+        /// <returns></returns>
+        public async Task<Result<int>> CreateColloc(string collocName, int roomieId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
                 p.Add( "@CollocName", collocName );
+                p.Add( "@RoomieId", roomieId);
                 p.Add( "@CollocId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCollocCreate", p, commandType: CommandType.StoredProcedure );
@@ -80,7 +90,6 @@ namespace ITI.Roomies.DAL
                      new { Email = email } );
                 
                 return result;
-
             }
         }
 
@@ -95,22 +104,19 @@ namespace ITI.Roomies.DAL
                 p.Add( "IdColloc", idColloc );
 
                 await con.ExecuteAsync( "rm.sInvitation", p, commandType: CommandType.StoredProcedure );
-                
                 return Result.Success( Status.Ok );
-
-
             }
-            
         }
 
         public async Task<int> CheckInvitation(string invitationKey)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                int result = await con.QueryFirstOrDefaultAsync<int>( @"select IdColloc from rm.tInvitation where InvitationKey = @InvitationKey;", new { InvitationKey = invitationKey } );
+                int result = await con.QueryFirstOrDefaultAsync<int>(
+                    @"select IdColloc from rm.tInvitation where InvitationKey = @InvitationKey;",
+                    new { InvitationKey = invitationKey } );
                 return result;
             }
-
         }
 
         public async Task<Result> DeleteInvite(string invitationKey )
@@ -123,7 +129,6 @@ namespace ITI.Roomies.DAL
 
                 return Result.Success( Status.Ok );
             }
-            
         }
         public async Task<IEnumerable<CollocData>> getCollocInformation( int collocId )
         {

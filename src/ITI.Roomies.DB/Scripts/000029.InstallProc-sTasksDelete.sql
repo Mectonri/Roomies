@@ -5,6 +5,7 @@ create procedure rm.sTasksDelete
 as
 begin
    
-    delete from rm.tTasks where TaskId = @TaskId;
+	delete from rm.tiTaskRoom where TaskId = @TaskId;
+    delete from rm.tTasks where TaskId = @TaskId
     return 0;
 end;

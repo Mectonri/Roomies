@@ -104,7 +104,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreateTask( string taskName, string taskDes, DateTime taskDate, int collocId )
+        public async Task<Result<int>> CreateTask( string taskName, string taskDes, DateTime taskDate, int collocId, int roomieId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -112,6 +112,7 @@ namespace ITI.Roomies.DAL
                 p.Add( "@TaskName", taskName );
                 p.Add( "@TaskDes", taskDes );
                 p.Add( "@TaskDate", taskDate );
+                p.Add( "@RoomieId", roomieId);
                 p.Add( "@CollocId", collocId );
                 p.Add( "@TaskId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
