@@ -41,7 +41,7 @@ export default {
 
     async mounted(){
       this.roomieId = this.$route.params.id;
-      this.picPath =  await getRoomiePicAsync(this.roomieId);
+      this.picPath =  await getRoomiePicAsync();
     },
 
     methods:{

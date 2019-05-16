@@ -19,6 +19,7 @@ import ImageUploader from './components/Roomies/ImageUploader.vue'
 
 
 import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
+import RoomieProfile from './components/Roomies/RoomieProfile.vue'
 import RoomieProfil from './components/Roomies/Roomie.vue'
 import checkRoomie from './components/Roomies/checkRoomie.vue'
 
@@ -41,8 +42,6 @@ const routes = [
     { path: '/login', component: Login },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },
 
-    {path: '/roomies/invite', component: Login, beforeEnter: requireAuth},
-
     {path: '/roomies/calendar', component: Calendar, beforeEnter: requireAuth},
 
     {path: '/roomies/upload/:id?', component: ImageUploader, beforeEnter: requireAuth},
@@ -52,7 +51,7 @@ const routes = [
 
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },
-    { path: '/roomies/:id?', component: RoomieProfil, beforeEnter: requireAuth },
+    { path: '/roomies/profile/:id?', component: RoomieProfile, beforeEnter: requireAuth },
     { path: '/checkRoomie', component: checkRoomie, beforeEnter: requireAuth },
 
     { path: '/task/colloc', component: TaskColloc, beforeEnter: requireAuth },
