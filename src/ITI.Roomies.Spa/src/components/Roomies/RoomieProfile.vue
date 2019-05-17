@@ -41,7 +41,7 @@
         </div>
 
         <div v-else>
-        
+        <br><br>
            <tr>
              <th>{{$t('Nom')}}</th>
              <td>{{roomie.lastName}}</td>
@@ -72,11 +72,13 @@
 
         </el-container>
       </el-main>
-
+    </el-container>
+    <el-container  class="Footer">
       <el-footer class="Footer">
         <Language></Language>
       </el-footer>
     </el-container>
+    
   </div>
 </template>
 
@@ -136,5 +138,11 @@ export default {
  
   border-radius: 50%;
 } */
+.Footer {
+  clear: both;
+  position: relative;
+  height: 40px;
+  margin-top: -40px
+}
 </style>
 

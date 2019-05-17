@@ -1,7 +1,7 @@
 <template>
     <section>
         <div>
-            <h5>{{$t('lang')}}</h5>
+            <h6>{{$t('lang')}}</h6>
             <el-button @click="changeLocale('fr')">Fr</el-button>
             <el-button @click="changeLocale('en')">En</el-button>
         </div>
