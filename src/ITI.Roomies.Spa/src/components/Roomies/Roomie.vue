@@ -23,7 +23,7 @@
 import ElementUI from "element-ui";
 import VueI18n from "vue-i18n";
 import VCalendar from "v-calendar";
-import { getCollocInformation } from "../../api/CollocationApi";
+import { getCollocInformation, getCollocNameIdByRoomieIdAsync } from "../../api/CollocationApi";
 
 export default {
   data(){
@@ -35,9 +35,15 @@ export default {
     };
   },
   async mounted(){
-    this.idColloc = this.$currColloc.collocId;
-    this.collocName = this.$currColloc.collocName;
-    this.collocInfo = await getCollocInformation(this.idColloc);
+    var collocData = await getCollocNameIdByRoomieIdAsync();
+        if (collocData != undefined) {
+          this.$currColloc.setCollocId(collocData.collocId);
+          this.$currColloc.setCollocName(collocData.collocName);
+          
+          this.idColloc = collocData.collocId;
+          this.collocName = collocData.collocName;
+          this.collocInfo = await getCollocInformation(collocData.collocId);
+        }
   },
   methods :{
 
