@@ -188,6 +188,7 @@ export default {
       try {
         this.checkJoin = await JoinAsync(this.item.InviteKey);
         if (this.checkJoin == 1) {
+          this.$setMenuItemDisabled.setDisableState(false);
           this.$router.replace("/roomies");
         }
       } catch (e) {
