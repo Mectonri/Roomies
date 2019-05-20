@@ -1,9 +1,9 @@
 <template>
   <div id="container">
     <header>
-      <button class="btn btn-dark" @click="changeCreate()">création</button>
-      <button class="btn btn-dark" @click="changeInvite()">inviter</button>
-      <button class="btn btn-dark" @click="changeJoin()">joindre</button>
+      <button class="btn btn-dark" @click="changeCreate()">Création</button>
+      <button class="btn btn-dark" @click="changeInvite()">Inviter</button>
+      <button class="btn btn-dark" @click="changeJoin()">Joindre</button>
     </header>
     <div v-if="show1">
       <form @submit="onSubmit($event)">
@@ -35,7 +35,7 @@
         <br>
         <button class="btn btn-dark" native-type="submit" v-if="this.collocName==''">Rejoindre</button>
         <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
-        <p v-if="this.checkjoin==0">le code que vous avez rentré n'est pas valide.</p>
+        <p v-if="this.checkjoin==0">Le code que vous avez rentré n'est pas valide.</p>
       </form>
     </div>
 
@@ -57,9 +57,9 @@
         <button class="form-control" native-type="submit" v-if="this.collocName!=''">Envoyer</button>
         <p
           v-if="this.collocName==''"
-        >Veuillez d'abords créer une collocation avant de chercher à inviter des personnes.</p>
+        >Veuillez d'abord créer une collocation avant d'inviter des personnes.</p>
         <p v-if="this.checkInvite==0">Le mail que vous avez rentré ne correspond à aucun roomie.</p>
-        <p v-if="this.checkInvite==1">L'invitation a été envoyé</p>
+        <p v-if="this.checkInvite==1">L'invitation a été envoyée</p>
       </form>
     </div>
 
