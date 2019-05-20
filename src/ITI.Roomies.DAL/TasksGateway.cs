@@ -104,7 +104,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreateTask( string taskName, string taskDes, DateTime taskDate, int collocId )
+        public async Task<Result<int>> CreateTask( string taskName, string taskDes, DateTime taskDate, int collocId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {

@@ -43,7 +43,7 @@ namespace ITI.Roomies.WebApp.Controllers
 
         // Renvoie la tâche correspondant à l'id de la tâche
         [HttpGet( "getByTaskId/{id}" )]
-        public async Task<IActionResult> GetTaskByTaskIdAsync( int id)
+        public async Task<IActionResult> GetTaskByTaskIdAsync( int id )
         {
             IEnumerable<TasksData> result = await _tasksGateway.FindTaskByTaskId( id );
             // TO DO : mettre le bon return
@@ -92,7 +92,7 @@ namespace ITI.Roomies.WebApp.Controllers
 
         // Mise à jour d'une tâche
         [HttpPost( "updateTask/{taskId}" )]
-        public async Task<IActionResult> createTaskSansDescAsync(int taskId, [FromBody] TaskViewModel model )
+        public async Task<IActionResult> createTaskSansDescAsync( int taskId, [FromBody] TaskViewModel model )
         {
             Result result = await _tasksGateway.UpdateTask( taskId, model.TaskName, model.TaskDate, model.TaskDes );
 

@@ -4,7 +4,7 @@ create procedure rm.sTasksDelete
 )
 as
 begin
-   
+
     delete from rm.tTasks where TaskId = @TaskId;
     return 0;
 end;
