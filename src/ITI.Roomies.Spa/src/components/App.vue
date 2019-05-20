@@ -21,6 +21,10 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Create a collocation</span>
       </el-menu-item>
+      <el-menu-item @click="clickRoute('/roomies/profile')">
+        <i class="el-icon-s-custom"></i>
+        <span slot="title">Profile</span>
+      </el-menu-item>
       <el-menu-item
         @click="clickRoute('/roomies/calendar')"
         :disabled="$setMenuItemDisabled.disableState"
