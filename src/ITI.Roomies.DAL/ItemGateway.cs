@@ -35,6 +35,23 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<Result<RItemData>> FindRItemById( int rItemId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                RItemData rItem = await con.QueryFirstOrDefaultAsync<RItemData>(
+                    @"select i.RoomieId,
+                             i.ItemPrice,
+                             i.ItemName,
+                             i.CourseId,
+                             i.RoomieId
+                      from rm.tItem i
+                      where i.ItemId = @ItemId;",
+                    new { ItemId = rItemId } );
+                if( rItem == null ) return Result.Failure<RItemData>( Status.NotFound, "Item not found." );
+                return Result.Success( rItem );
+            }
+        }
         public async Task<IEnumerable<ItemData>> GetAllItemFromList( int courseId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
