@@ -2,7 +2,12 @@
   <div id="app">
     <!-- Menu de navigation -->
     <!-- <div> -->
-    <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" id="navMenu">
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      :collapse="isCollapse"
+      v-bind:style="actualTheme.style"
+    >
       <!-- TO DO : Remplacer par l'image de la Colloc -->
       Name : {{$currColloc.collocName}}
       <br>
@@ -32,6 +37,20 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
+
+      <el-submenu index="200" >
+        <template>
+          <i class="el-icon-document"/>
+          <span>Themes</span>
+        </template>
+
+        <el-menu-item
+          index="200-1"
+          v-for="(i, idx) in styles"
+          :key="i.name"
+          @click="setTheme(idx)"
+        >{{i.name}}</el-menu-item>
+      </el-submenu>
 
       <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
@@ -107,6 +126,17 @@ import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
 export default {
   data() {
     return {
+      styles: [
+        {
+          name: "Style1",
+          style: "background-color: white;"
+        },
+        {
+          name: "Style2",
+          style: "background-color: rgb(142, 142, 142);"
+        }
+      ],
+      themeIdx: 0,
       message: "",
       state: true,
       isCollapse: true
@@ -114,7 +144,10 @@ export default {
   },
   computed: {
     auth: () => AuthService,
+    actualTheme() {
 
+      return this.styles[this.themeIdx];
+    },
     isLoading() {
       return this.state.isLoading;
     }
@@ -139,14 +172,29 @@ export default {
         // this.$router.replace("/checkRoomie");
         // }
       }
+      
     } catch (e) {
       console.log(e);
     } finally {
       this.state = false;
     }
+
+      if(this.$cookies.get("themeIdx") != undefined){
+        this.themeIdx =this.$cookies.get("themeIdx");
+      } else {
+        this.setTheme(0);
+        this.themeIdx = this.$cookies.get("themeIdx");
+      }
+    
+
+    
   },
 
   methods: {
+    setTheme(themeIdx){
+      this.$cookies.set("themeIdx", themeIdx);
+      this.themeIdx = themeIdx;
+    },
     async invite() {
       await inviteRoomieAsync(this.message);
     },

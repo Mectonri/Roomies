@@ -11,11 +11,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import VCalendar from 'v-calendar';
 import VueGlobalVariable from 'vue-global-var';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import VueCookies from 'vue-cookies'
 Vue.config.productionTip = false;
 
 Vue.component(Button.name, Button);
 Vue.component(Select.name, Select);
+Vue.use(VueCookies)
 Vue.use(ElementUI);
 Vue.use(VCalendar);
 
