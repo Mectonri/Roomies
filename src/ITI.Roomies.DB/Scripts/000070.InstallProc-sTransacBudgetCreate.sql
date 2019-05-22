@@ -1,6 +1,6 @@
 Create procedure rm.sTrasacBudgetCreate
 (	
-	@TBudgetId int,
+	@TBudgetId int out,
 	@Price int,
 	@Date datetime2,
 	@BudgetId int,
