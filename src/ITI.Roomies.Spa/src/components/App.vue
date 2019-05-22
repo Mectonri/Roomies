@@ -71,8 +71,6 @@
       <br>
       <br>
       <br>
-      <br>
-      <br>
       <el-menu-item @click="clickRoute('/logout')">
         <i class="el-icon-circle-close"></i>
         <span slot="title">Se déconnecter</span>
@@ -86,14 +84,23 @@
         <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
       </main>
     </template>
-    <!-- </container> -->
+
     <template v-else>
       <main v-if="state == true " role="main" style="padding-left: 236px;">Chargement en cours</main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
       </main>
     </template>
-    <!-- </container> -->
+    <!-- Le footer -->
+    <footer id="footer" class="font-small mdb-color lighten-3">
+      <div class="container">
+        <language></language>
+      </div>
+      <!-- <div class="footer-copyright text-center">
+        © 2019 Copyright:
+        <a href>Roomie.com</a>
+      </div>-->
+    </footer>
   </div>
 </template>
 
@@ -103,8 +110,13 @@ import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
+import Language from "./Language.vue";
 
 export default {
+  components: {
+    Language
+  },
+
   data() {
     return {
       message: "",
@@ -180,7 +192,9 @@ export default {
 .el-menu-vertical-demo {
   float: left;
   min-height: 100vh;
+  max-height: 100vh;
   border-right: 1px solid #000000;
+  position: fixed;
 }
 
 .el-menu {
@@ -197,5 +211,15 @@ export default {
 .el-button {
   background: rgb(102, 102, 102);
   border: 1px solid #000000;
+}
+
+#footer {
+  bottom: 0;
+  width: 100%;
+  height: 5.5rem; /* Footer height */
+  background: #3c1212;
+  color: white !important;
+  // padding-top: 2.5rem;
+  top: 2.5rem;
 }
 </style>

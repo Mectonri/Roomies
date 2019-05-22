@@ -1,5 +1,5 @@
 <template class='profile'>
-  <div>
+  <div class="container">
     <el-container>
       <el-header>
         <h1 class="text-center">{{$t('Welcome')}} {{$t('Profil')}}</h1>
@@ -73,11 +73,6 @@
         </el-container>
       </el-main>
     </el-container>
-    <el-container  class="Footer">
-      <el-footer class="Footer">
-        <Language></Language>
-      </el-footer>
-    </el-container>
     
   </div>
 </template>
@@ -138,11 +133,5 @@ export default {
  
   border-radius: 50%;
 } */
-.Footer {
-  clear: both;
-  position: relative;
-  height: 40px;
-  margin-top: -40px
-}
 </style>
 
