@@ -39,17 +39,17 @@
           <span>Tâches</span>
         </template>
 
-        <el-menu-item
+        <el-menu-item class="el-submenu-item"
           index="1-1"
           @click="clickRoute('/task/colloc')"
           :disabled="$setMenuItemDisabled.disableState"
         >Tâche de la Collocation</el-menu-item>
-        <el-menu-item
+        <el-menu-item class="el-submenu-item"
           index="1-2"
           @click="clickRoute('/task/roomie')"
           :disabled="$setMenuItemDisabled.disableState"
         >Vos tâches</el-menu-item>
-        <el-menu-item
+        <el-menu-item class="el-submenu-item"
           index="1-3"
           @click="clickRoute('/task/create')"
           :disabled="$setMenuItemDisabled.disableState"
@@ -211,10 +211,14 @@ export default {
 .el-submenu-item.is-active {
   color: black;
 }
-
+.el-submenu-item,
+.el-submenu-item.is-active{
+  min-width: 12em !important;
+}
 .el-button {
   background: rgb(102, 102, 102);
   border: 1px solid #000000;
+  color: #000000;
 }
 
 #footer {
