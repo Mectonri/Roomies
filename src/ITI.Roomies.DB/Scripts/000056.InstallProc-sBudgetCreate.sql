@@ -13,8 +13,8 @@ begin
 	set transaction isolation level serializable
 	begin tran;
 
-	insert into rm.tBudget( CategoryId, Date1, Amount, CollocId )
-				values( @CategoryId, @Date1, @Amount, @CollocId)
+	insert into rm.tBudget( CategoryId, Date1, Date2, Amount, CollocId )
+				values( @CategoryId, @Date1, @Date2, @Amount, @CollocId)
 	set @BudgetId = SCOPE_IDENTITY();
 	commit;
 	return 0;
