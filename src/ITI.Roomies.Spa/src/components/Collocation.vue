@@ -1,10 +1,40 @@
 <template>
   <div id="container">
     <header>
-      <button class="btn btn-dark" @click="changeCreate()">Création</button>&nbsp;
-      <button class="btn btn-dark" @click="changeInvite()">Inviter</button>&nbsp;
-      <button class="btn btn-dark" @click="changeJoin()">Joindre</button>
+      <h2>Collocation</h2>
     </header>
+
+    <p>
+      Créer une collocation puis inviter vos Roomies :
+      <br>
+      <br>
+      <button
+        class="btn btn-dark"
+        @click="changeCreate()"
+        :disabled="!$setMenuItemDisabled.disableState"
+      >Création</button>
+    </p>
+    <p>
+      Rejoigner une collocation à partir d'un code reçu par email :
+      <br>
+      <br>
+      <button
+        class="btn btn-dark"
+        @click="changeJoin()"
+        :disabled="!$setMenuItemDisabled.disableState"
+      >Joindre</button>
+    </p>
+    <p>
+      Inviter de nouveaux Roomies à votre collocation :
+      <br>
+      <br>
+      <button
+        class="btn btn-dark"
+        @click="changeInvite()"
+        :disabled="$setMenuItemDisabled.disableState"
+      >Inviter</button>
+    </p>
+
     <div v-if="show1">
       <form @submit="onSubmit($event)">
         <div class="alert alert-danger" v-if="errors.length > 0">
@@ -65,6 +95,8 @@
 
     <div v-if="this.collocName!='' && show4">
       <br>
+      <br>
+      <br>
       <button
         class="btn btn-dark"
         @click="onSubmitQuit($event)"
@@ -105,6 +137,7 @@ export default {
   async mounted() {
     this.idColloc = this.$currColloc.collocId;
     this.collocName = this.$currColloc.collocName;
+    this.show4 = !this.$setMenuItemDisabled.disableState;
   },
 
   methods: {
@@ -112,20 +145,20 @@ export default {
       this.show1 = true;
       this.show2 = false;
       this.show3 = false;
-      this.show4 = true;
+      // this.show4 = true;
       this.checkInvite = 2;
     },
     changeInvite() {
       this.show1 = false;
       this.show2 = true;
       this.show3 = false;
-      this.show4 = true;
+      // this.show4 = true;
     },
     changeJoin() {
       this.show1 = false;
       this.show2 = false;
       this.show3 = true;
-      this.show4 = true;
+      // this.show4 = true;
       this.checkInvite = 2;
     },
 
