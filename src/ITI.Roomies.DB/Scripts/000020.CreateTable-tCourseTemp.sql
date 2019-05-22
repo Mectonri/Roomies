@@ -1,11 +1,11 @@
 create table rm.tCourseTemp
 (
-	CourseId int identity(0,1),
+	CourseTempId int identity(0,1),
 	CourseName nvarchar(32) not null,
 	Price int,
 	CollocId int not null,
 
-	constraint PK_rm_tCourseTemp primary key(CourseId),
+	constraint PK_rm_tCourseTemp primary key(CourseTempId),
 	constraint FK_rm_tCourseTemp_CollocId foreign key (CollocId) references rm.tColloc(CollocId)
 );
 
