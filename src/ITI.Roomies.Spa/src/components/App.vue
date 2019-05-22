@@ -19,11 +19,11 @@
       </el-button>
       <el-menu-item @click="clickRoute('/roomies/collocation')">
         <i class="el-icon-menu"></i>
-        <span slot="title">Create a collocation</span>
+        <span slot="title">Gestion collocation</span>
       </el-menu-item>
       <el-menu-item @click="clickRoute('/roomies/profile')">
         <i class="el-icon-s-custom"></i>
-        <span slot="title">Profile</span>
+        <span slot="title">Profil</span>
       </el-menu-item>
       <el-menu-item
         @click="clickRoute('/roomies/calendar')"
@@ -43,22 +43,22 @@
           index="1-1"
           @click="clickRoute('/task/colloc')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Tâche Collocation active</el-menu-item>
+        >Tâche de la Collocation</el-menu-item>
         <el-menu-item
           index="1-2"
           @click="clickRoute('/task/roomie')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Tâches Roomie</el-menu-item>
+        >Vos tâches</el-menu-item>
         <el-menu-item
           index="1-3"
           @click="clickRoute('/task/create')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Ajouter tâche</el-menu-item>
+        >Ajouter une tâche</el-menu-item>
       </el-submenu>
 
       <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-location"></i>
-        <span slot="title">GroceryList</span>
+        <span slot="title">Listes de courses</span>
       </el-menu-item>
       <el-menu-item @click="clickRoute('/')" disabled>
         <i class="el-icon-setting"></i>
@@ -79,18 +79,22 @@
 
     <!-- Affihe le chemin demandé -->
     <template v-if="isCollapse">
-      <main v-if="state == true " role="main" style="padding-left: 100px;"><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></main>
+      <main v-if="state == true " role="main" style="padding-left: 100px;">
+        <div class="spinner-border text-secondary" role="status">
+          <span class="sr-only">Chargement en cours...</span>
+        </div>
+      </main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
       </main>
     </template>
 
     <template v-else>
-      <main v-if="state == true " role="main" style="padding-left: 236px;"><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></main>
+      <main v-if="state == true " role="main" style="padding-left: 236px;">
+        <div class="spinner-border text-secondary" role="status">
+          <span class="sr-only">Chargement en cours</span>
+        </div>
+      </main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
       </main>
