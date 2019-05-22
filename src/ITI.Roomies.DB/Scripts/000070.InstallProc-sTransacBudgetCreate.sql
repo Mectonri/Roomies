@@ -1,4 +1,4 @@
-Create procedure rm.sTrasacBudgetCreate
+Create procedure rm.sTransacBudgetCreate
 (	
 	@TBudgetId int out,
 	@Price int,
@@ -11,8 +11,8 @@ begin
 	set transaction isolation level serializable;
 	begin tran;
 
-	insert into rm.tTBudget(TBudgetId, Price, [Date], BudgetId, RoomieId)
-					values(@TBudgetId, @Price, @Date, @BudgetId, @RoomieId)
+	insert into rm.tTransacBudget( Price, [Date], BudgetId, RoomieId)
+					values( @Price, @Date, @BudgetId, @RoomieId)
 	set @TBudgetId = SCOPE_IDENTITY();
 
 	commit;
