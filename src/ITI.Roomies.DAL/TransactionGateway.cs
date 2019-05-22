@@ -1,4 +1,5 @@
 using Dapper;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -15,54 +16,91 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-        //public async Task<Result<TransactionData>> FindById(int transacId)
-        //{
-        //    using( SqlConnection con = new SqlConnection( _connectionString ) )
-        //    {
-        //        TransactionData transac = await con.QueryFirstOrDefaultAsync<TransactionData>(
-        //            @"select t.TransacId,
-        //                     t.TransacDesc,
-        //                     t.TransacPrice,
-        //                     t.TransacDate,
-        //                     t.CollocId,
-        //                     t.RoomieId
-        //             from rm.tTransaction t
-        //             where t.TransacId = @TransacId;",
-        //            new { TransacId = transacId } );
-        //        if( transac == null ) return Result.Failure<TransactionData>( Status.NotFound, "Transaction not found" );
-        //        return Result.Success( transac );
-        //    }
-        //}
-
-        public async Task<Result<int>> CreateTransac (string transacDesc, int transacPrice, int collocId, int roomieId)
+        public async Task<Result<TransacBudgetData>> FindTBudgetById( int tBudgetId )
         {
-            if( !IsNameValid( transacDesc ) ) return Result.Failure<int>( Status.BadRequest, "The description is not valid" );
-            
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                var p = new DynamicParameters();
-                p.Add( "@TransacDesc", transacDesc );
-                p.Add( "@TransacPrice", transacPrice );
-                p.Add( "@CollocId", collocId  );
-                p.Add( "@RoomieId", roomieId );
-                p.Add( "@TransacId", dbType: DbType.Int32, direction: ParameterDirection.Output );
-                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                await con.ExecuteAsync( "rm.sTransacCreate", p, commandType: CommandType.StoredProcedure );
-
-                int status = p.Get<int>( "@Status" );
-                Debug.Assert( status == 0 );
-                return Result.Success( Status.Created, p.Get<int>( "@TransacId" ) );
+                TransacBudgetData tBudget = await con.QueryFirstOrDefaultAsync<TransacBudgetData>(
+                    @"select 
+                             tb.TBudgetId,
+                             tb.Price,
+                             tb.Date,
+                             tb.BudgetId,
+                             tb.RoomieId
+                     from rm.tTransacBudget tb
+                     where tb.TBudgetId = @TBudgetId;",
+                    new { TBudgetId = tBudgetId } );
+                if( tBudget == null ) return Result.Failure<TransacBudgetData>( Status.NotFound, "Transaction not found" );
+                return Result.Success( tBudget );
             }
         }
 
-        public async Task<Result> Delete( int transacId )
+        public async Task<Result<TransacDepenseData>> FindTDepenseById( int tDepenseId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                TransacDepenseData tBudget = await con.QueryFirstOrDefaultAsync<TransacDepenseData>(
+                    @"select 
+                                     td.TDepenseId,
+                                     td.Price,
+                                     td.Date,
+                                     td.SRoomieId,
+                                     td.RRoomieId
+                             from rm.tTransacDepense td
+                             where td.TDepenseId = @TDepenseId;",
+                    new { TDepenseId = tDepenseId } );
+                if( tBudget == null ) return Result.Failure<TransacDepenseData>( Status.NotFound, "Transaction not found" );
+                return Result.Success( tBudget );
+            }
+        }
+
+
+        public async Task<Result<int>> CreateTransacBudget (  int price, DateTime date, int budgetId, int roomieId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@TransacId", transacId );
+                p.Add( "@Price", price );
+                p.Add( "@Date", date );
+                p.Add( "@BudgetId", budgetId  );
+                p.Add( "@RoomieId", roomieId );
+                p.Add( "@TBudgetId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                await con.ExecuteAsync( "rm.sTransacDelete", p, commandType: CommandType.StoredProcedure );
+                await con.ExecuteAsync( "rm.sTransacBudgetCreate", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Created, p.Get<int>( "@TBudgetId" ) );
+            }
+        }
+
+        public async Task<Result<int>> CreateTransacDepense( int price, DateTime date, int sRoomieId, int rRoomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( @"Price", price );
+                p.Add( "@Date", date );
+                p.Add( "@SRoomieId", sRoomieId );
+                p.Add( "@RRoomieId", rRoomieId );
+                p.Add( "@TDepenseId", dbType: DbType.Int32, direction: ParameterDirection.Output );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sTransacDepenseCreate", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Created, p.Get<int>( "@TDepenseId" ) );
+            }
+        }
+
+        public async Task<Result> DeleteTransacBudget( int tBudgetId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@TBudgetId", tBudgetId );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sTransacBudgetDelete", p, commandType: CommandType.StoredProcedure );
 
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Transaction not found." );
@@ -72,18 +110,36 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Update( int transacId, string transacDesc, int transacPrice, int collocId, int roomieId )
+        public async Task<Result> DeleteTransacDepense( int tDepenseId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@TransacId", transacId );
-                p.Add( "@TransacDesc", transacDesc );
-                p.Add( "@TransacPrice", transacPrice );
-                p.Add( "@CollocId", collocId );
+                p.Add( "@TDepenseId", tDepenseId );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sTransacDepenseDelete", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Transaction not found." );
+
+                Debug.Assert( status == 0 );
+                return Result.Success();
+            }
+        }
+
+
+        public async Task<Result> UpdateTransacBudget( int tBudgetId, int price, DateTime date, int budgetId, int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@TBudgetId", tBudgetId );
+                p.Add( "@Price", price );
+                p.Add( "@Date", date );
+                p.Add( "@BudgetId", budgetId );
                 p.Add( "@RoomieId", roomieId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                await con.ExecuteAsync( "rm.sTransacUpdate", p, commandType: CommandType.StoredProcedure );
+                await con.ExecuteAsync( "rm.sTransacBudgetUpdate", p, commandType: CommandType.StoredProcedure );
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Transaction not found." );
                 Debug.Assert( status == 0 );
@@ -91,6 +147,23 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        bool IsNameValid( string name ) => !string.IsNullOrWhiteSpace( name );
+        public async Task<Result> UpdateTransacDepense( int tDepenseId, int price, DateTime date, int sRoomieId, int rRoomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@TDepenseId", tDepenseId );
+                p.Add( "@Price", price );
+                p.Add( "@Date", date );
+                p.Add( "@SRoomieId", sRoomieId );
+                p.Add( "@RRoomieId", rRoomieId );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sTransacDepenseUpdate", p, commandType: CommandType.StoredProcedure );
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Transaction not found." );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok );
+            }
+        }
     }
 }

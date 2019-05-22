@@ -5,6 +5,6 @@ create procedure rm.sTransacDepenseDelete
 as
 begin
    
-    delete from rm.tTransactionDepense where TDepenseId = @TDepenseId;
+    delete from rm.tTransacDepense where TDepenseId = @TDepenseId;
     return 0;
 end;

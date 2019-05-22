@@ -1,7 +1,6 @@
-create proc rm.sTBudgetUpdate
+create proc rm.sTransacBudgetUpdate
 (
 	@TBudgetId int,
-	@Desc nvarchar(200),
 	@Price int, 
 	@Date datetime2,
 	@BudgetId int,
@@ -12,13 +11,13 @@ begin
     set transaction isolation level serializable;
 	begin tran;
 
-	if not exists(select * from rm.tTBudget tb where tb.TBudgetId = @TBudgetId)
+	if not exists(select * from rm.tTransacBudget tb where tb.TBudgetId = @TBudgetId)
 	begin
 		rollback;
 		return 1;
 	end;
 
-	if exists( select * from rm.tTBudget tb where tb.BudgetId <> @TBudgetId
+	if exists( select * from rm.tTransacBudget tb where tb.BudgetId <> @TBudgetId
 		and tb.RoomieId = @RoomieId
 		and tb.[Date] = @Date
 		and tb.BudgetId = @BudgetId )
@@ -27,8 +26,8 @@ begin
 		return 2;
 	end;
 
-update rm.tTBudget
-set [Desc] = @Desc,
+update rm.tTransacBudget
+set 
 	Price = @Price,
 	[Date] = @Date,
 	BudgetId = @BudgetId,
