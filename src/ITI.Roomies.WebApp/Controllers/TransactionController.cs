@@ -1,4 +1,4 @@
-﻿using ITI.Roomies.DAL;
+using ITI.Roomies.DAL;
 using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Models.CourseTempViewModels;
 using ITI.Roomies.WebApp.Models.CourseViewModels;
@@ -24,7 +24,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpDelete("getAllRoomieTransaction/{id}" )]
         public async Task<IActionResult> GetAllRoomieTrans( )
         {
-            IEnumerable<TransactionData> result = await _transactionGateway.
+            throw new NotImplementedException();
         }
 
     }
