@@ -8,6 +8,7 @@ create table rm.tTransacBudget
 	RoomieId int not null
 	
 	constraint PK_rm_tTbudget primary key (TBudgetId),
+	constraint FK_rm_tTBudget_BudgetId foreign key (BudgetId) references rm.tBudget(BudgetId),
 	constraint FK_rm_tTBudget_RoomieId foreign key (RoomieId) references rm.tRoomie(RoomieId) 
 );
 
