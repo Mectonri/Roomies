@@ -1,8 +1,8 @@
 <template>
   <div id="container">
     <header>
-      <button class="btn btn-dark" @click="changeCreate()">Création</button>
-      <button class="btn btn-dark" @click="changeInvite()">Inviter</button>
+      <button class="btn btn-dark" @click="changeCreate()">Création</button>&nbsp;
+      <button class="btn btn-dark" @click="changeInvite()">Inviter</button>&nbsp;
       <button class="btn btn-dark" @click="changeJoin()">Joindre</button>
     </header>
     <div v-if="show1">

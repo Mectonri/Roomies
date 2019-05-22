@@ -36,7 +36,9 @@
     </main>
     <main v-else>Erreur</main>
   </div>
-  <div id="container" v-else>Chargement en cours</div>
+  <div id="container" v-else><div class="spinner-border text-secondary" role="status">
+  <span class="sr-only">Chargement en cours...</span>
+</div></div>
 </template>
 
 <script>

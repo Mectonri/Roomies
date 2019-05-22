@@ -79,14 +79,18 @@
 
     <!-- Affihe le chemin demandé -->
     <template v-if="isCollapse">
-      <main v-if="state == true " role="main" style="padding-left: 100px;">Chargement en cours</main>
+      <main v-if="state == true " role="main" style="padding-left: 100px;"><div class="spinner-border text-secondary" role="status">
+  <span class="sr-only">Chargement en cours...</span>
+</div></main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
       </main>
     </template>
 
     <template v-else>
-      <main v-if="state == true " role="main" style="padding-left: 236px;">Chargement en cours</main>
+      <main v-if="state == true " role="main" style="padding-left: 236px;"><div class="spinner-border text-secondary" role="status">
+  <span class="sr-only">Chargement en cours...</span>
+</div></main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
       </main>
@@ -197,10 +201,6 @@ export default {
   position: fixed;
 }
 
-.el-menu {
-  background-color: rgb(142, 142, 142);
-}
-
 .el-menu-item i,
 .el-submenu i,
 .el-menu-item.is-active,
@@ -217,9 +217,8 @@ export default {
   bottom: 0;
   width: 100%;
   height: 5.5rem; /* Footer height */
-  background: #3c1212;
-  color: white !important;
   // padding-top: 2.5rem;
   top: 2.5rem;
+  padding-left: 12rem;
 }
 </style>

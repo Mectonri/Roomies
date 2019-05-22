@@ -32,9 +32,9 @@
           <td>
             <router-link :to="`course/edit/${g.courseId}`">
               <button class="btn btn-dark">edit</button>
+              &nbsp;
             </router-link>
-            <button class="btn btn-dark" @click="deleteList(g.courseId)"> Supprimer </button>
-            
+            <button class="btn btn-dark" @click="deleteList(g.courseId)">Supprimer</button>
           </td>
         </tr>
       </tbody>
