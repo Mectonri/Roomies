@@ -15,24 +15,24 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
-        public async Task<Result<TransactionData>> FindById(int transacId)
-        {
-            using( SqlConnection con = new SqlConnection( _connectionString ) )
-            {
-                TransactionData transac = await con.QueryFirstOrDefaultAsync<TransactionData>(
-                    @"select t.TransacId,
-                             t.TransacDesc,
-                             t.TransacPrice,
-                             t.TransacDate,
-                             t.CollocId,
-                             t.RoomieId
-                     from rm.tTransaction t
-                     where t.TransacId = @TransacId;",
-                    new { TransacId = transacId } );
-                if( transac == null ) return Result.Failure<TransactionData>( Status.NotFound, "Transaction not found" );
-                return Result.Success( transac );
-            }
-        }
+        //public async Task<Result<TransactionData>> FindById(int transacId)
+        //{
+        //    using( SqlConnection con = new SqlConnection( _connectionString ) )
+        //    {
+        //        TransactionData transac = await con.QueryFirstOrDefaultAsync<TransactionData>(
+        //            @"select t.TransacId,
+        //                     t.TransacDesc,
+        //                     t.TransacPrice,
+        //                     t.TransacDate,
+        //                     t.CollocId,
+        //                     t.RoomieId
+        //             from rm.tTransaction t
+        //             where t.TransacId = @TransacId;",
+        //            new { TransacId = transacId } );
+        //        if( transac == null ) return Result.Failure<TransactionData>( Status.NotFound, "Transaction not found" );
+        //        return Result.Success( transac );
+        //    }
+        //}
 
         public async Task<Result<int>> CreateTransac (string transacDesc, int transacPrice, int collocId, int roomieId)
         {
