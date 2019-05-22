@@ -12,6 +12,7 @@ namespace ITI.Roomies.DAL.Tests
         [Test]
         public async Task can_create_find_and_delete_transaction()
         {
+            ///Need a populated BD pop2
             TransactionGateway sut = new TransactionGateway( TestHelpers.ConnectionString );
 
             int price = 50;
