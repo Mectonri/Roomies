@@ -11,7 +11,7 @@
       <!-- TO DO : Remplacer par l'image de la Colloc -->
       Name : {{$currColloc.collocName}}
       <br>
-      Id : {{$currColloc.collocId}}
+      <!-- Id : {{$currColloc.collocId}} -->
       <el-menu-item @click="clickRoute('/roomies')">
         <i class="el-icon-star-on">
           <span slot="title">Accueil</span>
@@ -38,14 +38,15 @@
         <span slot="title">Calendrier</span>
       </el-menu-item>
 
-      <el-submenu index="200" >
-        <template>
+      <el-submenu index="2">
+        <template slot="title">
           <i class="el-icon-document"/>
           <span>Themes</span>
         </template>
 
         <el-menu-item
-          index="200-1"
+          class="el-submenu-item"
+          index="2-1"
           v-for="(i, idx) in styles"
           :key="i.name"
           @click="setTheme(idx)"
@@ -58,17 +59,20 @@
           <span>Tâches</span>
         </template>
 
-        <el-menu-item class="el-submenu-item"
+        <el-menu-item
+          class="el-submenu-item"
           index="1-1"
           @click="clickRoute('/task/colloc')"
           :disabled="$setMenuItemDisabled.disableState"
         >Tâche de la Collocation</el-menu-item>
-        <el-menu-item class="el-submenu-item"
+        <el-menu-item
+          class="el-submenu-item"
           index="1-2"
           @click="clickRoute('/task/roomie')"
           :disabled="$setMenuItemDisabled.disableState"
         >Vos tâches</el-menu-item>
-        <el-menu-item class="el-submenu-item"
+        <el-menu-item
+          class="el-submenu-item"
           index="1-3"
           @click="clickRoute('/task/create')"
           :disabled="$setMenuItemDisabled.disableState"
@@ -100,9 +104,7 @@
     <!-- <template v-if="isCollapse"> -->
     <template>
       <main v-if="state == true " role="main">
-        <div class="spinner-border text-secondary" role="status">
-          <span class="sr-only">Chargement en cours...</span>
-        </div>
+        <loading/>
       </main>
       <main v-else>
         <router-view id="pageContent" class="child"></router-view>
@@ -111,18 +113,16 @@
 
     <!-- <template v-else>
       <main v-if="state == true " role="main" style="padding-left: 236px;">
-        <div class="spinner-border text-secondary" role="status">
-          <span class="sr-only">Chargement en cours</span>
-        </div>
+        <loading />
       </main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
       </main>
-    </template> -->
+    </template>-->
     <!-- Le footer -->
     <footer id="footer" class="font-small mdb-color lighten-3">
       <div class="container">
-        <language></language>
+        <language/>
       </div>
       <!-- <div class="footer-copyright text-center">
         © 2019 Copyright:
@@ -138,11 +138,13 @@ import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
-import Language from "./Language.vue";
+import Language from "../components/Utility/Language.vue";
+import Loading from "../components/Utility/Loading.vue";
 
 export default {
   components: {
-    Language
+    Language,
+    Loading
   },
 
   data() {
@@ -166,7 +168,6 @@ export default {
   computed: {
     auth: () => AuthService,
     actualTheme() {
-
       return this.styles[this.themeIdx];
     },
     isLoading() {
@@ -193,26 +194,22 @@ export default {
         // this.$router.replace("/checkRoomie");
         // }
       }
-      
     } catch (e) {
       console.log(e);
     } finally {
       this.state = false;
     }
 
-      if(this.$cookies.get("themeIdx") != undefined){
-        this.themeIdx =this.$cookies.get("themeIdx");
-      } else {
-        this.setTheme(0);
-        this.themeIdx = this.$cookies.get("themeIdx");
-      }
-    
-
-    
+    if (this.$cookies.get("themeIdx") != undefined) {
+      this.themeIdx = this.$cookies.get("themeIdx");
+    } else {
+      this.setTheme(0);
+      this.themeIdx = this.$cookies.get("themeIdx");
+    }
   },
 
   methods: {
-    setTheme(themeIdx){
+    setTheme(themeIdx) {
       this.$cookies.set("themeIdx", themeIdx);
       this.themeIdx = themeIdx;
     },
@@ -220,7 +217,7 @@ export default {
       await inviteRoomieAsync(this.message);
     },
     clickRoute(pathToRoute) {
-      if(!this.isCollapse) this.expand_collapse();
+      if (!this.isCollapse) this.expand_collapse();
       this.$router.push(pathToRoute);
     },
     expand_collapse() {
@@ -262,7 +259,7 @@ export default {
   color: black;
 }
 .el-submenu-item,
-.el-submenu-item.is-active{
+.el-submenu-item.is-active {
   min-width: 12em !important;
 }
 .el-button {

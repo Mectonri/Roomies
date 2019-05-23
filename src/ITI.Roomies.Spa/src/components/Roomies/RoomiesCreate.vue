@@ -1,6 +1,6 @@
 <template>
   <div class="createContainer">
-  <!-- <div> -->
+    <!-- <div> -->
     <header>
       <h2>S'inscrire</h2>
     </header>
@@ -16,22 +16,22 @@
 
         <div>
           <label class="required">Nom</label>
-          <input class="form-control" type="text" v-model="item.lastName" required/>
+          <input class="form-control" type="text" v-model="item.lastName" required>
         </div>
 
         <div>
           <label class="required">Prénom</label>
-          <input class="form-control" type="text" v-model="item.firstName" required/>
+          <input class="form-control" type="text" v-model="item.firstName" required>
         </div>
 
         <div>
           <label class="required">Date de naissance</label>
-          <input class="form-control" type="date" v-model="item.birthDate" required/>
+          <input class="form-control" type="date" v-model="item.birthDate" required>
         </div>
 
         <div>
           <label class="required">Phone</label>
-          <input class="form-control" type="text" v-model="item.phone" required/>
+          <input class="form-control" type="text" v-model="item.phone" required>
         </div>
         <br>
         <br>
@@ -86,9 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-.container{
+.container {
   margin-left: 0;
   // margin-left: 0;
   margin-right: 0;

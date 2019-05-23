@@ -38,9 +38,9 @@
       </table>
       <div v-else>Aune tâche à afficher</div>
     </main>
-    <main v-else><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></main>
+    <main v-else>
+      <loading/>
+    </main>
 
     <br>
     <main v-if="taskHistoriqueData[0]">
@@ -77,9 +77,9 @@
       </table>
       <div v-else>Aune tâche à afficher</div>
     </main>
-    <main v-else><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></main>
+    <main v-else>
+      <loading/>
+    </main>
   </div>
 </template>
 
@@ -91,8 +91,12 @@ import {
   getTasksByCollocIdAsync,
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
+import Loading from "../../components/Utility/Loading.vue";
 
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       errors: [],
@@ -147,7 +151,9 @@ export default {
             // Si la tâche est différente de la précédente
             if (this.futureTaskData[task].taskId != currTaskDataTaskId) {
               // Ajoute la tâche précédente à un tableau temporaire possédant toutes les tâches de la collocation
-              this.futureTaskData[task - 1].firstName = tempRoomieList.join(', ');
+              this.futureTaskData[task - 1].firstName = tempRoomieList.join(
+                ", "
+              );
               if (!this.futureTaskData[task - 1].state)
                 tempArray.push(this.futureTaskData[task - 1]);
               else tempArray2.push(this.futureTaskData[task - 1]);
@@ -160,7 +166,7 @@ export default {
             tempRoomieList.push(this.futureTaskData[task].firstName);
           }
 
-          this.futureTaskData[task].firstName = tempRoomieList.join(', ');
+          this.futureTaskData[task].firstName = tempRoomieList.join(", ");
           if (!this.futureTaskData[task].state)
             tempArray.push(this.futureTaskData[task]);
           else tempArray2.push(this.futureTaskData[task]);

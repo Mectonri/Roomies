@@ -36,9 +36,9 @@
     </main>
     <main v-else>Erreur</main>
   </div>
-  <div  v-else><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></div>
+  <div v-else>
+    <loading/>
+  </div>
 </template>
 
 <script>
@@ -47,11 +47,14 @@ import { state } from "../../state";
 import {
   createItemAsync,
   getItemByItemIdAsync,
-updateItemAsync
+  updateItemAsync
 } from "../../api/ItemApi.js";
+import Loading from "../../components/Utility/Loading.vue";
 
 export default {
-  // props: ,
+  components: {
+    Loading
+  },
   data() {
     return {
       errors: [],
@@ -115,12 +118,12 @@ export default {
         try {
           if (this.route == "create") {
             await createItemAsync(this.item);
-            this.$router.push('/course/info/'+ this.item.courseId);
+            this.$router.push("/course/info/" + this.item.courseId);
           }
           if (this.route == "edit") {
             this.item.itemId = parseInt(this.$route.params.itemId);
             await updateItemAsync(this.item);
-            this.$router.push('/course/info/'+ this.item.courseId);
+            this.$router.push("/course/info/" + this.item.courseId);
           }
         } catch (e) {
           console.error(e);

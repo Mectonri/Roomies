@@ -1,19 +1,4 @@
 <template>
-  <!-- <div>
-    <div>
-      <h1 > Creer une liste  de course</h1>
-    </div>
-    <div>
-      <form @submit="onSubmit($event)">
-        <label>Nom</label>
-        <input type="text" v-model="course.courseName">
-        <label>Date</label>
-        <input type="date" v-model="course.courseDate">
-        <button type="submit">Sauvegarder</button>
-      </form>
-    </div>
-  </div>-->
-
   <div class="createContainer" v-if="!state">
     <main v-if="!idIsUndefined">
       <header v-if="route == 'create'">
@@ -43,9 +28,9 @@
     </main>
     <main v-else>Erreur</main>
   </div>
-  <div  v-else><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></div>
+  <div v-else>
+    <loading/>
+  </div>
 </template>
 
 <script>
@@ -56,8 +41,12 @@ import {
 } from "../../api/GroceriesApi";
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
+import Loading from "../../components/Utility/Loading.vue";
 
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       errors: [],
@@ -116,11 +105,11 @@ export default {
           if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
             await createGroceryListAsync(this.course);
-            this.$router.push('/course');
+            this.$router.push("/course");
           }
           if (this.route == "edit") {
             await updateAgroceryListAsync(this.course);
-            this.$router.push('/course');
+            this.$router.push("/course");
           }
         } catch (e) {
           console.error(e);

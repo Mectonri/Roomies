@@ -72,9 +72,7 @@
       </template>
     </main>
     <main v-else>
-      <div class="spinner-border text-secondary" role="status">
-        <span class="sr-only">Chargement en cours...</span>
-      </div>
+      <loading/>
     </main>
   </div>
 </template>
@@ -84,9 +82,13 @@ import axios from "axios";
 import AuthService from "../../services/AuthService";
 import { getRoomiePicAsync, getRoomieByIdAsync } from "../../api/RoomiesApi";
 import default_pic from "../../../public/default_profile_pic.png";
+import Loading from "../../components/Utility/Loading.vue";
 
 // document.getElementById("navMenu").style.display = "block";
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       file: new FormData(),
@@ -141,7 +143,7 @@ export default {
       this.uploadButtonDisabled = false;
     },
     clickRoute(pathToRoute) {
-      if(this.create){
+      if (this.create) {
         document.getElementById("navMenu").style.display = "block";
       }
       this.$router.push(pathToRoute);

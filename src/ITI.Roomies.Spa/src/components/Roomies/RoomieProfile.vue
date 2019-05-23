@@ -83,11 +83,11 @@
 import i18n from "../../plugins/i18n";
 import { getProfileAsync, getRoomiePicAsync } from "../../api/RoomiesApi";
 import AuthService from "../../services/AuthService";
-import Language from "../Language.vue";
+import Loading from "../../components/Utility/Loading.vue";
 
 export default {
   components: {
-    Language
+    Loading
   },
 
   data() {

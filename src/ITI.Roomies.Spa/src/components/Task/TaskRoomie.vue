@@ -47,9 +47,9 @@
       </div>
       <div v-else>Aucune tâche à afficher</div>
     </main>
-    <main v-else><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></main>
+    <main v-else>
+      <loading/>
+    </main>
 
     <header>
       <h2>Historique</h2>
@@ -85,9 +85,9 @@
       </table>
       <div v-else>Aune tâche à afficher</div>
     </main>
-    <main v-else><div class="spinner-border text-secondary" role="status">
-  <span class="sr-only">Chargement en cours...</span>
-</div></main>
+    <main v-else>
+      <loading/>
+    </main>
   </div>
 </template>
 
@@ -99,9 +99,13 @@ import {
   UpdateTaskStateAsync,
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
+import Loading from "../../components/Utility/Loading.vue";
 // import { state } from "../../state";
 
 export default {
+  components: {
+    Loading
+  },
   data() {
     return {
       errors: [],
