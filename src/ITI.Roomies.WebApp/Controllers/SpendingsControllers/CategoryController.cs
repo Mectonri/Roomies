@@ -33,7 +33,14 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result );
         }
 
-        [HttpPost("createCategory/{collocId}")]
+        [HttpGet( "getIcons" )]
+        public async Task<IActionResult> GetIcons()
+        {
+            Result<IEnumerable<string>> result = await _categoryGateway.GetIcons();
+            return this.CreateResult( result );
+        }
+
+        [HttpPost("{collocId}")]
         public async Task<IActionResult> CreateCategory(int collocId, [FromBody] CategoryViewModel model )
         {
             Result<int> result = await _categoryGateway.CreateCategory( model.CategoryName, model.Icon, collocId );
@@ -44,19 +51,20 @@ namespace ITI.Roomies.WebApp.Controllers
             } );
         }
 
-        [HttpPut( "updateCategory/{categoryId}")]
+        [HttpPut( "{categoryId}")]
         public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] CategoryViewModel model)
         {
             Result result = await _categoryGateway.UpdateCategory( categoryId, model.CategoryName, model.Icon, model.CollocId );
             return this.CreateResult( result );
         }
 
-        [HttpDelete("deleteCategory/{CategoryId}")]
+        [HttpDelete("{categoryId}")]
         public async Task<IActionResult> DeleteCategory(int categoryId )
         {
             Result result = await _categoryGateway.DeleteCategory( categoryId );
             return this.CreateResult( result );
         }
 
+        
     }
 }
