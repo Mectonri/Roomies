@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div class="container">
     <header>
       <h2>Tâches</h2>
     </header>
@@ -47,7 +47,9 @@
       </div>
       <div v-else>Aucune tâche à afficher</div>
     </main>
-    <main v-else>Chargement en cours</main>
+    <main v-else><div class="spinner-border text-secondary" role="status">
+  <span class="sr-only">Chargement en cours...</span>
+</div></main>
 
     <header>
       <h2>Historique</h2>
@@ -83,7 +85,9 @@
       </table>
       <div v-else>Aune tâche à afficher</div>
     </main>
-    <main v-else>Chargement en cours</main>
+    <main v-else><div class="spinner-border text-secondary" role="status">
+  <span class="sr-only">Chargement en cours...</span>
+</div></main>
   </div>
 </template>
 

@@ -24,11 +24,11 @@
       </el-button>
       <el-menu-item @click="clickRoute('/roomies/collocation')">
         <i class="el-icon-menu"></i>
-        <span slot="title">Create a collocation</span>
+        <span slot="title">Gestion collocation</span>
       </el-menu-item>
       <el-menu-item @click="clickRoute('/roomies/profile')">
         <i class="el-icon-s-custom"></i>
-        <span slot="title">Profile</span>
+        <span slot="title">Profil</span>
       </el-menu-item>
       <el-menu-item
         @click="clickRoute('/roomies/calendar')"
@@ -58,26 +58,26 @@
           <span>Tâches</span>
         </template>
 
-        <el-menu-item
+        <el-menu-item class="el-submenu-item"
           index="1-1"
           @click="clickRoute('/task/colloc')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Tâche Collocation active</el-menu-item>
-        <el-menu-item
+        >Tâche de la Collocation</el-menu-item>
+        <el-menu-item class="el-submenu-item"
           index="1-2"
           @click="clickRoute('/task/roomie')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Tâches Roomie</el-menu-item>
-        <el-menu-item
+        >Vos tâches</el-menu-item>
+        <el-menu-item class="el-submenu-item"
           index="1-3"
           @click="clickRoute('/task/create')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Ajouter tâche</el-menu-item>
+        >Ajouter une tâche</el-menu-item>
       </el-submenu>
 
       <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-location"></i>
-        <span slot="title">GroceryList</span>
+        <span slot="title">Listes de courses</span>
       </el-menu-item>
       <el-menu-item @click="clickRoute('/')" disabled>
         <i class="el-icon-setting"></i>
@@ -90,8 +90,6 @@
       <br>
       <br>
       <br>
-      <br>
-      <br>
       <el-menu-item @click="clickRoute('/logout')">
         <i class="el-icon-circle-close"></i>
         <span slot="title">Se déconnecter</span>
@@ -99,20 +97,38 @@
     </el-menu>
 
     <!-- Affihe le chemin demandé -->
-    <template v-if="isCollapse">
-      <main v-if="state == true " role="main" style="padding-left: 100px;">Chargement en cours</main>
+    <!-- <template v-if="isCollapse"> -->
+    <template>
+      <main v-if="state == true " role="main">
+        <div class="spinner-border text-secondary" role="status">
+          <span class="sr-only">Chargement en cours...</span>
+        </div>
+      </main>
       <main v-else>
-        <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
+        <router-view id="pageContent" class="child"></router-view>
       </main>
     </template>
-    <!-- </container> -->
-    <template v-else>
-      <main v-if="state == true " role="main" style="padding-left: 236px;">Chargement en cours</main>
+
+    <!-- <template v-else>
+      <main v-if="state == true " role="main" style="padding-left: 236px;">
+        <div class="spinner-border text-secondary" role="status">
+          <span class="sr-only">Chargement en cours</span>
+        </div>
+      </main>
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
       </main>
-    </template>
-    <!-- </container> -->
+    </template> -->
+    <!-- Le footer -->
+    <footer id="footer" class="font-small mdb-color lighten-3">
+      <div class="container">
+        <language></language>
+      </div>
+      <!-- <div class="footer-copyright text-center">
+        © 2019 Copyright:
+        <a href>Roomie.com</a>
+      </div>-->
+    </footer>
   </div>
 </template>
 
@@ -122,8 +138,13 @@ import "../directives/requiredProviders";
 import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
+import Language from "./Language.vue";
 
 export default {
+  components: {
+    Language
+  },
+
   data() {
     return {
       styles: [
@@ -199,6 +220,7 @@ export default {
       await inviteRoomieAsync(this.message);
     },
     clickRoute(pathToRoute) {
+      if(!this.isCollapse) this.expand_collapse();
       this.$router.push(pathToRoute);
     },
     expand_collapse() {
@@ -228,11 +250,9 @@ export default {
 .el-menu-vertical-demo {
   float: left;
   min-height: 100vh;
+  max-height: 100vh;
   border-right: 1px solid #000000;
-}
-
-.el-menu {
-  background-color: rgb(142, 142, 142);
+  position: fixed;
 }
 
 .el-menu-item i,
@@ -241,9 +261,22 @@ export default {
 .el-submenu-item.is-active {
   color: black;
 }
-
+.el-submenu-item,
+.el-submenu-item.is-active{
+  min-width: 12em !important;
+}
 .el-button {
   background: rgb(102, 102, 102);
   border: 1px solid #000000;
+  color: #000000;
+}
+
+#footer {
+  bottom: 0;
+  width: 100%;
+  height: 5.5rem; /* Footer height */
+  // padding-top: 2.5rem;
+  top: 2.5rem;
+  padding-left: 12rem;
 }
 </style>

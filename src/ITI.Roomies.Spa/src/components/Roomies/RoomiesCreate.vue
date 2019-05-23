@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="createContainer">
   <!-- <div> -->
     <header>
       <h2>S'inscrire</h2>
@@ -75,8 +75,7 @@ export default {
       if (errors.length == 0) {
         try {
           var idRoomie = await createRoomieAsync(this.item);
-          this.$router.replace("/roomies/" + idRoomie);
-          document.getElementById("navMenu").style.display = "block";
+          this.$router.replace("/roomies/upload/create/" + idRoomie);
         } catch (e) {
           console.error(e);
         }
