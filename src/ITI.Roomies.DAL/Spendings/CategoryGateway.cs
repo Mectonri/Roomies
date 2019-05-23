@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -60,6 +61,16 @@ namespace ITI.Roomies.DAL
 
                 Debug.Assert( status == 0 );
                 return Result.Success( Status.Created, p.Get<int>( "@CategoryId" ) );
+            }
+        }
+
+        public async Task<Result<IEnumerable<string>>> GetIcons()
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                IEnumerable<string> result = await con.QueryAsync<string>(
+                    @"select Link from rm.tDefaultCategories" );
+                return Result.Success( result );
             }
         }
 

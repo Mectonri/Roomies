@@ -4,9 +4,7 @@ using ITI.Roomies.WebApp.Models.CourseTempViewModels;
 using ITI.Roomies.WebApp.Models.CourseViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ITI.Roomies.WebApp.Controllers
