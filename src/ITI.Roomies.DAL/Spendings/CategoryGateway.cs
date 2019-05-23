@@ -15,6 +15,17 @@ namespace ITI.Roomies.DAL
             _connectionString = connectionString;
         }
 
+        public async Task<IEnumerable<CategoryData>> GetAll( int collocId )
+        {
+
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<CategoryData>(
+                    @"select * from rm.tCategory where CollocId = @CollocId;",
+                    new { CollocId = collocId } );
+            }
+        }
+
         public async Task<Result<CategoryData>> FindCategoryId( int categoryId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
