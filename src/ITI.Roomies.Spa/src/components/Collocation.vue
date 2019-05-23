@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div class="container">
     <header>
       <h2>Collocation</h2>
     </header>

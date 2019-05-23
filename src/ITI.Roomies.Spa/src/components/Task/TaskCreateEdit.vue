@@ -1,5 +1,5 @@
 <template>
-  <div id="container" v-if="state == false">
+  <div class="createContainer" v-if="state == false">
     <main v-if="idIsUndefined == false">
       <header v-if="route == 'create'">
         <h2>Créer une tâche</h2>
@@ -51,7 +51,7 @@
     </main>
     <main v-else>Erreur</main>
   </div>
-  <div id="container" v-else><div class="spinner-border text-secondary" role="status">
+  <div  v-else><div class="spinner-border text-secondary" role="status">
   <span class="sr-only">Chargement en cours...</span>
 </div></div>
 </template>

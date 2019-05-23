@@ -14,7 +14,7 @@
     </div>
   </div>-->
 
-  <div id="container" v-if="!state">
+  <div class="createContainer" v-if="!state">
     <main v-if="!idIsUndefined">
       <header v-if="route == 'create'">
         <h2>Créer une liste de course</h2>
@@ -43,7 +43,7 @@
     </main>
     <main v-else>Erreur</main>
   </div>
-  <div id="container" v-else><div class="spinner-border text-secondary" role="status">
+  <div  v-else><div class="spinner-border text-secondary" role="status">
   <span class="sr-only">Chargement en cours...</span>
 </div></div>
 </template>

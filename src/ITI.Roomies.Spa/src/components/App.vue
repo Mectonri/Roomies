@@ -78,18 +78,19 @@
     </el-menu>
 
     <!-- Affihe le chemin demandé -->
-    <template v-if="isCollapse">
-      <main v-if="state == true " role="main" style="padding-left: 100px;">
+    <!-- <template v-if="isCollapse"> -->
+    <template>
+      <main v-if="state == true " role="main">
         <div class="spinner-border text-secondary" role="status">
           <span class="sr-only">Chargement en cours...</span>
         </div>
       </main>
       <main v-else>
-        <router-view id="pageContent" class="child" style="padding-left: 100px;"></router-view>
+        <router-view id="pageContent" class="child"></router-view>
       </main>
     </template>
 
-    <template v-else>
+    <!-- <template v-else>
       <main v-if="state == true " role="main" style="padding-left: 236px;">
         <div class="spinner-border text-secondary" role="status">
           <span class="sr-only">Chargement en cours</span>
@@ -98,7 +99,7 @@
       <main v-else>
         <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
       </main>
-    </template>
+    </template> -->
     <!-- Le footer -->
     <footer id="footer" class="font-small mdb-color lighten-3">
       <div class="container">
@@ -171,6 +172,7 @@ export default {
       await inviteRoomieAsync(this.message);
     },
     clickRoute(pathToRoute) {
+      if(!this.isCollapse) this.expand_collapse();
       this.$router.push(pathToRoute);
     },
     expand_collapse() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="createContainer">
   <!-- <div> -->
     <header>
       <h2>S'inscrire</h2>
