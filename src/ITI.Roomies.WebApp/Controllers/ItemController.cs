@@ -54,7 +54,7 @@ namespace ITI.Roomies.WebApp.Controllers
         }
 
         [HttpPost( "updateItem" )]
-        public async Task<IActionResult> updateItemAsync([FromBody] ItemViewModel model)
+        public async Task<IActionResult> UpdateItemAsync([FromBody] ItemViewModel model)
         {
             int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result result = await _itemGateway.UpdateItem( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, userId );
