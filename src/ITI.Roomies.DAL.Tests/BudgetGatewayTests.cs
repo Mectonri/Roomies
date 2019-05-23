@@ -38,14 +38,14 @@ namespace ITI.Roomies.DAL.Tests
                 amount = 100;
                 date1 = TestHelpers.RandomBirthDate( 2 );
                 date2 = TestHelpers.RandomBirthDate( 3 );
-                await sut.Update( budgetId, categoryId, date1, date2, amount, collocId );
+                await sut.UpdateBudget( budgetId, categoryId, date1, date2, amount, collocId );
 
                 budgetData = await sut.FindBudgetById( budgetId );
                 checkBudget(budgetData, categoryId, date1, date2, amount, collocId);
 
             }
             {
-                Result r = await sut.Delete( budgetId );
+                Result r = await sut.DeleteBudget( budgetId );
                 Assert.That( r.Status, Is.EqualTo( Status.Ok ) );
 
                 budgetData = await sut.FindBudgetById( budgetId );

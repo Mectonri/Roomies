@@ -30,6 +30,11 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public Task<IEnumerable<BudgetData>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Result<int>> CreateBudget( int categoryId, DateTime date1, DateTime date2, int amount, int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -50,7 +55,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Delete( int budgetId )
+        public async Task<Result> DeleteBudget( int budgetId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -68,7 +73,7 @@ namespace ITI.Roomies.DAL
         }
 
 
-        public async Task<Result> Update( int budgetId, int categoryId, DateTime date1, DateTime date2, int amount, int collocId )
+        public async Task<Result> UpdateBudget( int budgetId, int categoryId, DateTime date1, DateTime date2, int amount, int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
