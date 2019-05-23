@@ -16,5 +16,4 @@ namespace ITI.Roomies.DAL
         public int CollocId { get; set; }
 
     }
-
 }
