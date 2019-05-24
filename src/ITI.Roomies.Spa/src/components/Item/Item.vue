@@ -1,5 +1,5 @@
 <template>
-  <div id="template">
+  <div class="container">
     <div>
       <header>
         <h1>Objet dans le liste {{courseName}}</h1>
