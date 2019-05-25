@@ -29,7 +29,6 @@ import TaskCreate from './components/Task/TaskCreateEdit.vue'
 
 import GroceryList from './components/GroceryList/Grocery.vue'
 import GroceryCreate from './components/GroceryList/GroceryCreate.vue'
-import GroceryInfo from './components/GroceryList/GroceryInfo.vue'
 
 import Item from './components/Item/Item.vue'
 import ItemCreate from './components/Item/ItemCreateEdit.vue'
