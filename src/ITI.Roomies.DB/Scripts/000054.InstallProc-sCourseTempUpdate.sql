@@ -17,8 +17,7 @@ begin
 	end;
 
 	update rm.tCourseTemp
-	set CourseName = @CourseName,
-		CourseDate = @CourseDate
+	set CourseName = @CourseName
 	where CourseId = @CourseId;
 
 	commit;
