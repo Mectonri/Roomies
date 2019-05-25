@@ -3,6 +3,7 @@
     <!-- Menu de navigation -->
     <!-- <div> -->
     <el-menu
+    id="navMenu"
       default-active="2"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
