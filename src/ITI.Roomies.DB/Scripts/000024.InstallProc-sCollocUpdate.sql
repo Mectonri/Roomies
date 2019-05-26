@@ -2,7 +2,7 @@ create proc rm.sCollocUpdate
 (
 	@CollocId int,
 	@CollocName nvarchar(32),
-	@CollocPic nvarchar(45)
+	@CollocPic nvarchar(max)
 )
 as
 begin
