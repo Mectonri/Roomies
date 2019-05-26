@@ -33,6 +33,8 @@ import GroceryCreate from './components/GroceryList/GroceryCreate.vue'
 import Item from './components/Item/Item.vue'
 import ItemCreate from './components/Item/ItemCreateEdit.vue'
 
+import Spendings from './components/Spendings/Spendings.vue'
+
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -69,6 +71,8 @@ const routes = [
     { path: '/course/info/:id?/item/create', component: ItemCreate, beforeEnter: requireAuth},
     { path: '/course/info/:id?/item/edit/:itemId?', component: ItemCreate, beforeEnter: requireAuth},
     { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
+
+    { path: '/spendings', component: Spendings, beforeEnter: requireAuth},
 
 ];
 
