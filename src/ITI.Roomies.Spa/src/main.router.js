@@ -50,6 +50,8 @@ const routes = [
     {path: '/roomies/collocation', component: Collocation, beforeEnter: requireAuth},
     {path: '/roomies/collocation/:id?', component: Collocation, beforeEnter: requireAuth},
 
+    {path: '/roomies/upload/colloc/:id?', component: ImageUploader, beforeEnter: requireAuth},
+
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },
     { path: '/roomies/profile', component: RoomieProfile, beforeEnter: requireAuth },
