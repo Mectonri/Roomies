@@ -11,7 +11,7 @@ create table rm.tRoomie
 
     constraint PK_tUser primary key(RoomieId),
     constraint UK_tUser_Email unique(Email),
-    constraint UK_tUser_Phone unique(Phone),
+    --constraint UK_tUser_Phone unique(Phone),
 );
 
 insert into rm.tRoomie(FirstName,                                LastName,                                 Email, BirthDate, Phone )
