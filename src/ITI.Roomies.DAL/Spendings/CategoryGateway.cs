@@ -50,7 +50,7 @@ namespace ITI.Roomies.DAL
             {
                 var p = new DynamicParameters();
                 p.Add( "@CategoryName", categoryName);
-                p.Add( "@Icon", icon);
+                p.Add( "@IconName", icon);
                 p.Add( "@CollocId", collocId);
                 p.Add( "@CategoryId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
@@ -64,13 +64,12 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<IEnumerable<string>>> GetIcons()
+        public async Task<IEnumerable<CategoryIconsData>> GetIcons()
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                IEnumerable<string> result = await con.QueryAsync<string>(
-                    @"select Link from rm.tDefaultCategories" );
-                return Result.Success( result );
+                return await con.QueryAsync<CategoryIconsData>(
+                    @"select IconName from rm.tIcon" );
             }
         }
 

@@ -17,7 +17,7 @@ namespace ITI.Roomies.WebApp.Controllers
             _transactionGateway = transactionGateway;
         }
 
-        [HttpGet("getAllRoomieTransaction/{id}" )]
+        [HttpGet("getAllRoomieTransaction/{roomieId}" )]
         public async Task<IActionResult> GetAllRoomieTrans( )
         {
             throw new NotImplementedException();

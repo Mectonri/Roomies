@@ -9,8 +9,8 @@ create table rm.tRoomie
 	[Description] nvarchar(200),
 	RoomiePic nvarchar(max),
 
-    constraint PK_tUser primary key(RoomieId),
-    constraint UK_tUser_Email unique(Email),
+    constraint PK_tRoomie primary key(RoomieId),
+    constraint UK_tRoomie_Email unique(Email),
     --constraint UK_tUser_Phone unique(Phone),
 );
 

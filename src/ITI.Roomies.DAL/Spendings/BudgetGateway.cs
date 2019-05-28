@@ -30,9 +30,14 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public Task<IEnumerable<BudgetData>> GetAll()
+        public async Task<IEnumerable<BudgetData>> GetAll( int collocId)
         {
-            throw new NotImplementedException();
+            using( SqlConnection con = new SqlConnection(_connectionString) )
+            {
+                return await con.QueryAsync<BudgetData>(
+                    @"select * from rm.tBudget where CollocId = @CollocId",
+                    new { CollocId = collocId } );
+            }
         }
 
         public async Task<Result<int>> CreateBudget( int categoryId, DateTime date1, DateTime date2, int amount, int collocId )

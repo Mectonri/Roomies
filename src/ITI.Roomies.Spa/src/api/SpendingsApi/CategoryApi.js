@@ -1,4 +1,4 @@
-import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
+import { getAsync, postAsync, putAsync, deleteAsync } from '../../helpers/apiHelper'
 
 const endpoint = process.env.VUE_APP_BACKEND + "/api/category";
 
@@ -10,8 +10,8 @@ export async function getCategoriesAsync(collocId){
   return await getAsync(`${endpoint}/GetCategories/${collocId}`);
 }
 
-export async function createCategoryAsync(collocId, model){
-  return await postAsync(`${endpoint}/${collocId}`, model)
+export async function createCategoryAsync(model){
+  return await postAsync(`${endpoint}/create`, model)
 }
 
 export async function updateCategoryAsync(categoryId){
@@ -22,6 +22,6 @@ export async function deleteCategoryAsync(categoryId){
   return await deleteAsync(`${endpoint}/${categoryId}`);
 }
 
-export async function getIconsAsync(){
+export async function getDefaultIconsAsync(){
   return await getAsync(`${endpoint}/getIcons`);
 }
