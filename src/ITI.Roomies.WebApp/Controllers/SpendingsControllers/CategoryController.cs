@@ -26,7 +26,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
        }
 
-        [HttpGet("GetCategory/{categoryId}")]
+        [HttpGet("GetCategory/{categoryId}", Name="GetCategory")]
         public async Task<IActionResult> GetGategory(int categoryId)
         {
             Result<CategoryData> result = await _categoryGateway.FindCategoryId( categoryId );
@@ -36,14 +36,15 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet( "getIcons" )]
         public async Task<IActionResult> GetIcons()
         {
-            Result<IEnumerable<string>> result = await _categoryGateway.GetIcons();
-            return this.CreateResult( result );
+            IEnumerable<CategoryIconsData> result = await _categoryGateway.GetIcons();
+            return Ok( result );
         }
 
-        [HttpPost("{collocId}")]
-        public async Task<IActionResult> CreateCategory(int collocId, [FromBody] CategoryViewModel model )
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryViewModel model )
         {
-            Result<int> result = await _categoryGateway.CreateCategory( model.CategoryName, model.Icon, collocId );
+            int collocId = model.CollocId;
+            Result<int> result = await _categoryGateway.CreateCategory( model.CategoryName, model.IconName, collocId );
             return this.CreateResult( result, o =>
             {
                 o.RouteName = "GetCategory";
@@ -54,7 +55,7 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPut( "{categoryId}")]
         public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] CategoryViewModel model)
         {
-            Result result = await _categoryGateway.UpdateCategory( categoryId, model.CategoryName, model.Icon, model.CollocId );
+            Result result = await _categoryGateway.UpdateCategory( categoryId, model.CategoryName, model.IconName, model.CollocId );
             return this.CreateResult( result );
         }
 
@@ -64,7 +65,5 @@ namespace ITI.Roomies.WebApp.Controllers
             Result result = await _categoryGateway.DeleteCategory( categoryId );
             return this.CreateResult( result );
         }
-
-        
     }
 }

@@ -21,24 +21,25 @@ namespace ITI.Roomies.WebApp.Controllers
             _budgetGateway = budgetGateway;
         }
 
-        [HttpGet( "getBudget/{id}")]
-        public async Task<IActionResult> getAllBudget()
+        [HttpGet( "getBudgets/{collocId}")]
+        public async Task<IActionResult> getAllBudget(int collocId)
         {
-            IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll();
+            IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll(collocId);
             return Ok( budgetDatas );
         }
 
-        [HttpGet("getBudgetById")]
+        [HttpGet("getBudgetById/{budgetId}")]
         public async Task<IActionResult> getBudgetById(int budgetId)
         {
             Result<BudgetData> result = await _budgetGateway.FindBudgetById( budgetId );
             return Ok( result );
         }
 
-        [HttpPost("addBudget")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddBudget( [FromBody] BudgetViewModel model)
         {
             int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier).Value );
+            
             Result result = await _budgetGateway.CreateBudget( model.CategoryId, model.Date1, model.Date2, model.Amount, model.CollocId );
             return this.CreateResult( result );
         }
