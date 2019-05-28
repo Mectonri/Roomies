@@ -28,7 +28,7 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( budgetDatas );
         }
 
-        [HttpGet("getBudgetById/{budgetId}")]
+        [HttpGet("getBudgetById/{budgetId}", Name="GetBudget")]
         public async Task<IActionResult> getBudgetById(int budgetId)
         {
             Result<BudgetData> result = await _budgetGateway.FindBudgetById( budgetId );
@@ -38,10 +38,14 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> AddBudget( [FromBody] BudgetViewModel model)
         {
-            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier).Value );
+            //int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier).Value );
             
-            Result result = await _budgetGateway.CreateBudget( model.CategoryId, model.Date1, model.Date2, model.Amount, model.CollocId );
-            return this.CreateResult( result );
+            Result<int> result = await _budgetGateway.CreateBudget( model.CategoryId, model.Date1, model.Date2, model.Amount, model.CollocId );
+            return this.CreateResult( result, o =>
+            {
+                o.RouteName = "GetBudget";
+                o.RouteValues = budgetId => new { budgetId };
+            } );
         }
 
         [HttpPost( "delete/{budgetId}")]

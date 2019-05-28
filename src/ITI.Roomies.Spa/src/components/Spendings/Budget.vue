@@ -1,36 +1,54 @@
 <template>
   <div class="createContainer">
-    <H1>Attribuer un budget à la categorie</H1>
     <div>
-      <label class="required">Montant</label>
-      <br>
-      <input type="text" v-model="budget.amount">
+      <H1>Attribuer un budget à la categorie</H1>
+    </div>
 
-      <label class="required">Debut</label>
-      <br>
-      <input type="text" v-model="budget.date1">
+    <div>
+      <form @submit="onSubmit($event)">
+        <div class="alert alert-alert" v-if="errors.length > 0">
+          <b>Les champs suivant semblent invalides:</b>
+          <ul>
+            <li v-for="e of errors" :key="e">{{e}}</li>
+          </ul>
+        </div>
 
-      <label class="required">fin</label>
-      <br>
-      <input type="text" v-model="budget.date2">
-      <!-- Ajouter une liste des diffeerentres categoy creer -->
-
-      <el-form-item label="Category">
-        <el-select
-          v-for="category in categories"
-          :key="category"
-          placeholder="please select your category"
-        >
-          <el-option>{{category}}</el-option>
-        </el-select>
-        <el-button @click="createBudget">Create</el-button>
-      </el-form-item>
+        <label for="amount" class="required">Amount</label>
+        <br>
+        <input type="text" name="amount" v-model="budget.amount" required>
+        <!-- <div>
+          <label for="date1" class="required">Debut</label>
+          <br>
+          <input type="date" v-model="budget.date1" required>
+        </div>
+        <div>
+          <label for="date2" class="required">Fin</label>
+          <br>
+          <input type="date" v-model="budget.date2" required>
+        </div>-->
+        <div class="block">
+          <span class="demonstration">choisissez une date</span>
+          <el-date-picker v-model="budget.date1" type="date" placeholder="Date de debut"></el-date-picker>
+          <el-date-picker v-model="budget.date2" type="date" placeholder="Date de fin"></el-date-picker>
+        </div>
+        <br>
+        <div>
+          <el-select v-model="budget.categoryId" placeholder="Select the category">
+            <el-option
+              v-for="category in categories"
+              :key="category.categoryName"
+              :label="category.categoryName"
+              :value="category.categoryId"
+            ></el-option>
+          </el-select>
+        </div>
+      </form>
+      <el-button type="primary" round @click="onSubmit">Sauvegarder</el-button>
     </div>
   </div>
 </template>
 
 <script>
-
 import {
   getAllBudgetAsync,
   getBudgetAsync,
@@ -48,7 +66,7 @@ export default {
       state: true,
       idIsUndefined: true,
       bugets: null,
-      budget: null,
+      budget: {},
       categories: null
     };
   },
@@ -64,17 +82,19 @@ export default {
   async mounted() {
     this.collocId = this.$currColloc.collocId;
     this.categories = await getCategoriesAsync(this.collocId);
-    this.budgets = await getAllBudgetAsync(this.collocId);
+    //this.budgets = await getAllBudgetAsync(this.collocId);
   },
 
   methods: {
-    async createBudget() {
+    async onSubmit() {
       event.preventDefault();
+      console.log(this.budget.categoryiId);
 
       var errors = [];
       if (!this.budget.amount) errors.push("Amount");
-      if (!this.budget.date1) errors.push("date1");
-      if (!this.budget.date2) errors.push("date2");
+      if (!this.budget.date1) errors.push("Date1");
+      if (!this.budget.date2) errors.push("Date2");
+      if (!this.budget.categoryId) errors.push("Category");
 
       this.errors = errors;
       this.budget.collocId = this.collocId;
