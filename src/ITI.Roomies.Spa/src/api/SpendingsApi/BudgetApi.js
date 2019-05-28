@@ -11,7 +11,7 @@ export async function getAllBudgetAsync(collocId) {
 }
 
 export async function createBudgetAsync(model) {
-  return await postAsync(`${endpoint}/create`, model);
+  return await postAsync(`${endpoint}/add`, model);
 }
 
 export async function updateBudget(budgetId) {
