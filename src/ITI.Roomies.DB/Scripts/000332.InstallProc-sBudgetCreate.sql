@@ -1,11 +1,12 @@
 create procedure rm.sBudgetCreate
 (	
-	@BudgetId int out,
+	
 	@CategoryId int,
 	@Date1 datetime2,
 	@Date2 datetime2,
 	@CollocId int,
-	@Amount int
+	@Amount int,
+	@BudgetId int out
 )
 as
 begin

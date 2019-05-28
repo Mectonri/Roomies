@@ -20,19 +20,20 @@
           <div>
             <label class="required">Nom</label>
             <br>
-            <input class="form-control" type="text" v-model="category.categoryName" required>
+            <input type="text" v-model="category.categoryName" required>
           </div>
 
           <div>
             <label>Icon</label>
             <br>
-            <input type="checkbox" name="icon" value="Icon1" v-model="category.iconName">
+            <input name="icon" value="Icon1" v-model="category.iconName">
             <div v-for="(icon, index) in icons" :key="index">
               <img :src="iconPath + '/'+icon.iconName+'.png'" @click="test(icon.iconName)">
             </div>
           </div>
         </div>
-
+        
+        
         <br>
         <br>
         <br>
@@ -73,7 +74,7 @@ export default {
       icons: [],
       iconPath: "http://localhost:5000/Pictures/Icons",
       budget: {},
-      categoies: null
+      categoies: null,
     };
   },
 
@@ -92,6 +93,7 @@ export default {
     console.log(this.collocId);
     this.budget.collocId = this.collocId;
     this.categories = getCategoriesAsync(this.collocId);
+    debugger;
   },
 
   methods: {
