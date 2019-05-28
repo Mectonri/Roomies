@@ -2,7 +2,7 @@ create proc rm.sCategoryUpdate
 (	
 	@CategoryId int,
 	@CategoryName nvarchar(32),
-	@Icon nvarchar(max),
+	@IconName nvarchar(32),
 	@CollocId int
 )
 as
@@ -18,7 +18,7 @@ begin
 	
 	if exists( select * from rm.tCategory c where CategoryId <> @CategoryId
 		and c.CategoryName = @CategoryName
-		and c.Icon = @Icon
+		and c.IconName = @IconName
 		and c.CollocId = CollocId)
 	begin
 		rollback;
@@ -27,7 +27,7 @@ begin
 	
 	update rm.tCategory 
 	set CategoryName = @CategoryName,
-		Icon = @Icon,
+		IconName = @IconName,
 		CollocId = @CollocId
 	where CategoryId = @CategoryId;
 	

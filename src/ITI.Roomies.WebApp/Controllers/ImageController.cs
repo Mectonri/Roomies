@@ -1,6 +1,5 @@
 using System.IO;
 using ITI.Roomies.DAL;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;

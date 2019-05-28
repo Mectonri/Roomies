@@ -2,7 +2,7 @@ Create procedure rm.sCategoryCreate
 (	
 	@CategoryId int out,
 	@CategoryName nvarchar(32),
-	@Icon nvarchar(max),
+	@IconName nvarchar(32),
 	@CollocId int
 )
 as 
@@ -16,8 +16,8 @@ begin
 			return 1;
 		end;
 
-	insert into rm.tCategory(CategoryName, Icon, CollocId)
-	values(@CategoryName, @Icon, @CollocId)
+	insert into rm.tCategory(CategoryName, IconName, CollocId)
+	values(@CategoryName, @IconName, @CollocId)
 	set @CategoryId = SCOPE_IDENTITY();
 
 	commit;
