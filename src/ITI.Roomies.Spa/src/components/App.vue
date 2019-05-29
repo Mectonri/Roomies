@@ -277,6 +277,6 @@ export default {
   height: 5.5rem; /* Footer height */
   // padding-top: 2.5rem;
   top: 2.5rem;
-  padding-left: 12rem;
+  // padding-left: 12rem;
 }
 </style>
