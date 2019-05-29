@@ -29,3 +29,11 @@ export async function JoinAsync(invitationKey){
 export async function getCollocInformation(collocId){
     return await getAsync(`${endpoint}/getCollocInformation/${collocId}`)
 };
+
+export async function DestroyCollocAsync(collocId){
+    return await deleteAsync(`${endpoint}/DestroyCollocAsync/${collocId}`)
+};
+
+export async function IsAdminAsync(collocId){
+    return await getAsync(`${endpoint}/IsAdminAsync/${collocId}`)
+};

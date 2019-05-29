@@ -34,6 +34,16 @@
         :disabled="$setMenuItemDisabled.disableState"
       >Inviter</button>
     </p>
+    <p v-if="Admin==1">
+      Supprimer la collocation :
+      <br>
+      <br>
+      <button
+        class="btn btn-dark"
+        @click="DestroyColloc()"
+        :disabled="$setMenuItemDisabled.disableState"
+      >Suppprimer</button>
+    </p>
 
     <div v-if="show1">
       <form @submit="onSubmit($event)">
@@ -103,6 +113,17 @@
         native-type="submit"
       >Quitter la collocation</button>
     </div>
+
+    <div v-if="this.collocName!='' && Admin==1">
+      <br>
+      <br>
+      <br>
+      <button
+        class="btn btn-dark"
+        @click="DestroyColloc($event)"
+        native-type="submit"
+      >Détruire la collocation</button>
+    </div>
   </div>
 </template>
 
@@ -112,7 +133,9 @@ import {
   createCollocAsync,
   quitCollocAsync,
   InviteAsync,
-  JoinAsync
+  JoinAsync,
+  DestroyCollocAsync,
+  IsAdminAsync
 } from "../api/CollocationApi";
 import { state } from "../state";
 import { error } from "util";
@@ -130,7 +153,8 @@ export default {
       mail: "",
       InviteKey: "",
       checkInvite: 2,
-      checkjoin: 2
+      checkjoin: 2,
+      Admin :0
     };
   },
 
@@ -138,6 +162,9 @@ export default {
     this.idColloc = this.$currColloc.collocId;
     this.collocName = this.$currColloc.collocName;
     this.show4 = !this.$setMenuItemDisabled.disableState;
+    if(this.$currColloc.collocName!=""){
+      this.Admin = await IsAdminAsync(this.$currColloc.collocId);
+    }
   },
 
   methods: {
@@ -227,6 +254,10 @@ export default {
       } catch (e) {
         console.error(e);
       }
+    },
+
+    async DestroyColloc(){
+      DestroyCollocAsync(this.$currColloc.collocId);
     }
   }
 };

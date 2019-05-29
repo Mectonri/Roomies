@@ -7,8 +7,8 @@ as
 begin
 
 
-	insert into rm.tiCollRoom(CollocId, RoomieId)
-	                  values(@CollocId, @RoomieId );
+	insert into rm.tiCollRoom(CollocId, RoomieId, AdminColloc)
+	                  values(@CollocId, @RoomieId, 0 );
 	return 0;
 end;
 
