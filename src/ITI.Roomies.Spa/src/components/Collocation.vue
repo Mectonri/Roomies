@@ -114,16 +114,6 @@
       >Quitter la collocation</button>
     </div>
 
-    <div v-if="this.collocName!='' && Admin==1">
-      <br>
-      <br>
-      <br>
-      <button
-        class="btn btn-dark"
-        @click="DestroyColloc($event)"
-        native-type="submit"
-      >Détruire la collocation</button>
-    </div>
   </div>
 </template>
 
@@ -258,6 +248,11 @@ export default {
 
     async DestroyColloc(){
       DestroyCollocAsync(this.$currColloc.collocId);
+      this.$currColloc.setCollocId(-1);
+      this.$currColloc.setCollocName("");
+      // Désactive les boutons du menu
+      this.$setMenuItemDisabled.setDisableState(true);
+      this.$router.replace("/roomies");
     }
   }
 };

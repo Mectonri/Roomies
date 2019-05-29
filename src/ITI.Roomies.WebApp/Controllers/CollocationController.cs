@@ -139,7 +139,7 @@ namespace ITI.Roomies.WebApp.Controllers
         }
 
 
-        [HttpDelete( "DestroyCollocAsync/${collocId}" )]
+        [HttpDelete( "DestroyCollocAsync/{collocId}" )]
         public async Task<IActionResult> DestroyCollocAsync( int collocId )
         {
             Result result = await _collocGateway.DestroyCollocAsync( collocId );

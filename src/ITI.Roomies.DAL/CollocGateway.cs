@@ -147,7 +147,7 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 int result = await con.QueryFirstOrDefaultAsync<int>(
-                     @"select CollocAdmin from rm.tiCollRoom where CollocId=@CollocId and RoomieId=@RoomieId",
+                     @"select AdminColloc from rm.tiCollRoom where CollocId=@CollocId and RoomieId=@RoomieId",
                      new { CollocId = collocId, RoomieId= roomieId } );
 
                 return result;
