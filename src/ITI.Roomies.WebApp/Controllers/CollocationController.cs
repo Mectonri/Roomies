@@ -129,5 +129,22 @@ namespace ITI.Roomies.WebApp.Controllers
             IEnumerable<CollocData> result = await _collocGateway.getCollocInformation(collocId);
             return this.Ok( result );
         }
+
+        [HttpGet( "IsAdminAsync/{collocId}" )]
+        public async Task<int> IsAdminAsync( int collocId )
+        {
+            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            int result = await _collocGateway.IsAdminAsync( collocId , roomieId);
+            return result;
+        }
+
+
+        [HttpDelete( "DestroyCollocAsync/${collocId}" )]
+        public async Task<IActionResult> DestroyCollocAsync( int collocId )
+        {
+            Result result = await _collocGateway.DestroyCollocAsync( collocId );
+            return this.Ok( result );
+        }
+
     }
 }

@@ -57,7 +57,7 @@ namespace ITI.Roomies.WebApp.Controllers
 
             return this.CreateResult( roomiePic );
 
-        } 
+        }
 
         [HttpPost( "createRoomie" )]
         public async Task<IActionResult> CreateRoomie( [FromBody] RoomiesViewModel model )
@@ -79,7 +79,6 @@ namespace ITI.Roomies.WebApp.Controllers
             bool enableSSL = true;
             string emailFromAddress = "ITI.Roomies@gmail.com"; //Sender Email Address
             string password = "0123456789A@"; //Sender Password
-            string subject = "Hello";
             string body = "Test";
 
             using( MailMessage mail = new MailMessage() )

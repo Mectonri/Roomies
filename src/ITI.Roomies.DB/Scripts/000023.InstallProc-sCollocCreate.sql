@@ -12,8 +12,8 @@ begin
 	insert into rm.tColloc  ( CollocName )
 	                  values( @CollocName )
 	set @CollocId = scope_identity();
-	insert into rm.tiCollRoom(collocId, RoomieId)
-		values(@CollocId, @RoomieId);
+	insert into rm.tiCollRoom(collocId, RoomieId, AdminColloc)
+		values(@CollocId, @RoomieId, 1);
 
 	commit;
 	return 0;
