@@ -66,7 +66,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public Task<Result> UpdateTransacBudget( int transacBudget, int price, DateTime date, int budgetId,   )
+        public Task<Result> UpdateTransacBudget( int transacBudget, int price, DateTime date, int budgetId )
         {
             //using( SqlConnection con = new SqlConnection( _connectionString ) )
             //{
@@ -109,7 +109,7 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<TransacDepenseData>(
-                @"select * from rm.tTransacDepense where RoomieId = @RoomieId",
+                @"select * from rm.tTransacDepense where SRoomieId = @RoomieId",
                 new { RoomieId = roomieId } );
             }
         }

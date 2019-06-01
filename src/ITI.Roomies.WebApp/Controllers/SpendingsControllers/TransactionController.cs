@@ -15,9 +15,39 @@ namespace ITI.Roomies.WebApp.Controllers
     public class TransactionController : Controller
     {
         readonly TransactionGateway _transactionGateway;
-        public TransactionController( TransactionGateway transactionGateway )
+        readonly BudgetGateway _budgetGateway;
+        public TransactionController( TransactionGateway transactionGateway, BudgetGateway budgetGateway )
         {
             _transactionGateway = transactionGateway;
+            _budgetGateway = budgetGateway;
+        }
+
+        [HttpPost("createTransaction")]
+        public async Task<IActionResult> CreateTransaction([FromBody] TransactionViewModel model )
+        {
+            int rRoomieId = model.RoomieId;
+            if (rRoomieId == 0 )
+            {
+                BudgetData budget = await _budgetGateway.FindBudgetByCollocIdAndDate( model.CollocId, model.Date );
+
+                rRoomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+                Result<int> result = await _transactionGateway.CreateTransacBudget( model.Price, model.Date, budget.BudgetId, rRoomieId );
+                return this.CreateResult( result, o =>
+                {
+                    o.RouteName = "GetTransacBudgetId";
+                    o.RouteValues = transacBudgetId => new { transacBudgetId };
+                } );
+            }
+            else
+            {
+                int sRoomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+                Result<int> result = await _transactionGateway.CreateTransacDepense( model.Price, model.Date, sRoomieId, rRoomieId );
+                return this.CreateResult( result, o =>
+                {
+                    o.RouteName = "GetTransacDepense";
+                    o.RouteValues = transacDepenseId => new { transacDepenseId };
+                } );
+            }
         }
 
         #region TransacBudget
@@ -40,7 +70,8 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet( "createTransacBudget" )]
         public async Task<IActionResult> CreateTransacBudget( [FromBody] TransacBudgetViewModel model )
         {
-            Result<int> result = await _transactionGateway.CreateTransacBudget( model.Price, model.Date, model.BudgetId, model.RoomieId );
+            int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
+            Result<int> result = await _transactionGateway.CreateTransacBudget( model.Price, model.Date, model.BudgetId, roomieId );
             return this.CreateResult( result, o =>
              {
                  o.RouteName = "GetTransacBudgetId";
@@ -53,8 +84,9 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPut( "updateTransacBudget/{transacBudgetId}" )]
         public async Task<IActionResult> UpdateTransacBudget( int transacBudget )
         {
-            Result result = await _transactionGateway.UpdateTransacBudget( transacBudget );
-            return this.CreateResult( result );
+            //Result result = await _transactionGateway.UpdateTransacBudget( transacBudget );
+            //return this.CreateResult( result );
+            throw new NotImplementedException();
         }
 
         [HttpDelete( "deleteTransacBudget/{transacBudgetId}" )]

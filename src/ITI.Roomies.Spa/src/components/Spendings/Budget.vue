@@ -7,7 +7,7 @@
     <div>
       <form @submit="onSubmit($event)">
         <div class="alert alert-alert" v-if="errors.length > 0">
-          <b>Les champs suivant semblent invalides:</b>
+          <b>Les champs suivants semblent invalides:</b>
           <ul>
             <li v-for="e of errors" :key="e">{{e}}</li>
           </ul>
