@@ -31,7 +31,7 @@ export async function getTransacDepenseAsync(transacDepenseId){
 }
 
 export async function createTransacDepenseAsync(model){
-  return await postAsync(`${endpont}/createTransacDepense`, model);
+  return await postAsync(`${endpoint}/createTransacDepense`, model);
 }
 
 export async function updateTransacDepenseAsync(transacDepenseId){
@@ -40,4 +40,8 @@ export async function updateTransacDepenseAsync(transacDepenseId){
 
 export async function deleteTransacDepenseAsync(transacDepenseId){
   return await deleteAsync(`${endpoint}/deleteTransacDepense/${transacDepenseId}`)
+}
+
+export async function createTransactionAsync(model){
+  return await postAsync(`${endpoint}/createTransaction`, model)
 }
