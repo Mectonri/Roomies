@@ -34,6 +34,10 @@ import Item from './components/Item/Item.vue'
 import ItemCreate from './components/Item/ItemCreateEdit.vue'
 
 import Spendings from './components/Spendings/Spendings.vue'
+import Category from './components/Spendings/CategoryCreateEdit.vue'
+
+import Budget from './components/Spendings/Budget.vue'
+import TransactionBudget from "./components/Spendings/Transaction/TransactionBudget.vue"
 
 
 const routes = [
@@ -75,6 +79,10 @@ const routes = [
     { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
 
     { path: '/spendings', component: Spendings, beforeEnter: requireAuth},
+    { path: '/Roomies/category', component: Category, beforeEnter: requireAuth},
+    { path: '/Roomies/budget', component: Budget, beforeEnter: requireAuth},
+    { path: '/Roomies/transaction', component: TransactionBudget, before: requireAuth},
+
 
 ];
 
