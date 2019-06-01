@@ -60,6 +60,16 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<BudgetData> FindBudgetByCollocIdAndDate( int collocId, DateTime date )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryFirstOrDefaultAsync<BudgetData>(
+                    @"select * from rm.tBudget where CollocId = @CollocId and Date1 < @Date and @Date < Date2",
+                    new { CollocId = collocId, Date = date } );
+            }
+        }
+
         public async Task<Result> DeleteBudget( int budgetId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
@@ -76,7 +86,6 @@ namespace ITI.Roomies.DAL
                 return Result.Success();
             }
         }
-
 
         public async Task<Result> UpdateBudget( int budgetId, int categoryId, DateTime date1, DateTime date2, int amount, int collocId )
         {
