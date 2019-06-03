@@ -31,7 +31,7 @@
               <input class="form-control" type="text" v-model="item.TaskName" required>
             </td>
             <td>
-              <el-date-picker v-model="value1" type="datetime" placeholder="Select date and time"></el-date-picker>
+              <el-date-picker v-model="item.TaskDate" type="datetime" placeholder="Select date and time"></el-date-picker>
             </td>
           </tr>
         </table>

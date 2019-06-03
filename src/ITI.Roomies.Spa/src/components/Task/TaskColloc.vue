@@ -39,7 +39,7 @@
         </tr>
       </table>-->
       <div v-if="taskData !='Nada'">
-        <table>
+        <table class="tableTask">
           <thead>
             <th>
               <div class="input-group mb-4">
@@ -324,6 +324,7 @@ export default {
 }
 .formName {
   max-width: 10rem;
+  width: 10rem;
   height: auto;
 }
 .formCheckbox {
@@ -333,6 +334,7 @@ export default {
 }
 .formDesc {
   max-width: 30rem;
+  width: 30rem;
   overflow: hidden;
   word-break: break-all;
   height: auto;
@@ -340,14 +342,17 @@ export default {
 }
 .formBtn {
   max-width: 15rem;
+  width: 15rem;
   height: auto;
 }
 .formDate {
   max-width: 6rem;
+  width: 6rem;
   height: auto;
 }
 .formFirstName {
   max-width: 10rem;
+  width: 10rem;
   /* word-break: break-all; */
   height: auto;
 }
@@ -363,6 +368,11 @@ export default {
 }
 tr > td {
   padding-bottom: 1;
+}
+
+.tableTask{
+  min-width: 60rem;
+  max-width: 80rem;
 }
 /* input[type="checkbox"] {
   transform: scale(1.5);
