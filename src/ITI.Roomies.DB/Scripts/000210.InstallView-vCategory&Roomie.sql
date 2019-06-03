@@ -12,5 +12,3 @@ as
 		left outer join rm.tColloc cllc on cllc.CollocId = ctgr.CollocId
 		 join rm.vRoomieInfo ri on ri.CollocId = ctgr.CollocId
 	where ctgr.CategoryId <> 0;
-
-	select * from rm.vRoomieInfo
