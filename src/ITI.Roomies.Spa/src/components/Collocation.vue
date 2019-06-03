@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer">
+  <div>
     <header>
       <h2>Collocation</h2>
     </header>
@@ -126,7 +126,6 @@ import {
   DestroyCollocAsync,
   IsAdminAsync
 } from "../api/CollocationApi";
-import { state } from "../state";
 import { error } from "util";
 export default {
   data() {

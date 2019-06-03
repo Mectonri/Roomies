@@ -1,80 +1,76 @@
 <template class='profile'>
-  <div v-if="!state" class="mainContainer">
+  <div v-if="!state">
+    <header>
+      <!-- <h2>{{$t('Welcome')}} {{$t('Profil')}}</h2> -->
+      <h2>{{$t('Profil')}}</h2>
+    </header>
     <el-container>
-      <el-header>
-        <h1 class="text-center">{{$t('Welcome')}} {{$t('Profil')}}</h1>
-      </el-header>
+      <el-row>
+        <el-col>
+          <div class="centerBox">
+            <header style="padding-left: 2rem;">
+              <h5>{{$t('pic')}}</h5>
+            </header>
+            <img
+              width="200px"
+              height="200px"
+              class="profilePicture"
+              :src="this.env+'/'+this.roomiePic"
+              alt="Vous n'avez pas de photo de profil"
+            >
+            <br>
+          </div>
+        </el-col>
 
-      <el-main>
-        <el-container>
-          <el-row>
-            <el-col>
-              <div class="centerBox">
-                <h2>{{$t('pic')}}</h2>
-                <img
-                  width="200px"
-                  height="200px"
-                  class="profilePicture"
-                  :src="this.env+'/'+this.roomiePic"
-                  alt="Vous n'avez pas de photo de profil"
-                >
-                <br>
-              </div>
-            </el-col>
+        <el-col>
+          <div v-if="roomie.description == null || ''">
+            <tr>{{$t("nullDesc")}}</tr>
+          </div>
+          <div v-else>
+            <tr>
+              <th>Description</th>
+              <td>{{roomie.description}}</td>
+            </tr>
+          </div>
+        </el-col>
+      </el-row>
 
-            <el-col>
-              <div v-if="roomie.description == null || ''">
-                <tr>{{$t("nullDesc")}}</tr>
-              </div>
-              <div v-else>
-                <tr>
-                  <th>Description</th>
-                  <td>{{roomie.description}}</td>
-                </tr>
-              </div>
-            </el-col>
-          </el-row>
+      <el-row>
+        <el-col>
+          <table>
+            <div v-if="roomie == null">
+              <tr>
+                <h1>{{$t('erreur')}}</h1>
+              </tr>
+            </div>
 
-          <el-row>
-            <el-col>
-              <table>
-                <div v-if="roomie == null">
-                  <tr>
-                    <h1>{{$t('erreur')}}</h1>
-                  </tr>
-                </div>
-
-                <div v-else>
-                  <br>
-                  <br>
-                  <tr>
-                    <th>{{$t('Nom')}}</th>
-                    <td>{{roomie.lastName}}</td>
-                  </tr>
-                  <tr>
-                    <th>{{$t('Prenom')}}</th>
-                    <td>{{roomie.firstName}}</td>
-                  </tr>
-                  <tr>
-                    <th>{{$t('Bday')}}</th>
-                    <td>{{roomie.birthDate}}</td>
-                  </tr>
-                  <tr>
-                    <th>Email</th>
-                    <td>{{roomie.email}}</td>
-                  </tr>
-                  <tr>
-                    <th>{{$t("number")}}</th>
-                    <td>{{roomie.phone}}</td>
-                  </tr>
-                </div>
-              </table>
-            </el-col>
-          </el-row>
-        </el-container>
-
-        <el-container></el-container>
-      </el-main>
+            <div v-else>
+              <br>
+              <br>
+              <tr>
+                <th>{{$t('Nom')}}</th>
+                <td>{{roomie.lastName}}</td>
+              </tr>
+              <tr>
+                <th>{{$t('Prenom')}}</th>
+                <td>{{roomie.firstName}}</td>
+              </tr>
+              <tr>
+                <th>{{$t('Bday')}}</th>
+                <td>{{roomie.birthDate}}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{roomie.email}}</td>
+              </tr>
+              <tr>
+                <th>{{$t("number")}}</th>
+                <td>{{roomie.phone}}</td>
+              </tr>
+            </div>
+          </table>
+        </el-col>
+      </el-row>
     </el-container>
   </div>
   <div v-else>
@@ -128,9 +124,8 @@ export default {
     },
 
     sqlToJsDate(sqlDate) {
-      console.log(sqlDate);
       sqlDate = sqlDate.replace("T", " ");
-      console.log(sqlDate);
+
       //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
       var sqlDateArr1 = sqlDate.split("-");
       //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']

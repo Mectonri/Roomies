@@ -39,7 +39,7 @@
         </tr>
       </table>-->
       <div v-if="taskData !='Nada'">
-        <table>
+        <table class="tableTask">
           <thead>
             <th>
               <div class="input-group mb-4">
@@ -63,16 +63,15 @@
                 <div class="input-group-text formCheckbox">
                   <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
                   <el-tooltip content="Valider" placement="top">
-                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
                   </el-tooltip>
                 </div>
                 <label class="form-control formName">{{ task.taskName }}</label>
                 <label class="form-control formDate">{{ task.taskDate }}</label>
-                <label :id="'formFirstName' + task.taskId" class="form-control formFirstName">
-                  {{ task.firstName}}
-                  <br>
-                  {{ task.firstName}}
-                </label>
+                <label
+                  :id="'formFirstName' + task.taskId"
+                  class="form-control formFirstName"
+                >{{ task.firstName}}</label>
                 <label class="form-control formDesc">{{ task.taskDes }}</label>
               </div>
             </th>
@@ -171,15 +170,12 @@ export default {
   async mounted() {
     this.monthList = require("../../components/Utility/month.js");
     this.refreshList();
-    // console.log(monthFr);
-    // console.log(month.monthFr);
   },
 
   methods: {
     sqlToJsDate(sqlDate) {
-      console.log(sqlDate);
       sqlDate = sqlDate.replace("T", " ");
-      console.log(sqlDate);
+
       //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
       var sqlDateArr1 = sqlDate.split("-");
       //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
@@ -324,6 +320,7 @@ export default {
 }
 .formName {
   max-width: 10rem;
+  width: 10rem;
   height: auto;
 }
 .formCheckbox {
@@ -333,6 +330,7 @@ export default {
 }
 .formDesc {
   max-width: 30rem;
+  width: 30rem;
   overflow: hidden;
   word-break: break-all;
   height: auto;
@@ -340,14 +338,17 @@ export default {
 }
 .formBtn {
   max-width: 15rem;
+  width: 15rem;
   height: auto;
 }
 .formDate {
   max-width: 6rem;
+  width: 6rem;
   height: auto;
 }
 .formFirstName {
   max-width: 10rem;
+  width: 10rem;
   /* word-break: break-all; */
   height: auto;
 }
@@ -363,6 +364,11 @@ export default {
 }
 tr > td {
   padding-bottom: 1;
+}
+
+.tableTask {
+  min-width: 60rem;
+  max-width: 80rem;
 }
 /* input[type="checkbox"] {
   transform: scale(1.5);

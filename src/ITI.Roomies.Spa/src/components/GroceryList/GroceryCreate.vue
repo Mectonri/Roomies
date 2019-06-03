@@ -40,7 +40,6 @@ import {
   updateAgroceryListAsync
 } from "../../api/GroceriesApi";
 import AuthService from "../../services/AuthService";
-import { state } from "../../state";
 import Loading from "../../components/Utility/Loading.vue";
 
 export default {

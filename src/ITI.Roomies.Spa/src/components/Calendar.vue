@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer">
+  <div>
     <v-calendar color="red" is-dark is-expanded :rows="3" :columns="4"></v-calendar>
   </div>
 </template>

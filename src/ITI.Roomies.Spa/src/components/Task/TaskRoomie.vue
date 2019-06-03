@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer">
+  <div>
     <header>
       <h2>Tâches</h2>
     </header>
@@ -100,7 +100,6 @@ import {
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
 import Loading from "../../components/Utility/Loading.vue";
-// import { state } from "../../state";
 
 export default {
   components: {
