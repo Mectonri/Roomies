@@ -7,6 +7,7 @@ import router from './main.router'
 import i18n from './plugins/i18n'
 import ElementUI from 'element-ui';
 import { Button, Select } from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/fr'
 import 'element-ui/lib/theme-chalk/index.css';
 import VCalendar from 'v-calendar';
 import VueGlobalVariable from 'vue-global-var';
@@ -17,7 +18,7 @@ Vue.config.productionTip = false;
 Vue.component(Button.name, Button);
 Vue.component(Select.name, Select);
 Vue.use(VueCookies)
-Vue.use(ElementUI);
+Vue.use(ElementUI, {locale});
 Vue.use(VCalendar);
 
 class currentColloc {

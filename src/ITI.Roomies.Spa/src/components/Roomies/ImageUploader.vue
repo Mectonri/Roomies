@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="mainContainer">
     <header>
       <h2>Ajouter une photo</h2>
     </header>

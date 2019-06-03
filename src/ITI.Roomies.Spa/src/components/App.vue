@@ -104,12 +104,14 @@
     <!-- Affihe le chemin demandé -->
     <!-- <template v-if="isCollapse"> -->
     <template>
+      <div class="mainContainer">
       <main v-if="state == true " role="main">
         <loading/>
       </main>
-      <main v-else>
+      <main v-else class="card containerCard">
         <router-view id="pageContent" class="child"></router-view>
       </main>
+      </div>
     </template>
 
     <!-- <template v-else>
@@ -123,6 +125,7 @@
     <!-- Le footer -->
     <footer id="footer" class="font-small mdb-color lighten-3">
       <div class="container">
+        <br>
         <language/>
       </div>
       <!-- <div class="footer-copyright text-center">
@@ -224,10 +227,10 @@ export default {
     expand_collapse() {
       if (this.isCollapse) {
         this.isCollapse = false;
-        // document.getElementById("pageContent").style.paddingLeft = "236px";
+        // document.getElementById("pageContent").style.paddingLeft = "12.5rem";
       } else {
         this.isCollapse = true;
-        // document.getElementById("pageContent").style.paddingLeft = "100px";
+        // document.getElementById("pageContent").style.paddingLeft = "5rem";
       }
     }
   }
@@ -240,10 +243,11 @@ export default {
 
 <style lang="scss" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 12em;
-  max-width: 12em;
+  width: 12rem;
+  max-width: 12rem;
   border-right: 1px solid #000000;
   float: left;
+  margin-top: 0;
 }
 .el-menu-vertical-demo {
   float: left;
@@ -251,6 +255,7 @@ export default {
   max-height: 100vh;
   border-right: 1px solid #000000;
   position: fixed;
+  margin-top: 0;
 }
 
 .el-menu-item i,
@@ -261,7 +266,7 @@ export default {
 }
 .el-submenu-item,
 .el-submenu-item.is-active {
-  min-width: 12em !important;
+  min-width: 12rem !important;
 }
 .el-button {
   background: rgb(102, 102, 102);
@@ -272,9 +277,9 @@ export default {
 #footer {
   bottom: 0;
   width: 100%;
-  height: 5.5rem; /* Footer height */
+  height: 8.5rem; /* Footer height */
   // padding-top: 2.5rem;
   top: 2.5rem;
-  padding-left: 12rem;
+  // padding-left: 12rem;
 }
 </style>

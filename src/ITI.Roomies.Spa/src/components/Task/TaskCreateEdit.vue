@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer" v-if="state == false">
+  <div v-if="state == false">
     <main v-if="idIsUndefined == false">
       <header v-if="route == 'create'">
         <h2>Créer une tâche</h2>
@@ -8,7 +8,7 @@
         <h2>Modifier la tâche</h2>
       </header>
 
-      <form @submit="onSubmit($event)">
+      <form class="card mainCard" @submit="onSubmit($event)">
         <!-- <div class="alert alert-danger" v-if="errors.length > 0">
         <b>Les champs suivants semblent invalides :</b>
 
@@ -17,33 +17,28 @@
         </ul>
         </div>-->
 
-        <div>
           <label class="required">Nom</label>
-          <br>
           <input class="form-control" type="text" v-model="item.TaskName" required>
-        </div>
+          <br>
 
-        <div>
           <label>Description</label>
           <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
-          <br>
           <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
-        </div>
+          <br>
 
-        <div>
           <label class="required">Echéance</label>
           <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
-          <br>
+          <!-- <br>
           <input
             class="form-control"
             type="datetime-local"
             id="echeance"
             v-model="item.TaskDate"
             required
-          >
-        </div>
-        <br>
-        <br>
+          >-->
+          <el-date-picker v-model="value1" type="datetime" placeholder="Select date and time"></el-date-picker>
+         <br>
+         <br>
         <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
           <td>
             <input
@@ -57,8 +52,15 @@
           </td>
         </tr>
         <br>
-        <br>
-        <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
+        <br>&nbsp;
+        &nbsp;
+        <button
+          class="btn btn-dark"
+          @click="onSubmit"
+          style="
+    max-width: 8rem;
+"
+        >Sauvegarder</button>
       </form>
     </main>
     <main v-else>Erreur</main>
@@ -191,3 +193,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+el-date-picker{
+  border: solid 1px #000000 !important;
+}
+</style>
