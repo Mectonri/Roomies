@@ -1,43 +1,35 @@
 import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
+import { async } from 'q';
 
 const endpoint = process.env.VUE_APP_BACKEND + "/api/course";
 
 
 export async function getGroceryListByIdAsync(courseId) {
-  return await getAsync(`${endpoint}/GetAGroceryList/${courseId}`);
+  return await getAsync(`${endpoint}/GetList/${courseId}`);
 }
-export async function getTemplateByIdAsync(courseId) {
-  return await getAsync(`${endpoint}/GetTemplate/${courseId}`);
+export async function getTemplateById( courseId){
+  return await getAsync(`${endpoint}/GetTemplates/${courseId}`);
 }
-
-export async function createGroceryListAsync(model) {
-  return await postAsync(`${endpoint}/createGroceryList`, model);
-}
-
-export async function createGroceryListTemplateAsync( model) {
-  return await postAsync(`${endpoint}/createTemplate`, model);
+export async function createTemplateOrListAsync( model ) {
+  return await postAsync(`${endpoint}/create`, model)
 }
 
-export async function getAllAsync(collocId) {
-  return await getAsync(`${endpoint}/getList/${collocId}`);
+export async function getAllListsAsync(collocId) {
+  return await getAsync(`${endpoint}/getLists/${collocId}`);
 }
 
-export async function getAllTemplateAsync( collocId) {
-  return await getAsync(`${endpoint}/getTemplate/${collocId}`);
+export async function getAllTemplatesAsync( collocId) {
+  return await getAsync(`${endpoint}/getTemplates/${collocId}`);
 }
 
-export async function updateAgroceryListAsync( model ) {
-  return await putAsync(`${endpoint}/updateGroceryList`, model);
+export async function updateListOrTemplateAsync( model ) {
+  return await putAsync(`${endpoint}/update`, model);
 }
 
-export async function updateAtemplateAsync( model ) {
-  return await putAsync(`${endpoint}/updateTemplate`, model);
-}
-
-export async function deleteAGroceryListAsync(courseId){
+export async function deleteListAsync(courseId){
   return await deleteAsync(`${endpoint}/${courseId}`);
 }
 
-export async function deleteATemplateAsync( courseId ) {
-  return await deleteAsync(`${endpoint}/${courseId}`);
+export async function deleteTemplateAsync( courseId ) {
+  return await deleteAsync(`${endpoint}/deleteTemplate/${courseId}`);
 }

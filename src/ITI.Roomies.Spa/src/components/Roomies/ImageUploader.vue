@@ -7,6 +7,7 @@
 
     <main v-if="picPath != null">
       <template v-if="!defaultPic">
+        <!-- <div v-if="route == 'colloc'"> -->
         <form enctype="multipart/form-data">
           <img :src="env+'/'+this.picPath" width="200px" height="200px">
           <br>
@@ -69,6 +70,7 @@
             @click="clickRoute('/roomies/profile')"
           >Retour au profil</button>
         </form>
+        <!-- </div> -->
       </template>
     </main>
     <main v-else>
@@ -83,6 +85,7 @@ import AuthService from "../../services/AuthService";
 import { getRoomiePicAsync, getRoomieByIdAsync } from "../../api/RoomiesApi";
 import default_pic from "../../../public/default_profile_pic.png";
 import Loading from "../../components/Utility/Loading.vue";
+import { debug } from 'util';
 
 // document.getElementById("navMenu").style.display = "block";
 export default {
@@ -97,7 +100,8 @@ export default {
       picPath: null,
       defaultPic: null,
       uploadButtonDisabled: true,
-      create: null
+      create: null,
+      route: null,
     };
   },
 
