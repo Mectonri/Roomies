@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div v-if="this.collocName==''">
       <!-- <el-aside width="200px">Menu</el-aside> -->
       <header>

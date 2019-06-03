@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer" v-if="state == false">
+  <div v-if="state == false">
     <main v-if="idIsUndefined == false">
       <header v-if="route == 'create'">
         <h2>Créer une tâche</h2>
@@ -8,7 +8,7 @@
         <h2>Modifier la tâche</h2>
       </header>
 
-      <form @submit="onSubmit($event)">
+      <form class="card mainCard" @submit="onSubmit($event)">
         <!-- <div class="alert alert-danger" v-if="errors.length > 0">
         <b>Les champs suivants semblent invalides :</b>
 
@@ -16,33 +16,41 @@
           <li v-for="e of errors">{{e}}</li>
         </ul>
         </div>-->
+        <br>
+        <table class="taskCreateTable">
+          <tr>
+            <td>
+              <label class="required">Nom</label>
+            </td>
+            <td>
+              <label class="required">Echéance</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input class="form-control" type="text" v-model="item.TaskName" required>
+            </td>
+            <td>
+              <el-date-picker v-model="item.TaskDate" type="datetime" placeholder="Select date and time"></el-date-picker>
+            </td>
+          </tr>
+        </table>
+        <br>
 
-        <div>
-          <label class="required">Nom</label>
-          <br>
-          <input class="form-control" type="text" v-model="item.TaskName" required>
-        </div>
+        <label>Description</label>
+        <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
+        <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
+        <br>
 
-        <div>
-          <label>Description</label>
-          <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
-          <br>
-          <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
-        </div>
-
-        <div>
-          <label class="required">Echéance</label>
-          <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
-          <br>
+        <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
+        <!-- <br>
           <input
             class="form-control"
             type="datetime-local"
             id="echeance"
             v-model="item.TaskDate"
             required
-          >
-        </div>
-        <br>
+        >-->
         <br>
         <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
           <td>
@@ -52,13 +60,21 @@
               :id="'roomie' + roomie.roomieId"
               :checked="roomie.checked"
             >
-            <input v-else type="checkbox" :id="'roomie' + roomie.roomieId" checked>
-            <label :for="'roomie' + roomie.roomieId">{{ roomie.firstName }} {{ roomie.lastName }}</label>
+            <input v-else type="checkbox" :id="'roomie' + roomie.roomieId" checked> &nbsp;
+            <!-- <label :for="'roomie' + roomie.roomieId">{{ roomie.firstName }} {{ roomie.lastName }}</label> -->
+            {{ roomie.firstName }} {{ roomie.lastName }}
           </td>
         </tr>
         <br>
-        <br>
-        <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
+        <br>&nbsp;
+        &nbsp;
+        <button
+          class="btn btn-dark"
+          @click="onSubmit"
+          style="
+    max-width: 8rem;
+"
+        >Sauvegarder</button>
       </form>
     </main>
     <main v-else>Erreur</main>
@@ -71,7 +87,6 @@
 <script>
 import { DateTime } from "luxon";
 import AuthService from "../../services/AuthService";
-import { state } from "../../state";
 import { GetRoomiesIdNamesByCollocIdAsync } from "../../api/CollocationApi.js";
 import {
   createTaskAsync,
@@ -191,3 +206,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+el-date-picker {
+  border: solid 1px #000000 !important;
+}
+
+.taskCreateTable {
+  max-width: 50%;
+}
+</style>

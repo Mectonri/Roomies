@@ -18,6 +18,9 @@ namespace ITI.Roomies.WebApp.Models.CourseViewModels
         public int CoursePrice {get; set; }
 
         [Required]
-        public int CollocId {get; set; }
+        public int CollocId { get; set; }
+
+        [Required]
+        public bool IsTemplate { get; set; }
     }
 }

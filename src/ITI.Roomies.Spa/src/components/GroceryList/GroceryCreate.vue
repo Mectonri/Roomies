@@ -10,20 +10,27 @@
       </header>
 
       <form>
+        <div v-if="route =='create'">
+        <div>
+          <el-switch
+            v-model="course.isTemplate"
+            active-text="Template"
+            inactive-text="liste de course"
+          ></el-switch>
+        </div>
         <div>
           <label class="required">Nom</label>
           <br>
           <input class="form-control" type="text" v-model="course.courseName" required>
         </div>
-
-        <div>
+        <div v-if="!course.isTemplate">
           <label>Date</label>
           <br>
           <input class="form-control" type="date" v-model="course.courseDate">
         </div>
-
         <br>
         <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
+        </div>
       </form>
     </main>
     <main v-else>Erreur</main>
@@ -35,12 +42,14 @@
 
 <script>
 import {
-  createGroceryListAsync,
+  getAllAsync,
+  getTemplateById,
   getGroceryListByIdAsync,
-  updateAgroceryListAsync
+  getAllTemplateAsync,
+  updateListOrTemplateAsync,
+  createTemplateOrListAsync
 } from "../../api/GroceriesApi";
 import AuthService from "../../services/AuthService";
-import { state } from "../../state";
 import Loading from "../../components/Utility/Loading.vue";
 
 export default {
@@ -55,7 +64,7 @@ export default {
       route: null,
       idIsUndefined: true,
       state: true,
-      id: null
+      id: null,
     };
   },
 
@@ -98,17 +107,19 @@ export default {
       var errors = [];
 
       if (!this.course.courseName) errors.push("Nom");
-      if (!this.course.courseDate) errors.push("Date");
-
+      if (!this.course.isTemplate) {
+        if (!this.course.courseDate) errors.push("Date");
+      }
       if (errors.length == 0) {
         try {
           if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
-            await createGroceryListAsync(this.course);
+            await createTemplateOrListAsync(this.course);
             this.$router.push("/course");
           }
+
           if (this.route == "edit") {
-            await updateAgroceryListAsync(this.course);
+            await updateListOrTemplateAsync(this.course);
             this.$router.push("/course");
           }
         } catch (e) {

@@ -2,7 +2,7 @@ create table rm.tCourseTemp
 (
 	CourseTempId int identity(0,1),
 	CourseName nvarchar(32) not null,
-	Price int,
+	CoursePrice int,
 	CollocId int not null,
 
 	constraint PK_rm_tCourseTemp primary key(CourseTempId),

@@ -1,6 +1,6 @@
 create procedure rm.sCourseTempCreate
 (
-	@CourseId int out,
+	@CourseTempId int out,
 	@CourseName nvarchar(32),
 	@CollocId int
 )
@@ -11,7 +11,7 @@ begin
 
 	insert into rm.tCourseTemp( CourseName, CollocId )
 					values(@CourseName, @CollocId);
-	set @CourseId = SCOPE_IDENTITY();
+	set @CourseTempId = SCOPE_IDENTITY();
 
 	commit;
 	return 0;

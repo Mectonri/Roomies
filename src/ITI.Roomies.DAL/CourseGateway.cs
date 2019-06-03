@@ -35,39 +35,40 @@ namespace ITI.Roomies.DAL
                 return Result.Success( course );
             }
         }
-        public async Task<Result<CourseTempData>> FindTempById ( int courseId)
+        public async Task<Result<CourseTempData>> FindTempById ( int courseTempId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 CourseTempData courseTemp = await con.QueryFirstOrDefaultAsync<CourseTempData>(
-                    @"select c.CourseId,
-                             c.CourseName,
-                            c.CoursePrice,
-                            c.CollocId
-                        from rm.tCourseTemp c
-                        where c.CourseId = @CourseId;",
-                    new { CourseId = courseId } );
+                    @"select ct.CourseTempId,
+                             ct.CourseName,
+                            ct.CoursePrice,
+                            ct.CollocId
+                        from rm.tCourseTemp ct
+                        where ct.CourseTempId = @CourseTempId;",
+                    new { CourseTempId = courseTempId } );
 
                 if( courseTemp == null ) return Result.Failure<CourseTempData>( Status.NotFound, "Course Template not found" );
                 return Result.Success( courseTemp );
             }
         }
 
-        public async Task<IEnumerable<CourseTempData>> GetAllTemp( int collocId )
+        public async Task<IEnumerable<CourseTempData>> GetAllTemplate( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<CourseTempData>(
-                    @"select c.CourseId,
-                              c.CourseName,
-                              c.CoursePrice,
-                              c.CollocId
-                        from rm.tCourse c
-                         where c.CollocId = @CollocId;",
+                    @"select ct.CourseTempId,
+                              ct.CourseName,
+                              ct.CoursePrice,
+                              ct.CollocId
+                        from rm.tCourseTemp ct
+                         where ct.CollocId = @CollocId;",
                     new { CollocId = collocId } );
             }
         }
-        public async Task<IEnumerable<CourseData>> GetAll( int collocId)
+
+        public async Task<IEnumerable<CourseData>> GetAllLists( int collocId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -102,7 +103,6 @@ namespace ITI.Roomies.DAL
 
                 Debug.Assert( status == 0 );
                 return Result.Success( Status.Created, p.Get<int>( "@CourseId" ) );
-
             }
         }
 
@@ -115,7 +115,7 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@CourseName", courseName );
                 p.Add( "@CollocId", collocId );
-                p.Add( "@CourseId", dbType: DbType.Int32, direction: ParameterDirection.Output );
+                p.Add( "@CourseTempId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseTempCreate", p, commandType: CommandType.StoredProcedure );
 
@@ -123,11 +123,10 @@ namespace ITI.Roomies.DAL
                 if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A Grocery List Template with this name already exists." );
 
                 Debug.Assert( status == 0 );
-                return Result.Success( Status.Created, p.Get<int>( "@CourseId" ) );
+                return Result.Success( Status.Created, p.Get<int>( "@CourseTempId" ) );
 
             }
         }
-
 
 
         public async Task<Result> DeleteGroceryList( int courseId )
@@ -148,13 +147,12 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> DeleteGroceryListTemp( int courseId )
+        public async Task<Result> DeleteGroceryListTemp( int courseTempId )
         {
-
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@CourseId", courseId );
+                p.Add( "@CourseTempId", courseTempId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseTempDelete", p, commandType: CommandType.StoredProcedure );
 
@@ -170,8 +168,6 @@ namespace ITI.Roomies.DAL
         public async Task<Result> UpdateGroceryList( int courseId, string courseName, DateTime courseDate)
         {
             if( !IsNameValid( courseName ) ) return Result.Failure( Status.BadRequest, "The course name is not valid." );
-
-
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
 
@@ -190,17 +186,15 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> UpdateGroceryListTemp( int courseId, string courseName)
+        public async Task<Result> UpdateGroceryListTemp( int courseTempId, string courseName)
         {
             if( !IsNameValid( courseName ) ) return Result.Failure( Status.BadRequest, "The name is not valid." );
-
-
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
 
                 var p = new DynamicParameters();
                 p.Add( "@CourseName", courseName );
-                p.Add( "@CourseId", courseId, dbType: DbType.Int32 );
+                p.Add( "@CourseTempId", courseTempId, dbType: DbType.Int32 );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseTempUpdate", p, commandType: CommandType.StoredProcedure );
 
@@ -214,6 +208,5 @@ namespace ITI.Roomies.DAL
 
 
         bool IsNameValid( string name ) => !string.IsNullOrWhiteSpace( name );
-
     }
 }

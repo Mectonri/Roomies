@@ -15,7 +15,11 @@ namespace ITI.Roomies.WebApp.Models.ItemModel
         [Required]
         public int CourseId { get; set; }
 
-
         public int RoomieId { get; set; }
+
+        public int CollocId { get; set; }
+
+        [Required]
+        public bool IsRepeated { get; set; } 
     }
 }

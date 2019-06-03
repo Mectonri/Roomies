@@ -2,7 +2,7 @@ namespace ITI.Roomies.DAL
 {
     public class CourseTempData
     {
-        public int CourseId { get; set; }
+        public int CourseTempId { get; set; }
 
         public string CourseName { get; set; }
 

@@ -1,8 +1,10 @@
 <template>
-  <div class="">
+  <div id="template">
+    <div>
       <header>
         <h1>Objet dans le liste {{courseName}}</h1>
       </header>
+    </div>
     <br>
 
     <table class="table table-dark">

@@ -28,6 +28,7 @@ export default {
 
   mounted() {
     AuthService.registerAuthenticatedCallback(() => this.onAuthenticated());
+    document.getElementById("globalContainer").style.marginRight = "12.5rem"
   },
 
   beforeDestroy() {
@@ -40,6 +41,7 @@ export default {
     },
 
     onAuthenticated() {
+      document.getElementById("globalContainer").style.marginRight = "0rem"
       // Envoie sur la page de vérification du profil Roomie
       this.$router.replace("/checkRoomie");
     }
