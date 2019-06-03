@@ -6,9 +6,9 @@ create table rm.tRItem
 	CollocId int not null,
 	CourseTempId int not null,
 
-	constraint PK_RItem primary key (RItemId),
+	constraint PK_rm_RItem primary key (RItemId),
 	constraint FK_rm_RItem_CollocId foreign key (CollocId) references rm.tColloc(CollocId),
-	constraint FK_rm_RItem_CourseTempId foreign key (CourseTempId) references rm.tCourseTemp(CourseTempId),
+	constraint FK_rm_RItem_CourseTempId foreign key (CourseTempId) references rm.tCourseTemp(CourseTempId)
 );
-insert into rm.RItem( RItemPrice, RItemName, CollocId, CourseTempId)
+insert into rm.tRItem( RItemPrice, RItemName, CollocId, CourseTempId)
 	values (0, left(convert(nvarchar(36), newid()), 32), 0, 0);
