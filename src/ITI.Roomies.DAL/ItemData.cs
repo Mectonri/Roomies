@@ -11,5 +11,7 @@ namespace ITI.Roomies.DAL
         public int CourseId { get; set;}
 
         public int RoomieId { get; set; }
+
+        public bool IsRepeated { get; set; }
     }
 }

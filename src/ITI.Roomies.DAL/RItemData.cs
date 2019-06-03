@@ -9,5 +9,7 @@ namespace ITI.Roomies.DAL
         public string ItemName { get; set; }
 
         public int CourseId { get; set; }
+
+        public int CollocId { get; set; }
     }
 }
