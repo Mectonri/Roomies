@@ -1,11 +1,13 @@
 import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
-import { async } from 'q';
 
 const endpoint = process.env.VUE_APP_BACKEND + "/api/course";
 
 
 export async function getGroceryListByIdAsync(courseId) {
   return await getAsync(`${endpoint}/GetAGroceryList/${courseId}`);
+}
+export async function getTemplateByIdAsync(courseId) {
+  return await getAsync(`${endpoint}/GetTemplate/${courseId}`);
 }
 
 export async function createGroceryListAsync(model) {

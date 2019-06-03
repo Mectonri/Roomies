@@ -53,12 +53,17 @@
 
 <script>
 import {
+  createGroceryListTemplateAsync,
+  getAllTemplateAsync,
+  getTemplateByIdAsync,
+  updateAtemplateAsync,
   createGroceryListAsync,
   getGroceryListByIdAsync,
   updateAgroceryListAsync
 } from "../../api/GroceriesApi";
 import AuthService from "../../services/AuthService";
 import { state } from "../../state";
+import { createHash } from 'crypto';
 
 export default {
   data() {
@@ -118,12 +123,27 @@ export default {
         try {
           if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
-            await createGroceryListAsync(this.course);
-            this.$router.push("/course");
+
+            if(this.course.isTemplate){
+              await createGroceryListTemplateAsync(this.course);
+              this.$router.push("/course");
+            }
+            else if( this.course.isTemplate == false)
+            {
+              await createGroceryListAsync(this.course);
+             this.$router.push("/course");
+            }
           }
+
           if (this.route == "edit") {
+            if(!course.isTemplate) {
             await updateAgroceryListAsync(this.course);
             this.$router.push("/course");
+            }
+            else {
+              await updateAtemplateAsync(this.course);
+              this.$router.push("/course");
+            }
           }
         } catch (e) {
           console.error(e);

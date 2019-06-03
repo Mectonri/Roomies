@@ -45,7 +45,7 @@ import { state } from "../../state";
 import {
   createItemAsync,
   getItemByItemIdAsync,
-updateItemAsync
+  updateItemAsync
 } from "../../api/ItemApi.js";
 
 export default {
@@ -113,12 +113,12 @@ export default {
         try {
           if (this.route == "create") {
             await createItemAsync(this.item);
-            this.$router.push('/course/info/'+ this.item.courseId);
+            this.$router.push("/course/info/" + this.item.courseId);
           }
           if (this.route == "edit") {
             this.item.itemId = parseInt(this.$route.params.itemId);
             await updateItemAsync(this.item);
-            this.$router.push('/course/info/'+ this.item.courseId);
+            this.$router.push("/course/info/" + this.item.courseId);
           }
         } catch (e) {
           console.error(e);
