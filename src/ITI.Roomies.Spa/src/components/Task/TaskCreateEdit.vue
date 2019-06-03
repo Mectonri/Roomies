@@ -16,29 +16,42 @@
           <li v-for="e of errors">{{e}}</li>
         </ul>
         </div>-->
+        <br>
+        <table class="taskCreateTable">
+          <tr>
+            <td>
+              <label class="required">Nom</label>
+            </td>
+            <td>
+              <label class="required">Echéance</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input class="form-control" type="text" v-model="item.TaskName" required>
+            </td>
+            <td>
+              <el-date-picker v-model="value1" type="datetime" placeholder="Select date and time"></el-date-picker>
+            </td>
+          </tr>
+        </table>
+        <br>
 
-          <label class="required">Nom</label>
-          <input class="form-control" type="text" v-model="item.TaskName" required>
-          <br>
+        <label>Description</label>
+        <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
+        <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
+        <br>
 
-          <label>Description</label>
-          <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
-          <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
-          <br>
-
-          <label class="required">Echéance</label>
-          <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
-          <!-- <br>
+        <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
+        <!-- <br>
           <input
             class="form-control"
             type="datetime-local"
             id="echeance"
             v-model="item.TaskDate"
             required
-          >-->
-          <el-date-picker v-model="value1" type="datetime" placeholder="Select date and time"></el-date-picker>
-         <br>
-         <br>
+        >-->
+        <br>
         <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
           <td>
             <input
@@ -47,8 +60,9 @@
               :id="'roomie' + roomie.roomieId"
               :checked="roomie.checked"
             >
-            <input v-else type="checkbox" :id="'roomie' + roomie.roomieId" checked>
-            <label :for="'roomie' + roomie.roomieId">{{ roomie.firstName }} {{ roomie.lastName }}</label>
+            <input v-else type="checkbox" :id="'roomie' + roomie.roomieId" checked> &nbsp;
+            <!-- <label :for="'roomie' + roomie.roomieId">{{ roomie.firstName }} {{ roomie.lastName }}</label> -->
+            {{ roomie.firstName }} {{ roomie.lastName }}
           </td>
         </tr>
         <br>
@@ -195,8 +209,11 @@ export default {
 </script>
 
 <style scoped>
-
-el-date-picker{
+el-date-picker {
   border: solid 1px #000000 !important;
+}
+
+.taskCreateTable {
+  max-width: 50%;
 }
 </style>
