@@ -70,8 +70,6 @@
                 <label class="form-control formDate">{{ task.taskDate }}</label>
                 <label :id="'formFirstName' + task.taskId" class="form-control formFirstName">
                   {{ task.firstName}}
-                  <br>
-                  {{ task.firstName}}
                 </label>
                 <label class="form-control formDesc">{{ task.taskDes }}</label>
               </div>
