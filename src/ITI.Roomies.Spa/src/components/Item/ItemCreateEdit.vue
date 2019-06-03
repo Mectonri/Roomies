@@ -43,7 +43,6 @@
 
 <script>
 import AuthService from "../../services/AuthService";
-import { state } from "../../state";
 import {
   createItemAsync,
   getItemByItemIdAsync,

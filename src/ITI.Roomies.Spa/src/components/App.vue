@@ -139,7 +139,6 @@
 <script>
 import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
-import { state } from "../state";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
 import Language from "../components/Utility/Language.vue";
@@ -280,6 +279,6 @@ export default {
   height: 8.5rem; /* Footer height */
   // padding-top: 2.5rem;
   top: 2.5rem;
-  // padding-left: 12rem;
+  padding-left: 12rem;
 }
 </style>
