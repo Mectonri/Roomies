@@ -104,7 +104,7 @@
     <!-- Affihe le chemin demandé -->
     <!-- <template v-if="isCollapse"> -->
     <template>
-      <div class="mainContainer">
+      <div id="globalContainer">
       <main v-if="state == true " role="main">
         <loading/>
       </main>

@@ -63,14 +63,15 @@
                 <div class="input-group-text formCheckbox">
                   <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
                   <el-tooltip content="Valider" placement="top">
-                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
                   </el-tooltip>
                 </div>
                 <label class="form-control formName">{{ task.taskName }}</label>
                 <label class="form-control formDate">{{ task.taskDate }}</label>
-                <label :id="'formFirstName' + task.taskId" class="form-control formFirstName">
-                  {{ task.firstName}}
-                </label>
+                <label
+                  :id="'formFirstName' + task.taskId"
+                  class="form-control formFirstName"
+                >{{ task.firstName}}</label>
                 <label class="form-control formDesc">{{ task.taskDes }}</label>
               </div>
             </th>
@@ -169,15 +170,12 @@ export default {
   async mounted() {
     this.monthList = require("../../components/Utility/month.js");
     this.refreshList();
-    // console.log(monthFr);
-    // console.log(month.monthFr);
   },
 
   methods: {
     sqlToJsDate(sqlDate) {
-      console.log(sqlDate);
       sqlDate = sqlDate.replace("T", " ");
-      console.log(sqlDate);
+
       //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
       var sqlDateArr1 = sqlDate.split("-");
       //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
@@ -368,7 +366,7 @@ tr > td {
   padding-bottom: 1;
 }
 
-.tableTask{
+.tableTask {
   min-width: 60rem;
   max-width: 80rem;
 }
