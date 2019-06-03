@@ -10,6 +10,13 @@
 
       <form>
         <div>
+          <el-switch
+            v-model="item.isRepeated"
+            active-text="Repeated"
+            inactive-text="Not - Repeated"
+          ></el-switch>
+        </div>
+        <div>
           <label class="required">Nom</label>
           <br>
           <input class="form-control" type="text" v-model="item.itemName" required>
@@ -44,7 +51,7 @@
 <script>
 import AuthService from "../../services/AuthService";
 import {
-  createItemAsync,
+  createItemOrRItemAsync,
   getItemByItemIdAsync,
   updateItemAsync
 } from "../../api/ItemApi.js";
@@ -61,7 +68,8 @@ export default {
       idIsUndefined: true,
       state: true,
       itemNameToShow: "",
-      route: null
+      route: null,
+      collocId: null,
     };
   },
   computed: {
@@ -74,6 +82,7 @@ export default {
 
   async mounted() {
     this.item.courseId = this.$route.params.id;
+    this.collocId = this.$currColloc.collocId;
 
     if (
       this.$route.fullPath.replace(
@@ -112,11 +121,14 @@ export default {
 
       if (!this.item.itemName) errors.push("Nom");
       if (!this.item.itemPrice) errors.push("Prix");
+      if (!this.item.isRepeated) errors.push("isRepeated");
 
       if (errors.length == 0) {
         try {
+          this.item.collocId = this.collocId;
           if (this.route == "create") {
-            await createItemAsync(this.item);
+            this.item.collocId = this.collocId;
+            await createItemOrRItemAsync(this.item);
             this.$router.push("/course/info/" + this.item.courseId);
           }
           if (this.route == "edit") {

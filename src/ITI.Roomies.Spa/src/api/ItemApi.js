@@ -21,7 +21,7 @@ export async function getItemByItemIdAsync(itemId) {
  export async function getRItemByIdAsync(rItemId) {
    return await getAsync(`${endpoint}/getRItem/${rItemId}`);
  }
- 
+
 export async function updateItemAsync(model){
   return await putAsync(`${endpoint}/updateItem`, model);
 }
@@ -37,4 +37,3 @@ export async function deleteItemAsync(itemId){
 export async function deleteRItemAsync(rItemId) {
   return await deleteAsync(`${endpoint}/deleteRItem/${rItemId}`);
 }
-
