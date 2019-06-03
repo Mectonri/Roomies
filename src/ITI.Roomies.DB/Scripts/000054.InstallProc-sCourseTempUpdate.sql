@@ -1,7 +1,7 @@
 create proc rm.sCourseTempUpdate
 (
-	@CourseId int, 
-	@CourseName nvarchar(32),
+	@CourseTempId int, 
+	@CourseTempName nvarchar(32),
 	@CollocId int
 
 )
@@ -10,15 +10,15 @@ begin
 	set transaction isolation level serializable;
 	begin tran;
 
-	if not exists(select * from rm.tCourseTemp c where c.CourseId = @CourseId)
+	if not exists(select * from rm.tCourseTemp ct where ct.CourseTempId = @CourseTempId)
 	begin
 		rollback;
 		return 1;
 	end;
 
 	update rm.tCourseTemp
-	set CourseName = @CourseName
-	where CourseId = @CourseId;
+	set CourseTempName = @CourseTempName
+	where CourseTempId = @CourseTempId;
 
 	commit;
     return 0;

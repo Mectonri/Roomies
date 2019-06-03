@@ -10,6 +10,11 @@
       </header>
 
       <form>
+        <div v-if="route =='create'">
+          <label>Template ?</label>
+          <br>
+          <el-switch v-model="course.isTemplate"></el-switch>
+        </div>
         <div>
           <label class="required">Nom</label>
           <br>
