@@ -208,9 +208,7 @@ export default {
       );
     },
 
-    dateToFrDisplay(dateToFormat) {
-      let laDate = dateToFormat;
-
+    dateToFrDisplay(laDate) {
       let dayToDisplay =
         laDate.getDate().toString().length == 1
           ? "0" + laDate.getDate().toString()
