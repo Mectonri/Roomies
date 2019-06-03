@@ -22,14 +22,14 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet( "getLists/{collocId}" )]
         public async Task<IActionResult> GetAllLists( int collocId )
         {
-            IEnumerable<CourseData> result = await _courseGateway.GetAll( collocId );
+            IEnumerable<CourseData> result = await _courseGateway.GetAllLists( collocId );
             return Ok( result );
         }
 
         [HttpGet( "getTemplates/{collocId}" )]
         public async Task<IActionResult> GetTemplates( int collocId )
         {
-            IEnumerable<CourseTempData> result = await _courseGateway.GetAllTemp( collocId );
+            IEnumerable<CourseTempData> result = await _courseGateway.GetAllTemplate( collocId );
             return Ok( result );
         }
 
@@ -41,7 +41,7 @@ namespace ITI.Roomies.WebApp.Controllers
         }
 
         [HttpGet( "GetTemplate/{courseId}", Name = "GetTemplate" )]
-        public async Task<IActionResult> GetATemplateById( int courseId )
+        public async Task<IActionResult> GetATemplateById( int courseTempId )
         {
             Result<CourseTempData> result = await _courseGateway.FindTempById( courseTempId );
             return this.CreateResult( result );

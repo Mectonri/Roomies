@@ -11,10 +11,6 @@
 
       <form>
         <div v-if="route =='create'">
-          <label>Template ?</label>
-          <br>
-          <el-switch v-model="course.isTemplate"></el-switch>
-        </div>
         <div>
           <el-switch
             v-model="course.isTemplate"
@@ -34,6 +30,7 @@
         </div>
         <br>
         <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
+        </div>
       </form>
     </main>
     <main v-else>Erreur</main>
@@ -67,7 +64,7 @@ export default {
       route: null,
       idIsUndefined: true,
       state: true,
-      id: null
+      id: null,
     };
   },
 
@@ -117,18 +114,13 @@ export default {
         try {
           if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
-            await createGroceryListAsync(this.course);
+            await createTemplateOrListAsync(this.course);
             this.$router.push("/course");
           }
 
           if (this.route == "edit") {
-            await updateAgroceryListAsync(this.course);
+            await updateListOrTemplateAsync(this.course);
             this.$router.push("/course");
-            }
-            else {
-              await updateAtemplateAsync(this.course);
-              this.$router.push("/course");
-            }
           }
         } catch (e) {
           console.error(e);

@@ -54,7 +54,6 @@ import {
   updateCategoryAsync
 } from "../../api/SpendingsApi/CategoryApi";
 import AuthService from "../../services/AuthService";
-import { state } from "../../state";
 import Loading from "../../components/Utility/Loading.vue";
 import Budget from "../Spendings/Budget.vue";
 export default {
