@@ -40,7 +40,6 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpPost("addItem")]
         public async Task<IActionResult> AddItem( [FromBody] ItemViewModel model )
         {
-
             int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName,  model.CourseId, userId );
             return this.CreateResult( result );

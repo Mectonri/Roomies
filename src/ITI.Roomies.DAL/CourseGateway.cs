@@ -40,12 +40,12 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 CourseTempData courseTemp = await con.QueryFirstOrDefaultAsync<CourseTempData>(
-                    @"select c.CourseId,
-                             c.CourseName,
+                    @"select c.CourseTempId,
+                             c.CourseTempName,
                             c.CoursePrice,
                             c.CollocId
                         from rm.tCourseTemp c
-                        where c.CourseId = @CourseId;",
+                        where c.CourseTempId = @CourseTempId;",
                     new { CourseId = courseId } );
 
                 if( courseTemp == null ) return Result.Failure<CourseTempData>( Status.NotFound, "Course Template not found" );
@@ -58,8 +58,8 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<CourseTempData>(
-                    @"select c.CourseId,
-                              c.CourseName,
+                    @"select c.CourseTempId,
+                              c.CourseTempName,
                               c.CoursePrice,
                               c.CollocId
                         from rm.tCourse c
@@ -113,9 +113,9 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@CourseName", courseName );
-                p.Add( "@CollocId", collocId );
-                p.Add( "@CourseId", dbType: DbType.Int32, direction: ParameterDirection.Output );
+                p.Add( "@CourseTempName", courseName );
+                p.Add( "@CollocTempId", collocId );
+                p.Add( "@CourseTempId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseTempCreate", p, commandType: CommandType.StoredProcedure );
 
@@ -123,7 +123,7 @@ namespace ITI.Roomies.DAL
                 if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A Grocery List Template with this name already exists." );
 
                 Debug.Assert( status == 0 );
-                return Result.Success( Status.Created, p.Get<int>( "@CourseId" ) );
+                return Result.Success( Status.Created, p.Get<int>( "@CourseTempId" ) );
 
             }
         }
@@ -154,7 +154,7 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@CourseId", courseId );
+                p.Add( "@CourseTempId", courseId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseTempDelete", p, commandType: CommandType.StoredProcedure );
 
@@ -199,8 +199,8 @@ namespace ITI.Roomies.DAL
             {
 
                 var p = new DynamicParameters();
-                p.Add( "@CourseName", courseName );
-                p.Add( "@CourseId", courseId, dbType: DbType.Int32 );
+                p.Add( "@CourseTempName", courseName );
+                p.Add( "@CourseTempId", courseId, dbType: DbType.Int32 );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCourseTempUpdate", p, commandType: CommandType.StoredProcedure );
 
@@ -211,7 +211,6 @@ namespace ITI.Roomies.DAL
                 return Result.Success( Status.Ok );
             }
         }
-
 
         bool IsNameValid( string name ) => !string.IsNullOrWhiteSpace( name );
 
