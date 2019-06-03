@@ -104,12 +104,14 @@
     <!-- Affihe le chemin demandé -->
     <!-- <template v-if="isCollapse"> -->
     <template>
+      <div class="mainContainer">
       <main v-if="state == true " role="main">
         <loading/>
       </main>
-      <main v-else class="mainContainer">
+      <main v-else class="card containerCard">
         <router-view id="pageContent" class="child"></router-view>
       </main>
+      </div>
     </template>
 
     <!-- <template v-else>
@@ -123,6 +125,7 @@
     <!-- Le footer -->
     <footer id="footer" class="font-small mdb-color lighten-3">
       <div class="container">
+        <br>
         <language/>
       </div>
       <!-- <div class="footer-copyright text-center">
@@ -274,7 +277,7 @@ export default {
 #footer {
   bottom: 0;
   width: 100%;
-  height: 5.5rem; /* Footer height */
+  height: 8.5rem; /* Footer height */
   // padding-top: 2.5rem;
   top: 2.5rem;
   // padding-left: 12rem;

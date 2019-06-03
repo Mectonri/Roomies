@@ -1,5 +1,5 @@
 <template class='profile'>
-  <div class="container">
+  <div class="mainContainer">
     <el-container>
       <el-header>
         <h1 class="text-center">{{$t('Welcome')}} {{$t('Profil')}}</h1>

@@ -1,13 +1,14 @@
 <template>
+  <!-- <div> -->
   <div>
-    <div class="card containerCard">
-      <header>
-        <h2>Tâches</h2>
-      </header>
+    <header>
+      <h2>Tâches</h2>
+    </header>
 
-      <main v-if="taskData[0]" class="card">
-        <h3 style="margin: 1.5rem;">{{$currColloc.collocName}}</h3>
-        <!-- 
+    <!-- <main v-if="taskData[0]" class="card mainCard"> -->
+    <main v-if="taskData[0]" class="card mainCard">
+      <h3 style="margin: 1.5rem;">{{$currColloc.collocName}}</h3>
+      <!-- 
       <table class="table table-dark" v-if="taskData !='Nada'">
         <tr>
           <td>Nom</td>
@@ -36,101 +37,105 @@
             <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
           </td>
         </tr>
-        </table>-->
-        <div v-if="taskData !='Nada'">
-          <table>
-            <thead>
-              <th>
-                <div class="input-group mb-3">
-                  <div class="input-group-text formCheckbox"></div>
-                  <label class="form-control formName">Nom</label>
-                  <label class="form-control formDate">Date</label>
-                  <label class="form-control formFirstName">FirstName</label>
-                  <label class="form-control formDesc">Description</label>
+      </table>-->
+      <div v-if="taskData !='Nada'">
+        <table>
+          <thead>
+            <th>
+              <div class="input-group mb-4">
+                <div class="input-group-text formCheckbox"></div>
+                <label class="form-control formName">Nom</label>
+                <label class="form-control formDate">Date</label>
+                <label class="form-control formFirstName">Roomie</label>
+                <label class="form-control formDesc">Description</label>
+              </div>
+            </th>
+            <!-- <th>Nom</th> -->
+            <!-- <th>Echéance</th> -->
+            <!-- <th>Description</th> -->
+            <th style="width: 8rem;"></th>
+          </thead>
+          <!-- <div v-for="task of taskData" :key="task.taskId"> -->
+          <tr v-for="task of taskData" :key="task.taskId">
+            <!-- <tr> -->
+            <th>
+              <div class="input-group mb-1">
+                <div class="input-group-text formCheckbox">
+                  <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
+                  <el-tooltip content="Valider" placement="top">
+                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                  </el-tooltip>
                 </div>
-              </th>
-              <!-- <th>Nom</th> -->
-              <!-- <th>Echéance</th> -->
-              <!-- <th>Description</th> -->
-              <th style="width: 8rem;"></th>
-            </thead>
-            <!-- <div v-for="task of taskData" :key="task.taskId"> -->
-            <tr v-for="task of taskData" :key="task.taskId">
-              <!-- <tr> -->
-              <th>
-                <div class="input-group">
-                  <div class="input-group-text formCheckbox">
-                    <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
-                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                  </div>
-                  <label class="form-control formName">{{ task.taskName }}</label>
-                  <label class="form-control formDate">{{ task.taskDate }}</label>
-                  <label :id="'formFirstName' + task.taskId" class="form-control formFirstName">
-                    {{ task.firstName}}
-                    <br>
-                    {{ task.firstName}}
-                  </label>
-                  <label class="form-control formDesc">{{ task.taskDes }}</label>
-                </div>
-              </th>
-              <th style="padding-left: 1rem;">
-                <!-- <label class="form-control formBtn"> -->
-                <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
-              </th>
-              <th>
+                <label class="form-control formName">{{ task.taskName }}</label>
+                <label class="form-control formDate">{{ task.taskDate }}</label>
+                <label :id="'formFirstName' + task.taskId" class="form-control formFirstName">
+                  {{ task.firstName}}
+                  <br>
+                  {{ task.firstName}}
+                </label>
+                <label class="form-control formDesc">{{ task.taskDes }}</label>
+              </div>
+            </th>
+            <th style="padding-left: 1rem;">
+              <!-- <label class="form-control formBtn"> -->
+              <el-tooltip content="Modifier" placement="top">
+                <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
+              </el-tooltip>&nbsp;
+              <el-tooltip content="Supprimer" placement="top">
                 <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-                <!-- </label> -->
-              </th>
-              <!-- </div> -->
-            </tr>
-          </table>
-        </div>
-        <div v-else>Aucune tâche à afficher</div>
-      </main>
-      <main v-else>
-        <loading/>
-      </main>
-
-      <br>
-      <main class="card" v-if="taskHistoriqueData[0]">
-        <h3>Historique</h3>
-
-        <table class="table table-dark" v-if="taskHistoriqueData !='Nada'">
-          <tr>
-            <td>Nom</td>
-            <td>Description</td>
-            <td>Echéance</td>
-            <td>Etat</td>
-            <td>Participant(s)</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-            <td>{{ task.taskName }}</td>
-            <td>{{ task.taskDes }}</td>
-            <td>{{ task.taskDate }}</td>
-            <td v-if="!task.state">
-              <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
-            </td>
-            <td v-else>
-              <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
-            </td>
-            <td>{{task.firstName}}</td>
-            <td>
-              <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
-            </td>
-            <td>
-              <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-            </td>
+              </el-tooltip>
+              <!-- </label> -->
+            </th>
+            <!-- </div> -->
           </tr>
         </table>
-        <div v-else>Aucune tâche à afficher</div>
-      </main>
-      <main v-else>
-        <loading/>
-      </main>
-    </div>
+      </div>
+      <div v-else>Aucune tâche à afficher</div>
+    </main>
+    <main v-else>
+      <loading/>
+    </main>
+
+    <br>
+    <main class="card mainCard" v-if="taskHistoriqueData[0]">
+      <h3>Historique</h3>
+
+      <table class="table table-dark" v-if="taskHistoriqueData !='Nada'">
+        <tr>
+          <td>Nom</td>
+          <td>Description</td>
+          <td>Echéance</td>
+          <td>Etat</td>
+          <td>Participant(s)</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr v-for="task of taskHistoriqueData" :key="task.taskId">
+          <td>{{ task.taskName }}</td>
+          <td>{{ task.taskDes }}</td>
+          <td>{{ task.taskDate }}</td>
+          <td v-if="!task.state">
+            <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
+          </td>
+          <td v-else>
+            <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
+          </td>
+          <td>{{task.firstName}}</td>
+          <td>
+            <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
+          </td>
+          <td>
+            <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+          </td>
+        </tr>
+      </table>
+      <div v-else>Aucune tâche à afficher</div>
+    </main>
+    <main v-else>
+      <loading/>
+    </main>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -142,6 +147,7 @@ import {
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
 import Loading from "../../components/Utility/Loading.vue";
+import monthFr from "../../components/Utility/month.js";
 
 export default {
   components: {
@@ -151,7 +157,8 @@ export default {
     return {
       errors: [],
       taskData: [],
-      taskHistoriqueData: []
+      taskHistoriqueData: [],
+      monthList: null
     };
   },
   computed: {
@@ -162,7 +169,10 @@ export default {
     }
   },
   async mounted() {
+    this.monthList = require("../../components/Utility/month.js");
     this.refreshList();
+    // console.log(monthFr);
+    // console.log(month.monthFr);
   },
 
   methods: {
@@ -205,11 +215,12 @@ export default {
         laDate.getDate().toString().length == 1
           ? "0" + laDate.getDate().toString()
           : laDate.getDate();
-      let monthToDisplay = laDate.getMonth() + 1;
-      monthToDisplay =
-        monthToDisplay.toString().length == 1
-          ? "0" + monthToDisplay.toString()
-          : monthToDisplay;
+      // let monthToDisplay = laDate.getMonth() + 1;
+      // monthToDisplay =
+      //   monthToDisplay.toString().length == 1
+      //     ? "0" + monthToDisplay.toString()
+      //     : monthToDisplay;
+      let monthToDisplay = this.monthList.monthFr[laDate.getMonth()];
       let hourToDisplay =
         laDate.getHours().toString().length == 1
           ? "0" + laDate.getHours().toString()
@@ -220,7 +231,7 @@ export default {
           : laDate.getMinutes();
       return (
         dayToDisplay +
-        "/" +
+        " " +
         monthToDisplay +
         " " +
         hourToDisplay +
@@ -334,7 +345,7 @@ export default {
   height: auto;
 }
 .formDate {
-  max-width: 5rem;
+  max-width: 6rem;
   height: auto;
 }
 .formFirstName {
@@ -342,10 +353,20 @@ export default {
   /* word-break: break-all; */
   height: auto;
 }
-input[type="checkbox"] {
+
+.formDate,
+.formDesc,
+.formFirstName,
+.formName {
+  /* border: 1px solid rgb(50,50,50) !important; */
+  border-top: 0px !important;
+  border-bottom: 0px !important;
+  border-right: 0px !important;
+}
+tr > td {
+  padding-bottom: 1;
+}
+/* input[type="checkbox"] {
   transform: scale(1.5);
-}
-.card{
- background-color: #8e652a; 
-}
+} */
 </style>
