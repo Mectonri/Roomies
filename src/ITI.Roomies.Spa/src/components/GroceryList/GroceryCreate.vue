@@ -25,6 +25,11 @@
       </header>
 
       <form>
+        <div v-if="route =='create'">
+          <label>Template ?</label>
+          <br>
+          <el-switch v-model="course.isTemplate"></el-switch>
+        </div>
         <div>
           <label class="required">Nom</label>
           <br>
@@ -114,11 +119,11 @@ export default {
           if (this.route == "create") {
             this.course.collocId = this.$currColloc.collocId;
             await createGroceryListAsync(this.course);
-            this.$router.push('/course');
+            this.$router.push("/course");
           }
           if (this.route == "edit") {
             await updateAgroceryListAsync(this.course);
-            this.$router.push('/course');
+            this.$router.push("/course");
           }
         } catch (e) {
           console.error(e);
