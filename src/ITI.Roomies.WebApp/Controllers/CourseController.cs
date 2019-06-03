@@ -1,6 +1,5 @@
 using ITI.Roomies.DAL;
 using ITI.Roomies.WebApp.Authentication;
-using ITI.Roomies.WebApp.Models.CourseTempViewModels;
 using ITI.Roomies.WebApp.Models.CourseViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
