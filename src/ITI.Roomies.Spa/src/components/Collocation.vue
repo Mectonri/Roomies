@@ -22,7 +22,7 @@
         class="btn btn-dark"
         @click="changeJoin()"
         :disabled="!$setMenuItemDisabled.disableState"
-      >Joindre</button>
+      >Rejoindre</button>
     </p>
     <p>
       Inviter de nouveaux Roomies à votre collocation :
@@ -34,17 +34,6 @@
         :disabled="$setMenuItemDisabled.disableState"
       >Inviter</button>
     </p>
-    <p v-if="Admin==1">
-      Supprimer la collocation :
-      <br>
-      <br>
-      <button
-        class="btn btn-dark"
-        @click="DestroyColloc()"
-        :disabled="$setMenuItemDisabled.disableState"
-      >Suppprimer</button>
-    </p>
-
     <div v-if="show1">
       <form @submit="onSubmit($event)">
         <div class="alert alert-danger" v-if="errors.length > 0">
@@ -112,8 +101,18 @@
         @click="onSubmitQuit($event)"
         native-type="submit"
       >Quitter la collocation</button>
-    </div>
-
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <template v-if="Admin==1">
+      <button
+        class="btn btn-dark"
+        @click="DestroyColloc()"
+        :disabled="$setMenuItemDisabled.disableState"
+      >Suppprimer la collocation</button>
+    </template>
+</div>
   </div>
 </template>
 
