@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
 
 namespace ITI.Roomies.DAL
 {
@@ -151,6 +152,19 @@ namespace ITI.Roomies.DAL
                      new { CollocId = collocId, RoomieId= roomieId } );
 
                 return result;
+            }
+        }
+
+        public async Task<Result<string>> GetCollocPic( int collocId )
+        {
+           using( SqlConnection con = new SqlConnection( _connectionString))
+           {
+                string result = await con.QueryFirstAsync<string>(
+                    @"select p.CollocPic from rm.tColloc c where c.CollocId = @CollocId",
+                    new { CollocId = collocId } );
+                if( result == null ) return Result.Failure<string>( Status.NotFound, "FlatSharing has no pictures" );
+
+                return Result.Success( result );
             }
         }
 

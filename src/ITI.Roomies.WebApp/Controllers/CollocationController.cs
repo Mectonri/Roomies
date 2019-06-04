@@ -146,5 +146,13 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.Ok( result );
         }
 
+        [HttpGet("getCollocPic")]
+        public async Task<IActionResult> getCollocPic( int collocId)
+        {
+            Result<string> collocPic = await _collocGateway.GetCollocPic( collocId );
+
+            return this.CreateResult( collocPic );
+        }
+
     }
 }

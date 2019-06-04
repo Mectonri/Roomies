@@ -1,4 +1,4 @@
-import { getAsync, postAsync, putAsync, deleteAsync } from '../helpers/apiHelper'
+import { getAsync, postAsync, putAsync, deleteAsync, getStringAsync } from '../helpers/apiHelper'
 
 const endpoint = process.env.VUE_APP_BACKEND + "/api/Collocation";
 
@@ -37,3 +37,7 @@ export async function DestroyCollocAsync(collocId){
 export async function IsAdminAsync(collocId){
     return await getAsync(`${endpoint}/IsAdminAsync/${collocId}`)
 };
+
+export async function getCollocPic( collocId) {
+    return await getStringAsync(`${endpoint}/getRoomiePic/${collocId}`);
+}

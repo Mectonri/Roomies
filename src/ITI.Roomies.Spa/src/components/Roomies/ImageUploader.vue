@@ -85,7 +85,6 @@ import AuthService from "../../services/AuthService";
 import { getRoomiePicAsync, getRoomieByIdAsync } from "../../api/RoomiesApi";
 import default_pic from "../../../public/default_profile_pic.png";
 import Loading from "../../components/Utility/Loading.vue";
-import { debug } from 'util';
 
 // document.getElementById("navMenu").style.display = "block";
 export default {

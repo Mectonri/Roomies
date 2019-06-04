@@ -67,7 +67,7 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 string result = await con.QueryFirstAsync<string>(
-                    "select p.RoomiePic from rm.vRoomiesPic p where p.RoomieId = @RoomieId",
+                    @"select p.RoomiePic from rm.vRoomiesPic p where p.RoomieId = @RoomieId",
                 new { RoomieId = roomieId });
 
                 if( result == null ) return Result.Failure<string>( Status.NotFound, "Roomie has no pictures" );
