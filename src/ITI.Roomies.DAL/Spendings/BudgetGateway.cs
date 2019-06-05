@@ -31,7 +31,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<IEnumerable<BudgetCatData>> GetChartData( int collocId, DateTime date )
+        public async Task<IEnumerable<BudgetCatData>> GetChartDataByTime( int collocId, DateTime date )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -42,12 +42,12 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<IEnumerable<BudgetCatData>> GetAllChartData( int collocId )
+        public async Task<IEnumerable<BudgetCatData>> GetAllChartDataByCollocId( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<BudgetCatData>(
-                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= date and date<= Fin ",
+                    @"select * from rm.vCategoryBudget where CollocId = @CollocId",
                     new { CollocId = collocId } );
             }
         }

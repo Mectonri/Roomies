@@ -11,28 +11,37 @@ using System.Threading.Tasks;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
-    [Route( "api/[controller]" )]
-    [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme)]
     public class BudgetController : Controller
     {
         readonly BudgetGateway _budgetGateway;
 
-        public BudgetController( BudgetGateway budgetGateway)
+        public BudgetController(BudgetGateway budgetGateway)
         {
             _budgetGateway = budgetGateway;
         }
 
-        [HttpGet( "getBudgets/{collocId}")]
+        [HttpGet("getBudgets/{collocId}")]
         public async Task<IActionResult> getAllBudget(int collocId)
         {
             IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll(collocId);
-            return Ok( budgetDatas );
+            return Ok(budgetDatas);
         }
-        [HttpGet( "getAllBudgetCatData")]
-            public async Task<IActionResult> getAllBudgetCat(int collocId)
+
+        [HttpGet("getAllBudgetCatData")]
+        public async Task<IActionResult> GetAllBudgetCat(int collocId)
         {
-            IEnumerable<BudgetCatData> budgetCats = await _budgetGateway.GetAllChartData( collocId );
-            return Ok( budgetCats );
+            IEnumerable<BudgetCatData> budgetCats = await _budgetGateway.GetChartDataByCollocId(collocId);
+            return Ok(budgetCats);
+        }
+
+        [HttpGet("getBudgetByTime")]
+        public async Task<IActionResult> GetByTime(int collocId, DateTime date)
+        {
+            IEnumarable<BudgetCatData> budgetByTime = await = _budgetGateway.GetChartDataByTime(collocId, date);
+            return Ok(budgetByTime);
+
         }
 
         [HttpGet("getBudgetById/{budgetId}", Name="GetBudget")]
