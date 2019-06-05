@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using ITI.Roomies.DAL.Spendings;
 
 namespace ITI.Roomies.DAL
 {
@@ -27,6 +28,27 @@ namespace ITI.Roomies.DAL
                     new { BudgetId = budgetId } );
                 if( budget == null ) return Result.Failure<BudgetData>( Status.NotFound, "Budget not found." );
                 return Result.Success( budget );
+            }
+        }
+
+        public async Task<IEnumerable<BudgetCatData>> GetChartData( int collocId, DateTime date )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<BudgetCatData>(
+                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= date and date<= Fin ",
+                    new { CollocId = collocId, Date = date } );
+             
+            }
+        }
+
+        public async Task<IEnumerable<BudgetCatData>> GetAllChartData( int collocId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<BudgetCatData>(
+                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= date and date<= Fin ",
+                    new { CollocId = collocId } );
             }
         }
 

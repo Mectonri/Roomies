@@ -1,4 +1,5 @@
 using ITI.Roomies.DAL;
+using ITI.Roomies.DAL.Spendings;
 using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Models.SpendingsViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -26,6 +27,12 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll(collocId);
             return Ok( budgetDatas );
+        }
+        [HttpGet( "getAllBudgetCatData")]
+            public async Task<IActionResult> getAllBudgetCat(int collocId)
+        {
+            IEnumerable<BudgetCatData> budgetCats = await _budgetGateway.GetAllChartData( collocId );
+            return Ok( budgetCats );
         }
 
         [HttpGet("getBudgetById/{budgetId}", Name="GetBudget")]
