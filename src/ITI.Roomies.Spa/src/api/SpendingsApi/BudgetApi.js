@@ -22,3 +22,11 @@ export async function updateBudget(budgetId) {
 export async function deleteBudgetAsync(budgetId) {
   return await deleteAsync(`${endpoint}/delete/${budgetId}`);
 }
+
+export async function getAllBudgetCatAsync(collocId) {
+  return await getAsync(`${endpoint}/getAllBudgetCatData/${collocId}`);
+}
+
+export async function getBudgetCatByTimeAsync(collocId, date) {
+  return await getAsync(`${endpoint}/getBudgetByTime/${collocId}/${date}`);
+}

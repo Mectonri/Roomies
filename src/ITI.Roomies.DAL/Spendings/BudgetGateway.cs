@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using ITI.Roomies.DAL.Spendings;
@@ -31,13 +30,13 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<IEnumerable<BudgetCatData>> GetChartDataByTime( int collocId, DateTime date )
+        public async Task<IEnumerable<BudgetCatData>> GetChartDataByTime( int collocId, DateTime date3 )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<BudgetCatData>(
-                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= date and date<= Fin ",
-                    new { CollocId = collocId, Date = date } );
+                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= @date3 and @Date3<= Fin ",
+                    new { CollocId = collocId, date3 = date3 } );
              
             }
         }
@@ -47,7 +46,7 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<BudgetCatData>(
-                    @"select * from rm.vCategoryBudget where CollocId = @CollocId",
+                    @"select * from rm.vAllCategoryBudget where CollocId = @CollocId",
                     new { CollocId = collocId } );
             }
         }

@@ -8,6 +8,7 @@ as
 		BudgetId = b.BudgetId,
 		Debut = b.Date1,
 		fin = b.Date2,
+		date3 = '0',
 		Amount = b.Amount
 	from rm.tCategory c
 		left outer join rm.tBudget b on b.CategoryId = c.CategoryId

@@ -2,10 +2,12 @@
   <div class="createContainer">
     <main>
       <div id="chart">
-        <charts :chartData="getChartData()" :Options="getOption()"></charts>
+        <charts :chartData="data" :Options="options"></charts>
       </div>
+      
       <div>
         <el-button type="primary" @click="chartByDay" round>Day</el-button>
+        <el-button type="primary" @click="chartByWeek" round>Week</el-button>
         <el-button type="primary" @click="chartByMonth" round>Month</el-button>
         <el-button type="primary" @click="chartByYear" round>Year</el-button>
         <el-button type="primary" @click="chartByAll" round>All</el-button>
@@ -24,6 +26,10 @@ import {
   getCategoryAsync,
   getCategoriesAsync
 } from "../../../api/SpendingsApi/CategoryApi";
+import {
+  getAllBudgetCatAsync,
+  getBudgetCatByTimeAsync
+} from "../../../api/SpendingsApi/BudgetApi";
 
 export default {
   components: {
@@ -38,47 +44,11 @@ export default {
       categories: null,
       categoriesName: [],
       categoriesValues: [],
-    };
-  },
-
-  async mounted() {
-    this.refresh();
-   
-    console.log(this.categories);
-    console.log(this.categories.length);
-  },
-
-  methods: {
-
-  refresh(){
-       this.collocId = this.$currColloc.collocId;
-       this.getCategoriesName();
-  
-    },
-    async getChartData() {
-      return (this.chartData = {
-        labels: this.getLabels(),
-        datasets: [
-          {
-            label: "Test-Chart",
-            backgroundColor: [
-              "#3e95cd",
-              "#8e5ea2",
-              "#3cba9f",
-              "#e8c3b9",
-              "#c45850"
-            ],
-            data: this.getData()
-          }
-        ]
-      });
-
-      //    this.labels = getCategoryNameOfColloc(this.collocId); // get the name of each categoris of the colloc
-      //   this.dataset = getDataOfColloc(this.collocId); //get the date of the colloc
-    },
-    getOption() {
-      return (this.chartOption = {
+      allBudgetCatData: [],
+      donnee: null,
+      options: {
         responsive: true,
+        maintainAspectRatio: false,
         title: {
           text: "title",
           display: true,
@@ -95,25 +65,108 @@ export default {
             fontSize: 16
           }
         }
-      });
+      }
+    };
+  },
+
+  async mounted() {
+    this.collocId = 1;
+    this.allBudgetCatData = await getAllBudgetCatAsync(this.collocId);
+    this.getCategoriesValues();
+    this.getCategoriesNames();
+    this.data = await this.getChartData();
+    
+  },
+
+  methods: {
+    refresh() {
+      this.getCategoriesName();
+      this.getCategoriesValues();
+    },
+
+    async getChartData() {
+      return {
+        labels: this.categoriesName,
+        datasets: [
+          {
+            label: "Test-Chart",
+            backgroundColor: [
+              "#3e95cd",
+              "#8e5ea2",
+              "#3cba9f",
+              "#e8c3b9",
+              "#c45850",
+              "#4CFF33",
+              "#140A2B"
+            ],
+            data: this.categoriesValues
+          }
+        ]
+      };
+    },
+
+    getChartDataOption() {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        title: {
+          text: "title",
+          display: true,
+          position: "top",
+          text: "Pie Chart",
+          fontSize: 18,
+          fontColor: "#111"
+        },
+        legend: {
+          display: true,
+          position: "bottom",
+          labels: {
+            fontColor: "#333",
+            fontSize: 16
+          }
+        }
+      };
     },
 
     async getLabels() {
-      this.refresh();
-      //return ["test", "test1", "test2"];
-      
+      return await this.getCategoriesNames();
     },
 
     async getData() {
-      
-      return [50,20,50,100,30];
-      //return await getCategories(this.collocId);
+      return await this.getCategoriesValues();
     },
 
-    chartByDay() {
+    async chartByDay() {
       console.log("daily budget");
-    },
+      // var today = new Date();
+      // var dd = String(today.getDate()).padStart(2, "0");
+      // var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      // var yyyy = today.getFullYear();
 
+      // today = mm + "/" + dd + "/" + yyyy;
+      // console.log(today.toString());
+
+      // var objet = await getBudgetCatByTimeAsync(1, today.toString());
+      // // console.log(objet);
+
+      var date = new Date();
+      var day = date.getDate(); // yields date
+      var month = date.getMonth() + 1; // yields month (add one as '.getMonth()' is zero indexed)
+      var year = date.getFullYear(); // yields year
+      var hour = date.getHours(); // yields hours
+      var minute = date.getMinutes(); // yields minutes
+      var second = date.getSeconds(); // yields seconds
+
+      // After this construct a string with the above results as below
+      var time = day + "/" + month + "/" + year;
+
+     var objet = await getBudgetCatByTimeAsync(1, "06-06-2019");
+     console.log(objet);
+    },
+    chartByWeek() {
+      console.log("weekly Budget");
+    },
     chartByMonth() {
       console.log("monthly budget");
     },
@@ -125,14 +178,16 @@ export default {
     chartByAll() {
       console.log("All budget");
     },
-    getCategoriesName() {
-      var i;
-      for (i = 0; i < this.categories.length; i++) {
-        this.categoriesName.push(i.categoryName);
-        console.log(this.categoryName);
-      }
-      return this.categoriesName;
+    getCategoriesNames() {
+      this.allBudgetCatData.forEach(e => {
+        this.categoriesName.push(e.categoryName);
+      });
+    },
 
+    getCategoriesValues() {
+      this.allBudgetCatData.forEach(e => {
+        this.categoriesValues.push(e.amount);
+      });
     }
   }
 };
