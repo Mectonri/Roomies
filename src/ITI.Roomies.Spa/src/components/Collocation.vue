@@ -1,32 +1,31 @@
 <template>
   <div>
     <header>
-      <h2>Collocation</h2>
+      <h2>{{$t('colloc')}}</h2>
     </header>
 
     <p>
-      Créer une collocation puis inviter vos Roomies :
+     {{$t('collocCreate')}}
       <br>
       <br>
       <button
         class="btn btn-dark"
         @click="changeCreate()"
         :disabled="!$setMenuItemDisabled.disableState"
-      >Création</button>
+      >{{$t('create')}}</button>
     </p>
     <p>
-      Rejoigner une collocation à partir d'un code reçu par email :
       <br>
       <br>
       <button
         class="btn btn-dark"
         @click="changeJoin()"
         :disabled="!$setMenuItemDisabled.disableState"
-      >Rejoindre</button>
+      >{{$t('join')}}</button>
     </p>
     <p>
-      Inviter de nouveaux Roomies à votre collocation :
-      <br>
+{{$t('collocInvite2')}}
+<br>
       <br>
       <button
         class="btn btn-dark"
