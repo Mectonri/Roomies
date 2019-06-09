@@ -4,7 +4,7 @@
       <div id="chart">
         <charts :chartData="data" :Options="options"></charts>
       </div>
-      
+
       <div>
         <el-button type="primary" @click="chartByDay" round>Day</el-button>
         <el-button type="primary" @click="chartByWeek" round>Week</el-button>
@@ -75,7 +75,6 @@ export default {
     this.getCategoriesValues();
     this.getCategoriesNames();
     this.data = await this.getChartData();
-    
   },
 
   methods: {
@@ -161,8 +160,8 @@ export default {
       // After this construct a string with the above results as below
       var time = day + "/" + month + "/" + year;
 
-     var objet = await getBudgetCatByTimeAsync(1, "06-06-2019");
-     console.log(objet);
+      var objet = await getBudgetCatByTimeAsync(1, "06-06-2019");
+      console.log(objet);
     },
     chartByWeek() {
       console.log("weekly Budget");
@@ -192,3 +191,10 @@ export default {
   }
 };
 </script>
+
+<style>
+#chart {
+  height: 400px;
+  width: 400px;
+}
+</style>
