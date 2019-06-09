@@ -1,35 +1,52 @@
 using ITI.Roomies.DAL;
+using ITI.Roomies.DAL.Spendings;
 using ITI.Roomies.WebApp.Authentication;
 using ITI.Roomies.WebApp.Models.SpendingsViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
-    [Route( "api/[controller]" )]
-    [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme)]
     public class BudgetController : Controller
     {
         readonly BudgetGateway _budgetGateway;
 
-        public BudgetController( BudgetGateway budgetGateway)
+        public BudgetController(BudgetGateway budgetGateway)
         {
             _budgetGateway = budgetGateway;
         }
 
-        [HttpGet( "getBudgets/{collocId}")]
-        public async Task<IActionResult> getAllBudget(int collocId)
+        [HttpGet("getBudgets/{collocId}")]
+        public async Task<IActionResult> GetAllBudget(int collocId)
         {
             IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll(collocId);
-            return Ok( budgetDatas );
+            return Ok(budgetDatas);
+        }
+
+        [HttpGet("getAllBudgetCatData/{collocId}")]
+        public async Task<IActionResult> GetAllBudgetCat(int collocId)
+        {
+            IEnumerable<BudgetCatData> budgetCats = await _budgetGateway.GetAllChartDataByCollocId(collocId);
+            return Ok(budgetCats);
+        }
+
+        [HttpGet("getBudgetByTime/{collocId}/{currentDate}")]
+        public async Task<IActionResult> GetByTime(int collocId, string currentDate)
+        {
+            DateTime dateObj = Convert.ToDateTime( currentDate );
+            IEnumerable<BudgetCatData> budgetByTime = await _budgetGateway.GetChartDataByTime(collocId, dateObj);
+            return Ok(budgetByTime);
+
         }
 
         [HttpGet("getBudgetById/{budgetId}", Name="GetBudget")]
-        public async Task<IActionResult> getBudgetById(int budgetId)
+        public async Task<IActionResult> GetBudgetById(int budgetId)
         {
             Result<BudgetData> result = await _budgetGateway.FindBudgetById( budgetId );
             return Ok( result );

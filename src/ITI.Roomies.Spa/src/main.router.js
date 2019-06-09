@@ -3,8 +3,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-
-
 import requireAuth from './helpers/requireAuth';
 
 // Components
@@ -16,7 +14,6 @@ import Calendar from './components/Calendar.vue'
 import Collocation from './components/Collocation.vue'
 
 import ImageUploader from './components/Roomies/ImageUploader.vue'
-
 
 import RoomiesCreate from './components/Roomies/RoomiesCreate.vue'
 import RoomieProfile from './components/Roomies/RoomieProfile.vue'
@@ -32,6 +29,7 @@ import GroceryCreate from './components/GroceryList/GroceryCreate.vue'
 
 import Item from './components/Item/Item.vue'
 import ItemCreate from './components/Item/ItemCreateEdit.vue'
+import RItemCreate from './components/Item/RItem.vue'
 
 import Spendings from './components/Spendings/Spendings.vue'
 import Category from './components/Spendings/CategoryCreateEdit.vue'
@@ -39,6 +37,7 @@ import Category from './components/Spendings/CategoryCreateEdit.vue'
 import Budget from './components/Spendings/Budget.vue'
 import TransactionBudget from "./components/Spendings/Transaction/TransactionBudget.vue"
 
+import Chart from "./components/Spendings/Transaction/Chart.vue";
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -69,6 +68,9 @@ const routes = [
     // { path: '/item', component: Item, beforeEnter: requireAuth},
     // { path: '/item/create', component: ItemCreate, beforeEnter: requireAuth },
     // { path: '/item/edit/:id?', component: ItemCreate, beforeEnter: requireAuth },
+    { path: '/Ritem', component: RItemCreate, beforeEnter: requireAuth },
+
+    {path: '/chart', component: Chart, beforeEnter: requireAuth},
 
 
     { path: '/course', component: GroceryList, beforeEnter: requireAuth},

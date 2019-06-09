@@ -67,7 +67,7 @@ namespace ITI.Roomies.DAL
             {
                 var p = new DynamicParameters();
                 p.Add( "@CollocId", collocId );
-                p.Add( "@CollocPic, collocId" );
+                p.Add( "@CollocPic", serverLink );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCollocPicUpdate", p, commandType: CommandType.StoredProcedure );
                 int status = p.Get<int>( "@Status" );

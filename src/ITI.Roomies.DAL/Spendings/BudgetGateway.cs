@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using ITI.Roomies.DAL.Spendings;
 
 namespace ITI.Roomies.DAL
 {
@@ -27,6 +27,27 @@ namespace ITI.Roomies.DAL
                     new { BudgetId = budgetId } );
                 if( budget == null ) return Result.Failure<BudgetData>( Status.NotFound, "Budget not found." );
                 return Result.Success( budget );
+            }
+        }
+
+        public async Task<IEnumerable<BudgetCatData>> GetChartDataByTime( int collocId, DateTime date3 )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<BudgetCatData>(
+                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= @date3 and @Date3<= Fin ",
+                    new { CollocId = collocId, date3 = date3 } );
+             
+            }
+        }
+
+        public async Task<IEnumerable<BudgetCatData>> GetAllChartDataByCollocId( int collocId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<BudgetCatData>(
+                    @"select * from rm.vAllCategoryBudget where CollocId = @CollocId",
+                    new { CollocId = collocId } );
             }
         }
 

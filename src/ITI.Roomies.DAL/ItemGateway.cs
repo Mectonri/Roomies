@@ -40,13 +40,13 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 RItemData rItem = await con.QueryFirstOrDefaultAsync<RItemData>(
-                    @"select i.CollocId,
-                             i.RItemPrice,
-                             i.RItemName,
-                             i.CourseTempId,
-                             i.RoomieId
-                      from rm.tRItem i
-                      where i.ItemId = @ItemId;",
+                    @"select ri.CollocId,
+                             ri.ItemPrice,
+                             ri.ItemName,
+                             ri.CourseTempId,
+                             ri.CourseTempId
+                      from rm.tRItem ri
+                      where ri.ItemId = @RItemId;",
                     new { RItemId = rItemId } );
                 if( rItem == null ) return Result.Failure<RItemData>( Status.NotFound, "Item not found." );
                 return Result.Success( rItem );
@@ -68,21 +68,21 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<IEnumerable<RItemData>> GetAllRItemFromList(int courseTempId)
+        public async Task<IEnumerable<RItemData>> GetAllRItemFromTemplate(int courseTempId)
         {
             using (SqlConnection con = new SqlConnection( _connectionString))
             {
                 return await con.QueryAsync<RItemData>(
-                    @"select i.RItemId,
-                             i.RItemPrice,
-                             i.RItemName,
-                        from rm.tRItem i
-                        where i.CourseTempId = @CourseTempId",
+                    @"select ri.RItemId,
+                             ri.ItemPrice,
+                             ri.ItemName,
+                        from rm.tRItem ri
+                        where ri.CourseTempId = @CourseTempId",
                     new { CourseTempId = courseTempId } );
             }
         }
 
-        public async Task<Result> CreateRItem( int itemPrice, string  itemName, int courseId, int collocId)
+        public async Task<Result> CreateRItem( int itemPrice, string  itemName, int courseTempId, int collocId)
         {
             if(!IsNameValid(itemName)) return Result.Failure<int>( Status.BadRequest, "The item Name is not valid." );
             using( SqlConnection con = new SqlConnection ( _connectionString ) )
@@ -90,7 +90,7 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@RItemPrice", itemPrice);
                 p.Add( "@ItemName", itemName );
-                p.Add( "@CourseId", courseId);
+                p.Add( "@CourseId", courseTempId);
                 p.Add( "@CollocId", collocId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sRItemCreate", p, commandType: CommandType.StoredProcedure );
@@ -121,12 +121,12 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> DeleteRItem( int itemId )
+        public async Task<Result> DeleteRItem( int rItemId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@RItemId", itemId );
+                p.Add( "@RItemId", rItemId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sRItemDelete", p, commandType: CommandType.StoredProcedure );
 
@@ -154,7 +154,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> UpdateItem(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
+        public async Task<Result> Update(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
         {
             if( !IsNameValid( itemName ) ) return Result.Failure( Status.BadRequest, "The item name is not valid." );
 
@@ -174,7 +174,7 @@ namespace ITI.Roomies.DAL
                 return Result.Success( Status.Ok );
             }
         }
-        public async Task<Result> UpdateRItem( int itemId, int itemPrice, string itemName, int courseId, int collocId )
+        public async Task<Result> UpdateRItem( int itemId, int itemPrice, string itemName, int CourseTempId, int collocId )
         {
             if( !IsNameValid( itemName ) ) return Result.Failure( Status.BadRequest, "The item name is not valid." );
 
@@ -182,9 +182,9 @@ namespace ITI.Roomies.DAL
             {
                 var p = new DynamicParameters();
                 p.Add( "@RItemId", itemId );
-                p.Add( "@RItemPrice", itemPrice );
-                p.Add( "@RItemName", itemName );
-                p.Add( "@CourseId", courseId );
+                p.Add( "@ItemPrice", itemPrice );
+                p.Add( "@ItemName", itemName );
+                p.Add( "@CourseId", CourseTempId );
                 p.Add( "@CollocId", collocId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sRItemUpdate", p, commandType: CommandType.StoredProcedure );
