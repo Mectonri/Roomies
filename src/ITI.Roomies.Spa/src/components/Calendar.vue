@@ -19,7 +19,7 @@ Vue.use(VCalendar, {
 export default {
   data() {
     return {
-      eventData:{key:'today', bar:true, popover:{label:'',},dates:'',},
+      eventData:{ bar:true, popover:{label:'',},dates:'',},
       TaskData:[],
       attrs:[]
     };
@@ -29,9 +29,7 @@ export default {
 
     },
     sqlToJsDate(sqlDate) {
-      console.log(sqlDate);
       sqlDate = sqlDate.replace("T", " ");
-      console.log(sqlDate);
       //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
       var sqlDateArr1 = sqlDate.split("-");
       //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
@@ -51,14 +49,15 @@ export default {
     var TaskData = await getTasksByCollocIdAsync(this.$currColloc.collocId);
     this.TaskData= TaskData;
     var attrs=[];
-    var i=0;
-    for (i=0; i<this.TaskData.length; i++){
-      this.eventData.dates = this.sqlToJsDate(this.TaskData[i].taskDate);
-      this.eventData.popover.label = 
+    
+    for (var i=0; i<this.TaskData.length; i++){
+      window['eventData'+i] ={ bar:true, popover:{label:'',},dates:'',}
+      window['eventData'+i].dates = this.sqlToJsDate(this.TaskData[i].taskDate);
+      window['eventData'+i] .popover.label = 
         this.TaskData[i].firstName+' '+this.TaskData[i].lastName+' : '+this.TaskData[i].taskDes;
-      attrs[i]=this.eventData;
-      this.attrs= attrs;
+      attrs[i]=window['eventData'+i] ;
     }
+    this.attrs= attrs;
   },
 }
 
