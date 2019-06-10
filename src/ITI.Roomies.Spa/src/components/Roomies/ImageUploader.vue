@@ -116,7 +116,7 @@ export default {
       console.log(e);
       if (e.message == "ERROR 404 (Not Found): Roomie has no pictures") {
         this.picPath = "../default_profile_pic.png";
-        console.log(this.env + "api/Roomies/0/default_profile_pic.png");
+        // console.log(this.env + "api/Roomies/0/default_profile_pic.png");
       }
       this.defaultPic = true;
     }

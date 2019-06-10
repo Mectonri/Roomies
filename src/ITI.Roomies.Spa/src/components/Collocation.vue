@@ -56,7 +56,7 @@
     <div v-if="show3">
       <form @submit="onSubmitJoin($event)">
         <div class="form-group">
-          <label class="required">Clé :</label>
+          <label class="required">Code :</label>
           <input class="form-control" type="text" v-model="item.InviteKey" required>
         </div>
 
@@ -82,7 +82,7 @@
           <input class="form-control" type="text" v-model="item.mail" required>
         </div>
 
-        <button class="form-control" native-type="submit" v-if="this.collocName!=''">Envoyer</button>
+        <button class="btn btn-dark" native-type="submit" v-if="this.collocName!=''">Envoyer</button>
         <p
           v-if="this.collocName==''"
         >Veuillez d'abord créer une collocation avant d'inviter des personnes.</p>
@@ -100,18 +100,16 @@
         @click="onSubmitQuit($event)"
         native-type="submit"
       >Quitter la collocation</button>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <template v-if="Admin==1">
-      <button
-        class="btn btn-dark"
-        @click="DestroyColloc()"
-        :disabled="$setMenuItemDisabled.disableState"
-      >Suppprimer la collocation</button>
-    </template>
-</div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <template
+        v-if="Admin==1 && !$setMenuItemDisabled.disableState"
+      >
+        <button class="btn btn-dark" @click="DestroyColloc()">Suppprimer la collocation</button>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -141,7 +139,7 @@ export default {
       InviteKey: "",
       checkInvite: 2,
       checkjoin: 2,
-      Admin :0
+      Admin: 0
     };
   },
 
@@ -149,7 +147,7 @@ export default {
     this.idColloc = this.$currColloc.collocId;
     this.collocName = this.$currColloc.collocName;
     this.show4 = !this.$setMenuItemDisabled.disableState;
-    if(this.$currColloc.collocName!=""){
+    if (this.$currColloc.collocName != "") {
       this.Admin = await IsAdminAsync(this.$currColloc.collocId);
     }
   },
@@ -243,7 +241,7 @@ export default {
       }
     },
 
-    async DestroyColloc(){
+    async DestroyColloc() {
       DestroyCollocAsync(this.$currColloc.collocId);
       this.$currColloc.setCollocId(-1);
       this.$currColloc.setCollocName("");
@@ -257,6 +255,6 @@ export default {
 
 <style scoped>
 .form-control {
-  max-width: 60em;
+  max-width: 30rem;
 }
 </style>

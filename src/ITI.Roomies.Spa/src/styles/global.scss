@@ -29,7 +29,11 @@ body{
 .form-control{
     max-width: 15rem;
     border: 2px solid #000000 !important;
-  }
+}
+
+.el-input__inner{
+  border: 2px solid #000000 !important;
+}
 
 .btn-dark{
     // color: rgb(220,220,220) !important;
@@ -48,7 +52,11 @@ body{
 }
 
 .textarea_width{
-    max-width: 25rem;
+    max-width: 25rem !important;
+    // width: 20rem !important;
+    min-width: 15rem !important;
+    resize: both;
+    // resize: vertical;
   }
 
 #app{
@@ -61,7 +69,7 @@ main{
 }
 
 .cardBorder {
-  border:1px solid #000000;
+  border: 1px solid #000000;
   border-radius: 5px;
 }
 

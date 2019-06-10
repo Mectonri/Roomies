@@ -22,7 +22,7 @@
             <td>
               <label class="required">Nom</label>
             </td>
-            <td>
+            <td style="padding-left: 2rem;">
               <label class="required">Echéance</label>
             </td>
           </tr>
@@ -30,8 +30,8 @@
             <td>
               <input class="form-control" type="text" v-model="item.TaskName" required>
             </td>
-            <td>
-              <el-date-picker v-model="item.TaskDate" type="datetime" placeholder="Select date and time"></el-date-picker>
+            <td style="padding-left: 2rem;">
+              <el-date-picker v-model="item.TaskDate" format="dd/MM HH:mm" type="datetime" placeholder="Select date and time"></el-date-picker>
             </td>
           </tr>
         </table>
@@ -213,6 +213,6 @@ el-date-picker {
 }
 
 .taskCreateTable {
-  max-width: 50%;
+  max-width: 55%;
 }
 </style>
