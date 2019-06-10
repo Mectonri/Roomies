@@ -96,11 +96,28 @@
     </main>
 
     <br>
+
+    <button
+      class="btn btn-dark"
+      type="button"
+      data-toggle="collapse"
+      data-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+      style="
+    max-width: 8rem;
+"
+    >Historique</button>
+    <button class="btn btn-dark" style="max-width! 10rem; margin-left: 4rem;" @click="clickRoute('/task/create')">Nouvelle tâche</button>
+    
+    <br>
+    <br>
     <main class="card mainCard" v-if="taskHistoriqueData[0]">
-      <h3 style="margin: 1.5rem;">Historique</h3>
-      <div v-if="taskHistoriqueData !='Nada'">
-      <table class="tableTask">
-        <thead>
+      <br>
+      <!-- <h3 style="margin: 1.5rem;">Historique</h3> -->
+      <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="collapseExample">
+        <table class="tableTask">
+          <!-- <thead>
           <th>
             <div class="input-group mb-4">
               <div class="input-group-text formCheckbox"></div>
@@ -110,64 +127,58 @@
               <label class="form-control formDesc">Description</label>
             </div>
           </th>
-          <!-- <th>Nom</th> -->
+          <!-- <th>Nom</th>-->
           <!-- <th>Echéance</th> -->
           <!-- <th>Description</th> -->
-          <th style="width: 8rem;"></th>
-        </thead>
-        <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-          <th>
-            <div class="input-group mb-1">
-              <div v-if="task.state" class="input-group-text formCheckbox formtrue">
-                <el-tooltip content="Valider" placement="top">
-                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                </el-tooltip>
+          <!-- <th style="width: 8rem;"></th> -->
+          <!-- </thead> -->
+          <tr v-for="task of taskHistoriqueData" :key="task.taskId">
+            <th>
+              <div class="input-group mb-1">
+                <div v-if="task.state" class="input-group-text formCheckbox formtrue">
+                  <el-tooltip content="Valider" placement="top">
+                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                  </el-tooltip>
+                </div>
+                <div v-else class="input-group-text formCheckbox formfalse">
+                  <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
+                  <el-tooltip content="Valider" placement="top">
+                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                  </el-tooltip>
+                </div>
+                <!-- <label class="form-control formName" :style="myStyle">{{ task.taskName + task.state}}</label> -->
+                <label v-if="task.state" class="form-control formName formtrue">{{ task.taskName}}</label>
+                <label v-else class="form-control formName formfalse">{{ task.taskName}}</label>
+                <!-- <label class="form-control formName">{{ task.taskName + task.state + task.formState}}</label> -->
+                <label v-if="task.state" class="form-control formDate formtrue">{{ task.taskDate }}</label>
+                <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
+                <label
+                  v-if="task.state"
+                  :id="'formFirstName' + task.taskId"
+                  class="form-control formFirstName formtrue"
+                >{{ task.firstName}}</label>
+                <label
+                  v-else
+                  :id="'formFirstName' + task.taskId"
+                  class="form-control formFirstName formfalse"
+                >{{ task.firstName}}</label>
+                <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
+                <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
               </div>
-              <div v-else class="input-group-text formCheckbox formfalse">
-                <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
-                <el-tooltip content="Valider" placement="top">
-                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                </el-tooltip>
-              </div>
-              <!-- <label class="form-control formName" :style="myStyle">{{ task.taskName + task.state}}</label> -->
-              <label
-                v-if="task.state"
-                class="form-control formName formtrue"
-              >{{ task.taskName}}</label>
-              <label
-                v-else
-                class="form-control formName formfalse"
-              >{{ task.taskName}}</label>
-              <!-- <label class="form-control formName">{{ task.taskName + task.state + task.formState}}</label> -->
-              <label v-if="task.state" class="form-control formDate formtrue">{{ task.taskDate }}</label>
-              <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
-              <label
-                v-if="task.state"
-                :id="'formFirstName' + task.taskId"
-                class="form-control formFirstName formtrue"
-              >{{ task.firstName}}</label>
-              <label
-                v-else
-                :id="'formFirstName' + task.taskId"
-                class="form-control formFirstName formfalse"
-              >{{ task.firstName}}</label>
-              <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
-              <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
-            </div>
-          </th>
-          <th style="padding-left: 1rem;">
-            <!-- <label class="form-control formBtn"> -->
-            <el-tooltip content="Modifier" placement="top">
-              <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
-            </el-tooltip>&nbsp;
-            <el-tooltip content="Supprimer" placement="top">
-              <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-            </el-tooltip>
-            <!-- </label> -->
-          </th>
-          <!-- </div> -->
-        </tr>
-      </table>
+            </th>
+            <th style="padding-left: 1rem;">
+              <!-- <label class="form-control formBtn"> -->
+              <el-tooltip content="Modifier" placement="top">
+                <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
+              </el-tooltip>&nbsp;
+              <el-tooltip content="Supprimer" placement="top">
+                <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+              </el-tooltip>
+              <!-- </label> -->
+            </th>
+            <!-- </div> -->
+          </tr>
+        </table>
       </div>
       <div v-else>Aucune tâche à afficher</div>
     </main>
@@ -214,6 +225,9 @@ export default {
   },
 
   methods: {
+    clickRoute(pathToRoute) {
+      this.$router.push(pathToRoute);
+    },
     sqlToJsDate(sqlDate) {
       sqlDate = sqlDate.replace("T", " ");
 

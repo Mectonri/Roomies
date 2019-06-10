@@ -70,7 +70,7 @@
           class="el-submenu-item"
           index="1-2"
           @click="clickRoute('/task/roomie')"
-          :disabled="$setMenuItemDisabled.disableState"
+          :disabled="true"
         >Vos tâches</el-menu-item>
         <el-menu-item
           class="el-submenu-item"
