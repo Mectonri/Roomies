@@ -13,7 +13,7 @@ const messages = {
         colloc: 'Collocation',
         collocCreate: ' Créer une collocation puis inviter vos Roomies :',
         collocInvite: 'Rejoigner une collocation à partir d\'un code reçu par email :',
-        collocInvite2: 'Inviter de nopueveaux Roomies à votre collocation',
+        collocInvite2: 'Inviter de nouveaux Roomies à votre collocation :',
         create: 'Création',
         //D
         description: 'Description',

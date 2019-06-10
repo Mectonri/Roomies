@@ -97,37 +97,78 @@
 
     <br>
     <main class="card mainCard" v-if="taskHistoriqueData[0]">
-      <h3>Historique</h3>
-
-      <table class="table table-dark" v-if="taskHistoriqueData !='Nada'">
-        <tr>
-          <td>Nom</td>
-          <td>Description</td>
-          <td>Echéance</td>
-          <td>Etat</td>
-          <td>Participant(s)</td>
-          <td></td>
-          <td></td>
-        </tr>
+      <h3 style="margin: 1.5rem;">Historique</h3>
+      <div v-if="taskHistoriqueData !='Nada'">
+      <table class="tableTask">
+        <thead>
+          <th>
+            <div class="input-group mb-4">
+              <div class="input-group-text formCheckbox"></div>
+              <label class="form-control formName">Nom</label>
+              <label class="form-control formDate">Date</label>
+              <label class="form-control formFirstName">Roomie</label>
+              <label class="form-control formDesc">Description</label>
+            </div>
+          </th>
+          <!-- <th>Nom</th> -->
+          <!-- <th>Echéance</th> -->
+          <!-- <th>Description</th> -->
+          <th style="width: 8rem;"></th>
+        </thead>
         <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-          <td>{{ task.taskName }}</td>
-          <td>{{ task.taskDes }}</td>
-          <td>{{ task.taskDate }}</td>
-          <td v-if="!task.state">
-            <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
-          </td>
-          <td v-else>
-            <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
-          </td>
-          <td>{{task.firstName}}</td>
-          <td>
-            <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
-          </td>
-          <td>
-            <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-          </td>
+          <th>
+            <div class="input-group mb-1">
+              <div v-if="task.state" class="input-group-text formCheckbox formtrue">
+                <el-tooltip content="Valider" placement="top">
+                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                </el-tooltip>
+              </div>
+              <div v-else class="input-group-text formCheckbox formfalse">
+                <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
+                <el-tooltip content="Valider" placement="top">
+                  <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                </el-tooltip>
+              </div>
+              <!-- <label class="form-control formName" :style="myStyle">{{ task.taskName + task.state}}</label> -->
+              <label
+                v-if="task.state"
+                class="form-control formName formtrue"
+              >{{ task.taskName}}</label>
+              <label
+                v-else
+                class="form-control formName formfalse"
+              >{{ task.taskName}}</label>
+              <!-- <label class="form-control formName">{{ task.taskName + task.state + task.formState}}</label> -->
+              <label v-if="task.state" class="form-control formDate formtrue">{{ task.taskDate }}</label>
+              <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
+              <label
+                v-if="task.state"
+                :id="'formFirstName' + task.taskId"
+                class="form-control formFirstName formtrue"
+              >{{ task.firstName}}</label>
+              <label
+                v-else
+                :id="'formFirstName' + task.taskId"
+                class="form-control formFirstName formfalse"
+              >{{ task.firstName}}</label>
+              <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
+              <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
+            </div>
+          </th>
+          <th style="padding-left: 1rem;">
+            <!-- <label class="form-control formBtn"> -->
+            <el-tooltip content="Modifier" placement="top">
+              <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
+            </el-tooltip>&nbsp;
+            <el-tooltip content="Supprimer" placement="top">
+              <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+            </el-tooltip>
+            <!-- </label> -->
+          </th>
+          <!-- </div> -->
         </tr>
       </table>
+      </div>
       <div v-else>Aucune tâche à afficher</div>
     </main>
     <main v-else>
@@ -262,8 +303,14 @@ export default {
           // Prend la valeur de la première tâche
           var currTaskDataTaskId = this.futureTaskData[0].taskId;
           var tempArray = [];
-          var tempArray2 = [];
+          var tempArrayHistorique = [];
           var tempRoomieList = [];
+          var currDate = new Date(new Date().getTime());
+          currDate.setMilliseconds(0);
+          currDate.setSeconds(0);
+          currDate.setMinutes(0);
+          currDate.setHours(0);
+
           // Pour chaque ligne
           for (var task in this.futureTaskData) {
             // Si la tâche est différente de la précédente
@@ -273,15 +320,31 @@ export default {
                 ", "
               );
 
-              // Formatage de la date
-              this.futureTaskData[task - 1].taskDate = this.dateToFrDisplay(
-                this.sqlToJsDate(this.futureTaskData[task - 1].taskDate)
+              // Formatage state
+              this.futureTaskData[task - 1].formState =
+                "form" + this.futureTaskData[task - 1].state;
+
+              console.log(this.futureTaskData[task - 1].formState);
+              // Formatage de la date au format objet Date()
+              this.futureTaskData[task - 1].taskDate = this.sqlToJsDate(
+                this.futureTaskData[task - 1].taskDate
               );
 
-              if (!this.futureTaskData[task - 1].state)
+              // Si la tâche est validée ou que sa date est aujourd'hui ou plus tard, l'ajoute au premier tableau
+              if (
+                !this.futureTaskData[task - 1].state &&
+                this.futureTaskData[task - 1].taskDate > currDate
+              ) {
+                this.futureTaskData[task - 1].taskDate = this.dateToFrDisplay(
+                  this.futureTaskData[task - 1].taskDate
+                );
                 tempArray.push(this.futureTaskData[task - 1]);
-              else tempArray2.push(this.futureTaskData[task - 1]);
-
+              } else {
+                this.futureTaskData[task - 1].taskDate = this.dateToFrDisplay(
+                  this.futureTaskData[task - 1].taskDate
+                );
+                tempArrayHistorique.push(this.futureTaskData[task - 1]);
+              }
               tempRoomieList = [];
               // Change la tâche précédente
               currTaskDataTaskId = this.futureTaskData[task].taskId;
@@ -290,20 +353,37 @@ export default {
             tempRoomieList.push(this.futureTaskData[task].firstName);
           }
 
-          // Formatage de la date
-          this.futureTaskData[task].taskDate = this.dateToFrDisplay(
-            this.sqlToJsDate(this.futureTaskData[task].taskDate)
+          // Formatage de la date au format objet Date()
+          this.futureTaskData[task].taskDate = this.sqlToJsDate(
+            this.futureTaskData[task].taskDate
           );
 
           this.futureTaskData[task].firstName = tempRoomieList.join(", ");
-          if (!this.futureTaskData[task].state)
+
+          this.futureTaskData[task].formState =
+            "form" + this.futureTaskData[task].state;
+
+          // Si la tâche est validée ou que sa date est aujourd'hui ou plus tard, l'ajoute au premier tableau
+          if (
+            !this.futureTaskData[task].state &&
+            this.futureTaskData[task].taskDate > currDate
+          ) {
+            this.futureTaskData[task].taskDate = this.dateToFrDisplay(
+              this.futureTaskData[task].taskDate
+            );
             tempArray.push(this.futureTaskData[task]);
-          else tempArray2.push(this.futureTaskData[task]);
+          } else {
+            this.futureTaskData[task].taskDate = this.dateToFrDisplay(
+              this.futureTaskData[task].taskDate
+            );
+            tempArrayHistorique.push(this.futureTaskData[task]);
+          }
 
           if (tempArray != 0) this.taskData = tempArray;
           else this.taskData = "Nada";
 
-          if (tempArray2.length != 0) this.taskHistoriqueData = tempArray2;
+          if (tempArrayHistorique.length != 0)
+            this.taskHistoriqueData = tempArrayHistorique;
           else this.taskHistoriqueData = "Nada";
         }
       } catch (e) {
@@ -326,6 +406,9 @@ export default {
 .formCheckbox {
   width: 2.65rem;
   padding: 0.1rem;
+  border: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   /* height: auto; */
 }
 .formDesc {
@@ -369,6 +452,13 @@ tr > td {
 .tableTask {
   min-width: 60rem;
   max-width: 80rem;
+}
+.formfalse {
+  background-color: #fd4d5f;
+}
+
+.formtrue {
+  background-color: #82c560;
 }
 /* input[type="checkbox"] {
   transform: scale(1.5);
