@@ -51,18 +51,6 @@
 			}
 
 
-
-			//[HttpPost]
-			//public async Task<int> CreateTask( [FromBody] CollocViewModel model )
-			//{
-			//Result<int> result = await _collocGateway.CreateColloc( model.CollocName );
-			//int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-			//Result<int> result2 = await _collRoomGateway.AddCollRoom( result.Content, userId );
-
-			//return result.Content;
-
-			//}
-
 			// Création de tâches depuis le modèle, ne prend pas en compte la description
 			[HttpPost( "createTask" )]
 			public async Task<IActionResult> createTaskSansDescAsync( [FromBody] TaskViewModel model )
