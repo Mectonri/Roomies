@@ -114,6 +114,12 @@
           @click="clickRoute('/Roomies/transaction')"
           :disabled="$setMenuItemDisabled.disableState"
         >Transaction</el-menu-item>
+        <el-menu-item
+          class="el-submenu-item"
+          index="2-4"
+          @click="clickRoute('/Roomies/category')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Catégorie</el-menu-item>
       </el-submenu>
 
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer">
+  <div >
     <main>
       <div id="chart">
         <charts :chartData="data" :Options="options"></charts>

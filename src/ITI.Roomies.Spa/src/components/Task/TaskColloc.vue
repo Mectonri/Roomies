@@ -55,38 +55,40 @@
             <!-- <th>Description</th> -->
             <th style="width: 8rem;"></th>
           </thead>
-          <!-- <div v-for="task of taskData" :key="task.taskId"> -->
-          <tr v-for="task of taskData" :key="task.taskId">
-            <!-- <tr> -->
-            <th>
-              <div class="input-group mb-1">
-                <div class="input-group-text formCheckbox">
-                  <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
-                  <el-tooltip content="Valider" placement="top">
-                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                  </el-tooltip>
+          <tbody>
+            <!-- <div v-for="task of taskData" :key="task.taskId"> -->
+            <tr v-for="task of taskData" :key="task.taskId">
+              <!-- <tr> -->
+              <td>
+                <div class="input-group mb-1">
+                  <div class="input-group-text formCheckbox">
+                    <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
+                    <el-tooltip content="Valider" placement="top">
+                      <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                    </el-tooltip>
+                  </div>
+                  <label class="form-control formName">{{ task.taskName }}</label>
+                  <label class="form-control formDate">{{ task.taskDate }}</label>
+                  <label
+                    :id="'formFirstName' + task.taskId"
+                    class="form-control formFirstName"
+                  >{{ task.firstName}}</label>
+                  <label class="form-control formDesc">{{ task.taskDes }}</label>
                 </div>
-                <label class="form-control formName">{{ task.taskName }}</label>
-                <label class="form-control formDate">{{ task.taskDate }}</label>
-                <label
-                  :id="'formFirstName' + task.taskId"
-                  class="form-control formFirstName"
-                >{{ task.firstName}}</label>
-                <label class="form-control formDesc">{{ task.taskDes }}</label>
-              </div>
-            </th>
-            <th style="padding-left: 1rem;">
-              <!-- <label class="form-control formBtn"> -->
-              <el-tooltip content="Modifier" placement="top">
-                <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
-              </el-tooltip>&nbsp;
-              <el-tooltip content="Supprimer" placement="top">
-                <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-              </el-tooltip>
-              <!-- </label> -->
-            </th>
-            <!-- </div> -->
-          </tr>
+              </td>
+              <td style="padding-left: 1rem;">
+                <!-- <label class="form-control formBtn"> -->
+                <el-tooltip content="Modifier" placement="top">
+                  <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
+                </el-tooltip>&nbsp;
+                <el-tooltip content="Supprimer" placement="top">
+                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+                </el-tooltip>
+                <!-- </label> -->
+              </td>
+              <!-- </div> -->
+            </tr>
+          </tbody>
         </table>
       </div>
       <div v-else>Aucune tâche à afficher</div>
@@ -108,8 +110,12 @@
     max-width: 8rem;
 "
     >Historique</button>
-    <button class="btn btn-dark" style="max-width! 10rem; margin-left: 4rem;" @click="clickRoute('/task/create')">Nouvelle tâche</button>
-    
+    <button
+      class="btn btn-dark"
+      style="max-width! 10rem; margin-left: 4rem;"
+      @click="clickRoute('/task/create')"
+    >Nouvelle tâche</button>
+
     <br>
     <br>
     <main class="card mainCard" v-if="taskHistoriqueData[0]">
@@ -132,52 +138,57 @@
           <!-- <th>Description</th> -->
           <!-- <th style="width: 8rem;"></th> -->
           <!-- </thead> -->
-          <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-            <th>
-              <div class="input-group mb-1">
-                <div v-if="task.state" class="input-group-text formCheckbox formtrue">
-                  <el-tooltip content="Valider" placement="top">
-                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                  </el-tooltip>
+          <tbody>
+            <tr v-for="task of taskHistoriqueData" :key="task.taskId">
+              <th>
+                <div class="input-group mb-1">
+                  <div v-if="task.state" class="input-group-text formCheckbox formtrue">
+                    <el-tooltip content="Valider" placement="top">
+                      <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                    </el-tooltip>
+                  </div>
+                  <div v-else class="input-group-text formCheckbox formfalse">
+                    <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
+                    <el-tooltip content="Valider" placement="top">
+                      <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                    </el-tooltip>
+                  </div>
+                  <!-- <label class="form-control formName" :style="myStyle">{{ task.taskName + task.state}}</label> -->
+                  <label v-if="task.state" class="form-control formName formtrue">{{ task.taskName}}</label>
+                  <label v-else class="form-control formName formfalse">{{ task.taskName}}</label>
+                  <!-- <label class="form-control formName">{{ task.taskName + task.state + task.formState}}</label> -->
+                  <label
+                    v-if="task.state"
+                    class="form-control formDate formtrue"
+                  >{{ task.taskDate }}</label>
+                  <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
+                  <label
+                    v-if="task.state"
+                    :id="'formFirstName' + task.taskId"
+                    class="form-control formFirstName formtrue"
+                  >{{ task.firstName}}</label>
+                  <label
+                    v-else
+                    :id="'formFirstName' + task.taskId"
+                    class="form-control formFirstName formfalse"
+                  >{{ task.firstName}}</label>
+                  <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
+                  <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
                 </div>
-                <div v-else class="input-group-text formCheckbox formfalse">
-                  <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
-                  <el-tooltip content="Valider" placement="top">
-                    <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                  </el-tooltip>
-                </div>
-                <!-- <label class="form-control formName" :style="myStyle">{{ task.taskName + task.state}}</label> -->
-                <label v-if="task.state" class="form-control formName formtrue">{{ task.taskName}}</label>
-                <label v-else class="form-control formName formfalse">{{ task.taskName}}</label>
-                <!-- <label class="form-control formName">{{ task.taskName + task.state + task.formState}}</label> -->
-                <label v-if="task.state" class="form-control formDate formtrue">{{ task.taskDate }}</label>
-                <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
-                <label
-                  v-if="task.state"
-                  :id="'formFirstName' + task.taskId"
-                  class="form-control formFirstName formtrue"
-                >{{ task.firstName}}</label>
-                <label
-                  v-else
-                  :id="'formFirstName' + task.taskId"
-                  class="form-control formFirstName formfalse"
-                >{{ task.firstName}}</label>
-                <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
-                <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
-              </div>
-            </th>
-            <th style="padding-left: 1rem;">
-              <!-- <label class="form-control formBtn"> -->
-              <el-tooltip content="Modifier" placement="top">
-                <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
-              </el-tooltip>&nbsp;
-              <el-tooltip content="Supprimer" placement="top">
-                <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-              </el-tooltip>
-              <!-- </label> -->
-            </th>
-            <!-- </div> -->
-          </tr>
+              </th>
+              <th style="padding-left: 1rem;">
+                <!-- <label class="form-control formBtn"> -->
+                <el-tooltip content="Modifier" placement="top">
+                  <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
+                </el-tooltip>&nbsp;
+                <el-tooltip content="Supprimer" placement="top">
+                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+                </el-tooltip>
+                <!-- </label> -->
+              </th>
+              <!-- </div> -->
+            </tr>
+          </tbody>
         </table>
       </div>
       <div v-else>Aucune tâche à afficher</div>
@@ -198,7 +209,7 @@ import {
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
 import Loading from "../../components/Utility/Loading.vue";
-import monthFr from "../../components/Utility/month.js";
+// import monthFr from "../../components/Utility/month.js";
 
 export default {
   components: {

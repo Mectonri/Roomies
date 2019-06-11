@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer">
+  <div >
     <div>
       <h1>Transaction</h1>
     </div>
@@ -106,8 +106,8 @@
             ></el-option>
           </el-select>
         </div>
-
-        <el-button type="primary" round @click="onSubmit">Sauvegarder</el-button>
+        <br>
+        <button class="btn btn-dark" round @click="onSubmit">Sauvegarder</button>
       </form>
     </div>
   </div>
@@ -165,7 +165,7 @@ export default {
         this.budgets = await getAllBudgetAsync(this.collocId);
         this.categories = await getCategoriesAsync(this.collocId);
         this.transacDepenseList = await getAllTransacDepenseAsync();
-        debugger;
+       
       } catch (e) {
         console.log(e);
       }
@@ -187,7 +187,7 @@ export default {
       )
         this.errors.push("can't have category and a Roomie");
 
-      debugger;
+     
       await createTransactionAsync(this.transaction);
     }
   }
