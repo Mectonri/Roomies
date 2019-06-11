@@ -35,9 +35,8 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<BudgetCatData>(
-                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Debut <= @date3 and @Date3<= Fin ",
+                    @"select * from rm.vCategoryBudget where CollocId = @CollocId and Date1 <= @date3 and @Date3<= Date2 ",
                     new { CollocId = collocId, date3 = date3 } );
-             
             }
         }
 
@@ -55,16 +54,11 @@ namespace ITI.Roomies.DAL
         {
             //IEnumerable<BudgetCatData> allBudget = await this.GetAllChartDataByCollocId( collocId );
             List<BudgetCatData> dailyBudget = new List<BudgetCatData>() ;
-
-            using( SqlConnection con = new SqlConnection( _connectionString ) )
-            {
-                IEnumerable<BudgetCatData> allBudget = await con.QueryAsync<BudgetCatData>(
-                   @"select * from rm.vCategoryBudget where CollocId = @CollocId",
-                   new { CollocId = collocId } );
+            IEnumerable<BudgetCatData> allBudget = await this.GetChartDataByTime( collocId, day );
 
                 foreach( BudgetCatData data in allBudget )
                 {
-                    if( data.Date1 < day && data.Date2 < day )
+                    //if( data.Date1 < day && data.Date2 < day )
                     {
                         if( data.Amount > 0 )
                             data.Amount = data.Amount / (int)((data.Date2 - data.Date1).TotalDays);
@@ -72,7 +66,6 @@ namespace ITI.Roomies.DAL
                     }
                 }
                 return dailyBudget;
-            }
         }
 
         public async Task<IEnumerable<BudgetData>> GetAll( int collocId)
