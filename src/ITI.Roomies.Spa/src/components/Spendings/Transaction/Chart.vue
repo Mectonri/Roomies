@@ -24,11 +24,12 @@ import charts from "../Transaction/Chart";
 
 import {
   getCategoryAsync,
-  getCategoriesAsync
+  getCategoriesAsync,
 } from "../../../api/SpendingsApi/CategoryApi";
 import {
   getAllBudgetCatAsync,
-  getBudgetCatByTimeAsync
+  getBudgetCatByTimeAsync,
+  getDailyBudgetCatAsync,
 } from "../../../api/SpendingsApi/BudgetApi";
 
 export default {
@@ -138,30 +139,24 @@ export default {
 
     async chartByDay() {
       console.log("daily budget");
-      // var today = new Date();
-      // var dd = String(today.getDate()).padStart(2, "0");
-      // var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-      // var yyyy = today.getFullYear();
+     
 
-      // today = mm + "/" + dd + "/" + yyyy;
-      // console.log(today.toString());
+      // var date = new Date();
+      // var day = date.getDate(); // yields date
+      // var month = date.getMonth() + 1; // yields month (add one as '.getMonth()' is zero indexed)
+      // var year = date.getFullYear(); // yields year
+      // var hour = date.getHours(); // yields hours
+      // var minute = date.getMinutes(); // yields minutes
+      // var second = date.getSeconds(); // yields seconds
 
-      // var objet = await getBudgetCatByTimeAsync(1, today.toString());
-      // // console.log(objet);
+      // // After this construct a string with the above results as below
+      // var time = day + "/" + month + "/" + year;
 
-      var date = new Date();
-      var day = date.getDate(); // yields date
-      var month = date.getMonth() + 1; // yields month (add one as '.getMonth()' is zero indexed)
-      var year = date.getFullYear(); // yields year
-      var hour = date.getHours(); // yields hours
-      var minute = date.getMinutes(); // yields minutes
-      var second = date.getSeconds(); // yields seconds
+      // var objet = await getBudgetCatByTimeAsync(1, "06-06-2019");
+      // console.log(objet);
 
-      // After this construct a string with the above results as below
-      var time = day + "/" + month + "/" + year;
-
-      var objet = await getBudgetCatByTimeAsync(1, "06-06-2019");
-      console.log(objet);
+      this.allBudgetCatData = await getDailyBudgetCatAsync(1);
+    this.refresh();
     },
     chartByWeek() {
       console.log("weekly Budget");

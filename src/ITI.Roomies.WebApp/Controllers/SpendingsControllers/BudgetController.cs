@@ -45,6 +45,22 @@ namespace ITI.Roomies.WebApp.Controllers
 
         }
 
+        [HttpGet("getDailyBudget/{collocId}") ]
+        public async Task<IActionResult> GetDailyBudget( int collocId )
+        {
+            DateTime day = DateTime.Today;
+            IEnumerable<BudgetCatData> DailyBudget = await _budgetGateway.GetDailyBudget( collocId, day );
+            return Ok( DailyBudget );
+        }
+
+        [HttpGet( "getMonthlyBudget/{collocId}" )]
+        public async Task<IActionResult> GetMothlyBudget( int collocId )
+        {
+            DateTime month = DateTime.Now;
+            IEnumerable<BudgetCatData> DailyBudget = await _budgetGateway.GetMonthlyBudget( collocId, month );
+            return Ok( DailyBudget );
+        }
+
         [HttpGet("getBudgetById/{budgetId}", Name="GetBudget")]
         public async Task<IActionResult> GetBudgetById(int budgetId)
         {
