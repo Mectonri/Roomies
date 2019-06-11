@@ -14,7 +14,9 @@
         :disabled="!$setMenuItemDisabled.disableState"
       >{{$t('create')}}</button>
     </p>
+    <br>
     <p>
+      {{$t('collocInvite')}}
       <br>
       <br>
       <button
@@ -23,6 +25,7 @@
         :disabled="!$setMenuItemDisabled.disableState"
       >{{$t('join')}}</button>
     </p>
+    <br>
     <p>
 {{$t('collocInvite2')}}
 <br>

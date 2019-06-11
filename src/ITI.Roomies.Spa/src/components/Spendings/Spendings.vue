@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <div id="app">
+  <div id="app">
+    <header>
+      <h3>Dépenses</h3>
+    </header>
+    <main class="card mainCard">
       <canvas id="planet-chart"></canvas>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -18,7 +21,6 @@ export default {
   },
 
   async mounted() {
-    debugger;
     this.createChart("planet-chart", this.planetChartData);
   },
 

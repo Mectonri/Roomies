@@ -37,7 +37,7 @@
 					  from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
 									   inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
 					  where t.CollocId = @CollocId
-					  order by t.TaskId, r.FirstName;"
+					  order by t.TaskDate, t.TaskId, r.FirstName;"
 					, new { CollocId = collocId } );
 
 					return tasks;
@@ -77,7 +77,7 @@
 							inner join rm.tTasks t on t.TaskId = tr.TaskId
 							inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
 						where t.TaskId in (select ti.TaskId from rm.tiTaskRoom ti where ti.RoomieId = @RoomieId)
-						ORDER BY t.CollocId, t.TaskId, r.FirstName;",
+						ORDER BY t.CollocId, t.taskDate, t.TaskId, r.FirstName;",
 						new { RoomieId = roomieId } );
 
 					return tasks;

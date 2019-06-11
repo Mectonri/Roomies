@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer" v-if="state == false">
+  <div  v-if="state == false">
     <main v-if="idIsUndefined == false">
       <header v-if="route == 'create'">
         <h2>Ajouter un Item a la liste de course {{item.courseId}}</h2>

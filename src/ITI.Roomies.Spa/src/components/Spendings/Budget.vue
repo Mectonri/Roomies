@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer">
+  <div >
     <div>
       <H1>Attribuer un budget à la categorie</H1>
     </div>

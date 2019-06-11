@@ -1,5 +1,5 @@
 <template>
-  <div class="createContainer">
+  <div >
     <!-- <main v-if="idIsUndefined == false">
       <header v-if="route == 'create'">
         <h2>Créer une categori</h2>
@@ -7,9 +7,10 @@
       <header v-if="route == 'edit'">
         <h2>Modifier la categori</h2>
     </header>-->
-    <main>
-      <header>creer une category</header>
-
+    <header>
+      <h3>Créer une catégorie</h3>
+    </header>
+    <main class="card mainCard">
       <form @submit="onSubmit($event)">
         <div class="alert alert-danger" v-if="errors.length > 0">
           <b>Les champs suivants semblent invalides :</b>
@@ -17,6 +18,8 @@
           <ul>
             <li v-for="e of errors" :key="e">{{e}}</li>
           </ul>
+        </div>
+        <div>
           <div>
             <label class="required">Nom</label>
             <br>
@@ -28,12 +31,11 @@
             <br>
             <input name="icon" value="Icon1" v-model="category.iconName">
             <div v-for="(icon, index) in icons" :key="index">
-              <img :src="iconPath + '/'+icon.iconName+'.png'" @click="test(icon.iconName)">
+              <img :src="iconPath + '/'+icon.iconName+'.png'" width="30" height="30" @click="test(icon.iconName)">
             </div>
           </div>
         </div>
-        
-        
+
         <br>
         <br>
         <br>
@@ -73,7 +75,7 @@ export default {
       icons: [],
       iconPath: "http://localhost:5000/Pictures/Icons",
       budget: {},
-      categoies: null,
+      categoies: null
     };
   },
 
@@ -92,7 +94,6 @@ export default {
     console.log(this.collocId);
     this.budget.collocId = this.collocId;
     this.categories = getCategoriesAsync(this.collocId);
-    debugger;
   },
 
   methods: {

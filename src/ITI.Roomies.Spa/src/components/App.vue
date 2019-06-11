@@ -38,7 +38,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
-
+<!-- 
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-document"/>
@@ -52,7 +52,7 @@
           :key="i.name"
           @click="setTheme(idx)"
         >{{i.name}}</el-menu-item>
-      </el-submenu>
+      </el-submenu> -->
 
       <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
@@ -70,7 +70,7 @@
           class="el-submenu-item"
           index="1-2"
           @click="clickRoute('/task/roomie')"
-          :disabled="$setMenuItemDisabled.disableState"
+          :disabled="true"
         >Vos tâches</el-menu-item>
         <el-menu-item
           class="el-submenu-item"
@@ -84,10 +84,45 @@
         <i class="el-icon-location"></i>
         <span slot="title">Listes de courses</span>
       </el-menu-item>
-      <el-menu-item @click="clickRoute('/')" disabled>
-        <i class="el-icon-setting"></i>
+      <!-- <el-menu-item @click="clickRoute('/spendings')">
+        <i class="el-icon-pie-chart"></i>
         <span slot="title">Dépense</span>
-      </el-menu-item>
+      </el-menu-item> -->
+
+      
+      <el-submenu index="2" :disabled="$setMenuItemDisabled.disableState">
+        <template slot="title">
+          <i class="el-icon-pie-chart"/>
+          <span>Dépenses</span>
+        </template>
+
+        <el-menu-item
+          class="el-submenu-item"
+          index="2-1"
+          @click="clickRoute('/spendings')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Graphique</el-menu-item>
+        <el-menu-item
+          class="el-submenu-item"
+          index="2-2"
+          @click="clickRoute('/Roomies/budget')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Budget</el-menu-item>
+        <el-menu-item
+          class="el-submenu-item"
+          index="2-3"
+          @click="clickRoute('/Roomies/transaction')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Transaction</el-menu-item>
+        <el-menu-item
+          class="el-submenu-item"
+          index="2-4"
+          @click="clickRoute('/Roomies/category')"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Catégorie</el-menu-item>
+      </el-submenu>
+
+
       <el-menu-item @click="clickRoute('/')" disabled>
         <i class="el-icon-setting"></i>
         <span slot="title">Paramètres</span>
