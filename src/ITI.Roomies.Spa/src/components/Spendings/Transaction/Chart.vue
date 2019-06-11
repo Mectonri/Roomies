@@ -79,9 +79,11 @@ export default {
   },
 
   methods: {
-    refresh() {
-      this.getCategoriesName();
+
+    async refresh() {
+      this.getCategoriesNames();
       this.getCategoriesValues();
+      this.data = await this.getChartData();
     },
 
     async getChartData() {
@@ -139,28 +141,15 @@ export default {
 
     async chartByDay() {
       console.log("daily budget");
-     
-
-      // var date = new Date();
-      // var day = date.getDate(); // yields date
-      // var month = date.getMonth() + 1; // yields month (add one as '.getMonth()' is zero indexed)
-      // var year = date.getFullYear(); // yields year
-      // var hour = date.getHours(); // yields hours
-      // var minute = date.getMinutes(); // yields minutes
-      // var second = date.getSeconds(); // yields seconds
-
-      // // After this construct a string with the above results as below
-      // var time = day + "/" + month + "/" + year;
-
-      // var objet = await getBudgetCatByTimeAsync(1, "06-06-2019");
-      // console.log(objet);
 
       this.allBudgetCatData = await getDailyBudgetCatAsync(1);
-    this.refresh();
+      await this.refresh();
     },
+
     chartByWeek() {
       console.log("weekly Budget");
     },
+
     chartByMonth() {
       console.log("monthly budget");
     },
@@ -172,6 +161,7 @@ export default {
     chartByAll() {
       console.log("All budget");
     },
+    
     getCategoriesNames() {
       this.allBudgetCatData.forEach(e => {
         this.categoriesName.push(e.categoryName);
