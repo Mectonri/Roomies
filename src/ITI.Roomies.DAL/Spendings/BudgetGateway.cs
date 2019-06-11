@@ -51,6 +51,30 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<IEnumerable<BudgetCatData>> GetDailyBudget( int collocId, DateTime day )
+        {
+            //IEnumerable<BudgetCatData> allBudget = await this.GetAllChartDataByCollocId( collocId );
+            List<BudgetCatData> dailyBudget = new List<BudgetCatData>() ;
+
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                IEnumerable<BudgetCatData> allBudget = await con.QueryAsync<BudgetCatData>(
+                   @"select * from rm.vCategoryBudget where CollocId = @CollocId",
+                   new { CollocId = collocId } );
+
+                foreach( BudgetCatData data in allBudget )
+                {
+                    if( data.Date1 < day && data.Date2 < day )
+                    {
+                        if( data.Amount > 0 )
+                            data.Amount = data.Amount / (int)((data.Date2 - data.Date1).TotalDays);
+                        dailyBudget.Add( data );
+                    }
+                }
+                return dailyBudget;
+            }
+        }
+
         public async Task<IEnumerable<BudgetData>> GetAll( int collocId)
         {
             using( SqlConnection con = new SqlConnection(_connectionString) )
@@ -59,6 +83,11 @@ namespace ITI.Roomies.DAL
                     @"select * from rm.tBudget where CollocId = @CollocId",
                     new { CollocId = collocId } );
             }
+        }
+
+        public Task<IEnumerable<BudgetCatData>> GetMonthlyBudget( int collocId, DateTime month )
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Result<int>> CreateBudget( int categoryId, DateTime date1, DateTime date2, int amount, int collocId )

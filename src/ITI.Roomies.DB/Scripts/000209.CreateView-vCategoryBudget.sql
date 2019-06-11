@@ -6,8 +6,8 @@ as
 		CategoryName = c.CategoryName,
 		CollocId = c.CollocId,
 		BudgetId = b.BudgetId,
-		Debut = b.Date1,
-		fin = b.Date2,
+		Date1 = b.Date1,
+		Date2 = b.Date2,
 		date3 = '0',
 		Amount = b.Amount
 	from rm.tCategory c

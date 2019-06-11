@@ -30,3 +30,7 @@ export async function getAllBudgetCatAsync(collocId) {
 export async function getBudgetCatByTimeAsync(collocId, date) {
   return await getAsync(`${endpoint}/getBudgetByTime/${collocId}/${date}`);
 }
+
+export async function getDailyBudgetCatAsync(collocId) {
+  return await getAsync(`${endpoint}/getDailyBudget/${collocId}`);
+}
