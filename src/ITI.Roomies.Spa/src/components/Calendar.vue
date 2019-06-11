@@ -37,7 +37,7 @@ export default {
       var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
       var sqlDateArr2 = sqlDateArr1[2].split(" ");
       //format of sqlDateArr2[] = ['dd', 'hh:mm:ss.ms']
-      var sDay = sqlDateArr2[0];
+      var sDay = (Number(sqlDateArr2[0]) + 1).toString();
       return new Date(
         sYear,
         sMonth,
