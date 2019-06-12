@@ -99,7 +99,7 @@
         <el-menu-item
           class="el-submenu-item"
           index="2-1"
-          @click="clickRoute('/spendings')"
+          @click="clickRoute('/chart')"
           :disabled="$setMenuItemDisabled.disableState"
         >Graphique</el-menu-item>
         <el-menu-item
