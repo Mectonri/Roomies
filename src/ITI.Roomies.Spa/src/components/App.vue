@@ -3,7 +3,7 @@
     <!-- Menu de navigation -->
     <!-- <div> -->
     <el-menu
-    id="navMenu"
+      id="navMenu"
       default-active="2"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
@@ -38,7 +38,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
-<!-- 
+      <!-- 
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-document"/>
@@ -52,7 +52,7 @@
           :key="i.name"
           @click="setTheme(idx)"
         >{{i.name}}</el-menu-item>
-      </el-submenu> -->
+      </el-submenu>-->
 
       <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
@@ -87,9 +87,8 @@
       <!-- <el-menu-item @click="clickRoute('/spendings')">
         <i class="el-icon-pie-chart"></i>
         <span slot="title">Dépense</span>
-      </el-menu-item> -->
+      </el-menu-item>-->
 
-      
       <el-submenu index="2" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
           <i class="el-icon-pie-chart"/>
@@ -122,7 +121,6 @@
         >Catégorie</el-menu-item>
       </el-submenu>
 
-
       <el-menu-item @click="clickRoute('/')" disabled>
         <i class="el-icon-setting"></i>
         <span slot="title">Paramètres</span>
@@ -140,12 +138,12 @@
     <!-- <template v-if="isCollapse"> -->
     <template>
       <div id="globalContainer">
-      <main v-if="state == true " role="main">
-        <loading/>
-      </main>
-      <main v-else class="card containerCard">
-        <router-view id="pageContent" class="child"></router-view>
-      </main>
+        <main v-if="state == true " role="main">
+          <loading/>
+        </main>
+        <main v-else class="card containerCard">
+          <router-view id="pageContent" class="child"></router-view>
+        </main>
       </div>
     </template>
 
@@ -163,7 +161,7 @@
         <br>
         <language/>
       </div>
-    </footer> -->
+    </footer>-->
   </div>
 </template>
 
@@ -172,12 +170,11 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
-import Language from "../components/Utility/Language.vue";
+// import Language from "../components/Utility/Language.vue";
 import Loading from "../components/Utility/Loading.vue";
 
 export default {
   components: {
-    Language,
     Loading
   },
 
