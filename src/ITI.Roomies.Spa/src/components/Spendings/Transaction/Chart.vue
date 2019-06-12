@@ -79,7 +79,7 @@ export default {
   },
 
   methods: {
-
+    
     async refresh() {
       this.getCategoriesNames();
       this.getCategoriesValues();

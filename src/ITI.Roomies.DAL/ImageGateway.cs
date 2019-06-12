@@ -54,9 +54,11 @@ namespace ITI.Roomies.DAL
             {
                 await UpdateCollocPic( id, serverLink );
             }
-
-            serverLink = "Pictures/RoomiePics/" + id + "/" + name;
-            await UpdateRoomiePic( id, serverLink );
+            else
+            {
+                serverLink = "Pictures/RoomiePics/" + id + "/" + name;
+                await UpdateRoomiePic( id, serverLink );
+            }
 
             return message;
         }

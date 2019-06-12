@@ -47,13 +47,14 @@ const routes = [
 
     {path: '/roomies/calendar', component: Calendar, beforeEnter: requireAuth},
 
-    {path: '/roomies/upload/:id?', component: ImageUploader, beforeEnter: requireAuth},
-    {path: '/roomies/upload/create/:id?', component: ImageUploader, beforeEnter: requireAuth},
+    {path: '/roomies/upload/roomie/edit', component: ImageUploader, beforeEnter: requireAuth},
+    {path: '/roomies/upload/roomie/create', component: ImageUploader, beforeEnter: requireAuth},
+    {path: '/roomies/upload/colloc/edit/:id', component: ImageUploader, beforeEnter: requireAuth},
+    {path: '/rommies/upload/colloc/create/:id', component: ImageUploader, beforeEnter: requireAuth},
 
     {path: '/roomies/collocation', component: Collocation, beforeEnter: requireAuth},
     {path: '/roomies/collocation/:id?', component: Collocation, beforeEnter: requireAuth},
 
-    {path: '/roomies/upload/colloc/:id?', component: ImageUploader, beforeEnter: requireAuth},
 
     { path: '/roomies/create', component: RoomiesCreate, beforeEnter: requireAuth },
     { path: '/roomies', component: RoomieProfil, beforeEnter: requireAuth },

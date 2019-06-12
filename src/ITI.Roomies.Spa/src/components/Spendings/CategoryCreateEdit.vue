@@ -29,12 +29,16 @@
           <div>
             <label>Icon</label>
             <br>
+            
+            <el-select>
             <input name="icon" value="Icon1" v-model="category.iconName">
-            <div v-for="(icon, index) in icons" :key="index">
+            <el-option v-for="(icon, index) in icons" :key="index">
               <img :src="iconPath + '/'+icon.iconName+'.png'" width="30" height="30" @click="test(icon.iconName)">
-            </div>
-          </div>
-        </div>
+            </el-option>
+            </el-select>
+ <!-- style="background-image:url(http://localhost:5000/Pictures/Icons/Icon1.png); background-position: center; " -->
+
+       
 
         <br>
         <br>
