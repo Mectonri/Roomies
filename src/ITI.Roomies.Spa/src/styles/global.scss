@@ -101,7 +101,7 @@ main{
   padding-bottom: 1.2rem;
 }
 
-.containerCard{
+.containerCard, .el-step__icon{
   background-color: rgb(200,200,200) !important;
 }
 
@@ -115,3 +115,25 @@ body, #app, content *{
   // background-color: #b18f5f !important; 
   background-color: #e2e8f08a !important; 
  }
+
+
+ .el-step__head.is-wait,
+ .el-step__title.is-wait{
+  color: #828790 !important;
+ }
+
+.el-step__line{
+  background-color: #8f9196 !important;
+}
+
+.flex_basis_0{
+  flex-basis: 0% !important;
+}
+
+.header_steps{
+margin-top: 4rem;
+}
+
+.el-steps_header{
+  margin-top: 1rem; left: 25%; right:25%; position: absolute;
+}

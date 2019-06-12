@@ -1,6 +1,13 @@
 <template>
   <div>
-    <header>
+    <template v-if="create">
+      <el-steps class="el-steps_header" space="50%" :active="1">
+        <el-step title="Informations" icon="el-icon-edit"></el-step>
+        <el-step title="Photo" icon="el-icon-picture"></el-step>
+        <el-step class="flex_basis_0" title="Collocation"></el-step>
+      </el-steps>
+    </template>
+    <header class="header_steps">
       <h2>Ajouter une photo</h2>
     </header>
     <br>
@@ -100,7 +107,7 @@ export default {
       defaultPic: null,
       uploadButtonDisabled: true,
       create: null,
-      route: null,
+      route: null
     };
   },
 
