@@ -158,16 +158,12 @@
       </main>
     </template>-->
     <!-- Le footer -->
-    <footer id="footer" class="font-small mdb-color lighten-3">
+    <!-- <footer id="footer" class="font-small mdb-color lighten-3">
       <div class="container">
         <br>
         <language/>
       </div>
-      <!-- <div class="footer-copyright text-center">
-        © 2019 Copyright:
-        <a href>Roomie.com</a>
-      </div>-->
-    </footer>
+    </footer> -->
   </div>
 </template>
 
