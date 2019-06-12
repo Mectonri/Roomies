@@ -54,7 +54,15 @@
         >{{i.name}}</el-menu-item>
       </el-submenu>-->
 
-      <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
+      <el-menu-item
+        @click="clickRoute('/task/colloc')"
+        :disabled="$setMenuItemDisabled.disableState"
+      >
+        <i class="el-icon-document"></i>
+        <span slot="title">Tâche de la Collocation</span>
+      </el-menu-item>
+
+      <!-- <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
           <i class="el-icon-document"/>
           <span>Tâches</span>
@@ -78,7 +86,7 @@
           @click="clickRoute('/task/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Ajouter une tâche</el-menu-item>
-      </el-submenu>
+      </el-submenu>-->
 
       <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-location"></i>

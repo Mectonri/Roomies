@@ -101,19 +101,23 @@
 
     <button
       class="btn btn-dark"
-      type="button"
       data-toggle="collapse"
-      data-target="#collapseExample"
+      data-target="#historique"
       aria-expanded="false"
       aria-controls="collapseExample"
       style="
     max-width: 8rem;
 "
+    @click="cacheCache('nouvelleTache')"
     >Historique</button>
     <button
       class="btn btn-dark"
-      style="max-width! 10rem; margin-left: 4rem;"
-      @click="clickRoute('/task/create')"
+      data-toggle="collapse"
+      data-target="#nouvelleTache"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+      style="margin-left: 4rem;"
+    @click="cacheCache('historique')"
     >Nouvelle tâche</button>
 
     <br>
@@ -121,7 +125,7 @@
     <main class="card mainCard" v-if="taskHistoriqueData[0]">
       <br>
       <!-- <h3 style="margin: 1.5rem;">Historique</h3> -->
-      <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="collapseExample">
+      <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="historique">
         <table class="tableTask">
           <!-- <thead>
           <th>
@@ -192,6 +196,60 @@
         </table>
       </div>
       <div v-else>Aucune tâche à afficher</div>
+
+      <div class="collapse" id="nouvelleTache">
+        <main>
+          <form @submit="onSubmit($event)">
+            <br>
+            <table class="taskCreateTable">
+              <tr>
+                <td>
+                  <label class="required">Nom</label>
+                </td>
+                <td style="padding-left: 2rem;">
+                  <label class="required">Echéance</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" v-model="item.TaskName" required>
+                </td>
+                <td style="padding-left: 2rem;">
+                  <el-date-picker
+                    v-model="item.TaskDate"
+                    format="dd/MM HH:mm"
+                    type="datetime"
+                    placeholder="Select date and time"
+                  ></el-date-picker>
+                </td>
+              </tr>
+            </table>
+            <br>
+
+            <label>Description</label>
+            <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
+            <br>
+            <br>
+            <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
+              <td>
+                <input type="checkbox" :id="'roomie' + roomie.roomieId" checked>
+                &nbsp;
+                {{ roomie.firstName }} {{ roomie.lastName }}
+              </td>
+            </tr>
+            <br>
+            <br>&nbsp;
+            &nbsp;
+            <button
+              class="btn btn-dark"
+              @click="onSubmit"
+              style="
+    max-width: 8rem;
+"
+            >Sauvegarder</button>
+          </form>
+        </main>
+      </div>
     </main>
     <main v-else>
       <loading/>
@@ -206,8 +264,10 @@ import AuthService from "../../services/AuthService";
 import {
   UpdateTaskStateAsync,
   getTasksByCollocIdAsync,
-  DeleteTaskByIdAsync
+  DeleteTaskByIdAsync,
+  createTaskAsync
 } from "../../api/TaskApi.js";
+import { GetRoomiesIdNamesByCollocIdAsync } from "../../api/CollocationApi.js";
 import Loading from "../../components/Utility/Loading.vue";
 // import monthFr from "../../components/Utility/month.js";
 
@@ -220,7 +280,9 @@ export default {
       errors: [],
       taskData: [],
       taskHistoriqueData: [],
-      monthList: null
+      monthList: null,
+      item: {},
+      roomiesList: []
     };
   },
   computed: {
@@ -233,12 +295,18 @@ export default {
   async mounted() {
     this.monthList = require("../../components/Utility/month.js");
     this.refreshList();
+
+    this.roomiesList = await GetRoomiesIdNamesByCollocIdAsync(
+      this.$currColloc.collocId
+    );
   },
 
   methods: {
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
     },
+
+    // Change une date renvoyée par SQL en date JS
     sqlToJsDate(sqlDate) {
       sqlDate = sqlDate.replace("T", " ");
 
@@ -270,6 +338,7 @@ export default {
       );
     },
 
+    // Change une date JS en string français
     dateToFrDisplay(laDate) {
       let dayToDisplay =
         laDate.getDate().toString().length == 1
@@ -313,6 +382,8 @@ export default {
     async modifierTâche(taskId) {
       this.$router.push("/task/edit/" + taskId);
     },
+
+    // Mise à jour des tableaux
     async refreshList() {
       try {
         this.futureTaskData = await getTasksByCollocIdAsync(
@@ -413,6 +484,49 @@ export default {
         }
       } catch (e) {
         console.log(e);
+      }
+    },
+
+    // Supprime la classe "show" du collapse non nécessaire
+    async cacheCache(classCacher){
+      document.getElementById(classCacher).classList.remove("show");
+    },
+
+    // Création de tâche
+    async onSubmit() {
+      event.preventDefault();
+
+      this.item.roomiesId = [];
+
+      for (var i = 0; i < this.roomiesList.length; i++) {
+        if (
+          document.getElementById("roomie" + this.roomiesList[i].roomieId)
+            .checked
+        )
+          this.item.roomiesId.push(this.roomiesList[i].roomieId);
+      }
+
+      var errors = [];
+
+      if (!this.item.TaskName) errors.push("Nom");
+      if (!this.item.TaskDate) errors.push("Echéance");
+      if (!this.item.roomiesId[0])
+        errors.push("Aucun roomie selectionné pour la tâche.");
+
+      this.errors = errors;
+
+      if (errors.length == 0) {
+        try {
+          this.item.collocId = this.$currColloc.collocId;
+          await createTaskAsync(this.item);
+          this.refreshList();
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        for (var j = 0; j < errors.length; j++) {
+          console.log(errors[j]);
+        }
       }
     }
   }
