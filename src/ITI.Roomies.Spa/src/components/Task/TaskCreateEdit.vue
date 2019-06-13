@@ -208,10 +208,6 @@ export default {
 </script>
 
 <style scoped>
-el-date-picker {
-  border: solid 1px #000000 !important;
-}
-
 .taskCreateTable {
   max-width: 55%;
 }

@@ -108,7 +108,7 @@
       style="
     max-width: 8rem;
 "
-    @click="cacheCache('nouvelleTache')"
+      @click="cacheCache('nouvelleTache')"
     >Historique</button>
     <button
       class="btn btn-dark"
@@ -117,7 +117,7 @@
       aria-expanded="false"
       aria-controls="collapseExample"
       style="margin-left: 4rem;"
-    @click="cacheCache('historique')"
+      @click="cacheCache('historique')"
     >Nouvelle tâche</button>
 
     <br>
@@ -149,7 +149,7 @@
                   <div v-if="task.state" class="input-group-text formCheckbox formtrue">
                     <!-- <el-tooltip content="Valider" placement="top">
                       <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                    </el-tooltip> -->
+                    </el-tooltip>-->
                   </div>
                   <div v-else class="input-group-text formCheckbox formfalse">
                     <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
@@ -187,7 +187,7 @@
                 </el-tooltip>
                 <!-- <el-tooltip content="Supprimer" placement="top">
                   <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-                </el-tooltip> -->
+                </el-tooltip>-->
                 <!-- </label> -->
               </td>
               <!-- </div> -->
@@ -216,11 +216,23 @@
                 </td>
                 <td style="padding-left: 2rem;">
                   <el-date-picker
+                    style="width: 10rem;"
                     v-model="item.TaskDate"
-                    format="dd/MM HH:mm"
+                    format="dd/MM"
                     type="datetime"
-                    placeholder="Select date and time"
+                    placeholder="Date"
+                    :default-value="currentDateToMidi"
                   ></el-date-picker>
+
+                  <el-time-picker
+                    style="width: 10rem;"
+                    v-model="item.TaskHour"
+                    :picker-options="{
+                      selectableRange: '00:00:00 - 23:55:00'
+                    }"
+                    format="HH:mm"
+                    :default-value="currentDateToMidi"
+                  ></el-time-picker>
                 </td>
               </tr>
             </table>
@@ -282,7 +294,8 @@ export default {
       taskHistoriqueData: [],
       monthList: null,
       item: {},
-      roomiesList: []
+      roomiesList: [],
+      currentDate: []
     };
   },
   computed: {
@@ -295,6 +308,19 @@ export default {
   async mounted() {
     this.monthList = require("../../components/Utility/month.js");
     this.refreshList();
+
+    // Date par défaut pour le date-picker
+    this.currentDateToMidi = new Date();
+    this.currentDateToMidi.setHours(0);
+    this.currentDateToMidi.setMinutes(0);
+    this.currentDateToMidi.setSeconds(0);
+    this.currentDateToMidi.setMilliseconds(0);
+    // Date par défaut pour le time-picker
+    this.item.TaskHour = new Date();
+    this.item.TaskHour.setHours(12);
+    this.item.TaskHour.setMinutes(30);
+    this.item.TaskHour.setSeconds(0);
+    this.item.TaskHour.setMilliseconds(0);
 
     this.roomiesList = await GetRoomiesIdNamesByCollocIdAsync(
       this.$currColloc.collocId
@@ -488,7 +514,7 @@ export default {
     },
 
     // Supprime la classe "show" du collapse non nécessaire
-    async cacheCache(classCacher){
+    async cacheCache(classCacher) {
       document.getElementById(classCacher).classList.remove("show");
     },
 
@@ -508,8 +534,20 @@ export default {
 
       var errors = [];
 
-      if (!this.item.TaskName) errors.push("Nom");
-      if (!this.item.TaskDate) errors.push("Echéance");
+      console.log(typeof this.item.TaskDate);
+      console.log(this.item.TaskDate);
+      console.log(this.item.TaskHour);
+      this.item.TaskDate = new Date(
+        this.item.TaskDate.getTime() +
+          this.item.TaskHour.getMinutes() * 60 * 1000 +
+          this.item.TaskHour.getHours() * 60 * 60 * 1000
+      );
+      console.log(this.item.TaskDate < new Date().getTime());
+
+      if (!this.item.TaskName) errors.push("Le nom est invalide");
+      if (!this.item.TaskDate) errors.push("L'éhéance est invalide");
+      if (this.item.TaskDate < new Date().getTime())
+        errors.push("La date sélectionnée est déjà passée.");
       if (!this.item.roomiesId[0])
         errors.push("Aucun roomie selectionné pour la tâche.");
 
@@ -526,6 +564,7 @@ export default {
       } else {
         for (var j = 0; j < errors.length; j++) {
           console.log(errors[j]);
+          window.alert(errors[j]);
         }
       }
     }
@@ -616,4 +655,9 @@ tr > td {
 /* input[type="checkbox"] {
   transform: scale(1.5);
 } */
+
+.el-date-editor,
+el-time-picker {
+  width: 8rem;
+}
 </style>
