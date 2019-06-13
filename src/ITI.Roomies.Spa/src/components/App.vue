@@ -59,7 +59,7 @@
         :disabled="$setMenuItemDisabled.disableState"
       >
         <i class="el-icon-document"></i>
-        <span slot="title">Tâche de la Collocation</span>
+        <span slot="title">Tâches</span>
       </el-menu-item>
 
       <!-- <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">

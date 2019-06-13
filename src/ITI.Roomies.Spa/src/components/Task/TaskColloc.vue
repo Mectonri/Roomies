@@ -53,7 +53,7 @@
             <!-- <th>Nom</th> -->
             <!-- <th>Echéance</th> -->
             <!-- <th>Description</th> -->
-            <th style="width: 8rem;"></th>
+            <th style="padding-left: 1rem;"></th>
           </thead>
           <tbody>
             <!-- <div v-for="task of taskData" :key="task.taskId"> -->
@@ -144,12 +144,12 @@
           <!-- </thead> -->
           <tbody>
             <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-              <th>
+              <td>
                 <div class="input-group mb-1">
                   <div v-if="task.state" class="input-group-text formCheckbox formtrue">
-                    <el-tooltip content="Valider" placement="top">
+                    <!-- <el-tooltip content="Valider" placement="top">
                       <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                    </el-tooltip>
+                    </el-tooltip> -->
                   </div>
                   <div v-else class="input-group-text formCheckbox formfalse">
                     <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
@@ -179,17 +179,17 @@
                   <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
                   <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
                 </div>
-              </th>
-              <th style="padding-left: 1rem;">
+              </td>
+              <td style="padding-left: 1rem;">
                 <!-- <label class="form-control formBtn"> -->
                 <el-tooltip content="Modifier" placement="top">
                   <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
-                </el-tooltip>&nbsp;
-                <el-tooltip content="Supprimer" placement="top">
-                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
                 </el-tooltip>
+                <!-- <el-tooltip content="Supprimer" placement="top">
+                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+                </el-tooltip> -->
                 <!-- </label> -->
-              </th>
+              </td>
               <!-- </div> -->
             </tr>
           </tbody>
@@ -541,13 +541,21 @@ export default {
   max-width: 10rem;
   width: 10rem;
   height: auto;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  border-right: 0px !important;
+  /* border-left: 0px !important; */
 }
 .formCheckbox {
-  width: 2.65rem;
+  width: 2.75rem;
   padding: 0.1rem;
-  border: 0px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  border-right: 0px !important;
+  /* border-left: 0px !important; */
+  border: 2px black solid;
   /* height: auto; */
 }
 .formDesc {
@@ -557,40 +565,46 @@ export default {
   word-break: break-all;
   height: auto;
   text-align: left;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  /* border-right: 0px !important; */
+  border-left: 0px !important;
 }
 .formBtn {
   max-width: 15rem;
   width: 15rem;
   height: auto;
+  border-top: 0px !important;
+  border-bottom: 0px !important;
+  border-right: 0px !important;
+  border-left: 0px !important;
 }
 .formDate {
   max-width: 6rem;
   width: 6rem;
   height: auto;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  border-right: 0px !important;
+  border-left: 0px !important;
 }
 .formFirstName {
   max-width: 10rem;
   width: 10rem;
   /* word-break: break-all; */
   height: auto;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important;  */
+  border-right: 0px !important;
+  border-left: 0px !important;
 }
 
-.formDate,
-.formDesc,
-.formFirstName,
-.formName {
-  /* border: 1px solid rgb(50,50,50) !important; */
-  border-top: 0px !important;
-  border-bottom: 0px !important;
-  border-right: 0px !important;
-}
 tr > td {
   padding-bottom: 1;
 }
 
 .tableTask {
-  min-width: 60rem;
-  max-width: 80rem;
+  width: 100%;
 }
 .formfalse {
   background-color: #fd4d5f;
