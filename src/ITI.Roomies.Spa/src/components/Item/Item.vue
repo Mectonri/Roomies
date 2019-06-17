@@ -1,42 +1,86 @@
 <template>
-  <div class="">
-      <header>
-        <h1>Objet dans le liste {{courseName}}</h1>
-      </header>
+  <div id="app">
+    <header>
+      <h2>Objet dans la liste {{courseName}}</h2>
+    </header>
     <br>
+    <table>
+      <tr>
+        <td align="left">
+    <main class="card mainCard cardCurrentItem">
+      <table class="table table-dark">
+        <div v-if="itemList == 0">
+          <tr>
+            <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
+          </tr>
+        </div>
 
-    <table class="table table-dark">
-      <div v-if="itemList == 0">
-        <tr>
-          <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
-        </tr>
-      </div>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Owner</th>
+            <th>Options</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="i of itemList" :key="i.itemId">
+            <td>{{i.itemName}}</td>
+            <td>{{i.itemPrice}}</td>
+            <td>{{i.roomieId}}</td>
+            <td>
+              <button
+                class="btn btn-dark"
+                @click="clickRoute('/course/info/'+ courseId + '/item/edit/' + i.itemId)"
+              >edit</button>
+            </td>
+            <td>
+              <button class="btn btn-dark" @click="deleteItem(i.itemId)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    </td>
+    <td align="right">
+    <main class="card mainCard cardItemToAdd">
+      <table class="table table-dark">
+        <div v-if="itemList == 0">
+          <tr>
+            <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
+          </tr>
+        </div>
 
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Owner</th>
-          <th>Options</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="i of itemList" :key="i.itemId">
-          <td>{{i.itemName}}</td>
-          <td>{{i.itemPrice}}</td>
-          <td>{{i.roomieId}}</td>
-          <td>
-            <button
-              class="btn btn-dark"
-              @click="clickRoute('/course/info/'+ courseId + '/item/edit/' + i.itemId)"
-            >edit</button>
-          </td>
-          <td>
-            <button class="btn btn-dark" @click="deleteItem(i.itemId)">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Owner</th>
+            <th>Options</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="i of itemList" :key="i.itemId">
+            <td>{{i.itemName}}</td>
+            <td>{{i.itemPrice}}</td>
+            <td>{{i.roomieId}}</td>
+            <td>
+              <button
+                class="btn btn-dark"
+                @click="clickRoute('/course/info/'+ courseId + '/item/edit/' + i.itemId)"
+              >edit</button>
+            </td>
+            <td>
+              <button class="btn btn-dark" @click="deleteItem(i.itemId)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    </td>
+      </tr>
     </table>
     <br>
     <div>
@@ -98,3 +142,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.cardCurrentItem{
+max-width: 90%;
+min-height: 20rem;
+flex: left;
+}
+.cardItemToAdd{
+max-width: 90%;
+min-height: 20rem;
+}
+</style>

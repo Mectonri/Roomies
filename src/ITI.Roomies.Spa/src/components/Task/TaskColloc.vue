@@ -244,7 +244,7 @@
             <br>
             <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
               <td>
-                <input type="checkbox" :id="'roomie' + roomie.roomieId" checked>
+                <input type="checkbox" :id="'roomie' + roomie.roomieId">
                 &nbsp;
                 {{ roomie.firstName }} {{ roomie.lastName }}
               </td>

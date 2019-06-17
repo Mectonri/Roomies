@@ -5,16 +5,6 @@
     </header>
     <main style="padding-top: 2rem;" class="card mainCard">
       <table class="tableTask">
-        <!-- <thead>
-          <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Options</th>
-            <th></th>
-          </tr>
-        </thead>-->
-
         <tbody>
           <tr v-if="groceryList.length == 0 ">
             <td>Il n'y a pas de liste de courses</td>
@@ -22,25 +12,28 @@
 
           <tr v-else v-for="g of groceryList" :key="g.courseId">
             <td>
-              <router-link :to="`course/info/${g.courseId}`" onmouseover="style='text-decoration:none'">
-              <div class="input-group">
-                <label class="form-control formName">{{ g.courseName }}</label>
-                <label class="form-control formDate">{{ g.courseDate}}</label>
-                <label class="form-control formPrice">{{ g.coursePrice}} €</label>
-              </div>
+                <!-- <div class="input-group"> -->
+              <router-link
+                class="input-group"
+                :to="`course/info/${g.courseId}`"
+                onmouseover="style='text-decoration:none'"
+              >
+                  <label class="form-control formName">{{ g.courseName }}</label>
+                  <label class="form-control formDate">{{ g.courseDate}}</label>
+                  <label class="form-control formPrice">{{ g.coursePrice}} €</label>
+                <!-- </div> -->
               </router-link>
             </td>
-            <!-- <td>
-              <router-link :to="`course/info/${g.courseId}`">
-                <button class="btn btn-dark">info</button>
-              </router-link>
-            </td> -->
             <td>
-              <router-link :to="`course/edit/${g.courseId}`" onmouseover="style='text-decoration:none'">
-                <button class="btn btn-dark">edit</button>
-                &nbsp;
-              </router-link>
-              <button class="btn btn-dark" @click="deleteList(g.courseId)"> X </button>
+              <router-link
+                :to="`course/edit/${g.courseId}`"
+                onmouseover="style='text-decoration:none'"
+              >
+                <el-tooltip content="Modifier" placement="top">
+                  <button class="btn btn-dark">⚙</button>
+                </el-tooltip>
+              </router-link>&nbsp;
+              <button class="btn btn-dark" @click="deleteList(g.courseId)">X</button>
             </td>
           </tr>
         </tbody>
@@ -72,8 +65,9 @@
             </td>
             <td>
               <router-link :to="`course/edit/${t.courseTempId}`">
-                <button class="btn btn-dark">edit</button>
-                &nbsp;
+                <el-tooltip content="Modifier" placement="top">
+                  <button class="btn btn-dark">⚙</button>
+                </el-tooltip>
               </router-link>
               <button class="btn btn-dark" @click="deleteTemp(t.courseTempId)">Supprimer</button>
             </td>
@@ -118,12 +112,16 @@ export default {
       try {
         this.groceryList = await getAllListsAsync(this.$currColloc.collocId);
         console.log(this.groceryList);
-        if(this.groceryList.length != 0){
-          for(var grocery in this.groceryList){
-            this.groceryList[grocery].courseDate = this.dateToFrDisplay(this.sqlToJsDate(this.groceryList[grocery].courseDate));
+        if (this.groceryList.length != 0) {
+          for (var grocery in this.groceryList) {
+            this.groceryList[grocery].courseDate = this.dateToFrDisplay(
+              this.sqlToJsDate(this.groceryList[grocery].courseDate)
+            );
           }
         }
-        this.templateList = await getAllTemplatesAsync(this.$currColloc.collocId);
+        this.templateList = await getAllTemplatesAsync(
+          this.$currColloc.collocId
+        );
         console.log(this.templateList);
       } catch (e) {
         console.log(e);
@@ -184,7 +182,15 @@ export default {
         laDate.getDate().toString().length == 1
           ? "0" + laDate.getDate().toString()
           : laDate.getDate();
-      let listeDay = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+      let listeDay = [
+        "Lundi",
+        "Mardi",
+        "Mercredi",
+        "Jeudi",
+        "Vendredi",
+        "Samedi",
+        "Dimanche"
+      ];
       dayToDisplay = listeDay[laDate.getDay()] + " " + dayToDisplay;
       // let monthToDisplay = laDate.getMonth() + 1;
       // monthToDisplay =
@@ -201,9 +207,7 @@ export default {
       //     ? "0" + laDate.getMinutes().toString()
       //     : laDate.getMinutes();
       return (
-        dayToDisplay +
-        " " +
-        monthToDisplay
+        dayToDisplay + " " + monthToDisplay
         // + " " +
         // hourToDisplay +
         // "h" +
@@ -217,6 +221,7 @@ export default {
 <style scoped>
 .input-group {
   text-align: center;
+  width: 34rem;
 }
 .formName {
   max-width: 10rem;

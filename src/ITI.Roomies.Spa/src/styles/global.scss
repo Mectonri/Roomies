@@ -21,9 +21,17 @@ body, #app, content *{
 }
 
 body{
-    color: rgb(0,0,0);
     font-weight: 500;
 }
+
+
+body{
+  color: rgb(0,0,0);
+}
+
+a:link, a:visited, a:hover, a:active {
+  color:#495057 !important;
+}  
 
 .form-control{
     max-width: 15rem;
