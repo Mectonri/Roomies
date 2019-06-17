@@ -4,7 +4,7 @@ namespace ITI.Roomies.DAL
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public string Icon { get; set; }
+        public string IconName { get; set; }
         public int CollocId { get; set; }
 
     }

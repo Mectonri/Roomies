@@ -11,6 +11,10 @@
       </Content>
   </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="Scripts\*.sql" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+    </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="dbup-sqlserver" Version="4.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />

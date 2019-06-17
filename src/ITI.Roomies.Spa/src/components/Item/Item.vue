@@ -73,7 +73,7 @@ export default {
     async refreshList() {
       try {
         this.itemList = await getItemListAsync(this.courseId);
-        console.log(this.itemList);
+
         this.tooMuchData = await getGroceryListByIdAsync(this.courseId);
         this.courseName = this.tooMuchData.courseName;
       } catch (e) {
@@ -98,3 +98,4 @@ export default {
   }
 };
 </script>
+

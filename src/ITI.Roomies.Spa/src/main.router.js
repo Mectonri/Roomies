@@ -34,10 +34,13 @@ import RItemCreate from './components/Item/RItem.vue'
 import Spendings from './components/Spendings/Spendings.vue'
 import Category from './components/Spendings/CategoryCreateEdit.vue'
 
-import Budget from './components/Spendings/Budget.vue'
+import Budget from './components/Spendings/Transaction/BudgetCreate.vue'
 import TransactionBudget from "./components/Spendings/Transaction/TransactionBudget.vue"
 
+import CategoryList from './components/Spendings/CategoryList.vue'
+
 import Chart from "./components/Spendings/Transaction/Chart.vue";
+import CategoryCreateEdit from './components/Spendings/CategoryCreateEdit.vue';
 
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
@@ -83,9 +86,11 @@ const routes = [
 
     { path: '/spendings', component: Spendings, beforeEnter: requireAuth},
     { path: '/Roomies/category', component: Category, beforeEnter: requireAuth},
-    { path: '/Roomies/budget', component: Budget, beforeEnter: requireAuth},
+    { path: '/budget/:mode([create|edit]+)/:id?', component: Budget, beforeEnter: requireAuth},
     { path: '/Roomies/transaction', component: TransactionBudget, before: requireAuth},
 
+    { path: '/categoryList', component: CategoryList, beforeEnter: requireAuth },
+    { path: '/category/:mode([create|edit]+)/:id?', component: CategoryCreateEdit, beforeEnter: requireAuth },
 
 ];
 

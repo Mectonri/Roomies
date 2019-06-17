@@ -60,7 +60,6 @@ namespace ITI.Roomies.DAL.Tests
             Assert.That( budget.Content.Date2, Is.EqualTo( date2 ) );
             Assert.That( budget.Content.Amount, Is.EqualTo( amount) );
             Assert.That( budget.Content.CategoryId, Is.EqualTo( categoryId ) );
-            Assert.That( budget.Content.CollocId, Is.EqualTo( collocId) );
         }
     }
 }

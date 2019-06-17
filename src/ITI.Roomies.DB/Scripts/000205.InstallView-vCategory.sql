@@ -2,7 +2,7 @@ create view rm.vCategory
 as
 	select
 		CategoryId = c.CategoryId,
-		 Icon = c.IconName,
+		 IconName = c.IconName,
 		CategoryName = c.CategoryName,
 		CollocId = c.CollocId,
 		BudgetId = b.BudgetId,

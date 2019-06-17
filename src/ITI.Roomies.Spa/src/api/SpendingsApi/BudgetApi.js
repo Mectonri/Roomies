@@ -9,6 +9,9 @@ export async function getBudgetAsync (budgetId) {
 export async function getAllBudgetAsync(collocId) {
   return await getAsync(`${endpoint}/getBudgets/${collocId}`);
 }
+export async function getAllBudgetOfCategoryAsync(categoryId) {
+  return await getAsync(`${endpoint}/getBudgetsOfCategory/${categoryId}`);
+}
 
 export async function createBudgetAsync(model) {
   return await postAsync(`${endpoint}/add`, model);

@@ -5,7 +5,9 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Dapper;
+using Itenso.TimePeriod;
 using ITI.Roomies.DAL.Spendings;
+
 
 namespace ITI.Roomies.DAL
 {
@@ -13,12 +15,13 @@ namespace ITI.Roomies.DAL
     {
         readonly string _connectionString;
 
-        public BudgetGateway( string connectionString)
+
+        public BudgetGateway( string connectionString )
         {
             _connectionString = connectionString;
         }
 
-        public async Task<Result<BudgetData>> FindBudgetById( int budgetId)
+        public async Task<Result<BudgetData>> FindBudgetById( int budgetId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -53,28 +56,39 @@ namespace ITI.Roomies.DAL
         public async Task<IEnumerable<BudgetCatData>> GetDailyBudget( int collocId, DateTime day )
         {
             //IEnumerable<BudgetCatData> allBudget = await this.GetAllChartDataByCollocId( collocId );
-            List<BudgetCatData> dailyBudget = new List<BudgetCatData>() ;
+            List<BudgetCatData> dailyBudget = new List<BudgetCatData>();
             IEnumerable<BudgetCatData> allBudget = await this.GetChartDataByTime( collocId, day );
 
-                foreach( BudgetCatData data in allBudget )
+            foreach( BudgetCatData data in allBudget )
+            {
+                //if( data.Date1 < day && data.Date2 < day )
                 {
-                    //if( data.Date1 < day && data.Date2 < day )
-                    {
-                        if( data.Amount > 0 )
-                            data.Amount = data.Amount / (int)((data.Date2 - data.Date1).TotalDays);
-                        dailyBudget.Add( data );
-                    }
+                    if( data.Amount > 0 )
+                        data.Amount = data.Amount / (int)((data.Date2 - data.Date1).TotalDays);
+                    dailyBudget.Add( data );
                 }
-                return dailyBudget;
+            }
+            return dailyBudget;
         }
 
-        public async Task<IEnumerable<BudgetData>> GetAll( int collocId)
+        public async Task<IEnumerable<BudgetData>> GetAll( int collocId )
         {
-            using( SqlConnection con = new SqlConnection(_connectionString) )
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 return await con.QueryAsync<BudgetData>(
                     @"select * from rm.tBudget where CollocId = @CollocId",
                     new { CollocId = collocId } );
+            }
+        }
+
+        public async Task<IEnumerable<BudgetData>> GetAllBudgetOfCategory( int categoryId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                return await con.QueryAsync<BudgetData>(
+                    @"select * from rm.vCategoryBudget where CategoryId = @CategoryId",
+                    new { CategoryId = categoryId } );
+
             }
         }
 
@@ -83,24 +97,35 @@ namespace ITI.Roomies.DAL
             throw new NotImplementedException();
         }
 
-        public async Task<Result<int>> CreateBudget( int categoryId, DateTime date1, DateTime date2, int amount, int collocId )
+        public async Task<Result<int>> CreateBudget( int categoryId, DateTime date1, DateTime date2, int amount )
         {
-            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            TimeRange t = new TimeRange( date1, date2 );
+            IEnumerable<BudgetData> budgets = await this.GetAllBudgetOfCategory( categoryId );
+            foreach( BudgetData budget in budgets )
             {
-                var p = new DynamicParameters();
-                p.Add( "@CategoryId", categoryId );
-                p.Add( "@Date1", date1 );
-                p.Add( "@Date2", date2 );
-                p.Add( "@Amount", amount );
-                p.Add( "@collocId", collocId);
-                p.Add( "@BudgetId", dbType: DbType.Int32, direction: ParameterDirection.Output );
-                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-                await con.ExecuteAsync( "rm.sBudgetCreate", p, commandType: CommandType.StoredProcedure );
+                TimeRange t1 = new TimeRange( budget.Date1, budget.Date2 );
 
-                int status = p.Get<int>( "@Status" );
-                Debug.Assert( status == 0 );
-                return Result.Success( Status.Created, p.Get<int>( "@BudgetId" ) );
+                if( !t1.OverlapsWith( t ) )
+                {
+                    using( SqlConnection con = new SqlConnection( _connectionString ) )
+                    {
+                        var p = new DynamicParameters();
+                        p.Add( "@CategoryId", categoryId );
+                        p.Add( "@Date1", date1 );
+                        p.Add( "@Date2", date2 );
+                        p.Add( "@Amount", amount );
+                        p.Add( "@BudgetId", dbType: DbType.Int32, direction: ParameterDirection.Output );
+                        p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                        await con.ExecuteAsync( "rm.sBudgetCreate", p, commandType: CommandType.StoredProcedure );
+
+                        int status = p.Get<int>( "@Status" );
+                        Debug.Assert( status == 0 );
+                        return Result.Success( Status.Created, p.Get<int>( "@BudgetId" ) );
+                    }
+                }
+
             }
+            return Result.Success( Status.BadRequest, 0 );
         }
 
         public async Task<BudgetData> FindBudgetByCollocIdAndDate( int collocId, DateTime date )
@@ -135,17 +160,17 @@ namespace ITI.Roomies.DAL
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
                 var p = new DynamicParameters();
-                p.Add( "@BudgetId", budgetId);
+                p.Add( "@BudgetId", budgetId );
                 p.Add( "@CategoryId", categoryId );
                 p.Add( "@Date1", date1 );
                 p.Add( "@Date2", date2 );
                 p.Add( "@Amount", amount );
-                p.Add( "@CollocId", collocId);
+                p.Add( "@CollocId", collocId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sBudgetUpdate", p, commandType: CommandType.StoredProcedure );
 
                 int status = p.Get<int>( "@Status" );
-                if( status == 1 ) return Result.Failure( Status.NotFound, "Budeget not found." );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Budget not found." );
 
                 Debug.Assert( status == 0 );
                 return Result.Success();

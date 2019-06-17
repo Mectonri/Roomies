@@ -1,50 +1,7 @@
 <template>
-  <div >
-    <div>
-      <H1>Attribuer un budget à la categorie</H1>
-    </div>
+  <div>
 
-    <div>
-      <form @submit="onSubmit($event)">
-        <div class="alert alert-alert" v-if="errors.length > 0">
-          <b>Les champs suivants semblent invalides:</b>
-          <ul>
-            <li v-for="e of errors" :key="e">{{e}}</li>
-          </ul>
-        </div>
-
-        <label for="amount" class="required">Amount</label>
-        <br>
-        <input type="text" name="amount" v-model="budget.amount" required>
-        <!-- <div>
-          <label for="date1" class="required">Debut</label>
-          <br>
-          <input type="date" v-model="budget.date1" required>
-        </div>
-        <div>
-          <label for="date2" class="required">Fin</label>
-          <br>
-          <input type="date" v-model="budget.date2" required>
-        </div>-->
-        <div class="block">
-          <span class="demonstration">choisissez une date</span>
-          <el-date-picker v-model="budget.date1" type="date" placeholder="Date de debut"></el-date-picker>
-          <el-date-picker v-model="budget.date2" type="date" placeholder="Date de fin"></el-date-picker>
-        </div>
-        <br>
-        <div>
-          <el-select v-model="budget.categoryId" placeholder="Select the category">
-            <el-option
-              v-for="category in categories"
-              :key="category.categoryName"
-              :label="category.categoryName"
-              :value="category.categoryId"
-            ></el-option>
-          </el-select>
-        </div>
-      </form>
-      <el-button type="primary" round @click="onSubmit">Sauvegarder</el-button>
-    </div>
+    
   </div>
 </template>
 
@@ -64,9 +21,9 @@ export default {
       errors: [],
       state: true,
       idIsUndefined: true,
-      bugets: null,
+      bugetsList: [],
       budget: {},
-      categories: null
+      categoriesList: [],
     };
   },
 
@@ -81,13 +38,12 @@ export default {
   async mounted() {
     this.collocId = this.$currColloc.collocId;
     this.categories = await getCategoriesAsync(this.collocId);
-    //this.budgets = await getAllBudgetAsync(this.collocId);
   },
 
   methods: {
     async onSubmit() {
       event.preventDefault();
-      console.log(this.budget.categoryiId);
+      console.log(this.budget.categoryId);
 
       var errors = [];
       if (!this.budget.amount) errors.push("Amount");

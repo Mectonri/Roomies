@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace ITI.Roomies.WebApp.Controllers
 {
     [Route( "api/[controller]" )]
@@ -19,14 +20,14 @@ namespace ITI.Roomies.WebApp.Controllers
             _categoryGateway = categoryGateway;
         }
 
-       [HttpGet("GetCategories/{collocId}")]
+       [HttpGet("getCategories/{collocId}")]
        public async Task<IActionResult> GetCategories(int collocId)
        {
             IEnumerable<CategoryData> result = await _categoryGateway.GetAll( collocId );
             return Ok( result );
        }
 
-        [HttpGet("GetCategory/{categoryId}", Name="GetCategory")]
+        [HttpGet("getCategory/{categoryId}", Name="GetCategory")]
         public async Task<IActionResult> GetGategory(int categoryId)
         {
             Result<CategoryData> result = await _categoryGateway.FindCategoryId( categoryId );
@@ -52,10 +53,10 @@ namespace ITI.Roomies.WebApp.Controllers
             } );
         }
 
-        [HttpPut( "{categoryId}")]
-        public async Task<IActionResult> UpdateCategory(int categoryId, [FromBody] CategoryViewModel model)
+        [HttpPut( "{category}")]
+        public async Task<IActionResult> UpdateCategory([FromBody] CategoryViewModel model)
         {
-            Result result = await _categoryGateway.UpdateCategory( categoryId, model.CategoryName, model.IconName, model.CollocId );
+            Result result = await _categoryGateway.UpdateCategory( model.CategoryId, model.CategoryName, model.IconName, model.CollocId );
             return this.CreateResult( result );
         }
 

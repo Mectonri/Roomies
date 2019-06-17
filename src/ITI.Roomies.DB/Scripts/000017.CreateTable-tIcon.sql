@@ -6,7 +6,7 @@ create table rm.tIcon
 constraint PK_rm_tIcon primary key (IconId),
 constraint UK_rm_tIcon_IconName unique(IconName),
 );
-insert into rm.tIcon(IconName) values (N'');
+
 insert into rm.tIcon(IconName) values ('Icon0');
 insert into rm.tIcon(IconName) values ('Icon1');
 insert into rm.tIcon(IconName) values ('Icon2');
@@ -27,7 +27,7 @@ insert into rm.tIcon(IconName) values ('Icon16');
 insert into rm.tIcon(IconName) values ('Icon17');
 insert into rm.tIcon(IconName) values ('Icon18');
 insert into rm.tIcon(IconName) values ('Icon19');
-insert into rm.tIcon(IconName) values ('Icon20');
+
 
 
 

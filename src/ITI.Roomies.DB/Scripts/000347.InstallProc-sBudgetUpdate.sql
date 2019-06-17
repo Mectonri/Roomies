@@ -4,7 +4,6 @@ create proc rm.sBudgetUpdate
 	@CategoryId int,
 	@Date1 datetime2,
 	@Date2 datetime2,
-	@CollocId int,
 	@Amount int
 )
 as 
@@ -22,7 +21,6 @@ begin
 		and b.CategoryId = @CategoryId
 		and b.Date1 = @Date1
 		and b.Date2 = @Date2
-		and b.CollocId = @CollocId
 		and b.Amount = @Amount)
 	begin
 		rollback;
@@ -33,7 +31,6 @@ begin
 	set CategoryId = @CategoryId,
 		Date1 = @Date1,
 		Date2 = @Date2,
-		CollocId = @CollocId,
 		Amount = @Amount
 	where BudgetId = @BudgetId;
 

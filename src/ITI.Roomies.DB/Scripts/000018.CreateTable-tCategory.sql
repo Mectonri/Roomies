@@ -11,4 +11,4 @@ create table rm.tCategory
 );
 
 insert into rm.tCategory( CategoryName, IconName, CollocId) 
-				 values ( N'', N'', 0);
+				 values ( N'', 'Icon0', 0);

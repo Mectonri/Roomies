@@ -1,3 +1,4 @@
+using Itenso.TimePeriod;
 using ITI.Roomies.DAL;
 using ITI.Roomies.DAL.Spendings;
 using ITI.Roomies.WebApp.Authentication;
@@ -28,6 +29,7 @@ namespace ITI.Roomies.WebApp.Controllers
             IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll(collocId);
             return Ok(budgetDatas);
         }
+  
 
         [HttpGet("getAllBudgetCatData/{collocId}")]
         public async Task<IActionResult> GetAllBudgetCat(int collocId)
@@ -68,12 +70,19 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
         }
 
+        [HttpGet( "getBudgetsOfCategory/{categoryId}" )]
+        public async Task<IActionResult> GetBudgetsOfCategory ( int categoryId)
+        {
+            IEnumerable<BudgetData> budgets = await _budgetGateway.GetAllBudgetOfCategory(categoryId);
+            return Ok( budgets );
+        }
+
         [HttpPost("add")]
         public async Task<IActionResult> AddBudget( [FromBody] BudgetViewModel model)
         {
-            //int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier).Value );
             
-            Result<int> result = await _budgetGateway.CreateBudget( model.CategoryId, model.Date1, model.Date2, model.Amount, model.CollocId );
+            Result<int> result = await _budgetGateway.CreateBudget( model.CategoryId, model.Date1, model.Date2, model.Amount);
+            
             return this.CreateResult( result, o =>
             {
                 o.RouteName = "GetBudget";
