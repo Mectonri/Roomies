@@ -199,6 +199,22 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<Result> UpdateItemBought( int itemId, bool itemBought )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@ItemId", itemId );
+                p.Add( "@ItemBought", itemBought );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sUpdateItemBought", p, commandType: CommandType.StoredProcedure );
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Item not found." );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok );
+            }
+        }
+
         bool IsNameValid( string name ) => !string.IsNullOrWhiteSpace( name );
     }
 }

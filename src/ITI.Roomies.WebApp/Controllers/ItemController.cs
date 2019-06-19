@@ -93,5 +93,13 @@ namespace ITI.Roomies.WebApp.Controllers
             Result result = await _itemGateway.UpdateRItem( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, model.CollocId );
             return this.CreateResult( result );
         }
+
+        // Met à jour l'état de l'item renseignée
+        [HttpPost( "updateItemBought/{id}/{bought}" )]
+        public async Task<IActionResult> updateItemBoughtAsync( int id, bool bought )
+        {
+            Result result = await _itemGateway.UpdateItemBought( id, bought );
+            return this.Ok( result );
+        }
     }
 }

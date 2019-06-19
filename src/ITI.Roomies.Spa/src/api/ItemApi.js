@@ -37,3 +37,7 @@ export async function deleteItemAsync(itemId){
 export async function deleteRItemAsync(rItemId) {
   return await deleteAsync(`${endpoint}/deleteRItem/${rItemId}`);
 }
+
+export async function UpdateItemBoughtAsync(itemId, bought) {
+  return await postAsync(`${endpoint}/updateItemBought/${itemId}/${bought}`);
+}

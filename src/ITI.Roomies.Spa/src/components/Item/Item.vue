@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <h2>Objet dans la liste {{courseName}}</h2>
+      <h2>Objet dans {{courseName}}</h2>
     </header>
     <br>
     <table>
@@ -11,7 +11,7 @@
       <table class="table table-dark">
         <div v-if="itemList == 0">
           <tr>
-            <td>Il n'y as pas d'item dans la liste {{courseName}}</td>
+            <td>Il n'y as pas d'item dans {{courseName}}</td>
           </tr>
         </div>
 
@@ -19,6 +19,7 @@
           <tr>
             <th>Name</th>
             <th>Price</th>
+            <th>Quantite</th>
             <th>Owner</th>
             <th>Options</th>
             <th></th>
@@ -28,6 +29,7 @@
           <tr v-for="i of itemList" :key="i.itemId">
             <td>{{i.itemName}}</td>
             <td>{{i.itemPrice}}</td>
+            <td>{{i.itemQuantite}}</td>
             <td>{{i.roomieId}}</td>
             <td>
               <button
@@ -54,8 +56,10 @@
 
         <thead>
           <tr>
+            <th>Acheté ?</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Nb</th>
             <th>Owner</th>
             <th>Options</th>
             <th></th>
@@ -63,8 +67,10 @@
         </thead>
         <tbody>
           <tr v-for="i of itemList" :key="i.itemId">
+            <td><button class="btn btn-dark" @click="updateBought(i.itemId, !i.itemBought)">✓</button></td>
             <td>{{i.itemName}}</td>
             <td>{{i.itemPrice}}</td>
+            <td>{{i.itemQuantite}}</td>
             <td>{{i.roomieId}}</td>
             <td>
               <button
@@ -93,7 +99,7 @@
 </template>
 
 <script>
-import { getItemListAsync, deleteItemAsync } from "../../api/ItemApi";
+import { getItemListAsync, deleteItemAsync, UpdateItemBoughtAsync } from "../../api/ItemApi";
 import { getGroceryListByIdAsync } from "../../api/GroceriesApi";
 import { getRoomieByIdAsync } from "../../api/RoomiesApi.js";
 
@@ -123,6 +129,11 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+
+    async updateBought(itemIdToUpdate, newBoughtState) {
+      await UpdateItemBoughtAsync(itemIdToUpdate, newBoughtState);
+      this.refreshList();
     },
 
     async deleteItem(itemId) {

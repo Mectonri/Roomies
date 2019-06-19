@@ -1,12 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
 
-    <ItemGroup>
-        <EmbeddedResource Include="Scripts\000001.CreateSchema-rm.sql" />
+    <!--<ItemGroup>-->
+        <!--<EmbeddedResource Include="Scripts\000001.CreateSchema-rm.sql" />
         <EmbeddedResource Include="Scripts\000002.CreateTable-tColloc.sql" />
         <EmbeddedResource Include="Scripts\000003.CreateTable-tRoomie.sql" />
         <EmbeddedResource Include="Scripts\000004.CreateTable-tTask.sql" />
@@ -86,7 +86,11 @@
         <EmbeddedResource Include="Scripts\000344.InstallProc-sCourseCreate.sql" />
         <EmbeddedResource Include="Scripts\000346.InstallProc-sTaskRoomDeleteByTaskId.sql" />
         <EmbeddedResource Include="Scripts\000347.InstallProc-sBudgetUpdate.sql" />
-    </ItemGroup>
+    </ItemGroup>-->
+
+        <ItemGroup>
+            <EmbeddedResource Include="Scripts\*.sql" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
+        </ItemGroup>
 
   <ItemGroup>
       <Content Include="appsettings.json">
