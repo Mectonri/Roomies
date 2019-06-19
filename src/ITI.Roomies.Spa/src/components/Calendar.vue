@@ -1,30 +1,44 @@
 <template>
   <div class="mainContainer">
-    <v-calendar is-dark is-expanded :rows="3" :columns="4" title-position="left" :attributes='attrs' year=2019>       
-    </v-calendar>
+    <FullCalendar  :plugins="DayPlugin"/>
   </div>
 </template>
 
 
 <script>
 import Vue from "vue";
-import VCalendar from "v-calendar";
 import {getTasksByCollocIdAsync} from "../api/TaskApi";
 import TaskCollocVue from './Task/TaskColloc.vue';
 
-Vue.use(VCalendar, {
-  componentPrefix: "v",
-});
+import VFullcalendar from 'v-fullcalendar';
+import FullCalendar from "@fullcalendar/vue"
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import bootstrapPlugin from '@fullcalendar/bootstrap';
+
+Vue.component('FullCalendar', FullCalendar)
+
 
 export default {
+  
   data() {
     return {
       eventData:{ bar:true, popover:{label:'',},dates:'',},
       TaskData:[],
-      attrs:[]
+      attrs:[],
+      DayPlugin: [dayGridPlugin],
+      config: {
+      plugins: [interactionPlugin, dayGridPlugin, bootstrapPlugin ],
+      themeSystem: 'bootstrap',
+      defaultDate: "2019-06-18",
+      editable: true,
+      eventLimit: true // allow "more" link when too many events
+    },
+    events: []
     };
-  },
+  },    
   methods:{
+    
     CreateCalendarEvents(TaskData){
 
     },
@@ -62,3 +76,7 @@ export default {
 }
 
 </script>
+<style lang="scss">
+@import"~@fullcalendar/core/main.css";
+@import"~@fullcalendar/daygrid/main.css";
+  </style>

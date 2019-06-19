@@ -226,17 +226,7 @@ export default {
   /* border-left: 1px !important; */
   cursor: pointer;
 }
-/* .formDesc {
-  max-width: 30rem;
-  width: 30rem;
-  overflow: hidden;
-  word-break: break-all;
-  height: auto;
-  text-align: left;
-  border-right: 0px !important;
-  border-left: 0px !important;
-  cursor: pointer;
-} */
+
 .formBtn {
   max-width: 15rem;
   width: 15rem;

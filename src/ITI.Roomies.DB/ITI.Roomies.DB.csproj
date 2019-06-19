@@ -18,13 +18,11 @@
         <EmbeddedResource Include="Scripts\000011.CreateTable-tGoogleRoomie.sql" />
         <EmbeddedResource Include="Scripts\000012.CreateTable-tPasswordRoomie.sql" />
         <EmbeddedResource Include="Scripts\000013.CreateTable-tCourseTemp.sql" />
-        <EmbeddedResource Include="Scripts\000016.CreateTable-tInvitation.sql" />
         <EmbeddedResource Include="Scripts\000017.CreateTable-tIcon.sql" />
         <EmbeddedResource Include="Scripts\000018.CreateTable-tCategory.sql" />
         <EmbeddedResource Include="Scripts\000019.CreateTable.tBudget.sql" />
         <EmbeddedResource Include="Scripts\000020.CreateTable-tTransacBudget.sql" />
         <EmbeddedResource Include="Scripts\000021.CreateTable-tTransacDepense.sql" />
-        <EmbeddedResource Include="Scripts\000047.InstallProc-sInvitation.sql" />
         <EmbeddedResource Include="Scripts\000056.CreateTable-tRItem.sql" />
         <EmbeddedResource Include="Scripts\000056.InstallProc-sDeleteColloc.sql" />
         <EmbeddedResource Include="Scripts\000057.InstallProc-sCollocNewAdmin.sql" />

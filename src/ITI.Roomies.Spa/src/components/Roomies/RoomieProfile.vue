@@ -172,19 +172,6 @@ export default {
 };
 </script>
 <style scoped>
-/* .centerBox {
-  margin: auto;
-  border-radius: 15px;
-  background-color: aliceblue;
-  text-align: center;
-}
-.profilePicture  {
-  vertical-align: middle;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
- 
-  border-radius: 50%;
-} */
+
 </style>
 

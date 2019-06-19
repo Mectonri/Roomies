@@ -16,16 +16,7 @@
         <label for="amount" class="required">Amount</label>
         <br>
         <input type="text" name="amount" v-model="budget.amount" required>
-        <!-- <div>
-          <label for="date1" class="required">Debut</label>
-          <br>
-          <input type="date" v-model="budget.date1" required>
-        </div>
-        <div>
-          <label for="date2" class="required">Fin</label>
-          <br>
-          <input type="date" v-model="budget.date2" required>
-        </div>-->
+
         <div class="block">
           <span class="demonstration">choisissez une date</span>
           <el-date-picker v-model="budget.date1" type="date" placeholder="Date de debut"></el-date-picker>

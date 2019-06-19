@@ -149,24 +149,14 @@
       </div>
     </template>
 
-    <!-- <template v-else>
-      <main v-if="state == true " role="main" style="padding-left: 236px;">
-        <loading />
-      </main>
-      <main v-else>
-        <router-view id="pageContent" class="child" style="padding-left: 236px;"></router-view>
-      </main>
-    </template>-->
+
     <!-- Le footer -->
     <footer id="footer" class="font-small mdb-color lighten-3">
       <div class="container">
         <br>
         <language/>
       </div>
-      <!-- <div class="footer-copyright text-center">
-        © 2019 Copyright:
-        <a href>Roomie.com</a>
-      </div>-->
+
     </footer>
   </div>
 </template>
@@ -227,10 +217,7 @@ export default {
           this.$currColloc.setCollocName(collocData.collocName);
           this.$setMenuItemDisabled.setDisableState(false);
         }
-        //} else {
-        // document.getElementById("navMenu").style.display = "none";
-        // this.$router.replace("/checkRoomie");
-        // }
+
       }
     } catch (e) {
       console.log(e);
@@ -261,10 +248,8 @@ export default {
     expand_collapse() {
       if (this.isCollapse) {
         this.isCollapse = false;
-        // document.getElementById("pageContent").style.paddingLeft = "12.5rem";
       } else {
         this.isCollapse = true;
-        // document.getElementById("pageContent").style.paddingLeft = "5rem";
       }
     }
   }
@@ -312,7 +297,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 8.5rem; /* Footer height */
-  // padding-top: 2.5rem;
+
   top: 2.5rem;
   padding-left: 12rem;
 }

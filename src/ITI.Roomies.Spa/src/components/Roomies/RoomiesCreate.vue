@@ -86,9 +86,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .container {
-//   margin-left: 0;
-//   // margin-left: 0;
-//   margin-right: 0;
-// }
+
 </style>

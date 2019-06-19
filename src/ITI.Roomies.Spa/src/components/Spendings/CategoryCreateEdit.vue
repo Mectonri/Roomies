@@ -1,12 +1,6 @@
 <template>
   <div >
-    <!-- <main v-if="idIsUndefined == false">
-      <header v-if="route == 'create'">
-        <h2>Créer une categori</h2>
-      </header>
-      <header v-if="route == 'edit'">
-        <h2>Modifier la categori</h2>
-    </header>-->
+
     <header>
       <h3>Créer une catégorie</h3>
     </header>
