@@ -23,8 +23,13 @@
         </div>
 
         <div>
-          <label class="required">Prix</label>
-          <input class="form-control" type="number" v-model="item.itemPrice" required>
+          <label>Prix</label>
+          <input class="form-control" type="number" v-model="item.itemPrice">
+        </div>
+
+        <div>
+          <label>Nombre</label>
+          <input class="form-control" type="text" v-model="item.itemQuantite">
         </div>
 
         <!-- /!\ TO DO : faire tune liste deffilantes avex le nom des liste/!\-->
@@ -121,7 +126,12 @@ export default {
 
       if (!this.item.itemName) errors.push("Nom");
       if (!this.item.itemPrice) errors.push("Prix");
-      if (!this.item.isRepeated) errors.push("isRepeated");
+
+      console.log(this.item.isRepeated);
+
+      // if (!this.item.isRepeated) errors.push("isRepeated");
+
+      if (this.item.isRepeated == undefined) this.item.isRepeated = false;
 
       if (errors.length == 0) {
         try {

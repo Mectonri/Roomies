@@ -91,7 +91,7 @@ namespace ITI.Roomies.DAL
             {
                 var p = new DynamicParameters();
                 p.Add( "@RItemPrice", itemPrice);
-                p.Add( "@ItemName", itemName );
+                p.Add( "@RItemName", itemName );
                 p.Add( "@CourseId", courseTempId);
                 p.Add( "@CollocId", collocId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
