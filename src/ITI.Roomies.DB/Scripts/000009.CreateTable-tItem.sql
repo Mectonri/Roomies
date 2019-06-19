@@ -1,8 +1,10 @@
 create table rm.tItem
 ( 
 	ItemId int identity(0,1),
-	ItemPrice int not null,
+	ItemPrice int,
 	ItemName nvarchar(32) not null,
+	ItemQuantite nvarchar(32),
+	ItemBought bit default 0,
 	CourseId int not null,
 	RoomieId int,
 

@@ -12,6 +12,10 @@ namespace ITI.Roomies.WebApp.Models.ItemModel
         [Required]
         public string ItemName { get; set; }
 
+        public string ItemQuantite { get; set; }
+
+        public bool ItemBought { get; set; }
+
         [Required]
         public int CourseId { get; set; }
 

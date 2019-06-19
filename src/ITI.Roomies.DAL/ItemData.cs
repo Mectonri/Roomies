@@ -8,6 +8,10 @@ namespace ITI.Roomies.DAL
 
         public string ItemName { get; set; }
 
+        public string ItemQuantite { get; set; }
+
+        public bool ItemBought { get; set; }
+
         public int CourseId { get; set;}
 
         public int RoomieId { get; set; }
