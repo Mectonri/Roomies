@@ -95,11 +95,11 @@ namespace ITI.Roomies.WebApp.Controllers
         }
 
         // Met à jour l'état de l'item renseignée
-        [HttpPost( "updateItemBought/{id}/{bought}" )]
-        public async Task<IActionResult> updateItemBoughtAsync( int id, bool bought )
-        {
-            Result result = await _itemGateway.UpdateItemBought( id, bought );
-            return this.Ok( result );
-        }
+        //[HttpPost( "updateItemBought/{id}/{bought}" )]
+        //public async Task<IActionResult> updateItemBoughtAsync( int id, bool bought )
+        //{
+        //    Result result = await _itemGateway.UpdateItemBought( id, bought );
+        //    return this.Ok( result );
+        //}
     }
 }
