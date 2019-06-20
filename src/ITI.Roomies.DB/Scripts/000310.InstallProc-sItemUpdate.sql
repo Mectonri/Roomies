@@ -4,7 +4,6 @@ create procedure rm.sItemUpdate
 	@CourseId	int,
 	@RoomieId	int,
     @ItemName   nvarchar(32),
-    @ItemQuantite   nvarchar(32),
     @ItemPrice	int
 )
 
@@ -26,7 +25,7 @@ begin
 	end;
 
 	update rm.tItem
-	set ItemName = @ItemName, ItemPrice = @ItemPrice, ItemQuantite = @ItemQuantite, RoomieId = @RoomieId, CourseId = @CourseId
+	set ItemName = @ItemName, ItemPrice = @ItemPrice, RoomieId = @RoomieId, CourseId = @CourseId
 	where ItemId = @ItemId;
 
 	commit;

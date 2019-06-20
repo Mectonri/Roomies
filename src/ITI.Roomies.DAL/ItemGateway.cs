@@ -61,8 +61,6 @@ namespace ITI.Roomies.DAL
                     @"select i.ItemId,
                              i.ItemPrice,
                              i.ItemName,
-                             i.ItemQuantite,
-                             i.ItemBought,
                              i.RoomieId
                        from rm.tItem i
                        where i.CourseId = @CourseId",
@@ -103,7 +101,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> CreateItem( int itemPrice, string itemName, string itemQuantite, int courseId, int roomieId )
+        public async Task<Result> CreateItem( int itemPrice, string itemName, int courseId, int roomieId )
         {
             if( !IsNameValid( itemName ) ) return Result.Failure<int>( Status.BadRequest, "The item name is not valid." );
 
@@ -114,7 +112,6 @@ namespace ITI.Roomies.DAL
                 p.Add( "@ItemName", itemName );
                 p.Add( "@CourseId", courseId );
                 p.Add( "@RoomieId", roomieId );
-                p.Add( "@ItemQuantite", itemQuantite );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sItemCreate", p, commandType: CommandType.StoredProcedure );
 
@@ -157,7 +154,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Update(int itemId, int itemPrice, string itemName, string itemQuantite, int courseId,  int roomieId)
+        public async Task<Result> Update(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
         {
             if( !IsNameValid( itemName ) ) return Result.Failure( Status.BadRequest, "The item name is not valid." );
 
@@ -167,7 +164,6 @@ namespace ITI.Roomies.DAL
                 p.Add( "@ItemId", itemId );
                 p.Add( "@ItemPrice", itemPrice );
                 p.Add( "@ItemName", itemName );
-                p.Add( "@ItemQuantite", itemQuantite );
                 p.Add( "@CourseId", courseId );
                 p.Add( "@RoomieId", roomieId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );

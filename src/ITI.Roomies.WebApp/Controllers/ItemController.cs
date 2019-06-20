@@ -60,7 +60,7 @@ namespace ITI.Roomies.WebApp.Controllers
             else
             {
                 int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-                Result result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName, model.ItemQuantite, model.CourseId, userId );
+                Result result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName, model.CourseId, userId );
                 return this.CreateResult( result );
             }
         }
@@ -83,7 +83,7 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<IActionResult> UpdateItemAsync([FromBody] ItemViewModel model)
         {
             int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-            Result result = await _itemGateway.Update( model.ItemId, model.ItemPrice, model.ItemName, model.ItemQuantite, model.CourseId, userId );
+            Result result = await _itemGateway.Update( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, userId );
             return this.CreateResult( result );
         }
 
