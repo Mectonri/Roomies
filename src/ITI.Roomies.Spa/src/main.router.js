@@ -31,7 +31,6 @@ import Item from './components/Item/Item.vue'
 import ItemCreate from './components/Item/ItemCreateEdit.vue'
 import RItemCreate from './components/Item/RItem.vue'
 
-import Spendings from './components/Spendings/Spendings.vue'
 import Category from './components/Spendings/CategoryCreateEdit.vue'
 
 import Budget from './components/Spendings/Transaction/BudgetCreate.vue'
@@ -84,7 +83,6 @@ const routes = [
     { path: '/course/info/:id?/item/edit/:itemId?', component: ItemCreate, beforeEnter: requireAuth},
     { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
 
-    { path: '/spendings', component: Spendings, beforeEnter: requireAuth},
     { path: '/Roomies/category', component: Category, beforeEnter: requireAuth},
     { path: '/budget/:mode([create|edit]+)/:id?', component: Budget, beforeEnter: requireAuth},
     { path: '/Roomies/transaction', component: TransactionBudget, before: requireAuth},

@@ -1,35 +1,38 @@
 <template>
-  <div >
+  <div>
     <main>
       <div id="chart">
         <charts :chartData="data" :Options="options"></charts>
       </div>
 
+      <!-- <div id="chart">
+        <barchart :chartData="data" :Options="options"></barchart>
+      </div>-->
       <div>
-        <el-button type="primary" @click="chartByDay" round>Day</el-button>
-        <el-button type="primary" @click="chartByWeek" round>Week</el-button>
-        <el-button type="primary" @click="chartByMonth" round>Month</el-button>
-        <el-button type="primary" @click="chartByYear" round>Year</el-button>
-        <el-button type="primary" @click="chartByAll" round>All</el-button>
-        <!-- <el-button type="primary" @click="getToday" round>today</el-button> -->
+        <el-radio-group v-model="radio">
+          <el-radio-button label="Day"></el-radio-button>
+          <el-radio-button label="Week"></el-radio-button>
+          <el-radio-button label="Month"></el-radio-button>
+        </el-radio-group>
       </div>
+     
     </main>
   </div>
 </template>
 
 <script>
 import VueCharts from "vue-chartjs";
-import { Pie } from "vue-chartjs";
-import charts from "../Transaction/Chart";
+import charts from "../Transaction/Chart.js";
+
 
 import {
   getCategoryAsync,
-  getCategoriesAsync,
+  getCategoriesAsync
 } from "../../../api/SpendingsApi/CategoryApi";
 import {
   getAllBudgetCatAsync,
   getBudgetCatByTimeAsync,
-  getDailyBudgetCatAsync,
+  getDailyBudgetCatAsync
 } from "../../../api/SpendingsApi/BudgetApi";
 
 export default {
@@ -47,6 +50,7 @@ export default {
       categoriesValues: [],
       allBudgetCatData: [],
       donnee: null,
+      radio: null,
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -73,22 +77,21 @@ export default {
   async mounted() {
     this.collocId = 1;
     this.allBudgetCatData = await getAllBudgetCatAsync(this.collocId);
-    this.getCategoriesValues();
-    this.getCategoriesNames();
+    //this.getCategoriesValues();
+    //this.getCategoriesNames();
     this.data = await this.getChartData();
   },
 
   methods: {
-    
     async refresh() {
-      this.getCategoriesNames();
-      this.getCategoriesValues();
+      //this.getCategoriesNames();
+      //this.getCategoriesValues();
       this.data = await this.getChartData();
     },
 
     async getChartData() {
       return {
-        labels: this.categoriesName,
+        labels: this.getLabels(),
         datasets: [
           {
             label: "Test-Chart",
@@ -101,7 +104,7 @@ export default {
               "#4CFF33",
               "#140A2B"
             ],
-            data: this.categoriesValues
+            data: this.getData(),
           }
         ]
       };
@@ -130,49 +133,38 @@ export default {
         }
       };
     },
+    
+async getData() {
+  switch(this.radio ) {
+    case 'Day': 
+    console.log("day");
+      //return await getDailyBudgetCatAsync(this.collocId);
+    break;
+    case 'Week': 
+    console.log('Week');
+      //return await getMonthlyBudgetCatAsync(this.collocId);
+    break;
+    case 'Month': 
+    console.log("Month")
+   //return await getYearlyBudgetCatAsync(this.collocId);
+    break; 
+      default:
+        console.log("Default");  
+        //return await getMonthlyBudgetCatAsync(this.collocId);
 
-    async getLabels() {
-      return await this.getCategoriesNames();
+  }
+},
+    getLabels() {
+     this.allBudgetCatData.forEach(e => {
+        this.categoriesName.push(e.categoryName);
+      });
+      return this.categoriesName;
     },
 
     async getData() {
-      return await this.getCategoriesValues();
+      //return await this.getCategoriesValues();
     },
 
-    async chartByDay() {
-      console.log("daily budget");
-
-      this.allBudgetCatData = await getDailyBudgetCatAsync(1);
-      await this.refresh();
-    },
-
-    chartByWeek() {
-      console.log("weekly Budget");
-    },
-
-    chartByMonth() {
-      console.log("monthly budget");
-    },
-
-    chartByYear() {
-      console.log("yearly budget");
-    },
-
-    chartByAll() {
-      console.log("All budget");
-    },
-    
-    getCategoriesNames() {
-      this.allBudgetCatData.forEach(e => {
-        this.categoriesName.push(e.categoryName);
-      });
-    },
-
-    getCategoriesValues() {
-      this.allBudgetCatData.forEach(e => {
-        this.categoriesValues.push(e.amount);
-      });
-    }
   }
 };
 </script>

@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Dapper;
-using Itenso.TimePeriod;
 using ITI.Roomies.DAL.Spendings;
 
 
@@ -99,14 +98,7 @@ namespace ITI.Roomies.DAL
 
         public async Task<Result<int>> CreateBudget( int categoryId, DateTime date1, DateTime date2, int amount )
         {
-            TimeRange t = new TimeRange( date1, date2 );
-            IEnumerable<BudgetData> budgets = await this.GetAllBudgetOfCategory( categoryId );
-            foreach( BudgetData budget in budgets )
-            {
-                TimeRange t1 = new TimeRange( budget.Date1, budget.Date2 );
-
-                if( !t1.OverlapsWith( t ) )
-                {
+           
                     using( SqlConnection con = new SqlConnection( _connectionString ) )
                     {
                         var p = new DynamicParameters();
@@ -122,10 +114,7 @@ namespace ITI.Roomies.DAL
                         Debug.Assert( status == 0 );
                         return Result.Success( Status.Created, p.Get<int>( "@BudgetId" ) );
                     }
-                }
-
-            }
-            return Result.Success( Status.BadRequest, 0 );
+           
         }
 
         public async Task<BudgetData> FindBudgetByCollocIdAndDate( int collocId, DateTime date )

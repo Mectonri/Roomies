@@ -64,6 +64,7 @@ namespace ITI.Roomies.DAL
             }
         }
 
+
         public async Task<IEnumerable<CategoryIconsData>> GetIcons()
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )

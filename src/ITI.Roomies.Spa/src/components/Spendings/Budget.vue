@@ -1,8 +1,5 @@
 <template>
-  <div>
-
-    
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -23,7 +20,7 @@ export default {
       idIsUndefined: true,
       bugetsList: [],
       budget: {},
-      categoriesList: [],
+      categoriesList: []
     };
   },
 
@@ -47,8 +44,9 @@ export default {
 
       var errors = [];
       if (!this.budget.amount) errors.push("Amount");
-      if (!this.budget.date1) errors.push("Date1");
-      if (!this.budget.date2) errors.push("Date2");
+        if (!this.budget.date1) errors.push("Date1");
+        if (!this.budget.date2) errors.push("Date2");
+    
       if (!this.budget.categoryId) errors.push("Category");
 
       this.errors = errors;

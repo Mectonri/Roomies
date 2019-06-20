@@ -93,7 +93,7 @@ export default {
         this.category = category;
         this.errors.push(this.category.errorMessage);
       } catch (errors) {
-        console.errors(errors)
+        console.error(errors)
       }  finally {
     await this.refreshList();
   }
@@ -107,7 +107,7 @@ export default {
       try {
         this.categoriesList = await getCategoriesAsync(this.collocId);
       } catch (errors) {
-        console.errors(errors);
+        console.error(errors);
       }
     },
     async onSubmit() {

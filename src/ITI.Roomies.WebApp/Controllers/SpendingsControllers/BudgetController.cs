@@ -1,4 +1,3 @@
-using Itenso.TimePeriod;
 using ITI.Roomies.DAL;
 using ITI.Roomies.DAL.Spendings;
 using ITI.Roomies.WebApp.Authentication;
@@ -12,24 +11,23 @@ using System.Threading.Tasks;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
-    [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme)]
+    [Route( "api/[controller]" )]
+    [Authorize( AuthenticationSchemes = JwtBearerAuthentication.AuthenticationScheme )]
     public class BudgetController : Controller
     {
         readonly BudgetGateway _budgetGateway;
 
-        public BudgetController(BudgetGateway budgetGateway)
+        public BudgetController( BudgetGateway budgetGateway )
         {
             _budgetGateway = budgetGateway;
         }
 
-        [HttpGet("getBudgets/{collocId}")]
-        public async Task<IActionResult> GetAllBudget(int collocId)
+        [HttpGet( "getBudgets/{collocId}" )]
+        public async Task<IActionResult> GetAllBudget( int collocId )
         {
-            IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll(collocId);
-            return Ok(budgetDatas);
+            IEnumerable<BudgetData> budgetDatas = await _budgetGateway.GetAll( collocId );
+            return Ok( budgetDatas );
         }
-  
 
         [HttpGet("getAllBudgetCatData/{collocId}")]
         public async Task<IActionResult> GetAllBudgetCat(int collocId)

@@ -1,147 +1,38 @@
 <template>
-  <div >
-    <div>
-      <h1>Transaction</h1>
-    </div>
+  <div>
+    <el-row :gutter="20">
+      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
+        <el-card>
+          <div>
+            <TransactionCreate></TransactionCreate>
+          </div>
+        </el-card>
+      </el-col>
 
-    <div>
-      <h2>Transaction table</h2>
-    </div>
-    <div>
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Date</th>
-            <th>BudgetId</th>
-            <th>RoomieId</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr v-if="transacBudgetList.length == 0">
-            <td>Il n'a y aucune transaction</td>
-          </tr>
-
-          <tr v-else v-for="t in transacBudgetList" :key="t.transacBudgetId">
-            <td>{{t.description}}</td>
-            <td>{{t.price}}</td>
-            <td>{{t.date}}</td>
-            <td>{{t.budgetId}}</td>
-            <td>{{t.roomieId}}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div>
-        <table class="table table-dark">
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Date</th>
-              <th>from</th>
-              <th>to</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-if="transacDepenseList.length == 0">
-              <td>Il n'a pas de depenses</td>
-            </tr>
-            <tr v-else v-for="t in transacDepenseList" :key="t.transacBudgetId">
-              <td>{{t.desc}}</td>
-              <td>{{t.price}}</td>
-              <td>{{t.date}}</td>
-              <td>{{t.sRoomieId}}</td>
-              <td>{{t.rRoomieId}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div>
-      <h2>Ajouter une transaction</h2>
-    </div>
-    <div>
-      <form @submit="onSubmit($event)">
-        <div class="alert alert-alert" v-if="errors.length > 0">
-          <b>Les champs suivants semblent invalides</b>
-          <ul>
-            <li v-for="e of errors" :key="e">{{e}}</li>
-          </ul>
-        </div>
-
-        <div>
-          <label for="Price">Amount</label>
-          <br>
-          <input type="number" name="Price" v-model="transaction.price" required>
-        </div>
-
-        <div>
-          <label for="Date">Date</label>
-          <br>
-          <input type="Date" name="Date" v-model="transaction.date" required>
-        </div>
-
-        <div>
-          <label>Chosir la category</label>
-        </div>
-        <div>
-          <el-select v-model="transaction.categoryId" clearable placeholder="Categories">
-            <el-option
-              v-for="category in categories"
-              :key="category.categoryId"
-              :label="category.categoryName"
-              :value="category.categoryId"
-            ></el-option>
-          </el-select>
-          <el-select v-model="transaction.roomieId" placeholder="Roomie">
-            <el-option
-              v-for="roomie in roomies"
-              :key="roomie.roomieId"
-              :label="roomie.firstName"
-              :value="roomie.roomieId"
-            ></el-option>
-          </el-select>
-        </div>
-        <br>
-        <button class="btn btn-dark" round @click="onSubmit">Sauvegarder</button>
-      </form>
-    </div>
+      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
+        <el-card>
+          <div>
+            <TransactionList></TransactionList>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
-import {
-  getAllTransacBudgetAsync,
-  getTransacBudgetAsync,
-  createTransactionAsync,
-  deleteTransacBudgetAsync,
-  updateTransacBudgetAsync,
-  getAllTransacDepenseAsync
-} from "../../../api/SpendingsApi/TransactionApi";
-import { GetRoomiesIdNamesByCollocIdAsync } from "../../../api/CollocationApi";
-import { getAllBudgetAsync } from "../../../api/SpendingsApi/BudgetApi";
-import { getCategoriesAsync } from "../../../api/SpendingsApi/CategoryApi";
 import AuthService from "../../../services/AuthService";
 import Loading from "../../../components/Utility/Loading.vue";
-
+import TransactionList from "../../Spendings/Transaction/TransactionList";
+import TransactionCreate from "../../Spendings/Transaction/TransactionCreate";
 export default {
+  components: {
+    TransactionList,
+    TransactionCreate
+  },
+
   data() {
-    return {
-      errors: [],
-      roomies: [],
-      budgets: [],
-      transacBudgetList: [],
-      transacDepenseList: [],
-      categories: [],
-      strate: true,
-      idIsUndefined: true,
-      collocId: null,
-      transaction: {}
-    };
+    return {};
   },
 
   computed: {
@@ -150,46 +41,37 @@ export default {
     isLoading() {
       return this.state.isLoading;
     }
-  },
-
-  async mounted() {
-    await this.refreshList();
-  },
-
-  methods: {
-    async refreshList() {
-      try {
-        this.collocId = this.$currColloc.collocId;
-        this.transacBudgetList = await getAllTransacBudgetAsync();
-        this.roomies = await GetRoomiesIdNamesByCollocIdAsync(this.collocId);
-        this.budgets = await getAllBudgetAsync(this.collocId);
-        this.categories = await getCategoriesAsync(this.collocId);
-        this.transacDepenseList = await getAllTransacDepenseAsync();
-       
-      } catch (e) {
-        console.log(e);
-      }
-    },
-
-    async onSubmit() {
-      event.preventDefault();
-
-      this.transaction.collocId = this.$currColloc.collocId;
-
-      if (!this.transaction.price) this.errors.push("Price");
-      if (!this.transaction.date) this.errors.push("Date");
-      if (!this.transaction.collocId) this.errors.push("CollocId");
-      if (this.transaction.roomieId && this.transaction.categoryId)
-        this.errors.push("can't have category and a Roomie");
-      if (
-        this.transaction.roomieId != null &&
-        this.transaction.categoryId != null
-      )
-        this.errors.push("can't have category and a Roomie");
-
-     
-      await createTransactionAsync(this.transaction);
-    }
   }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.text {
+  font-size: 14px;
+}
+
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
+}
+</style>

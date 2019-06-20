@@ -43,5 +43,6 @@ export async function deleteTransacDepenseAsync(transacDepenseId){
 }
 
 export async function createTransactionAsync(model){
+  console.log(model)
   return await postAsync(`${endpoint}/createTransaction`, model)
 }

@@ -15,13 +15,17 @@
         </div>
 
         <div>
-          <el-select @change="getOffDates" v-model="budget.categoryId" placeholder="Select the category" required>
+          <el-select
+           
+            v-model="budget.categoryId"
+            placeholder="Select the category"
+            required
+          >
             <el-option
-              v-for="(category, index) in categoriesList"
-              :key="index"
+              v-for="category in categoriesList"
+              :key="category.categoryId"
               :label="category.categoryName"
-              :value="index"
-              
+              :value="category.categoryId"
             ></el-option>
           </el-select>
         </div>
@@ -51,12 +55,19 @@
             required
             :picker-options="datePickerOptions"
           ></el-date-picker>
-          <el-date-picker v-model="budget.date2" type="date" placeholder="Date de fin" required></el-date-picker>
+          <el-date-picker v-model="budget.date2"
+            type="date" 
+            placeholder="Date de fin" 
+            required 
+            :picker-options="datePickerOptions" >
+          </el-date-picker>
         </div>
       </form>
 
       <el-button type="primary" round @click="onSubmit">Sauvegarder</el-button>
     </div>
+
+
   </div>
 </template>
 
@@ -64,9 +75,9 @@
 import {
   createBudgetAsync,
   getAllBudgetAsync,
-  getAllBudgetOfCategoryAsync
+  getAllBudgetOfCategoryAsync,
 } from "./../../../api/SpendingsApi/BudgetApi";
-import { getCategoriesAsync } from "./../../../api/SpendingsApi/CategoryApi";
+import { getCategoriesAsync, } from "./../../../api/SpendingsApi/CategoryApi";
 
 export default {
   data() {
@@ -77,17 +88,14 @@ export default {
       mode: null,
       collocId: null,
       budgets: [],
-      active: 0,
       radio1: null,
       datePickerOptions: {
         disabledDate(date) {
-          return date < (new Date().setDate(new Date().getDate() - 1));
+          return date < new Date().setDate(new Date().getDate() - 1);
         }
       }
     };
   },
-
-  computed: {},
 
   async mounted() {
     this.mode = this.$route.params.mode;
@@ -102,6 +110,7 @@ export default {
       }
     }
   },
+
   methods: {
     async refreshList() {
       try {
@@ -110,19 +119,21 @@ export default {
       }
     },
 
-    getOffDates(i) {
-      let category = this.categoriesList[i];
-      console.log(category.categoryId);
-    },
+endDate(radio1) {
+      var startDate = new Date();
+      this.budget.date1 = startDate;
 
-    endDate(radio1) {
-      var n = new Date();
       if (this.radio1 == "Monthly") {
-        return new Date(n.getFullYear(), n.getMonth() + 1, 0);
+        var endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+        this.budget.date2 = endDate;
+
+        return endDate;
       }
       if (this.radio1 == "Yearly") {
-        console.log(n.getFullYear(), 12, 31);
-        return new Date(n.getFullYear(), 11, 31);
+        var endDate = new Date(startDate.getFullYear(), 11, 31);
+        this.budget.date2 = endDate;
+
+        return endDate;
       }
     },
 
@@ -132,15 +143,15 @@ export default {
       var errors = [];
       if (!this.budget.amount) errors.push("amount");
       if (this.budget.amount < 0) errors.push("amount should be positive");
+      if(!this.budget.categoryId) errors.push("Category");
       if (!this.budget.date1) errors.push("Start date");
       if (!this.budget.date2) errors.push("End date");
-
       if (this.budget.date1 > this.budget.date2) {
         var date = this.budget.date1;
         this.budget.date1 = this.budget.date2;
         this.budget.date2 = date;
       }
-
+debugger;
       this.errors = errors;
 
       if (errors.length == 0) {

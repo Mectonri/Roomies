@@ -41,7 +41,7 @@ namespace ITI.Roomies.WebApp.Controllers
             else
             {
                 int sRoomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-                Result<int> result = await _transactionGateway.CreateTransacDepense( model.Price, model.Date, sRoomieId, rRoomieId );
+                Result<int> result = await _transactionGateway.CreateTransacDepense( (int)model.Price, model.Date, sRoomieId, rRoomieId );
                 return this.CreateResult( result, o =>
                 {
                     o.RouteName = "GetTransacDepense";
@@ -72,11 +72,7 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             int roomieId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result<int> result = await _transactionGateway.CreateTransacBudget( model.Price, model.Date, model.BudgetId, roomieId );
-            return this.CreateResult( result, o =>
-             {
-                 o.RouteName = "GetTransacBudgetId";
-                 o.RouteValues = transacBudgetId => new { transacBudgetId };
-             } );
+            return this.CreateResult( result );
         }
 
 
