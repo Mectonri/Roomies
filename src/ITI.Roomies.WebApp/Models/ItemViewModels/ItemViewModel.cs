@@ -19,7 +19,7 @@ namespace ITI.Roomies.WebApp.Models.ItemModel
 
         public int CollocId { get; set; }
 
-        [Required]
-        public bool IsRepeated { get; set; } 
+        //[Required]
+        //public bool IsRepeated { get; set; } 
     }
 }
