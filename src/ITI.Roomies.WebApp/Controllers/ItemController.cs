@@ -28,12 +28,12 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
         }
 
-        [HttpGet( "getRItems/{courseTempId}")]
-        public async Task<IActionResult> GetRItemsFromTemplate( int courseTempId)
-        {
-            IEnumerable<RItemData> result = await _itemGateway.GetAllRItemFromTemplate( courseTempId );
-            return Ok( result );
-        }
+        //[HttpGet( "getRItems/{courseTempId}")]
+        //public async Task<IActionResult> GetRItemsFromTemplate( int courseTempId)
+        //{
+        //    IEnumerable<RItemData> result = await _itemGateway.GetAllRItemFromTemplate( courseTempId );
+        //    return Ok( result );
+        //}
 
         [HttpGet( "{itemId}" )]
         public async Task<IActionResult> GetItemByItemId( int itemId )
@@ -42,12 +42,12 @@ namespace ITI.Roomies.WebApp.Controllers
             return Ok( result );
         }
 
-        [HttpGet( "getRItem/{rItemId}")]
-        public async Task<IActionResult> GetRItemByRItemId( int rItemId)
-        {
-            Result<RItemData> result = await _itemGateway.FindRItemById( rItemId );
-            return Ok( result );
-        }
+        //[HttpGet( "getRItem/{rItemId}")]
+        //public async Task<IActionResult> GetRItemByRItemId( int rItemId)
+        //{
+        //    Result<RItemData> result = await _itemGateway.FindRItemById( rItemId );
+        //    return Ok( result );
+        //}
 
         [HttpPost("addItem")]
         public async Task<IActionResult> AddItem( [FromBody] ItemViewModel model )
@@ -72,12 +72,12 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result );
         }
 
-        [HttpDelete("deleteRItem/{rItemId}")]
-        public async Task<IActionResult> DeleteRItem( int rItemId)
-        {
-            Result result = await _itemGateway.DeleteRItem( rItemId );
-            return this.CreateResult( result );
-        }
+        //[HttpDelete("deleteRItem/{rItemId}")]
+        //public async Task<IActionResult> DeleteRItem( int rItemId)
+        //{
+        //    Result result = await _itemGateway.DeleteRItem( rItemId );
+        //    return this.CreateResult( result );
+        //}
 
         [HttpPut( "updateItem" )]
         public async Task<IActionResult> UpdateItemAsync([FromBody] ItemViewModel model)
@@ -87,12 +87,12 @@ namespace ITI.Roomies.WebApp.Controllers
             return this.CreateResult( result );
         }
 
-        [HttpPut("updateRItem/{RItemId}")]
-        public async Task<IActionResult> UpdateRItem( [FromBody] ItemViewModel model)
-        {
-            Result result = await _itemGateway.UpdateRItem( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, model.CollocId );
-            return this.CreateResult( result );
-        }
+        //[HttpPut("updateRItem/{RItemId}")]
+        //public async Task<IActionResult> UpdateRItem( [FromBody] ItemViewModel model)
+        //{
+        //    Result result = await _itemGateway.UpdateRItem( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, model.CollocId );
+        //    return this.CreateResult( result );
+        //}
 
         // Met à jour l'état de l'item renseignée
         //[HttpPost( "updateItemBought/{id}/{bought}" )]
