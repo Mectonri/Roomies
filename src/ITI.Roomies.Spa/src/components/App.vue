@@ -105,7 +105,7 @@
         <el-menu-item
           class="el-submenu-item"
           index="2-2"
-          @click="clickRoute('/Roomies/budget')"
+          @click="clickRoute('/budget/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Budget</el-menu-item>
         <el-menu-item
@@ -117,7 +117,7 @@
         <el-menu-item
           class="el-submenu-item"
           index="2-4"
-          @click="clickRoute('/Roomies/category')"
+          @click="clickRoute('/Category/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Catégorie</el-menu-item>
       </el-submenu>

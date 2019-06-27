@@ -14,13 +14,13 @@
           </ul>
         </div>
 
-        <div>
-          <el-select
-           
+        <div >
+          <el-select 
             v-model="budget.categoryId"
             placeholder="Select the category"
+            @change="getOffDates"
             required
-          >
+           >
             <el-option
               v-for="category in categoriesList"
               :key="category.categoryId"
@@ -48,7 +48,7 @@
 
         <div class="block" v-if="radio1 == 'Custom'">
           <span class="demonstration">choisissez une date</span>
-          <el-date-picker
+          <el-date-picker class="D1"
             v-model="budget.date1"
             type="date"
             placeholder="Date de debut"
@@ -76,6 +76,7 @@ import {
   createBudgetAsync,
   getAllBudgetAsync,
   getAllBudgetOfCategoryAsync,
+  getCategoryOffDates
 } from "./../../../api/SpendingsApi/BudgetApi";
 import { getCategoriesAsync, } from "./../../../api/SpendingsApi/CategoryApi";
 
@@ -85,15 +86,12 @@ export default {
       errors: [],
       categoriesList: [],
       budget: {},
+      offDatesList:[],
       mode: null,
       collocId: null,
       budgets: [],
       radio1: null,
-      datePickerOptions: {
-        disabledDate(date) {
-          return date < new Date().setDate(new Date().getDate() - 1);
-        }
-      }
+      datePickerOptions: { },
     };
   },
 
@@ -101,6 +99,7 @@ export default {
     this.mode = this.$route.params.mode;
     this.collocId = this.$currColloc.collocId;
     this.categoriesList = await getCategoriesAsync(this.collocId);
+
     if (this.mode == "edit") {
       try {
       } catch (errors) {
@@ -108,6 +107,12 @@ export default {
       } finally {
         await this.refreshList();
       }
+    }
+  },
+
+  computed: {
+    disabledDates(date){
+      return !this.offDatesList.includes(date)
     }
   },
 
@@ -137,6 +142,12 @@ endDate(radio1) {
       }
     },
 
+    async getOffDates(){
+      console.log(' !! offDates !! ');
+      this.offDatesList = await getCategoryOffDates(this.budget.categoryId);
+      this.datePickerOptions.disabledDate = this.disabledDates;
+    },
+
     async onSubmit() {
       event.preventDefault();
 
@@ -151,7 +162,7 @@ endDate(radio1) {
         this.budget.date1 = this.budget.date2;
         this.budget.date2 = date;
       }
-debugger;
+
       this.errors = errors;
 
       if (errors.length == 0) {
@@ -167,4 +178,11 @@ debugger;
   } //end Methods
 }; //end Export
 </script>
+
+<style lang="scss" scoped>
+.D1{
+  color: red !important;
+}
+</style>
+
 

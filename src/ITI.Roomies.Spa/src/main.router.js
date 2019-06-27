@@ -31,16 +31,19 @@ import Item from './components/Item/Item.vue'
 import ItemCreate from './components/Item/ItemCreateEdit.vue'
 import RItemCreate from './components/Item/RItem.vue'
 
-import Category from './components/Spendings/CategoryCreateEdit.vue'
+import Category from './components/Spendings/Category/Category.vue'
 
 import Budget from './components/Spendings/Transaction/BudgetCreate.vue'
 import TransactionBudget from "./components/Spendings/Transaction/TransactionBudget.vue"
 
-import CategoryList from './components/Spendings/CategoryList.vue'
+import CategoryList from './components/Spendings/Category/CategoryList.vue'
 
 import Chart from "./components/Spendings/Transaction/Chart.vue";
-import CategoryCreateEdit from './components/Spendings/CategoryCreateEdit.vue';
-
+//import CategoryCreateEdit from './components/Spendings/CategoryCreateEdit.vue';
+import TDepenseCreate from "./components/Spendings/Transaction/TDepenseCreate.vue";
+import TBudgetCreate from './components/Spendings/Transaction/TBudgetCreate.vue';
+import CategoryInfo from './components/Spendings/Category/CategoryInfo.vue';
+import TransactionCreate from './components/Spendings/Transaction/TransactionCreate.vue';
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
     
@@ -83,12 +86,19 @@ const routes = [
     { path: '/course/info/:id?/item/edit/:itemId?', component: ItemCreate, beforeEnter: requireAuth},
     { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
 
-    { path: '/Roomies/category', component: Category, beforeEnter: requireAuth},
+    //{ path: '/Roomies/category', component: Category, beforeEnter: requireAuth},
     { path: '/budget/:mode([create|edit]+)/:id?', component: Budget, beforeEnter: requireAuth},
-    { path: '/Roomies/transaction', component: TransactionBudget, before: requireAuth},
+    { path: '/Roomies/transaction', component: TransactionBudget, beforeEnter: requireAuth},
+    { path: '/category/:mode(create|edit)/:id?', component: Category, beforeEnter: requireAuth},
 
     { path: '/categoryList', component: CategoryList, beforeEnter: requireAuth },
-    { path: '/category/:mode([create|edit]+)/:id?', component: CategoryCreateEdit, beforeEnter: requireAuth },
+    //{ path: '/category/:mode([create|edit]+)/:id?', component: CategoryCreateEdit, beforeEnter: requireAuth },
+
+    // { path: '/transaction/create/tdepense', component: TDepenseCreate , beforeEnter: requireAuth},
+    // { path: '/transaction/create/tbudget', component: TBudgetCreate, beforeEnter: requireAuth},
+    { path: '/transaction', component: TransactionCreate, beforeEnter: requireAuth },
+    { path: '/CategoryInfo', component: CategoryInfo, beforeEnter: requireAuth},
+
 
 ];
 

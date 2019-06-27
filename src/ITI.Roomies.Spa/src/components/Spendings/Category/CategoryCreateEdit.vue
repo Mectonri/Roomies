@@ -14,24 +14,50 @@
 
       <label class="required">Nom</label>
       <br>
-      <input type="text" v-model="category.categoryName" placeholder="Nom de la category" required>
-
+      <el-input
+        placeholder="Nom de la category" 
+        v-model="category.categoryName"
+        clearable required>
+      </el-input>
       <label>Icon</label>
       <br>
-      <el-select v-model="category.iconName" placeholder="Choisiser une Icon">
-        <el-option
-          v-for="(icon, index) in icons"
-          :key="index"
-          :label="icon.iconName"
-          :value="icon.iconName"
-        >
-          <img :src="iconPath + '/' + icon.iconName + '.png'" width="50" height="50">
-          <!-- @click="test(icon.iconName)" -->
-        </el-option>
-      </el-select>
+        <div><p>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >Choisissez votre icon</button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <div>
+            <div class="row">
+              <div
+                class="col"
+                v-for="(icon, index) in icons"
+                :key="index"
+                :label="icon.iconName"
+                :value="icon.iconName"
+              >
+                <el-button @click="setIcon(icon.iconName)">
+                  <img :src="iconPath + '/' + icon.iconName + '.png'" width="50" height="50">
+                  <div class="w-100"></div>
+                </el-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
 
       <button class="btn btn-dark" @click="onSubmit">Sauvegarder</button>
     </form>
+
+  
   </div>
 </template>
 
@@ -41,20 +67,19 @@ import {
   createCategoryAsync,
   getCategoryAsync,
   updateCategoryAsync
-} from "../../api/SpendingsApi/CategoryApi";
-import AuthService from "../../services/AuthService";
-import Loading from "../../components/Utility/Loading.vue";
-import Budget from "../Spendings/Budget.vue";
+} from "../../../api/SpendingsApi/CategoryApi";
+
+import Budget from "../../Spendings/Budget.vue";
+
 export default {
   components: {
-    Loading,
-    Budget
+   
+    Budget,
   },
 
   data() {
     return {
       errors: [],
-
       state: true,
       category: {},
       idIsUndefined: true,
@@ -63,6 +88,7 @@ export default {
       categoriesList: [],
       categoryId: null,
       mode: null,
+      collocId: null,
     };
   },
 
@@ -76,30 +102,26 @@ export default {
 
   async mounted() {
     this.mode = this.$route.params.mode;
-    console.log(this.mode)
+    console.log(this.mode);
     this.collocId = this.$currColloc.collocId;
+    console.log(this.collocId);
+
     this.icons = await getDefaultIconsAsync();
-    this.budget.collocId = this.collocId;
     this.categoryId = this.$route.params.id;
 
-  
-
-    if (this.mode == 'edit') {
+    if (this.mode == "edit") {
       try {
-            
-            console.log(this.categoryId);
+
         const category = await getCategoryAsync(this.categoryId);
-        console.log(category);
+   
         this.category = category;
         this.errors.push(this.category.errorMessage);
       } catch (errors) {
-        console.error(errors)
-      }  finally {
-    await this.refreshList();
-  }
+        console.error(errors);
+      } finally {
+        await this.refreshList();
+      }
     }
-
-   
   },
 
   methods: {
@@ -110,36 +132,39 @@ export default {
         console.error(errors);
       }
     },
+
+    async setIcon(iconName) {
+      this.category.iconName = iconName;
+    },
+
     async onSubmit() {
       event.preventDefault();
+       this.category.collocId = this.collocId;
+      console.log(this.category);
 
       var errors = [];
 
       if (!this.category.categoryName) errors.push("Category Name");
       if (!this.category.iconName) errors.push("Icon");
+      if(!this.category.collocId) errors.push("collocId");
 
       this.errors = errors;
+      console.log(this.category);
 
-      if (errors.length == 0) {
+      
         try {
           if (this.mode == "create") {
-            this.category.collocId = this.collocId;
+           
             await createCategoryAsync(this.category);
-          }else {
-            debugger;
+          } 
+          if( this.route == 'edit') {
             await updateCategoryAsync(this.category);
           }
-
         } catch (errors) {
           console.error(errors);
         } finally {
-          await this.refreshList();
+          this.$root.$emit('updateCategoryList');
         }
-      } else {
-        for (var j = 0; j < errors.length; j++) {
-          console.log(errors[j]);
-        }
-      }
     }
   }
 };

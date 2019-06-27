@@ -142,7 +142,6 @@ namespace ITI.Roomies.WebApp
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Account", action = "Login" });
             });
-
             app.UseStaticFiles();
         }
 

@@ -2,7 +2,7 @@ import { getAsync, postAsync, putAsync, deleteAsync } from '../../helpers/apiHel
 
 const endpoint = process.env.VUE_APP_BACKEND + "/api/budget";
 
-export async function getBudgetAsync (budgetId) {
+export async function getBudgetAsync(budgetId) {
   return await getAsync(`${endpoint}/getBudgetById/${budgetId}`);
 }
 
@@ -36,4 +36,8 @@ export async function getBudgetCatByTimeAsync(collocId, date) {
 
 export async function getDailyBudgetCatAsync(collocId) {
   return await getAsync(`${endpoint}/getDailyBudget/${collocId}`);
+}
+
+export async function getCategoryOffDates(categoryId) {
+  return await getAsync(`${endpoint}/offDates/${categoryId}`);
 }

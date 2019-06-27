@@ -102,5 +102,12 @@ namespace ITI.Roomies.WebApp.Controllers
             Result result = await _budgetGateway.UpdateBudget( budgetId, model.CategoryId, model.Date1, model.Date2, model.Amount, model.CollocId );
             return this.CreateResult( result );
         }
+
+        [HttpGet("offDates/{categoryId}")]
+        public async Task<IActionResult> GetOffDates ( int categoryId)
+        {
+            Result result = await _budgetGateway.GetOffDates( categoryId );
+            return this.CreateResult( result );
+        }
     }
 }

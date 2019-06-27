@@ -47,11 +47,33 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result<int>> CreateTransacBudget( int price, DateTime date, int budgetId, int roomieId )
+        public async Task<BudgetData> GetActualBudget( int categoryId)
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
-                var p = new DynamicParameters();
+                BudgetData budget = await con.QueryFirstOrDefaultAsync<BudgetData>(
+                    @"select
+                        BudgetId,
+                        CategoryId,
+                        Date2 = MAX(Date2),
+                        Amount
+                    from rm.tBudget
+                    WHERE BudgetId <> 0 and CategoryId = @CategoryId
+                    GROUP BY BudgetId, CategoryId, Date2, Amount
+                    ORDER BY Date2 DESC;",
+                new { CategoryId = categoryId });
+                return budget;
+            }
+        }
+
+        public async Task<Result<int>> CreateTransacBudget( int price, DateTime date, int categoryId, int roomieId )
+        {
+            BudgetData budget = await this.GetActualBudget( categoryId );
+            int budgetId = budget.BudgetId;
+
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var  p  = new DynamicParameters();
                 p.Add( "@Price", price );
                 p.Add( "@Date", date );
                 p.Add( "@BudgetId", budgetId );
@@ -63,25 +85,8 @@ namespace ITI.Roomies.DAL
                 int status = p.Get<int>( "@Status" );
                 Debug.Assert( status == 0 );
                 return Result.Success( Status.Created, p.Get<int>( "@TBudgetId" ) );
+
             }
-        }
-
-        public Task<Result> UpdateTransacBudget( int transacBudget, int price, DateTime date, int budgetId )
-        {
-            //using( SqlConnection con = new SqlConnection( _connectionString ) )
-            //{
-            //    var p = new DynamicParameters();
-            //    p.Add( "@");
-            //    p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
-            //    await con.ExecuteAsync( "rm.sBudgetUpdate", p, commandType: CommandType.StoredProcedure );
-
-            //    int status = p.Get<int>( "@Status" );
-            //    if( status == 1 ) return Result.Failure( Status.NotFound, "Budeget not found." );
-
-            //    Debug.Assert( status == 0 );
-            //    return Result.Success();
-            //}
-            throw new NotImplementedException();
         }
 
         public async Task<Result> DeleteTransacBudget( int tBudgetId )
@@ -112,11 +117,6 @@ namespace ITI.Roomies.DAL
                 @"select * from rm.tTransacDepense where SRoomieId = @RoomieId",
                 new { RoomieId = roomieId } );
             }
-        }
-
-        public Task<Result> UpdateTransacDepense( int transacDepense )
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Result<TransacDepenseData>> FindTDepenseById( int tDepenseId )

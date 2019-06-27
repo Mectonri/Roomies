@@ -18,7 +18,7 @@ namespace ITI.Roomies.DAL.Tests
             int amount = 50;
             int collocId = 0;
 
-            Result<int> budgetResult = await sut.CreateBudget( categoryId, date1, date2, amount, collocId );
+            Result<int> budgetResult = await sut.CreateBudget( categoryId, date1, date2, amount);
             Assert.That( budgetResult.Status, Is.EqualTo( Status.Created ) );
 
             int budgetId = budgetResult.Content;

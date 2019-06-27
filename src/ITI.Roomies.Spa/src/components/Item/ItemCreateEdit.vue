@@ -105,7 +105,7 @@ export default {
           this.itemNameToShow = this.item.itemName;
           this.idIsUndefined = false;
         } catch (e) {
-          console.log(e);
+          console.error(e);
           this.idIsUndefined = true;
         }
       }

@@ -15,7 +15,7 @@ namespace ITI.Roomies.WebApp.Models.TransactionViewModels
         public DateTime Date { get; set; }
 
         [Required]
-        public int BudgetId { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
         public int RoomieId { get; set; }

@@ -53,7 +53,7 @@ namespace ITI.Roomies.DAL.Tests
         {
             Assert.That( category.Status, Is.EqualTo( Status.Ok ) );
             Assert.That( category.Content.CategoryName, Is.EqualTo( categoryName ) );
-            Assert.That( category.Content.Icon, Is.EqualTo( icon ) );
+            Assert.That( category.Content.IconName, Is.EqualTo( icon ) );
             Assert.That( category.Content.CollocId, Is.EqualTo( collocId) );
 
         }

@@ -165,5 +165,19 @@ namespace ITI.Roomies.DAL
                 return Result.Success();
             }
         }
+
+        public async Task<Result<List<DateTime>>> GetOffDates( int categoryId)
+        {
+            IEnumerable<BudgetData> budgetsOfCategory = await this.GetAllBudgetOfCategory(  categoryId );
+            var dates = new List<DateTime>();
+            foreach( BudgetData budget in budgetsOfCategory)
+            {
+                for( var dt = budget.Date1; dt <= budget.Date2; dt = dt.AddDays( 1 ) )
+                {
+                    dates.Add( dt );
+                }
+            }
+            return Result.Success(dates);
+        }
     }
 }

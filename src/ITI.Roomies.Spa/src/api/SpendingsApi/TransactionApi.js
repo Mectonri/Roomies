@@ -11,11 +11,11 @@ export async function  getTransacBudgetAsync(transacBudgetId){
 }
 
 export async function createTransacBugetAsync(model){
-  return await postAsync(`${endpoint}/createTransacBudget`, model);
+  return await postAsync(`${endpoint}/createTBudget`, model);
 }
 
-export async function updateTransacBudgetAsync(transacBudgetId){
-  return await putAsync(`${endpoint}/updateTransacBudget/${transacBudgetId}`);
+export async function updateTransacBudgetAsync(model){
+  return await putAsync(`${endpoint}/updateTransacBudget/${model.TBudgetId}`, model);
 }
 
 export async function deleteTransacBudgetAsync(transacBudgetId){
@@ -31,18 +31,18 @@ export async function getTransacDepenseAsync(transacDepenseId){
 }
 
 export async function createTransacDepenseAsync(model){
-  return await postAsync(`${endpoint}/createTransacDepense`, model);
+  return await postAsync(`${endpoint}/createTDepense`, model);
 }
 
 export async function updateTransacDepenseAsync(transacDepenseId){
   return await putAsync(`${endpoint}/updateTransacDepense/${transacDepenseId}`);
 }
 
-export async function deleteTransacDepenseAsync(transacDepenseId){
-  return await deleteAsync(`${endpoint}/deleteTransacDepense/${transacDepenseId}`)
+export async function deleteTDepenseAsync(tDepenseId){
+  
+  return await deleteAsync(`${endpoint}/deleteTDepense/${tDepenseId}`)
 }
 
 export async function createTransactionAsync(model){
-  console.log(model)
   return await postAsync(`${endpoint}/createTransaction`, model)
 }
