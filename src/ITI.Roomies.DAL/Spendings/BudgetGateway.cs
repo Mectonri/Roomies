@@ -42,6 +42,24 @@ namespace ITI.Roomies.DAL
             }
         }
 
+        public async Task<BudgetData> GetCurrentBudget( int categoryId )
+        {
+           using(SqlConnection con = new SqlConnection( _connectionString ) )
+           {
+                return  await con.QueryFirstOrDefaultAsync<BudgetData>(
+                    @"select
+                        BudgetId,
+                        CategoryId,
+                        Date2 = MAX(Date2),
+                        Amount
+                    from rm.tBudget
+                    WHERE BudgetId <> 0 and CategoryId = @CategoryId
+                    GROUP BY BudgetId, CategoryId, Date2, Amount
+                    ORDER BY Date2 DESC;",
+                    new { CategoryId = categoryId } );
+           }
+        }
+
         public async Task<IEnumerable<BudgetCatData>> GetAllChartDataByCollocId( int collocId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )

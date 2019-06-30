@@ -22,6 +22,10 @@ export async function updateBudget(budgetId) {
 
 }
 
+export async function getCurentBudgetOfCategory(categoryId){
+  return await getAsync(`${endpoint}/currentBudget/${categoryId}`);
+}
+
 export async function deleteBudgetAsync(budgetId) {
   return await deleteAsync(`${endpoint}/delete/${budgetId}`);
 }

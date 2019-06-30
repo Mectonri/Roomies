@@ -15,11 +15,8 @@
           <el-table-column label="RoomieId"></el-table-column>
           <el-table-column label="Actions">
             <template slot-scope="scope">
-              <router-link :to="`transaction/edit/${getTDepensePage[scope.$index].tDepenseId}`">
-                <el-button
-                  size="mini"
-                  @click="updateTDepense(getTDepensePage[scope.$index].tDepenseId)"
-                >Edit</el-button>
+              <router-link :to="`edit/${getTDepensePage[scope.$index].tDepenseId}`">
+                <el-button size="mini" >Edit</el-button>
               </router-link>
               <el-button size="mini" @click="deleteTDepense(getTDepensePage[scope.$index].tDepenseId)">Delete</el-button>
             </template>
@@ -42,26 +39,26 @@
           <el-table-column label="Receiver" property="rRoomieId"></el-table-column>
           <el-table-column label="Options" property>
             <template slot-scope="scope1">
-              <routeur-link :to="`tBudget/edit/${getTBudgetPage[scope1.$index].tBudgetId}`">
-            <el-button size="mini" @click="updateTBudget(getTBudgetPage[scope1.$index].tBudgetId)">Edit</el-button>
-            </routeur-link>
-            <el-button size="mini" @click="deleteTBudget(getTBudgetList[scope1.$index].tBudgetId)"></el-button>
+            
+          <router-link :to="`edit/${getTBudgetPage[scope1.$index].tBudgetId}`"><el-button size="mini" >Edit</el-button></router-link>
+            <el-button size="mini" @click="deleteTBudget(getTBudgetPage[scope1.$index].tBudgetId)">Delete</el-button>
             </template>
           </el-table-column>
         </el-table>
+         <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="transacBudgetList.length"
+          @current-change="changePage"
+        ></el-pagination>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {
-  getAllTransacBudgetAsync,
-  getAllTransacDepenseAsync,
-  deleteTransacBudgetAsync,
-  deleteTDepenseAsync,
-  updateTransacBudgetAsync,
-  updateTransacDepenseAsync
-} from "../../../api/SpendingsApi/TransactionApi";
+
+import { getAllTransacBudgetAsync, getTransacBudgetAsync, deleteTransacBudgetAsync, updateTransacBudgetAsync } from "../../../api/SpendingsApi/TransactionsApi/TBudgetApi";
+import { getAllTransacDepenseAsync, getTransacDepenseAsync, deleteTDepenseAsync } from "../../../api/SpendingsApi/TransactionsApi/TDepenseApi";
 
 export default {
   data() {
@@ -87,6 +84,7 @@ export default {
     await this.refreshList();
   },
   methods: {
+    
     async refreshList() {
       try {
         this.transacBudgetList = await getAllTransacBudgetAsync();
@@ -100,24 +98,9 @@ export default {
       console.log(newPage);
       this.page = newPage - 1;
     },
-    async Update() {
-      console.log("update");
-    },
-    async Delete() {
-      console.log("delete");
-      try {
-        await this.refreshList();
-      } catch (e) {
-        console.log(e);
-      } finally {
-        await this.refreshList();
-      }
-    },
+
     async deleteTDepense(TDepenseId) {
-      console.log("delete");
-      console.log(TDepenseId);
       try {
-        
         await deleteTDepenseAsync(TDepenseId);
       } catch (e) {
         console.error(e);
@@ -125,33 +108,15 @@ export default {
         await this.refreshList();
       }
     },
-    async deleteTBudget() {
+    async deleteTBudget(TBudgetId) {
       try {
-        await this.deleteTransacBudgetAsync();
+        await deleteTransacBudgetAsync(TBudgetId);
       } catch (e) {
         console.error(e);
       } finally {
         await this.refreshList();
       }
     },
-    async updateTDepense(id) {
-      try {
-        await this.updateTransactionDepense(id);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        await this.refreshList();
-      }
-    },
-    async updateTBudget(id) {
-      try {
-        await this.updateTransactionBudget(id);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        await this.refreshList();
-      }
-    }
   }
 };
 </script>

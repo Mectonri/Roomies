@@ -8,11 +8,11 @@
       <el-tabs type="border-card">
         
       <el-tab-pane label="Category">Roomie
-         <TDepenseCreate></TDepenseCreate>
+         <TDepenseCreateEdit></TDepenseCreateEdit>
       </el-tab-pane>
 
       <el-tab-pane label="Roomie">Category
-        <TBudgetCreate></TBudgetCreate>
+        <TBudgetCreateEdit></TBudgetCreateEdit>
       </el-tab-pane>
 
       </el-tabs>
@@ -23,13 +23,13 @@
 
 <script>
 
-import TDepenseCreate from "../Transaction/TDepenseCreate";
-import TBudgetCreate  from "../Transaction/TBudgetCreate";
+import TDepenseCreateEdit from "../Transaction/TDepenseCreateEdit.vue";
+import TBudgetCreateEdit  from "../Transaction/TBudgetCreateEdit.vue";
 
 export default {
   components: {
-    TBudgetCreate, 
-    TDepenseCreate,
+    TBudgetCreateEdit, 
+    TDepenseCreateEdit,
   }  
 };
 </script>

@@ -4,7 +4,7 @@
       <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
         <el-card>
           <div>
-            <TransactionCreate></TransactionCreate>
+            <TransactionCreateEdit></TransactionCreateEdit>
           </div>
         </el-card>
       </el-col>
@@ -24,11 +24,11 @@
 import AuthService from "../../../services/AuthService";
 import Loading from "../../../components/Utility/Loading.vue";
 import TransactionList from "../../Spendings/Transaction/TransactionList";
-import TransactionCreate from "../../Spendings/Transaction/TransactionCreate";
+import TransactionCreateEdit from "../../Spendings/Transaction/TransactionsCreateEdit";
 export default {
   components: {
     TransactionList,
-    TransactionCreate
+    TransactionCreateEdit
   },
 
   data() {

@@ -35,6 +35,12 @@ namespace ITI.Roomies.WebApp.Controllers
             IEnumerable<BudgetCatData> budgetCats = await _budgetGateway.GetAllChartDataByCollocId(collocId);
             return Ok(budgetCats);
         }
+        [HttpGet( "currentBudget/{categoryId}" )]
+        public async Task<IActionResult> GetCurrentBudget( int categoryId )
+        {
+            BudgetData currentBudget = await _budgetGateway.GetCurrentBudget( categoryId );
+            return Ok( currentBudget);
+        }
 
         [HttpGet("getBudgetByTime/{collocId}/{currentDate}")]
         public async Task<IActionResult> GetByTime(int collocId, string currentDate)

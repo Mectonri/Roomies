@@ -1,17 +1,16 @@
 <template>
   <div>
     
-    <header v-if="route=='create'">
-      <h2>Ajouter une transaction</h2>
+    <header v-if="mode=='create'" >
+      <h2 >Ajouter une transaction</h2>
+      
     </header>
-    <header>
-      <H2>Modifier la transaction</H2>
-    </header>
+    <head><H2>Modifier la transaction</H2></head>
 
     <div>
       <form @submit="onSubmit($event)">
         <div class="alert alert-alert" v-if="errors.length > 0">
-          <b>Les champs suivants semblent invalides</b>
+          <b>Les champs suivants semblent invalides : </b>
           <ul>
             <li v-for="e of errors" :key="e">{{e}}</li>
           </ul>
@@ -53,7 +52,7 @@
 </template>
 
 <script>
-import { createTransacBugetAsync, updateTransacBudgetAsync } from '../../../api/SpendingsApi/TransactionApi';
+import { createTransacBugetAsync, updateTransacBudgetAsync, getTransacBudgetAsync } from '../../../api/SpendingsApi/TransactionsApi/TBudgetApi';
 import { getCategoriesAsync } from "../../../api/SpendingsApi/CategoryApi";
 
 export default {
@@ -63,42 +62,59 @@ export default {
       TBudget: {},
       collocId: null,
       categories: [],
-      route: null,
+      TBudgetId: null,
+      mode: null,
     }
   },
 
   async mounted() {
     this.collocId = this.$currColloc.collocId;
     this.categories = await getCategoriesAsync(this.collocId);
-    if( this.$route.fullPath.replace() == 'create' ){
-      this.routee = "create";
-
-   }else {
-     this.route = 'edit';
-
+    await this.refreshList();
+    
+    if( this.mode == 'edit'){
+      try{
+        const tbudget = await getTransacBudgetAsync(this.TBudgetId);
+        this.TBudget = tbudget;
+        this.errors.push(this.TBudget.errorMessage);
+      } catch(e) {
+        console.error(e);
+      }finally{
+        await this.refreshList();
+      }
    }
   },
+
+
   methods: {
-    
+    async refreshList(){
+      this.mode = this.$route.params.mode;
+      this.TBudgetId = this.$route.params.id;
+    },
     async onSubmit(){
       event.preventDefault();
 
-      if(!this.TBudget.price ||this.TBudget.price < 0) this.errors.push("Price");
+      if(!this.TBudget.price) this.errors.push("Price");
+      if(!this.TBudget.price) this.errors.push("Price must be positive");
       if(!this.TBudget.date) this.errors.push("Date");
       if(!this.TBudget.categoryId) this.errors.push("Category");
 
-      
+      if(this.errors.length == 0){
       try {
-        if (this.route == 'create' ){
+        if (this.mode == 'create' ){
           await createTransacBugetAsync(this.TBudget);
         }
-        if( this.route== 'edit') {
+        else{
           await updateTransacBudgetAsync(this.TBudget);
         }
       } catch(e) {
         console.error(e);
       } finally {
+        await this.refreshList();
         this.$root.$emit('update');
+        this.TBudget = {};
+        this.$router.replace("/transaction/create");
+      }
       }
     },
   }

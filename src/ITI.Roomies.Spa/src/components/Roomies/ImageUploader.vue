@@ -1,7 +1,8 @@
 <template>
   <div>
     <header>
-      <h2>Ajouter une photo</h2>
+      <h2 v-if="mode == 'create'">Ajouter une photo</h2>
+      <h2 v-else>Changer de photo</h2>
     </header>
     <br>
 
@@ -82,7 +83,7 @@
 <script>
 import axios from "axios";
 import AuthService from "../../services/AuthService";
-import { getRoomiePicAsync, getRoomieByIdAsync } from "../../api/RoomiesApi";
+import { getRoomiePicAsync, getRoomieByIdAsync, getCollocPicAsync} from "../../api/RoomiesApi";
 import default_pic from "../../../public/default_profile_pic.png";
 import Loading from "../../components/Utility/Loading.vue";
 
@@ -101,36 +102,84 @@ export default {
       uploadButtonDisabled: true,
       create: null,
       route: null,
+      mode: null,
+      object: null,
+      collocId: null,
+      isRoomie: null,
+      id: null,
     };
   },
 
   async mounted() {
-    this.roomieId = this.$route.params.id;
-    if (this.$route.path.includes("create")) this.create = true;
-    else this.create = false;
-    console.log(this.create);
-    try {
-      this.picPath = await getRoomiePicAsync();
+      await this.refresh();
+
+      if(this.mode == "edit"){
+        this.create = false;
+       
+      }
+      else{
+        if(this.object=='roomie'){
+          this.isRoomie = true;
+        }else{
+          this.isRoomie = false;
+          this.id = this.collocId}
+        try {
+          if(this.object == "roomie" ){ this.picPath = await getRoomiePicAsync();}
+          else{
+            this.picPath = await getCollocPicAsync(this.collocId); 
+          }
+           
+     
       this.defaultPic = false;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       if (e.message == "ERROR 404 (Not Found): Roomie has no pictures") {
         this.picPath = "../default_profile_pic.png";
         // console.log(this.env + "api/Roomies/0/default_profile_pic.png");
       }
       this.defaultPic = true;
     }
+    
+    }
+
+   
+    // if (this.$route.path.includes("create")) this.create = true;
+    // else this.create = false;
+    // console.log(this.create);
+    // try {
+    //   this.picPath = await getRoomiePicAsync();
+    //   this.defaultPic = false;
+    // } catch (e) {
+    //   console.log(e);
+    //   if (e.message == "ERROR 404 (Not Found): Roomie has no pictures") {
+    //     this.picPath = "../default_profile_pic.png";
+    //     // console.log(this.env + "api/Roomies/0/default_profile_pic.png");
+    //   }
+    //   this.defaultPic = true;
+    // }
     // console.log(this.env+'/'+this.picPath);
   },
 
   methods: {
+
+    async refresh(){
+      this.mode = this.$route.params.mode;
+      this.object = this.$route.params.object;
+      this.roomieId = this.$route.params.id;
+      this.collocId = this.$currColloc.collocId;
+    },
+
     async submitImage() {
+      event.preventDefault();
       const endpoint = process.env.VUE_APP_BACKEND + "/api/image";
 
       const file = this.file;
       file.append("roomieId", parseInt(this.roomieId));
-
-      let data = await axios.post(`${endpoint}/uploadImage`, this.file, {
+      var id = this.id;
+      var isRoomie = this.isRoomie;
+      console.log(this.isRoomie);
+      console.log(this.id);
+      let data = await axios.post(`${endpoint}/uploadImage/${id}/${isRoomie}`, this.file, {
         headers: {
           "Content-type": "multipart/form-data",
           Authorization: `Bearer ${AuthService.accessToken}`

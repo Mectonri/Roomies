@@ -111,7 +111,7 @@
         <el-menu-item
           class="el-submenu-item"
           index="2-3"
-          @click="clickRoute('/Roomies/transaction')"
+          @click="clickRoute('/transaction/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Transaction</el-menu-item>
         <el-menu-item

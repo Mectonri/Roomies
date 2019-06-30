@@ -2,11 +2,11 @@
   <div>
     <div>
       <h1 v-if="mode == 'create'">Ajouter une Category</h1>
-      <h1 v-else>Editer la category {{category.categoryName}}</h1>
+      <h1 v-else>Editer la category {{categoryName}}</h1>
     </div>
     <form @submit="onSubmit($event)">
       <div class="alert alert-danger" v-if="errors.length > 0">
-        <b>Les champs suivants semblent invalides :</b>
+        <b>Les champs suivants semblent invalides : </b>
         <ul>
           <li v-for="e of errors" :key="e">{{e}}</li>
         </ul>
@@ -65,7 +65,7 @@
 import {
   getDefaultIconsAsync,
   createCategoryAsync,
-  getCategoryAsync,
+  getCategoryAsync,getCategoriesAsync,
   updateCategoryAsync
 } from "../../../api/SpendingsApi/CategoryApi";
 
@@ -73,7 +73,6 @@ import Budget from "../../Spendings/Budget.vue";
 
 export default {
   components: {
-   
     Budget,
   },
 
@@ -89,6 +88,7 @@ export default {
       categoryId: null,
       mode: null,
       collocId: null,
+      categoryName: null,
     };
   },
 
@@ -101,70 +101,71 @@ export default {
   },
 
   async mounted() {
-    this.mode = this.$route.params.mode;
-    console.log(this.mode);
-    this.collocId = this.$currColloc.collocId;
-    console.log(this.collocId);
-
+   
     this.icons = await getDefaultIconsAsync();
-    this.categoryId = this.$route.params.id;
+    await this.refreshList();
 
     if (this.mode == "edit") {
       try {
 
         const category = await getCategoryAsync(this.categoryId);
+        this.categoryName = category.categoryName;
    
         this.category = category;
-        this.errors.push(this.category.errorMessage);
+        
+          this.errors.push(this.category.errorMessage);
+        
+        
       } catch (errors) {
         console.error(errors);
       } finally {
-        await this.refreshList();
+       await this.refreshList();
       }
     }
   },
 
   methods: {
-    async refreshList() {
-      try {
-        this.categoriesList = await getCategoriesAsync(this.collocId);
-      } catch (errors) {
-        console.error(errors);
-      }
-    },
+    async refreshList(){
+    this.mode = this.$route.params.mode;
+    this.collocId = this.$currColloc.collocId;
+    this.categoryId = this.$route.params.id;
 
+    },
     async setIcon(iconName) {
       this.category.iconName = iconName;
     },
 
     async onSubmit() {
       event.preventDefault();
-       this.category.collocId = this.collocId;
-      console.log(this.category);
+      this.category.collocId = this.collocId;
 
       var errors = [];
 
-      if (!this.category.categoryName) errors.push("Category Name");
-      if (!this.category.iconName) errors.push("Icon");
+      if(!this.category.categoryName) errors.push("Category Name");
+      if(!this.category.iconName) errors.push("Icon");
       if(!this.category.collocId) errors.push("collocId");
 
       this.errors = errors;
       console.log(this.category);
 
-      
+      if(this.errors.length == 0){
         try {
           if (this.mode == "create") {
            
             await createCategoryAsync(this.category);
           } 
-          if( this.route == 'edit') {
+          else{
             await updateCategoryAsync(this.category);
           }
         } catch (errors) {
           console.error(errors);
         } finally {
+          await this.refreshList();
           this.$root.$emit('updateCategoryList');
+          this.category = {};
+          this.$router.replace('/category/create'); 
         }
+      }
     }
   }
 };

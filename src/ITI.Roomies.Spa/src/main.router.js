@@ -32,18 +32,13 @@ import ItemCreate from './components/Item/ItemCreateEdit.vue'
 import RItemCreate from './components/Item/RItem.vue'
 
 import Category from './components/Spendings/Category/Category.vue'
+import CategoryInfo from './components/Spendings/Category/CategoryInfo.vue'
 
 import Budget from './components/Spendings/Transaction/BudgetCreate.vue'
-import TransactionBudget from "./components/Spendings/Transaction/TransactionBudget.vue"
 
-import CategoryList from './components/Spendings/Category/CategoryList.vue'
+import TransactionsCreateEditList from './components/Spendings/Transaction/TransactionsCreateEditList';
 
-import Chart from "./components/Spendings/Transaction/Chart.vue";
-//import CategoryCreateEdit from './components/Spendings/CategoryCreateEdit.vue';
-import TDepenseCreate from "./components/Spendings/Transaction/TDepenseCreate.vue";
-import TBudgetCreate from './components/Spendings/Transaction/TBudgetCreate.vue';
-import CategoryInfo from './components/Spendings/Category/CategoryInfo.vue';
-import TransactionCreate from './components/Spendings/Transaction/TransactionCreate.vue';
+
 const routes = [
     { path: '/', component: Home, beforeEnter: requireAuth },
     
@@ -56,6 +51,7 @@ const routes = [
     {path: '/roomies/upload/roomie/create', component: ImageUploader, beforeEnter: requireAuth},
     {path: '/roomies/upload/colloc/edit/:id', component: ImageUploader, beforeEnter: requireAuth},
     {path: '/rommies/upload/colloc/create/:id', component: ImageUploader, beforeEnter: requireAuth},
+    { path: '/upload/:object(colloc|roomie)/:mode(create|edit)/:id?', component: ImageUploader, beforeEnter: requireAuth},
 
     {path: '/roomies/collocation', component: Collocation, beforeEnter: requireAuth},
     {path: '/roomies/collocation/:id?', component: Collocation, beforeEnter: requireAuth},
@@ -70,14 +66,8 @@ const routes = [
     { path: '/task/roomie', component: TaskRoomie, beforeEnter: requireAuth },
     { path: '/task/create', component: TaskCreate, beforeEnter: requireAuth },
     { path: '/task/edit/:id?', component: TaskCreate, beforeEnter: requireAuth },
-    
-    // { path: '/item', component: Item, beforeEnter: requireAuth},
-    // { path: '/item/create', component: ItemCreate, beforeEnter: requireAuth },
-    // { path: '/item/edit/:id?', component: ItemCreate, beforeEnter: requireAuth },
+  
     { path: '/Ritem', component: RItemCreate, beforeEnter: requireAuth },
-
-    {path: '/chart', component: Chart, beforeEnter: requireAuth},
-
 
     { path: '/course', component: GroceryList, beforeEnter: requireAuth},
     { path: '/course/edit/:id?', component: GroceryCreate, beforeEnter: requireAuth},
@@ -85,20 +75,12 @@ const routes = [
     { path: '/course/info/:id?/item/create', component: ItemCreate, beforeEnter: requireAuth},
     { path: '/course/info/:id?/item/edit/:itemId?', component: ItemCreate, beforeEnter: requireAuth},
     { path: '/course/create', component: GroceryCreate, beforeEnter: requireAuth},
-
-    //{ path: '/Roomies/category', component: Category, beforeEnter: requireAuth},
     { path: '/budget/:mode([create|edit]+)/:id?', component: Budget, beforeEnter: requireAuth},
-    { path: '/Roomies/transaction', component: TransactionBudget, beforeEnter: requireAuth},
+    
     { path: '/category/:mode(create|edit)/:id?', component: Category, beforeEnter: requireAuth},
-
-    { path: '/categoryList', component: CategoryList, beforeEnter: requireAuth },
-    //{ path: '/category/:mode([create|edit]+)/:id?', component: CategoryCreateEdit, beforeEnter: requireAuth },
-
-    // { path: '/transaction/create/tdepense', component: TDepenseCreate , beforeEnter: requireAuth},
-    // { path: '/transaction/create/tbudget', component: TBudgetCreate, beforeEnter: requireAuth},
-    { path: '/transaction', component: TransactionCreate, beforeEnter: requireAuth },
-    { path: '/CategoryInfo', component: CategoryInfo, beforeEnter: requireAuth},
-
+    { path: '/category/info', component: CategoryInfo, beforeEnter: requireAuth },
+    
+    { path: '/transaction/:mode(create|edit)/:id?', component: TransactionsCreateEditList, beforeEnter: requireAuth },
 
 ];
 

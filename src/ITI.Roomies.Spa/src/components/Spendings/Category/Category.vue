@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="20">
+    <!-- <el-row :gutter="20">
       <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
         <el-card>
           <div>
@@ -16,7 +16,20 @@
           </div>
         </el-card>
       </el-col>
-    </el-row>
+    </el-row> -->
+
+    <div>
+   <table>
+     <th><td align="center"></td>
+     <td align="center"></td></th>
+     <tr>
+       <td align="center" class="card tdcreatecategory"><CategoryCreateEdit></CategoryCreateEdit></td>
+       <td align="center" class="card tdcreatecategory1"><CategoryList></CategoryList></td>
+     </tr>
+   </table>
+
+    </div>
+
   </div>
 </template>
 
@@ -34,6 +47,17 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.tdcreatecategory{
+  max-width: 45%;
+  float: left;
+
+}
+.tdcreatecategory1{
+  max-width: 45%;
+  float: right;
+
+}
 .el-col {
   border-radius: 4px;
 }

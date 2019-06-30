@@ -6,8 +6,8 @@
           :span="6"
           v-for="(category, index) in categoryList"
           :key="index"
-          :label="category.categoryName"
-          :value="category"
+        
+         
         >
           <div class="grid-content bg-purple">
             <p>
@@ -15,33 +15,38 @@
                 <el-popover
                   transition="el-fade-in-linear"
                   placement="bottom"
-                  :title="category.categoryName"
+                 
                   width="200"
-                  trigger="click"
+                  trigger="click" 
                   
+                              
                 >
-                  <el-button slot="reference">
-                    {{category.categoryName}}
+                
+                  <CategoryInfo :Options="category"></CategoryInfo>   
+                  <el-button slot="reference" >
+                    
                     
                     <img
                       :src="iconPath + '/' + category.iconName + '.png'"
                       width="50"
                       height="50"
-                      :content="category"
-                      @click="print()"
+                      
                     >
                   </el-button>
                   <div>
-                    <el-popover placement="top" width="160" v-model="visible">
+                    <el-popover placement="top" width="170" v-model="visible">
                       <p>Are you sure to delete this?</p>
                       <div style="text-align: right; margin: 0">
                         <el-button size="mini" type="text" @click="visible = false">cancel</el-button>
-                        <el-button type="primary" size="mini" @click="visible = false">confirm</el-button>
+                        <el-button type="primary" size="mini" @click="visible = false; deleteCategory(category.categoryId)">confirm</el-button>
                       </div>
                       <el-button slot="reference">Delete</el-button>
                     </el-popover>
-
-                    <el-button>edit</el-button>
+                    <div>
+                      
+                      <router-link :to="`edit/${category.categoryId}`"><el-button>edit</el-button></router-link>
+                    </div>
+                   
                   </div>
                 </el-popover>
               </el-row>
@@ -55,9 +60,14 @@
 </template>
 
 <script>
-import { getCategoriesAsync } from "../../../api/SpendingsApi/CategoryApi";
+import { getCategoriesAsync, deleteCategoryAsync} from "../../../api/SpendingsApi/CategoryApi";
+import { deleteAsync } from '../../../helpers/apiHelper';
+import CategoryInfo from '../Category/CategoryInfo.vue';
 
 export default {
+  components:{
+    CategoryInfo
+  },
   data() {
     return {
       categoryList: [],
@@ -84,12 +94,30 @@ export default {
         console.error(e);
       }
     },
+    async deleteCategory(categoryId){
+     
+      try{
+        await deleteCategoryAsync(categoryId);
+      }catch(e){
+          console.error(e);
+      }finally{
+        await this.refreshList();
+      }
+
+    }
    
   }
 };
 </script>
 
 <style lang="scss" scoped>
+
+.el-button{
+  min-width: 10rem;
+  max-width: 10rem;
+}
+
+
 // .el-row {
 //   margin-bottom: 20px;
 //   &:last-child {

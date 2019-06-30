@@ -7,6 +7,7 @@ using ITI.Roomies.WebApp.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace ITI.Roomies.WebApp.Controllers
 {
@@ -20,12 +21,13 @@ namespace ITI.Roomies.WebApp.Controllers
             _imageGateway = imageGateway;
         }
 
-        [HttpPost( "uploadImage" )]
+        [HttpPost( "uploadImage/{id}/{isRoomie}" )]
         public async Task<IActionResult> UploadImage( IFormCollection model, int id, bool isRoomie )
         {
             if( isRoomie )
             { 
-                id = int.Parse( model.ToList().Find( x => x.Key == "roomieId" ).Value.ToString() );
+                //id = int.Parse( model.ToList().Find( x => x.Key == "roomieId" ).Value.ToString() );
+                id = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             }
 
             List<string> result = await _imageGateway.UploadImage( model.Files, id, isRoomie );

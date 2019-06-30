@@ -99,7 +99,7 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@CategoryId", categoryId );
                 p.Add( "@CategoryName", categoryName );
-                p.Add( "@Icon", icon);
+                p.Add( "@IconName", icon);
                 p.Add( "@CollocId", collocId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sCategoryUpdate", p, commandType: CommandType.StoredProcedure );

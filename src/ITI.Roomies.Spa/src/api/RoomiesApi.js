@@ -25,3 +25,6 @@ export async function inviteRoomieAsync(email){
 export async function getRoomiePicAsync() {
     return await getStringAsync(`${endpoint}/getRoomiePic`);
 }
+export async function getCollocPicAsync(collocId){
+    return await getStringAsync(`${endpoint}/getCollocPic/${collocId}`);
+}
