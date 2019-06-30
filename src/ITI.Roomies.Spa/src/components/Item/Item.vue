@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <header>
-      <h2>Objet dans {{courseName}}</h2>
-    </header>
     <br>
     <table class="mainTable" vertical-align="top">
       <tr>
         <td valign="left">
           <main class="card mainCard cardCurrentItem">
+            <header>
+              <h2>Objet dans {{courseName}}</h2>
+            </header>
             <table class="table table-dark">
               <div v-if="itemList == 0">
                 <tr>
@@ -22,7 +22,6 @@
                   <th>Quantite</th>
                   <th>Owner</th>
                   <th>Options</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -32,7 +31,10 @@
                   <td>{{i.itemQuantite}}</td>
                   <td>{{i.firstName}}</td>
                   <td>
-                    <button class="btn btn-dark" @click="deleteItem(i.itemId, i.courseId, i.roomieId, i.itemSaved)">X</button>
+                    <button
+                      class="btn btn-dark"
+                      @click="deleteItem(i.itemId, i.courseId, i.roomieId, i.itemSaved)"
+                    >X</button>
                   </td>
                 </tr>
               </tbody>
@@ -41,8 +43,10 @@
         </td>
         <td>
           <main class="card mainCard cardItemToAdd">
-          <header><h3> Ajouter un objet </h3></header>
-          <br>
+            <header>
+              <h3>Ajouter un objet</h3>
+            </header>
+            <br>
             <table class="table table-dark">
               <div v-if="savedItemList == 0">
                 <tr>
@@ -60,7 +64,7 @@
               <tbody>
                 <tr v-for="i of savedItemList" :key="i.itemId">
                   <td>
-                    <button class="btn btn-dark">+</button>
+                    <button class="btn btn-dark" @click="addItemToList(i.itemId, 0, 1)">+</button>
                   </td>
                   <td>{{i.itemName}}</td>
                   <td>{{i.itemPrice / 100}} €</td>
@@ -74,12 +78,50 @@
         </td>
       </tr>
     </table>
-    <br>
     <div>
-      <button
-        class="btn btn-dark"
-        @click="clickRoute('/course/info/'+ courseId + '/item/create')"
-      >Ajouter un objet à la liste</button>
+      <form>
+        <header>
+          <h2>Ajouter un nouvel objet</h2>
+        </header>
+        <div>
+          <label class="required">Nom</label>
+          <br>
+          <input class="form-control" type="text" v-model="item.itemName" required>
+        </div>
+
+        <div>
+          <label>Prix</label>
+          <input class="form-control" type="number" v-model="item.itemPrice">
+        </div>
+
+        <div>
+          <label>Quantite</label>
+          <br>
+          <input class="form-control" type="text" v-model="item.itemQuantite">
+        </div>
+        <br>
+        <div class="form-check" v-for="roomie of roomiesList" :key="roomie.roomieId">
+          <input
+            v-if="roomie.roomieId != 0"
+            class="form-check-input"
+            type="radio"
+            name="roomies"
+            :id="'roomie' + roomie.roomieId"
+          >
+          <input
+            v-else
+            class="form-check-input"
+            type="radio"
+            name="roomies"
+            :id="'roomie' + roomie.roomieId"
+            checked
+          >&nbsp;
+          <label :for="'roomie' + roomie.roomieId">{{ roomie.firstName }} {{ roomie.lastName }}</label>
+        </div>
+        <br>
+        <button class="btn btn-dark" @click="createItem('ajouter')">Ajouter</button> &nbsp;
+        <button class="btn btn-dark" @click="createItem('autre')">Ajouter et enregistrer</button>
+      </form>
     </div>
   </div>
 </template>
@@ -88,10 +130,13 @@
 import {
   getSavedItemListFromCollocAsync,
   deleteItemFromListAsync,
-  getItemListAsync
+  getItemListAsync,
+  createItemInListAsync,
+  createItem
 } from "../../api/ItemApi.js";
 import { getGroceryListByIdAsync } from "../../api/GroceriesApi";
 import { getRoomieByIdAsync } from "../../api/RoomiesApi.js";
+import { GetRoomiesIdNamesByCollocIdAsync } from "../../api/CollocationApi.js";
 
 export default {
   data() {
@@ -101,12 +146,18 @@ export default {
       courseName: "",
       courseId: null,
       item: {},
-      roomieName: ""
+      roomieName: "",
+      roomiesList: []
     };
   },
 
   async mounted() {
     this.courseId = this.$route.params.id;
+    this.roomiesList = await GetRoomiesIdNamesByCollocIdAsync(
+      this.$currColloc.collocId
+    );
+    this.roomiesList.splice(0, 0, { roomieId: 0, firstName: "Aucun" });
+    console.log(this.roomiesList);
     await this.refreshList();
   },
 
@@ -121,7 +172,7 @@ export default {
         this.courseName = this.course.courseName;
 
         this.itemList = await getItemListAsync(this.courseId);
-        console.log(this.itemList)
+        console.log(this.itemList);
       } catch (e) {
         console.log(e);
       }
@@ -140,6 +191,69 @@ export default {
         console.log(e);
       } finally {
         await this.refreshList();
+      }
+    },
+
+    async addItemToList(itemId, roomieId, itemQuantite) {
+      try {
+        await createItemInListAsync(
+          itemId,
+          this.courseId,
+          roomieId,
+          itemQuantite
+        );
+      } catch (e) {
+        console.log(e);
+      } finally {
+        await this.refreshList();
+      }
+    },
+
+    async createItem(mode) {
+      event.preventDefault();
+
+      var errors = [];
+
+      if (!this.item.itemName) errors.push("Nom invalide");
+
+      if (errors.length == 0) {
+        try {
+          this.item.collocId = this.$currColloc.collocId;
+          if (mode != "ajouter") this.item.itemSaved = true;
+          else this.item.itemSaved = false;
+          let newItemId = await createItem(this.item);
+          // console.log(newItemId);
+          // this.item.roomieId = 1;
+
+          for (var i = 0; i < this.roomiesList.length; i++) {
+            if (
+              document.getElementById("roomie" + this.roomiesList[i].roomieId)
+                .checked
+            )
+              this.item.roomieId = this.roomiesList[i].roomieId;
+          }
+          console.log(this.item.roomieId);
+          console.log(this.item.itemQuantite);
+          await this.addItemToList(
+            newItemId,
+            this.courseId,
+            this.item.roomieId,
+            this.item.itemQuantite
+          );
+
+          window.alert("Objet ajouté");
+
+          this.item.itemName = '';
+          this.item.roomieId = 0;
+          this.item.itemQuantite = null;
+          await this.refreshList();
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        for (var j = 0; j < errors.length; j++) {
+          console.log(errors[j]);
+        }
       }
     },
 

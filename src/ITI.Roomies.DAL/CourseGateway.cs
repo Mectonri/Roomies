@@ -107,7 +107,7 @@ namespace ITI.Roomies.DAL
                 if( status == 1 ) return Result.Failure<int>( Status.BadRequest, "A Grocery List with this name already exists." );
 
                 Debug.Assert( status == 0 );
-                return Result.Success( Status.Created, p.Get<int>( "@CourseId" ) );
+                return Result.Success( Status.Ok, p.Get<int>( "@CourseId" ) );
             }
         }
 

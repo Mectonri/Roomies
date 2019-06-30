@@ -151,7 +151,7 @@ namespace ITI.Roomies.DAL
         //    }
         //}
 
-        public async Task<Result> CreateItem( int itemPrice, string itemName, int collocId, bool ItemSaved )
+        public async Task<Result<int>> CreateItem( int itemPrice, string itemName, int collocId, bool ItemSaved )
         {
             if( !IsNameValid( itemName ) ) return Result.Failure<int>( Status.BadRequest, "The item name is not valid." );
 
@@ -162,8 +162,27 @@ namespace ITI.Roomies.DAL
                 p.Add( "@ItemName", itemName );
                 p.Add( "@CollocId", collocId );
                 p.Add( "@ItemSaved", ItemSaved );
+                p.Add( "@ItemId", dbType: DbType.Int32, direction: ParameterDirection.Output );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sItemCreate", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok, p.Get<int>( "@ItemId" ) );
+
+            }
+        }
+                public async Task<Result> CreateItemInList( int itemId, int courseId, int roomieId, string itemQuantite )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@ItemId", itemId );
+                p.Add( "@CourseId", courseId );
+                p.Add( "@RoomieId", roomieId );
+                p.Add( "@ItemQuantite", itemQuantite );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sItemCourseCreate", p, commandType: CommandType.StoredProcedure );
 
                 int status = p.Get<int>( "@Status" );
                 Debug.Assert( status == 0 );

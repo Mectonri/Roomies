@@ -65,7 +65,6 @@
       style="
     max-width: 12rem;
 "
-      @click="blabla()"
     >Enregistrer un objet</button>
 
     <main class="card mainCard">

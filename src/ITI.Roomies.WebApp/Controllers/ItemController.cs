@@ -67,9 +67,18 @@ namespace ITI.Roomies.WebApp.Controllers
             //else
             //{
 
-            Result result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName, model.CollocId, model.ItemSaved );
-            return this.CreateResult( result );
+            Result<int> result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName, model.CollocId, model.ItemSaved );
+            return this.CreateResult( result, o => {
+                o.RouteValues = itemId => new { itemId };
+            } );
             //}
+        }
+        
+        [HttpPost( "createItemInList/{itemId}/{courseId}/{roomieId}/{itemQuantite}" )]
+        public async Task<IActionResult> createItem( int itemId, int courseId, int roomieId, string itemQuantite )
+        {
+            Result result = await _itemGateway.CreateItemInList( itemId, courseId, roomieId, itemQuantite );
+            return this.CreateResult( result );
         }
 
         [HttpDelete( "{itemId}" )]
@@ -84,7 +93,7 @@ namespace ITI.Roomies.WebApp.Controllers
         {
             
             Result result = await _itemGateway.DeleteItemFromCourse( itemId, courseId, roomieId );
-            if( itemSaved ) await _itemGateway.Delete(itemId );
+            if( !itemSaved ) await _itemGateway.Delete(itemId );
             return this.CreateResult( result );
         }
 

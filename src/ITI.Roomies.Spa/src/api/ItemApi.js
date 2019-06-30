@@ -20,6 +20,10 @@ export async function createItem(model) {
   return await postAsync(`${endpoint}/createItem`, model);
 }
 
+export async function createItemInListAsync(itemId, courseId, roomieId, itemQuantite) {
+  return await postAsync(`${endpoint}/createItemInList/${itemId}/${courseId}/${roomieId}/${itemQuantite}`);
+}
+
 export async function getItemByItemIdAsync(itemId) {
   return await getAsync(`${endpoint}/${itemId}`);
 }
