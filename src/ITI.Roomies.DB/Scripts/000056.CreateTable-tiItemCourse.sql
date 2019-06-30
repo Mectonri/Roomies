@@ -2,7 +2,7 @@ create table rm.tiItemCourse
 (
 	ItemId int not null,
 	CourseId int not null,
-	RoomieId int,
+	RoomieId int default 0 not null,
 	ItemQuantite nvarchar(32),
 	ItemBought bit default 0,
 

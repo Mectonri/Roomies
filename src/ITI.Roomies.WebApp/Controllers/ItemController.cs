@@ -24,7 +24,14 @@ namespace ITI.Roomies.WebApp.Controllers
         [HttpGet( "getItemList/{courseId}" )]
         public async Task<IActionResult> GetItemsFromList( int courseId )
         {
-            IEnumerable<ItemData> result = await _itemGateway.GetAllItemFromList( courseId );
+            IEnumerable<ItemCourseData> result = await _itemGateway.GetAllItemFromList( courseId );
+            return Ok( result );
+        }
+        
+        [HttpGet( "getAllSavedItemList/{collocId}" )]
+        public async Task<IActionResult> GetSavedItemsFromColloc( int collocId )
+        {
+            IEnumerable<ItemData> result = await _itemGateway.GetAllSavedItemFromColloc( collocId );
             return Ok( result );
         }
 
@@ -49,8 +56,8 @@ namespace ITI.Roomies.WebApp.Controllers
         //    return Ok( result );
         //}
 
-        [HttpPost("addItem")]
-        public async Task<IActionResult> AddItem( [FromBody] ItemViewModel model )
+        [HttpPost( "createItem" )]
+        public async Task<IActionResult> createItem( [FromBody] ItemViewModel model )
         {
             //if( model.IsRepeated )
             //{
@@ -59,9 +66,9 @@ namespace ITI.Roomies.WebApp.Controllers
             //}
             //else
             //{
-                int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
-                Result result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName, model.CourseId, userId );
-                return this.CreateResult( result );
+
+            Result result = await _itemGateway.CreateItem( model.ItemPrice, model.ItemName, model.CollocId, model.ItemSaved );
+            return this.CreateResult( result );
             //}
         }
 
@@ -69,6 +76,15 @@ namespace ITI.Roomies.WebApp.Controllers
         public async Task<IActionResult> DeleteItem( int itemId )
         {
             Result result = await _itemGateway.Delete( itemId );
+            return this.CreateResult( result );
+        }
+        
+        [HttpDelete( "deleteFromCourse/{itemId}/{courseId}/{roomieId}/{itemSaved}" )]
+        public async Task<IActionResult> DeleteFromCourseItem( int itemId, int courseId, int roomieId, bool itemSaved )
+        {
+            
+            Result result = await _itemGateway.DeleteItemFromCourse( itemId, courseId, roomieId );
+            if( itemSaved ) await _itemGateway.Delete(itemId );
             return this.CreateResult( result );
         }
 
@@ -80,7 +96,7 @@ namespace ITI.Roomies.WebApp.Controllers
         //}
 
         [HttpPut( "updateItem" )]
-        public async Task<IActionResult> UpdateItemAsync([FromBody] ItemViewModel model)
+        public async Task<IActionResult> UpdateItemAsync( [FromBody] ItemViewModel model )
         {
             int userId = int.Parse( HttpContext.User.FindFirst( c => c.Type == ClaimTypes.NameIdentifier ).Value );
             Result result = await _itemGateway.Update( model.ItemId, model.ItemPrice, model.ItemName, model.CourseId, userId );

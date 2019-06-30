@@ -8,15 +8,15 @@ using Dapper;
 namespace ITI.Roomies.DAL
 {
     public class ItemGateway
-    { 
+    {
         readonly string _connectionString;
 
-        public ItemGateway( string connectionString)
+        public ItemGateway( string connectionString )
         {
             _connectionString = connectionString;
         }
 
-        public async Task<Result<ItemData>> FindById( int itemId)
+        public async Task<Result<ItemData>> FindById( int itemId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
@@ -53,18 +53,68 @@ namespace ITI.Roomies.DAL
         //    }
         //}
 
-        public async Task<IEnumerable<ItemData>> GetAllItemFromList( int courseId )
+        //public async Task<IEnumerable<ItemData>> GetAllItemFromList( int courseId )
+        //{
+        //    using( SqlConnection con = new SqlConnection( _connectionString ) )
+        //    {
+        //        return await con.QueryAsync<ItemData>(
+        //            @"select i.ItemId,
+        //                     i.ItemPrice,
+        //                     i.ItemName,
+        //                     i.RoomieId,
+        //                     i.itemBought
+        //               from rm.tItem i
+        //               where i.CourseId = @CourseId",
+        //            new {CourseId = courseId} );
+        //    }
+        //}
+        public async Task<IEnumerable<ItemCourseData>> GetAllItemFromList( int courseId )
         {
             using( SqlConnection con = new SqlConnection( _connectionString ) )
             {
+                return await con.QueryAsync<ItemCourseData>(
+                    @"select i.ItemId,
+								i.ItemName,
+                                i.ItemSaved,
+                                ic.CourseId,
+								ic.ItemQuantite,
+								ic.ItemBought,
+								case when r.RoomieId = 0 then 0
+								else r.RoomieId
+								end as RoomieId,
+								case when r.RoomieId = 0 then 'N/A'
+								else r.FirstName
+								end as FirstName
+						  from rm.tItem i
+							inner join rm.tiItemCourse ic on i.ItemId = ic.ItemId
+							inner join rm.tRoomie r on ic.RoomieId = r.RoomieId
+						where ic.CourseId = @CourseId;",
+                    new { CourseId = courseId } );
+            }
+        }
+
+        public async Task<IEnumerable<ItemData>> GetAllSavedItemFromColloc( int collocId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                //return await con.QueryAsync<ItemData>(
+                //    @"select i.ItemId,
+                //             i.ItemPrice,
+                //             i.ItemName
+                //       from rm.tItem i
+                //       where i.CollocId = @CollocId
+                //       and i.ItemSaved = 1
+                //       order by i.ItemName",
+                //    new {CollocId = collocId} );
                 return await con.QueryAsync<ItemData>(
                     @"select i.ItemId,
                              i.ItemPrice,
-                             i.ItemName,
-                             i.RoomieId
+                             i.ItemName
                        from rm.tItem i
-                       where i.CourseId = @CourseId",
-                    new {CourseId = courseId} );
+                       where i.CollocId = @CollocId
+                       and i.ItemSaved = 1
+                       order by i.ItemName",
+                    new { CollocId = collocId } );
             }
         }
 
@@ -101,7 +151,7 @@ namespace ITI.Roomies.DAL
         //    }
         //}
 
-        public async Task<Result> CreateItem( int itemPrice, string itemName, int courseId, int roomieId )
+        public async Task<Result> CreateItem( int itemPrice, string itemName, int collocId, bool ItemSaved )
         {
             if( !IsNameValid( itemName ) ) return Result.Failure<int>( Status.BadRequest, "The item name is not valid." );
 
@@ -110,14 +160,14 @@ namespace ITI.Roomies.DAL
                 var p = new DynamicParameters();
                 p.Add( "@ItemPrice", itemPrice );
                 p.Add( "@ItemName", itemName );
-                p.Add( "@CourseId", courseId );
-                p.Add( "@RoomieId", roomieId );
+                p.Add( "@CollocId", collocId );
+                p.Add( "@ItemSaved", ItemSaved );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sItemCreate", p, commandType: CommandType.StoredProcedure );
 
                 int status = p.Get<int>( "@Status" );
                 Debug.Assert( status == 0 );
-                return Result.Success( status);
+                return Result.Success( status );
             }
         }
 
@@ -155,7 +205,26 @@ namespace ITI.Roomies.DAL
             }
         }
 
-        public async Task<Result> Update(int itemId, int itemPrice, string itemName, int courseId,  int roomieId)
+        public async Task<Result> DeleteItemFromCourse( int itemId, int courseId, int roomieId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@ItemId", itemId );
+                p.Add( "@CourseId", courseId );
+                p.Add( "@RoomieId", roomieId );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sDeleteItemFromCourse", p, commandType: CommandType.StoredProcedure );
+
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Item not found." );
+
+                Debug.Assert( status == 0 );
+                return Result.Success();
+            }
+        }
+
+        public async Task<Result> Update( int itemId, int itemPrice, string itemName, int courseId, int roomieId )
         {
             if( !IsNameValid( itemName ) ) return Result.Failure( Status.BadRequest, "The item name is not valid." );
 

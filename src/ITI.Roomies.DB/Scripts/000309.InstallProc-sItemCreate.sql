@@ -1,17 +1,17 @@
 create procedure rm.sItemCreate
 (
-	@CourseId	int,
-	@RoomieId	int,
-    @ItemName   nvarchar(32),
-    @ItemPrice	int
+	@CollocId	int,
+	@ItemName   nvarchar(32),
+    @ItemPrice	int,
+    @ItemSaved  bit
 )
 as
 begin
     set transaction isolation level serializable;
 	begin tran;
 
-	insert into rm.tItem(ItemName, ItemPrice, RoomieId, CourseId)
-	                  values(@ItemName, @ItemPrice, @RoomieId, @CourseId);
+	insert into rm.tItem(ItemName, ItemPrice, CollocId, ItemSaved)
+	                  values(@ItemName, @ItemPrice, @CollocId, @ItemSaved);
 	
 	commit;
 	return 0;

@@ -133,6 +133,11 @@
         <i class="el-icon-setting"></i>
         <span slot="title">Paramètres</span>
       </el-menu-item>
+
+      <el-menu-item @click="clickRoute('/itemcretetemp')">
+        <i class="el-icon-setting"></i>
+        <span slot="title">itemtemp</span>
+      </el-menu-item>
       <br>
       <br>
       <br>

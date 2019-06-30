@@ -4,13 +4,11 @@ create table rm.tItem
 	ItemPrice int,
 	ItemName nvarchar(32) not null,
     ItemSaved bit not null default 0,
-	CourseId int not null,
-	RoomieId int,
+	CollocId int not null,
 
 	constraint PK_rm_tItem primary key (ItemId),
-	constraint FK_rm_tCourse_CourseId foreign key (CourseId) references rm.tCourse(CourseId),
-	constraint FK_rm_tCourse_RoomieId foreign key (RoomieId) references rm.tRoomie(RoomieId)
+	constraint FK_rm_tItem_CollocId foreign key (CollocId) references rm.tColloc(CollocId)
 
 );
 
-insert into rm.tItem( ItemPrice, ItemName, CourseId, RoomieId) values( 0, left(convert(nvarchar(36), newid()), 32), 0, 0);
+insert into rm.tItem( ItemPrice, ItemName, CollocId) values( 0, left(convert(nvarchar(36), newid()), 32), 0);

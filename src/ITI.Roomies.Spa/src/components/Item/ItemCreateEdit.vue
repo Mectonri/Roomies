@@ -10,13 +10,6 @@
 
       <form>
         <div>
-          <el-switch
-            v-model="item.isRepeated"
-            active-text="Repeated"
-            inactive-text="Not - Repeated"
-          ></el-switch>
-        </div>
-        <div>
           <label class="required">Nom</label>
           <br>
           <input class="form-control" type="text" v-model="item.itemName" required>
@@ -56,7 +49,7 @@
 <script>
 import AuthService from "../../services/AuthService";
 import {
-  createItemOrRItemAsync,
+  createItem,
   getItemByItemIdAsync,
   updateItemAsync
 } from "../../api/ItemApi.js";
@@ -127,18 +120,12 @@ export default {
       if (!this.item.itemName) errors.push("Nom");
       if (!this.item.itemPrice) errors.push("Prix");
 
-      console.log(this.item.isRepeated);
-
-      // if (!this.item.isRepeated) errors.push("isRepeated");
-
-      if (this.item.isRepeated == undefined) this.item.isRepeated = false;
-
       if (errors.length == 0) {
         try {
           this.item.collocId = this.collocId;
           if (this.route == "create") {
             this.item.collocId = this.collocId;
-            await createItemOrRItemAsync(this.item);
+            await createItem(this.item);
             this.$router.push("/course/info/" + this.item.courseId);
           }
           if (this.route == "edit") {

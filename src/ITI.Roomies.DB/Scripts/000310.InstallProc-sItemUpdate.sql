@@ -1,8 +1,7 @@
 create procedure rm.sItemUpdate
 (
 	@ItemId		int,
-	@CourseId	int,
-	@RoomieId	int,
+	@CollocId	int,
     @ItemName   nvarchar(32),
     @ItemPrice	int
 )
@@ -18,14 +17,14 @@ begin
 		return 1;
 	end;
 
-	if exists(select * from rm.tItem t where t.ItemId <> @ItemId and t.ItemName = @ItemName and t.CourseId = @CourseId)
+	if exists(select * from rm.tItem t where t.ItemId <> @ItemId and t.ItemName = @ItemName and t.CollocId = @CollocId)
 	begin
 		rollback;
 		return 2;
 	end;
 
 	update rm.tItem
-	set ItemName = @ItemName, ItemPrice = @ItemPrice, RoomieId = @RoomieId, CourseId = @CourseId
+	set ItemName = @ItemName, ItemPrice = @ItemPrice, CollocId = @CollocId
 	where ItemId = @ItemId;
 
 	commit;
