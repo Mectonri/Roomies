@@ -8,11 +8,11 @@
       <el-tabs type="border-card">
         
       <el-tab-pane label="Roomie">
-         <TDepenseCreateEdit></TDepenseCreateEdit>
+         <TDepenseCreateEdit :key="force"></TDepenseCreateEdit>
       </el-tab-pane>
 
       <el-tab-pane label="Category"> 
-        <TBudgetCreateEdit></TBudgetCreateEdit>
+        <TBudgetCreateEdit :key="force"></TBudgetCreateEdit>
       </el-tab-pane>
 
       </el-tabs>
@@ -30,7 +30,17 @@ export default {
   components: {
     TBudgetCreateEdit, 
     TDepenseCreateEdit,
-  }  
+  },
+  data(){
+    return{
+      force: 0,
+    }
+  },
+  methods: {
+    forceRendering(){
+      this.force +=1; 
+    }
+  } 
 };
 </script>
 

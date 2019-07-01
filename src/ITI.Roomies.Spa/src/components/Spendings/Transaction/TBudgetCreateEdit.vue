@@ -1,12 +1,5 @@
 <template>
   <div>
-    
-    <!-- <header v-if="mode=='create'" >
-      <h2>Ajouter une transaction</h2>
-      
-    </header>
-    <head><H2>Modifier la transaction</H2></head> -->
-
     <div>
       <form @submit="onSubmit($event)">
         <div class="alert alert-alert" v-if="errors.length > 0">
@@ -70,13 +63,32 @@ export default {
       mode: null,
     }
   },
+  watch:{
+    "$route.params.mode": async function(mode) {
+      console.log("my watcher");
+      await this.refreshList();
+      await this.edition();
+    }
+  },
 
   async mounted() {
     this.collocId = this.$currColloc.collocId;
     this.categories = await getCategoriesAsync(this.collocId);
     await this.refreshList();
     
-    if( this.mode == 'edit'){
+    await this.edition();
+    
+  },
+
+
+  methods: {
+    async refreshList(){
+      this.mode = this.$route.params.mode;
+      this.TBudgetId = this.$route.params.id;
+    },
+
+    async edition(){
+      if( this.mode == 'edit'){
       try{
         const tbudget = await getTransacBudgetAsync(this.TBudgetId);
         this.TBudget = tbudget;
@@ -86,14 +98,7 @@ export default {
       }finally{
         await this.refreshList();
       }
-   }
-  },
-
-
-  methods: {
-    async refreshList(){
-      this.mode = this.$route.params.mode;
-      this.TBudgetId = this.$route.params.id;
+   }  
     },
     async onSubmit(){
       event.preventDefault();

@@ -1,5 +1,10 @@
 <template>
   <div>
+
+<div>
+  <h1>Liste des Categories</h1>
+</div>
+
     <div>
       <el-row :gutter="20" justify="center" align="middle">
         <el-col
@@ -18,19 +23,15 @@
                  
                   width="200"
                   trigger="click" 
-                  
-                              
                 >
                 
                   <CategoryInfo :Options="category"></CategoryInfo>   
                   <el-button slot="reference" >
                     
-                    
                     <img
                       :src="iconPath + '/' + category.iconName + '.png'"
                       width="50"
                       height="50"
-                      
                     >
                   </el-button>
                   <div>
@@ -43,8 +44,9 @@
                       <el-button slot="reference">Delete</el-button>
                     </el-popover>
                     <div>
-                      
-                      <router-link :to="`edit/${category.categoryId}`"><el-button>edit</el-button></router-link>
+                      <router-link :to="`edit/${category.categoryId}`">
+                      <el-button>edit</el-button>
+                      </router-link>
                     </div>
                    
                   </div>
@@ -74,7 +76,6 @@ export default {
       collocId: null,
       iconPath: "http://localhost:5000/Pictures/Icons",
       visible: false,
-
     };
   },
 
@@ -103,9 +104,7 @@ export default {
       }finally{
         await this.refreshList();
       }
-
     }
-   
   }
 };
 </script>
