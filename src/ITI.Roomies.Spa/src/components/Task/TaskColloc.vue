@@ -250,16 +250,16 @@ export default {
 
     // Date par défaut pour le date-picker
     this.currentDateToMidi = new Date();
-    this.currentDateToMidi.setHours(0);
-    this.currentDateToMidi.setMinutes(0);
+    this.currentDateToMidi.setHours(12);
+    this.currentDateToMidi.setMinutes(30);
     this.currentDateToMidi.setSeconds(0);
     this.currentDateToMidi.setMilliseconds(0);
     // Date par défaut pour le time-picker
-    this.item.TaskHour = new Date();
-    this.item.TaskHour.setHours(12);
-    this.item.TaskHour.setMinutes(30);
-    this.item.TaskHour.setSeconds(0);
-    this.item.TaskHour.setMilliseconds(0);
+    // this.item.TaskHour = new Date();
+    // this.item.TaskHour.setHours(12);
+    // this.item.TaskHour.setMinutes(30);
+    // this.item.TaskHour.setSeconds(0);
+    // this.item.TaskHour.setMilliseconds(0);
 
     this.roomiesList = await GetRoomiesIdNamesByCollocIdAsync(
       this.$currColloc.collocId

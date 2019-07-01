@@ -75,27 +75,27 @@
           <span>Dépenses</span>
         </template>
 
-        <el-menu-item
+        <!-- <el-menu-item
           class="el-submenu-item"
           index="2-1"
           @click="clickRoute('/chart')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Graphique</el-menu-item>
+        >Graphique</el-menu-item> -->
         <el-menu-item
           class="el-submenu-item"
-          index="2-2"
+          index="2-1"
           @click="clickRoute('/budget/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Budget</el-menu-item>
         <el-menu-item
           class="el-submenu-item"
-          index="2-3"
+          index="2-2"
           @click="clickRoute('/transaction/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Transaction</el-menu-item>
         <el-menu-item
           class="el-submenu-item"
-          index="2-4"
+          index="2-3"
           @click="clickRoute('/Category/create')"
           :disabled="$setMenuItemDisabled.disableState"
         >Catégorie</el-menu-item>
