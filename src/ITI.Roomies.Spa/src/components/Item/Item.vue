@@ -236,7 +236,6 @@ export default {
           console.log(this.item.itemQuantite);
           await this.addItemToList(
             newItemId,
-            this.courseId,
             this.item.roomieId,
             this.item.itemQuantite
           );
