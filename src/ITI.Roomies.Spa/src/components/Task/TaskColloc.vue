@@ -491,6 +491,7 @@ export default {
         try {
           this.item.collocId = this.$currColloc.collocId;
           await createTaskAsync(this.item);
+          // this.item= {};
           this.refreshList();
         } catch (e) {
           console.error(e);

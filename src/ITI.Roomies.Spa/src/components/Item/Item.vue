@@ -67,7 +67,7 @@
                     <button class="btn btn-dark" @click="addItemToList(i.itemId, 0, 1)">+</button>
                   </td>
                   <td>{{i.itemName}}</td>
-                  <td>{{i.itemPrice / 100}} €</td>
+                  <td>{{i.itemPrice}} €</td>
                   <!-- <td> -->
                   <!-- <button class="btn btn-dark" @click="deleteItem(i.itemId)">A modifier</button> -->
                   <!-- </td> -->
