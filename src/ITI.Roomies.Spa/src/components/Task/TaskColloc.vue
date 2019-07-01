@@ -89,8 +89,8 @@
     <br>
     <main class="card mainCard" v-if="taskHistoriqueData[0]">
       <br>
-      <!-- <h3 style="margin: 1.5rem;">Historique</h3> -->
-      <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="historique">
+      <div class="collapse" id="historique">
+        <div v-if="taskHistoriqueData !='Nada'">
         <table class="tableTask">
           
           <tbody>
@@ -98,20 +98,14 @@
               <td>
                 <div class="input-group mb-1">
                   <div v-if="task.state" class="input-group-text formCheckbox formtrue">
-                    <!-- <el-tooltip content="Valider" placement="top">
-                      <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                    </el-tooltip>-->
                   </div>
                   <div v-else class="input-group-text formCheckbox formfalse">
-                    <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
                     <el-tooltip content="Valider" placement="top">
                       <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
                     </el-tooltip>
                   </div>
-                  <!-- <label class="form-control formName" :style="myStyle">{{ task.taskName + task.state}}</label> -->
                   <label v-if="task.state" class="form-control formName formtrue">{{ task.taskName}}</label>
                   <label v-else class="form-control formName formfalse">{{ task.taskName}}</label>
-                  <!-- <label class="form-control formName">{{ task.taskName + task.state + task.formState}}</label> -->
                   <label
                     v-if="task.state"
                     class="form-control formDate formtrue"
@@ -132,21 +126,16 @@
                 </div>
               </td>
               <td style="padding-left: 1rem;">
-                <!-- <label class="form-control formBtn"> -->
                 <el-tooltip content="Modifier" placement="top">
                   <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
                 </el-tooltip>
-                <!-- <el-tooltip content="Supprimer" placement="top">
-                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-                </el-tooltip>-->
-                <!-- </label> -->
               </td>
-              <!-- </div> -->
             </tr>
           </tbody>
         </table>
+        </div>
+        <div v-else>Aucune tâche à afficher</div>
       </div>
-      <div v-else>Aucune tâche à afficher</div>
 
       <div class="collapse" id="nouvelleTache">
         <main>
