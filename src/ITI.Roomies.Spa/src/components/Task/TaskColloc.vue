@@ -3,9 +3,158 @@
     <header>
       <h2>Tâches</h2>
     </header>
+    
+    <br />
+
+    <button
+      class="btn btn-dark"
+      data-toggle="collapse"
+      data-target="#historique"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+      style="
+    max-width: 8rem;
+"
+      @click="cacheCache('nouvelleTache')"
+    >Historique</button>
+    <button
+      class="btn btn-dark"
+      data-toggle="collapse"
+      data-target="#nouvelleTache"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+      style="margin-left: 4rem;"
+      @click="cacheCache('historique')"
+    >Nouvelle tâche</button>
+
+    <br />
+    <br />
+    <main class="card mainCard" v-if="taskHistoriqueData[0]">
+      <br />
+      <div class="collapse" id="historique">
+        <div v-if="taskHistoriqueData !='Nada'">
+          <table class="tableTask">
+            <tbody>
+              <tr v-for="task of taskHistoriqueData" :key="task.taskId">
+                <td>
+                  <div class="input-group mb-1">
+                    <div v-if="task.state" class="input-group-text formCheckbox formtrue"></div>
+                    <div v-else class="input-group-text formCheckbox formfalse">
+                      <el-tooltip content="Valider" placement="top">
+                        <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
+                      </el-tooltip>
+                    </div>
+                    <label
+                      v-if="task.state"
+                      class="form-control formName formtrue"
+                    >{{ task.taskName}}</label>
+                    <label v-else class="form-control formName formfalse">{{ task.taskName}}</label>
+                    <label
+                      v-if="task.state"
+                      class="form-control formDate formtrue"
+                    >{{ task.taskDate }}</label>
+                    <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
+                    <label
+                      v-if="task.state"
+                      :id="'formFirstName' + task.taskId"
+                      class="form-control formFirstName formtrue"
+                    >{{ task.firstName}}</label>
+                    <label
+                      v-else
+                      :id="'formFirstName' + task.taskId"
+                      class="form-control formFirstName formfalse"
+                    >{{ task.firstName}}</label>
+                    <label
+                      v-if="task.state"
+                      class="form-control formDesc formtrue"
+                    >{{ task.taskDes }}</label>
+                    <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
+                  </div>
+                </td>
+                <td style="padding-left: 1rem;">
+                  <el-tooltip content="Modifier" placement="top">
+                    <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
+                  </el-tooltip>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-else>Aucune tâche à afficher</div>
+      </div>
+
+      <div class="collapse" id="nouvelleTache">
+        <main>
+          <form @submit="onSubmit($event)">
+            <br />
+            <table class="taskCreateTable">
+              <tr>
+                <td>
+                  <label class="required">Nom</label>
+                </td>
+                <td style="padding-left: 2rem;">
+                  <label class="required">Echéance</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" v-model="item.TaskName" required />
+                </td>
+                <td style="padding-left: 2rem;">
+                  <el-date-picker
+                    style="width: 10rem;"
+                    v-model="item.TaskDate"
+                    format="dd/MM"
+                    type="datetime"
+                    placeholder="Date"
+                    :default-value="currentDateToMidi"
+                  ></el-date-picker>
+
+                  <el-time-picker
+                    style="width: 10rem;"
+                    v-model="item.TaskHour"
+                    :picker-options="{
+                      selectableRange: '00:00:00 - 23:55:00'
+                    }"
+                    format="HH:mm"
+                    :default-value="currentDateToMidi"
+                  ></el-time-picker>
+                </td>
+              </tr>
+            </table>
+            <br />
+
+            <label>Description</label>
+            <textarea class="form-control textarea_width" v-model="item.TaskDes" />
+            <br />
+            <br />
+            <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
+              <td>
+                <input type="checkbox" :id="'roomie' + roomie.roomieId" />
+                &nbsp;
+                {{ roomie.firstName }} {{ roomie.lastName }}
+              </td>
+            </tr>
+            <br />
+            <br />&nbsp;
+            &nbsp;
+            <button
+              class="btn btn-dark"
+              @click="onSubmit"
+              style="
+    max-width: 8rem;
+"
+            >Sauvegarder</button>
+          </form>
+        </main>
+      </div>
+    </main>
+    <main v-else>
+      <loading />
+    </main>
     <main v-if="taskData[0]" class="card mainCard">
       <h3 style="margin: 1.5rem;">{{$currColloc.collocName}}</h3>
-     
+
       <div v-if="taskData !='Nada'">
         <table class="tableTask">
           <thead>
@@ -59,152 +208,7 @@
       <div v-else>Aucune tâche à afficher</div>
     </main>
     <main v-else>
-      <loading/>
-    </main>
-
-    <br>
-
-    <button
-      class="btn btn-dark"
-      data-toggle="collapse"
-      data-target="#historique"
-      aria-expanded="false"
-      aria-controls="collapseExample"
-      style="
-    max-width: 8rem;
-"
-      @click="cacheCache('nouvelleTache')"
-    >Historique</button>
-    <button
-      class="btn btn-dark"
-      data-toggle="collapse"
-      data-target="#nouvelleTache"
-      aria-expanded="false"
-      aria-controls="collapseExample"
-      style="margin-left: 4rem;"
-      @click="cacheCache('historique')"
-    >Nouvelle tâche</button>
-
-    <br>
-    <br>
-    <main class="card mainCard" v-if="taskHistoriqueData[0]">
-      <br>
-      <div class="collapse" id="historique">
-        <div v-if="taskHistoriqueData !='Nada'">
-        <table class="tableTask">
-          
-          <tbody>
-            <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-              <td>
-                <div class="input-group mb-1">
-                  <div v-if="task.state" class="input-group-text formCheckbox formtrue">
-                  </div>
-                  <div v-else class="input-group-text formCheckbox formfalse">
-                    <el-tooltip content="Valider" placement="top">
-                      <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                    </el-tooltip>
-                  </div>
-                  <label v-if="task.state" class="form-control formName formtrue">{{ task.taskName}}</label>
-                  <label v-else class="form-control formName formfalse">{{ task.taskName}}</label>
-                  <label
-                    v-if="task.state"
-                    class="form-control formDate formtrue"
-                  >{{ task.taskDate }}</label>
-                  <label v-else class="form-control formDate formfalse">{{ task.taskDate }}</label>
-                  <label
-                    v-if="task.state"
-                    :id="'formFirstName' + task.taskId"
-                    class="form-control formFirstName formtrue"
-                  >{{ task.firstName}}</label>
-                  <label
-                    v-else
-                    :id="'formFirstName' + task.taskId"
-                    class="form-control formFirstName formfalse"
-                  >{{ task.firstName}}</label>
-                  <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
-                  <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
-                </div>
-              </td>
-              <td style="padding-left: 1rem;">
-                <el-tooltip content="Modifier" placement="top">
-                  <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
-                </el-tooltip>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-        <div v-else>Aucune tâche à afficher</div>
-      </div>
-
-      <div class="collapse" id="nouvelleTache">
-        <main>
-          <form @submit="onSubmit($event)">
-            <br>
-            <table class="taskCreateTable">
-              <tr>
-                <td>
-                  <label class="required">Nom</label>
-                </td>
-                <td style="padding-left: 2rem;">
-                  <label class="required">Echéance</label>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <input class="form-control" type="text" v-model="item.TaskName" required>
-                </td>
-                <td style="padding-left: 2rem;">
-                  <el-date-picker
-                    style="width: 10rem;"
-                    v-model="item.TaskDate"
-                    format="dd/MM"
-                    type="datetime"
-                    placeholder="Date"
-                    :default-value="currentDateToMidi"
-                  ></el-date-picker>
-
-                  <el-time-picker
-                    style="width: 10rem;"
-                    v-model="item.TaskHour"
-                    :picker-options="{
-                      selectableRange: '00:00:00 - 23:55:00'
-                    }"
-                    format="HH:mm"
-                    :default-value="currentDateToMidi"
-                  ></el-time-picker>
-                </td>
-              </tr>
-            </table>
-            <br>
-
-            <label>Description</label>
-            <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
-            <br>
-            <br>
-            <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
-              <td>
-                <input type="checkbox" :id="'roomie' + roomie.roomieId">
-                &nbsp;
-                {{ roomie.firstName }} {{ roomie.lastName }}
-              </td>
-            </tr>
-            <br>
-            <br>&nbsp;
-            &nbsp;
-            <button
-              class="btn btn-dark"
-              @click="onSubmit"
-              style="
-    max-width: 8rem;
-"
-            >Sauvegarder</button>
-          </form>
-        </main>
-      </div>
-    </main>
-    <main v-else>
-      <loading/>
+      <loading />
     </main>
   </div>
   <!-- </div> -->
