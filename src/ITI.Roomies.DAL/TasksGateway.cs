@@ -23,15 +23,6 @@
 				using( SqlConnection con = new SqlConnection( _connectionString ) )
 				{
 					IEnumerable<TasksData> tasks = await con.QueryAsync<TasksData>(
-					//@"select t.TaskId,
-					//         t.TaskName,
-					//         t.TaskDes,
-					//         t.TaskDate,
-					//         t.State,
-					//         t.CollocId
-					//  from rm.tTasks t
-					//  where t.CollocId = @CollocId;",
-					//new { CollocId = collocId } );
 
 					@"select t.TaskId, t.TaskName, t.TaskDes, t.TaskDate, t.State, t.CollocId, tr.RoomieId, r.FirstName, r.LastName
 					  from rm.tTasks t inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
@@ -50,20 +41,6 @@
 				using( SqlConnection con = new SqlConnection( _connectionString ) )
 				{
 					IEnumerable<TasksData> tasks = await con.QueryAsync<TasksData>(
-						//              @"select t.TaskId,
-						//                      t.TaskName,
-						//                      t.TaskDes,
-						//                      t.TaskDate,
-						//                      t.State,
-						//                      t.CollocId,
-						//	r.RoomieId,
-						//	r.FirstName,
-						//	r.LastName
-						//                from rm.tTasks t
-						//inner join rm.tiTaskRoom tr on t.TaskId = tr.TaskId
-						//inner join rm.tRoomie r on tr.RoomieId = r.RoomieId
-						//                where tr.RoomieId = @RoomieId;",
-						//              new { RoomieId = roomieId } );
 						@"select t.TaskId,                             
 								t.TaskName,
 								t.TaskDes,                             

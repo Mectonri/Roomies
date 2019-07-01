@@ -17,7 +17,6 @@ namespace ITI.Roomies.WebApp.Controllers
     public class RoomiesController : Controller
     {
         readonly RoomiesGateway _roomiesGateway;
-        // readonly IEmailService _emailService;
 
         public RoomiesController( RoomiesGateway roomiesGateway )
         {

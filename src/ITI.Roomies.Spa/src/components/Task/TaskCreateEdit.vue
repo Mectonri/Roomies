@@ -9,13 +9,7 @@
       </header>
 
       <form class="card mainCard" @submit="onSubmit($event)">
-        <!-- <div class="alert alert-danger" v-if="errors.length > 0">
-        <b>Les champs suivants semblent invalides :</b>
 
-        <ul>
-          <li v-for="e of errors">{{e}}</li>
-        </ul>
-        </div>-->
         <br>
         <table class="taskCreateTable">
           <tr>
@@ -38,19 +32,9 @@
         <br>
 
         <label>Description</label>
-        <!-- <el-input type="textarea" v-model="item.TaskDes"/> -->
         <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
         <br>
 
-        <!-- <el-input type="datetime-local" id="echeance" v-model="item.TaskDate" required/> -->
-        <!-- <br>
-          <input
-            class="form-control"
-            type="datetime-local"
-            id="echeance"
-            v-model="item.TaskDate"
-            required
-        >-->
         <br>
         <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
           <td>
@@ -61,7 +45,6 @@
               :checked="roomie.checked"
             >
             <input v-else type="checkbox" :id="'roomie' + roomie.roomieId" checked> &nbsp;
-            <!-- <label :for="'roomie' + roomie.roomieId">{{ roomie.firstName }} {{ roomie.lastName }}</label> -->
             {{ roomie.firstName }} {{ roomie.lastName }}
           </td>
         </tr>

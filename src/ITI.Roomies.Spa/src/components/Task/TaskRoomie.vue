@@ -189,11 +189,6 @@ export default {
               currTaskDataColloc = this.futureTaskData[task].collocId;
             }
           }
-
-          // Ajoute la dernière tâche
-          // this.futureTaskData[task].firstName = tempRoomieList;
-          // tempArray.push(this.futureTaskData[task]);
-
           this.futureTaskData[task].firstName = tempRoomieList.join(", ");
 
           if (!this.futureTaskData[task].state)

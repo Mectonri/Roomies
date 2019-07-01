@@ -1,43 +1,11 @@
 <template>
-  <!-- <div> -->
   <div>
     <header>
       <h2>Tâches</h2>
     </header>
-
-    <!-- <main v-if="taskData[0]" class="card mainCard"> -->
     <main v-if="taskData[0]" class="card mainCard">
       <h3 style="margin: 1.5rem;">{{$currColloc.collocName}}</h3>
-      <!-- 
-      <table class="table table-dark" v-if="taskData !='Nada'">
-        <tr>
-          <td>Nom</td>
-          <td>Description</td>
-          <td>Echéance</td>
-          <td>Etat</td>
-          <td>Participant(s)</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr v-for="task of taskData" :key="task.taskId">
-          <td>{{ task.taskName }}</td>
-          <td>{{ task.taskDes }}</td>
-          <td>{{ task.taskDate }}</td>
-          <td v-if="!task.state">
-            <button class="btn btn-dark" @click="updateState(task.taskId, true)">{{ task.state }}</button>
-          </td>
-          <td v-else>
-            <button class="btn btn-dark" @click="updateState(task.taskId, false)">{{ task.state }}</button>
-          </td>
-          <td>{{task.firstName}}</td>
-          <td>
-            <button class="btn btn-dark" @click="modifierTâche(task.taskId)">Modifier</button>
-          </td>
-          <td>
-            <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
-          </td>
-        </tr>
-      </table>-->
+     
       <div v-if="taskData !='Nada'">
         <table class="tableTask">
           <thead>
@@ -50,19 +18,13 @@
                 <label class="form-control formDesc">Description</label>
               </div>
             </th>
-            <!-- <th>Nom</th> -->
-            <!-- <th>Echéance</th> -->
-            <!-- <th>Description</th> -->
             <th style="width: 8rem;"></th>
           </thead>
           <tbody>
-            <!-- <div v-for="task of taskData" :key="task.taskId"> -->
             <tr v-for="task of taskData" :key="task.taskId">
-              <!-- <tr> -->
               <td>
                 <div class="input-group mb-1">
                   <div class="input-group-text formCheckbox">
-                    <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
                     <el-tooltip content="Valider" placement="top">
                       <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
                     </el-tooltip>
@@ -123,21 +85,7 @@
       <!-- <h3 style="margin: 1.5rem;">Historique</h3> -->
       <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="collapseExample">
         <table class="tableTask">
-          <!-- <thead>
-          <th>
-            <div class="input-group mb-4">
-              <div class="input-group-text formCheckbox"></div>
-              <label class="form-control formName">Nom</label>
-              <label class="form-control formDate">Date</label>
-              <label class="form-control formFirstName">Roomie</label>
-              <label class="form-control formDesc">Description</label>
-            </div>
-          </th>
-          <!-- <th>Nom</th>-->
-          <!-- <th>Echéance</th> -->
-          <!-- <th>Description</th> -->
-          <!-- <th style="width: 8rem;"></th> -->
-          <!-- </thead> -->
+          
           <tbody>
             <tr v-for="task of taskHistoriqueData" :key="task.taskId">
               <th>
@@ -209,7 +157,6 @@ import {
   DeleteTaskByIdAsync
 } from "../../api/TaskApi.js";
 import Loading from "../../components/Utility/Loading.vue";
-// import monthFr from "../../components/Utility/month.js";
 
 export default {
   components: {
@@ -275,11 +222,6 @@ export default {
         laDate.getDate().toString().length == 1
           ? "0" + laDate.getDate().toString()
           : laDate.getDate();
-      // let monthToDisplay = laDate.getMonth() + 1;
-      // monthToDisplay =
-      //   monthToDisplay.toString().length == 1
-      //     ? "0" + monthToDisplay.toString()
-      //     : monthToDisplay;
       let monthToDisplay = this.monthList.monthFr[laDate.getMonth()];
       let hourToDisplay =
         laDate.getHours().toString().length == 1

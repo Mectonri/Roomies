@@ -245,12 +245,17 @@ export default {
     },
 
     async DestroyColloc() {
+      try {
       DestroyCollocAsync(this.$currColloc.collocId);
       this.$currColloc.setCollocId(-1);
       this.$currColloc.setCollocName("");
       // Désactive les boutons du menu
       this.$setMenuItemDisabled.setDisableState(true);
       this.$router.replace("/roomies");
+      
+      } catch (e) {
+        console.log(e );
+      }
     }
   }
 };
