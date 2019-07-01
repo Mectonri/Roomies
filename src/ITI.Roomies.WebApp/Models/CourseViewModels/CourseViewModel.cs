@@ -20,7 +20,7 @@ namespace ITI.Roomies.WebApp.Models.CourseViewModels
         [Required]
         public int CollocId { get; set; }
 
-        [Required]
-        public bool IsTemplate { get; set; }
+        //[Required]
+        //public bool IsTemplate { get; set; }
     }
 }

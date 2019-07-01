@@ -18,7 +18,10 @@
                 <label class="form-control formDesc">Description</label>
               </div>
             </th>
-            <th style="width: 8rem;"></th>
+            <!-- <th>Nom</th> -->
+            <!-- <th>Echéance</th> -->
+            <!-- <th>Description</th> -->
+            <th style="padding-left: 1rem;"></th>
           </thead>
           <tbody>
             <tr v-for="task of taskData" :key="task.taskId">
@@ -63,19 +66,23 @@
 
     <button
       class="btn btn-dark"
-      type="button"
       data-toggle="collapse"
-      data-target="#collapseExample"
+      data-target="#historique"
       aria-expanded="false"
       aria-controls="collapseExample"
       style="
     max-width: 8rem;
 "
+      @click="cacheCache('nouvelleTache')"
     >Historique</button>
     <button
       class="btn btn-dark"
-      style="max-width! 10rem; margin-left: 4rem;"
-      @click="clickRoute('/task/create')"
+      data-toggle="collapse"
+      data-target="#nouvelleTache"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+      style="margin-left: 4rem;"
+      @click="cacheCache('historique')"
     >Nouvelle tâche</button>
 
     <br>
@@ -83,17 +90,17 @@
     <main class="card mainCard" v-if="taskHistoriqueData[0]">
       <br>
       <!-- <h3 style="margin: 1.5rem;">Historique</h3> -->
-      <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="collapseExample">
+      <div v-if="taskHistoriqueData !='Nada'" class="collapse" id="historique">
         <table class="tableTask">
           
           <tbody>
             <tr v-for="task of taskHistoriqueData" :key="task.taskId">
-              <th>
+              <td>
                 <div class="input-group mb-1">
                   <div v-if="task.state" class="input-group-text formCheckbox formtrue">
-                    <el-tooltip content="Valider" placement="top">
+                    <!-- <el-tooltip content="Valider" placement="top">
                       <button class="btn btn-dark" @click="updateState(task.taskId, true)">✓</button>
-                    </el-tooltip>
+                    </el-tooltip>-->
                   </div>
                   <div v-else class="input-group-text formCheckbox formfalse">
                     <!-- <input type="checkbox" aria-label="Checkbox for following text input"> -->
@@ -123,23 +130,89 @@
                   <label v-if="task.state" class="form-control formDesc formtrue">{{ task.taskDes }}</label>
                   <label v-else class="form-control formDesc formfalse">{{ task.taskDes }}</label>
                 </div>
-              </th>
-              <th style="padding-left: 1rem;">
+              </td>
+              <td style="padding-left: 1rem;">
                 <!-- <label class="form-control formBtn"> -->
                 <el-tooltip content="Modifier" placement="top">
                   <button class="btn btn-dark" @click="modifierTâche(task.taskId)">⚙</button>
-                </el-tooltip>&nbsp;
-                <el-tooltip content="Supprimer" placement="top">
-                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
                 </el-tooltip>
+                <!-- <el-tooltip content="Supprimer" placement="top">
+                  <button class="btn btn-dark" @click="deleteTask(task.taskId)">X</button>
+                </el-tooltip>-->
                 <!-- </label> -->
-              </th>
+              </td>
               <!-- </div> -->
             </tr>
           </tbody>
         </table>
       </div>
       <div v-else>Aucune tâche à afficher</div>
+
+      <div class="collapse" id="nouvelleTache">
+        <main>
+          <form @submit="onSubmit($event)">
+            <br>
+            <table class="taskCreateTable">
+              <tr>
+                <td>
+                  <label class="required">Nom</label>
+                </td>
+                <td style="padding-left: 2rem;">
+                  <label class="required">Echéance</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input class="form-control" type="text" v-model="item.TaskName" required>
+                </td>
+                <td style="padding-left: 2rem;">
+                  <el-date-picker
+                    style="width: 10rem;"
+                    v-model="item.TaskDate"
+                    format="dd/MM"
+                    type="datetime"
+                    placeholder="Date"
+                    :default-value="currentDateToMidi"
+                  ></el-date-picker>
+
+                  <el-time-picker
+                    style="width: 10rem;"
+                    v-model="item.TaskHour"
+                    :picker-options="{
+                      selectableRange: '00:00:00 - 23:55:00'
+                    }"
+                    format="HH:mm"
+                    :default-value="currentDateToMidi"
+                  ></el-time-picker>
+                </td>
+              </tr>
+            </table>
+            <br>
+
+            <label>Description</label>
+            <textarea class="form-control textarea_width" v-model="item.TaskDes"/>
+            <br>
+            <br>
+            <tr v-for="roomie of roomiesList" :key="roomie.roomieId">
+              <td>
+                <input type="checkbox" :id="'roomie' + roomie.roomieId">
+                &nbsp;
+                {{ roomie.firstName }} {{ roomie.lastName }}
+              </td>
+            </tr>
+            <br>
+            <br>&nbsp;
+            &nbsp;
+            <button
+              class="btn btn-dark"
+              @click="onSubmit"
+              style="
+    max-width: 8rem;
+"
+            >Sauvegarder</button>
+          </form>
+        </main>
+      </div>
     </main>
     <main v-else>
       <loading/>
@@ -154,8 +227,10 @@ import AuthService from "../../services/AuthService";
 import {
   UpdateTaskStateAsync,
   getTasksByCollocIdAsync,
-  DeleteTaskByIdAsync
+  DeleteTaskByIdAsync,
+  createTaskAsync
 } from "../../api/TaskApi.js";
+import { GetRoomiesIdNamesByCollocIdAsync } from "../../api/CollocationApi.js";
 import Loading from "../../components/Utility/Loading.vue";
 
 export default {
@@ -167,7 +242,10 @@ export default {
       errors: [],
       taskData: [],
       taskHistoriqueData: [],
-      monthList: null
+      monthList: null,
+      item: {},
+      roomiesList: [],
+      currentDate: []
     };
   },
   computed: {
@@ -180,12 +258,31 @@ export default {
   async mounted() {
     this.monthList = require("../../components/Utility/month.js");
     this.refreshList();
+
+    // Date par défaut pour le date-picker
+    this.currentDateToMidi = new Date();
+    this.currentDateToMidi.setHours(0);
+    this.currentDateToMidi.setMinutes(0);
+    this.currentDateToMidi.setSeconds(0);
+    this.currentDateToMidi.setMilliseconds(0);
+    // Date par défaut pour le time-picker
+    this.item.TaskHour = new Date();
+    this.item.TaskHour.setHours(12);
+    this.item.TaskHour.setMinutes(30);
+    this.item.TaskHour.setSeconds(0);
+    this.item.TaskHour.setMilliseconds(0);
+
+    this.roomiesList = await GetRoomiesIdNamesByCollocIdAsync(
+      this.$currColloc.collocId
+    );
   },
 
   methods: {
     clickRoute(pathToRoute) {
       this.$router.push(pathToRoute);
     },
+
+    // Change une date renvoyée par SQL en date JS
     sqlToJsDate(sqlDate) {
       sqlDate = sqlDate.replace("T", " ");
 
@@ -217,6 +314,7 @@ export default {
       );
     },
 
+    // Change une date JS en string français
     dateToFrDisplay(laDate) {
       let dayToDisplay =
         laDate.getDate().toString().length == 1
@@ -255,6 +353,8 @@ export default {
     async modifierTâche(taskId) {
       this.$router.push("/task/edit/" + taskId);
     },
+
+    // Mise à jour des tableaux
     async refreshList() {
       try {
         this.futureTaskData = await getTasksByCollocIdAsync(
@@ -356,6 +456,62 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+
+    // Supprime la classe "show" du collapse non nécessaire
+    async cacheCache(classCacher) {
+      document.getElementById(classCacher).classList.remove("show");
+    },
+
+    // Création de tâche
+    async onSubmit() {
+      event.preventDefault();
+
+      this.item.roomiesId = [];
+
+      for (var i = 0; i < this.roomiesList.length; i++) {
+        if (
+          document.getElementById("roomie" + this.roomiesList[i].roomieId)
+            .checked
+        )
+          this.item.roomiesId.push(this.roomiesList[i].roomieId);
+      }
+
+      var errors = [];
+
+      console.log(typeof this.item.TaskDate);
+      console.log(this.item.TaskDate);
+      console.log(this.item.TaskHour);
+      this.item.TaskDate = new Date(
+        this.item.TaskDate.getTime() +
+          this.item.TaskHour.getMinutes() * 60 * 1000 +
+          this.item.TaskHour.getHours() * 60 * 60 * 1000
+      );
+      console.log(this.item.TaskDate < new Date().getTime());
+
+      if (!this.item.TaskName) errors.push("Le nom est invalide");
+      if (!this.item.TaskDate) errors.push("L'éhéance est invalide");
+      if (this.item.TaskDate < new Date().getTime())
+        errors.push("La date sélectionnée est déjà passée.");
+      if (!this.item.roomiesId[0])
+        errors.push("Aucun roomie selectionné pour la tâche.");
+
+      this.errors = errors;
+
+      if (errors.length == 0) {
+        try {
+          this.item.collocId = this.$currColloc.collocId;
+          await createTaskAsync(this.item);
+          this.refreshList();
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        for (var j = 0; j < errors.length; j++) {
+          console.log(errors[j]);
+          window.alert(errors[j]);
+        }
+      }
     }
   }
 };
@@ -369,13 +525,21 @@ export default {
   max-width: 10rem;
   width: 10rem;
   height: auto;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  border-right: 0px !important;
+  /* border-left: 0px !important; */
 }
 .formCheckbox {
-  width: 2.65rem;
+  width: 2.75rem;
   padding: 0.1rem;
-  border: 0px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  border-right: 0px !important;
+  /* border-left: 0px !important; */
+  border: 2px black solid;
   /* height: auto; */
 }
 .formDesc {
@@ -385,40 +549,46 @@ export default {
   word-break: break-all;
   height: auto;
   text-align: left;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  /* border-right: 0px !important; */
+  border-left: 0px !important;
 }
 .formBtn {
   max-width: 15rem;
   width: 15rem;
   height: auto;
+  border-top: 0px !important;
+  border-bottom: 0px !important;
+  border-right: 0px !important;
+  border-left: 0px !important;
 }
 .formDate {
   max-width: 6rem;
   width: 6rem;
   height: auto;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important; */
+  border-right: 0px !important;
+  border-left: 0px !important;
 }
 .formFirstName {
   max-width: 10rem;
   width: 10rem;
   /* word-break: break-all; */
   height: auto;
+  /* border-top: 0px !important; */
+  /* border-bottom: 0px !important;  */
+  border-right: 0px !important;
+  border-left: 0px !important;
 }
 
-.formDate,
-.formDesc,
-.formFirstName,
-.formName {
-  /* border: 1px solid rgb(50,50,50) !important; */
-  border-top: 0px !important;
-  border-bottom: 0px !important;
-  border-right: 0px !important;
-}
 tr > td {
   padding-bottom: 1;
 }
 
 .tableTask {
-  min-width: 60rem;
-  max-width: 80rem;
+  width: 100%;
 }
 .formfalse {
   background-color: #fd4d5f;
@@ -430,4 +600,9 @@ tr > td {
 /* input[type="checkbox"] {
   transform: scale(1.5);
 } */
+
+.el-date-editor,
+el-time-picker {
+  width: 8rem;
+}
 </style>

@@ -1,8 +1,14 @@
 <template>
   <div>
-    <header>
-      <h2 v-if="mode == 'create'">Ajouter une photo</h2>
-      <h2 v-else>Changer de photo</h2>
+    <template v-if="create">
+      <el-steps class="el-steps_header" space="50%" :active="1">
+        <el-step title="Informations" icon="el-icon-edit"></el-step>
+        <el-step title="Photo" icon="el-icon-picture"></el-step>
+        <el-step class="flex_basis_0" title="Collocation"></el-step>
+      </el-steps>
+    </template>
+    <header class="header_steps">
+      <h2>Ajouter une photo</h2>
     </header>
     <br>
 

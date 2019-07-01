@@ -6,20 +6,20 @@ namespace ITI.Roomies.WebApp.Models.ItemModel
     {
         public int ItemId { get; set; }
 
-        [Required]
         public int ItemPrice { get; set; }
 
         [Required]
         public string ItemName { get; set; }
 
-        [Required]
         public int CourseId { get; set; }
 
         public int RoomieId { get; set; }
 
         public int CollocId { get; set; }
 
-        [Required]
-        public bool IsRepeated { get; set; } 
+        public bool ItemSaved { get; set; }
+
+        //[Required]
+        //public bool IsRepeated { get; set; } 
     }
 }

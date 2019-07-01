@@ -12,13 +12,6 @@
       <form>
         <div v-if="route =='create'">
         <div>
-          <el-switch
-            v-model="course.isTemplate"
-            active-text="Template"
-            inactive-text="liste de course"
-          ></el-switch>
-        </div>
-        <div>
           <label class="required">Nom</label>
           <br>
           <input class="form-control" type="text" v-model="course.courseName" required>
@@ -107,9 +100,7 @@ export default {
       var errors = [];
 
       if (!this.course.courseName) errors.push("Nom");
-      if (!this.course.isTemplate) {
-        if (!this.course.courseDate) errors.push("Date");
-      }
+        // if (!this.course.courseDate) errors.push("Date");
       if (errors.length == 0) {
         try {
           if (this.route == "create") {
