@@ -133,7 +133,6 @@ import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
-// import Language from "../components/Utility/Language.vue";
 import Loading from "../components/Utility/Loading.vue";
 
 export default {
