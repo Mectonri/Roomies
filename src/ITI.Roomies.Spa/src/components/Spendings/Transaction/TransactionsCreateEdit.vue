@@ -7,11 +7,11 @@
     <div>
       <el-tabs type="border-card">
         
-      <el-tab-pane label="Category">Roomie
+      <el-tab-pane label="Roomie">
          <TDepenseCreateEdit></TDepenseCreateEdit>
       </el-tab-pane>
 
-      <el-tab-pane label="Roomie">Category
+      <el-tab-pane label="Category"> 
         <TBudgetCreateEdit></TBudgetCreateEdit>
       </el-tab-pane>
 

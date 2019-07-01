@@ -1,11 +1,11 @@
 <template>
   <div>
     
-    <header v-if="mode=='create'" >
-      <h2 >Ajouter une transaction</h2>
+    <!-- <header v-if="mode=='create'" >
+      <h2>Ajouter une transaction</h2>
       
     </header>
-    <head><H2>Modifier la transaction</H2></head>
+    <head><H2>Modifier la transaction</H2></head> -->
 
     <div>
       <form @submit="onSubmit($event)">
@@ -16,26 +16,29 @@
           </ul>
         </div>
         <div>
-          <label for="Price"></label>
+          <label for="Price">Price </label>
          <el-input-number
+         controls-position="right"
             type="number"
             name="Price"
             v-model="TBudget.price"
+            
             required>
           </el-input-number>
         </div>
         <div>
-          <label for="Date"></label>
+          <label for="Date">Date</label>
           <el-date-picker
+          name='Date'
             v-model="TBudget.date"
             type="date"
             placeholder="Date de la transaction"
-            required
-            
+            required            
           ></el-date-picker>
         </div>
         <div>
-          <el-select v-model="TBudget.categoryId" clearable placeholder="Categories">
+          <label for="category">Categorie</label>
+          <el-select v-model="TBudget.categoryId" id='category' clearable placeholder="Categories">
             <el-option
               v-for="category in categories"
               :key="category.categoryId"
@@ -44,7 +47,8 @@
             ></el-option>
           </el-select>
         </div> 
-       <el-button class="primary" @click="onSubmit">Sauvegarder</el-button>
+        <br><br>
+       <el-button type="primary" @click="onSubmit">Sauvegarder</el-button>
       </form>
     </div>
 
@@ -120,3 +124,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+label{
+margin-right: 100px;
+}
+</style>

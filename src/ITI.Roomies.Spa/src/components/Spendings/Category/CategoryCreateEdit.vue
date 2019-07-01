@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <h1 v-if="mode == 'create'">Ajouter une Category</h1>
-      <h1 v-else>Editer la category {{categoryName}}</h1>
+      <h1 v-if="mode == 'create'">Ajouter une categorie</h1>
+      <h1 v-else>Editer la categorie {{categoryName}}</h1>
     </div>
     <form @submit="onSubmit($event)">
       <div class="alert alert-danger" v-if="errors.length > 0">
@@ -126,11 +126,11 @@ export default {
 
   methods: {
     async refreshList(){
-    this.mode = this.$route.params.mode;
-    this.collocId = this.$currColloc.collocId;
-    this.categoryId = this.$route.params.id;
-
+      this.mode = this.$route.params.mode;
+      this.collocId = this.$currColloc.collocId;
+      this.categoryId = this.$route.params.id;
     },
+
     async setIcon(iconName) {
       this.category.iconName = iconName;
     },

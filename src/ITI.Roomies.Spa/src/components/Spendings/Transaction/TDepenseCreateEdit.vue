@@ -12,8 +12,9 @@
         </div>
 
         <div>
-          <label for="Price"></label>
+          <label for="Price">Price</label>
           <el-input-number
+          controls-position="right"
             type="number"
             name="Price"
             v-model="TDepense.price"
@@ -22,7 +23,7 @@
         </div>
 
         <div>
-          <label for="Date"></label>
+          <label for="Date">Date</label>
           <el-date-picker
             v-model="TDepense.date"
             type="date"
@@ -32,6 +33,7 @@
         </div>
 
         <div>
+          <label for="Rommie">Roomie</label>
           <el-select v-model="TDepense.rRoomieId" placeholder="Roomie">
             <el-option
               v-for="roomie in roomies"
@@ -41,7 +43,8 @@
             ></el-option>
           </el-select>
         </div>
-        <el-button class="primary" @click="onSubmit">Sauvegarder</el-button>
+        <br><br>
+        <el-button class="primary" type="primary" @click="onSubmit">Sauvegarder</el-button>
       </form>
     </div>
 
@@ -121,10 +124,11 @@ export default {
   
 }
 </script>
-<style>
-.el-input-number .el-input__inner{
-  background-color: red
+<style lang="scss" scoped>
+label{
+margin-right: 100px;
 }
 </style>
+
 
 
