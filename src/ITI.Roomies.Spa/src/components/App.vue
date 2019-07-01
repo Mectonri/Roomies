@@ -60,32 +60,6 @@
         <span slot="title">Tâches</span>
       </el-menu-item>
 
-      <!-- <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
-        <template slot="title">
-          <i class="el-icon-document"/>
-          <span>Tâches</span>
-        </template>
-
-        <el-menu-item
-          class="el-submenu-item"
-          index="1-1"
-          @click="clickRoute('/task/colloc')"
-          :disabled="$setMenuItemDisabled.disableState"
-        >Tâche de la Collocation</el-menu-item>
-        <el-menu-item
-          class="el-submenu-item"
-          index="1-2"
-          @click="clickRoute('/task/roomie')"
-          :disabled="true"
-        >Vos tâches</el-menu-item>
-        <el-menu-item
-          class="el-submenu-item"
-          index="1-3"
-          @click="clickRoute('/task/create')"
-          :disabled="$setMenuItemDisabled.disableState"
-        >Ajouter une tâche</el-menu-item>
-      </el-submenu>-->
-
       <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-location"></i>
         <span slot="title">Listes de courses</span>
@@ -131,11 +105,6 @@
         <i class="el-icon-setting"></i>
         <span slot="title">Paramètres</span>
       </el-menu-item>
-
-      <el-menu-item @click="clickRoute('/itemcretetemp')">
-        <i class="el-icon-setting"></i>
-        <span slot="title">itemtemp</span>
-      </el-menu-item>
       <br>
       <br>
       <br>
@@ -156,14 +125,6 @@
       </div>
     </template>
 
-
-    <!-- Le footer -->
-    <!-- <footer id="footer" class="font-small mdb-color lighten-3">
-      <div class="container">
-        <br>
-        <language/>
-      </div>
-    </footer>-->
   </div>
 </template>
 
