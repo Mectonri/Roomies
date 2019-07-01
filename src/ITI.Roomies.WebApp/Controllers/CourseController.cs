@@ -71,16 +71,6 @@ namespace ITI.Roomies.WebApp.Controllers
             }
         }
 
-        //[HttpPost("CreateTemplate")]
-        //public async Task<IActionResult> CreateTemplate( [FromBody] CourseTempData model)
-        //{
-        //    Result<int> result = await _courseGateway.CreateTempGroceryList( model.CourseName, model.CollocId);
-        //    return this.CreateResult( result, o =>
-        //    {
-        //        o.RouteName = "GetATemplate";
-        //        o.RouteValues = courseId => new { courseId };
-        //    } );
-        //}
 
         [HttpPut( "update" )]
         public async Task<IActionResult> UpdateAGroceryList( [FromBody] CourseViewModel model )

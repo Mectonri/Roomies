@@ -1,6 +1,5 @@
 <template>
   <div >
-    <!-- <div> -->
     <header>
       <h2>S'inscrire</h2>
     </header>

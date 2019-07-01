@@ -1,7 +1,6 @@
 <template class='profile'>
   <div v-if="!state">
     <header>
-      <!-- <h2>{{$t('Welcome')}} {{$t('Profil')}}</h2> -->
       <h2>{{$t('Profil')}}</h2>
     </header>
     <el-container>
@@ -159,11 +158,7 @@ export default {
         laDate.getDate().toString().length == 1
           ? "0" + laDate.getDate().toString()
           : laDate.getDate();
-      // let monthToDisplay = laDate.getMonth() + 1;
-      // monthToDisplay =
-      //   monthToDisplay.toString().length == 1
-      //     ? "0" + monthToDisplay.toString()
-      //     : monthToDisplay;
+
       let monthToDisplay = this.monthList.monthFr[laDate.getMonth()];
       let yearToDisplay = laDate.getFullYear();
       return dayToDisplay + " " + monthToDisplay + " " + yearToDisplay;

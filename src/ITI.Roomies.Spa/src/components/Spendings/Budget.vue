@@ -72,7 +72,6 @@ export default {
   async mounted() {
     this.collocId = this.$currColloc.collocId;
     this.categories = await getCategoriesAsync(this.collocId);
-    //this.budgets = await getAllBudgetAsync(this.collocId);
   },
 
   methods: {

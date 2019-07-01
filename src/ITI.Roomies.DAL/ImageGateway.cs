@@ -111,7 +111,7 @@ namespace ITI.Roomies.DAL
 
             string extension = Path.GetExtension( path );
 
-             return extension;
+            return extension;
         }
 
         internal void ExistDirectory( string path )

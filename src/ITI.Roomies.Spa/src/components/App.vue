@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <!-- Menu de navigation -->
-    <!-- <div> -->
     <el-menu
     id="navMenu"
       default-active="2"
@@ -12,7 +11,6 @@
       <!-- TO DO : Remplacer par l'image de la Colloc -->
       Name : {{$currColloc.collocName}}
       <br>
-      <!-- Id : {{$currColloc.collocId}} -->
       <el-menu-item @click="clickRoute('/roomies')">
         <i class="el-icon-star-on">
           <span slot="title">Accueil</span>
@@ -38,21 +36,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
-<!-- 
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-document"/>
-          <span>Themes</span>
-        </template>
 
-        <el-menu-item
-          class="el-submenu-item"
-          index="2-1"
-          v-for="(i, idx) in styles"
-          :key="i.name"
-          @click="setTheme(idx)"
-        >{{i.name}}</el-menu-item>
-      </el-submenu> -->
 
       <el-submenu index="1" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
@@ -84,10 +68,6 @@
         <i class="el-icon-location"></i>
         <span slot="title">Listes de courses</span>
       </el-menu-item>
-      <!-- <el-menu-item @click="clickRoute('/spendings')">
-        <i class="el-icon-pie-chart"></i>
-        <span slot="title">Dépense</span>
-      </el-menu-item> -->
 
       
       <el-submenu index="2" :disabled="$setMenuItemDisabled.disableState">
@@ -136,8 +116,6 @@
       </el-menu-item>
     </el-menu>
 
-    <!-- Affihe le chemin demandé -->
-    <!-- <template v-if="isCollapse"> -->
     <template>
       <div id="globalContainer">
       <main v-if="state == true " role="main">
@@ -209,7 +187,6 @@ export default {
       if (!AuthService.isConnected) {
         document.getElementById("navMenu").style.display = "none";
       } else {
-        //if (this.$checkedGoogle) {
         // Récupère la premère collocation du Roomie
         var collocData = await getCollocNameIdByRoomieIdAsync();
         if (collocData != undefined) {
