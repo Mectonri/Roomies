@@ -6,7 +6,7 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       }" 
-      :events="eventData" :plugins="calendarPlugins" :editable="true"  @dateClick="handleDateClick" />
+      :events="eventData" :plugins="calendarPlugins" :editable="true"   />
   </div>
 </template>
 
@@ -41,29 +41,7 @@ export default {
 
     sqlToJsDate(sqlDate) {
       sqlDate = sqlDate.replace("T", " ");
-      //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
-      /*var sqlDateArr1 = sqlDate.split("-");
-      //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
-      var sYear = sqlDateArr1[0];
-      var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
-      var sqlDateArr2 = sqlDateArr1[2].split(" ");
-      //format of sqlDateArr2[] = ['dd', 'hh:mm:ss.ms']
-      var sDay = (Number(sqlDateArr2[0]) + 1).toString();
-      return new Date(
-        sYear,
-        sMonth,
-        sDay
-      );*/
       return sqlDate;
-    },
-    handleDateClick(arg) {
-      if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
-        this.eventData.push({ // add new event data
-          title: 'New Event',
-          start: arg.date,
-          allDay: arg.allDay
-        })
-      }
     }
   },
   async mounted(){
@@ -72,7 +50,6 @@ export default {
     var taskData={title:"",start:""};
     
     for (var i=0; i<Task.length; i++){
-      //window['eventData'+i] ={ bar:true, popover:{label:'',},dates:'',}
       taskData.start =this.sqlToJsDate( Task[i].taskDate);
       taskData.title = 
         Task[i].firstName+' '+Task[i].lastName+' : '+Task[i].taskDes;
