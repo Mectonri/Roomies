@@ -14,7 +14,8 @@
           </ul>
         </div>
 
-        <div >
+        <div>
+          <label class="label" for="">Choississez une Category</label>
           <el-select 
             v-model="budget.categoryId"
             placeholder="Select the category"
@@ -38,6 +39,7 @@
 
           <label v-if="radio1 ==='Custom'" for="Amount">Amount</label>
 
+          <label class="label">Amount</label>
           <el-input-number v-model="budget.amount" controls-position="right" :min="1"></el-input-number>
           <el-radio-group v-model="radio1">
             <el-radio-button label="Monthly"></el-radio-button>
@@ -64,7 +66,7 @@
         </div>
       </form>
 
-      <el-button type="primary" round @click="onSubmit">Sauvegarder</el-button>
+      <el-button type="primary"  @click="onSubmit">Sauvegarder</el-button>
     </div>
 
 
@@ -180,9 +182,8 @@ endDate(radio1) {
 </script>
 
 <style lang="scss" scoped>
-.D1{
-  color: red !important;
+.label{
+margin-right: 100px;
 }
 </style>
-
 

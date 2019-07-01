@@ -1,33 +1,15 @@
 <template>
   <div>
-    <!-- <el-row :gutter="20">
-      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
-        <el-card>
-          <div>
-            <CategoryCreateEdit></CategoryCreateEdit>
-          </div>
-        </el-card>
-      </el-col>
-
-      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
-        <el-card>
-          <div>
-            <CategoryList></CategoryList>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row> -->
-
-    <div>
+ 
+  <div>
    <table>
      <th><td align="center"></td>
      <td align="center"></td></th>
      <tr>
-       <td align="center" class="card tdcreatecategory"><CategoryCreateEdit></CategoryCreateEdit></td>
+       <td align="center" class="card tdcreatecategory"><CategoryCreateEdit :key="force"></CategoryCreateEdit></td>
        <td align="center" class="card tdcreatecategory1"><CategoryList></CategoryList></td>
      </tr>
    </table>
-
     </div>
 
   </div>
@@ -41,7 +23,20 @@ export default {
   components: {
     CategoryList,
     CategoryCreateEdit
+  },
+  data() {
+    return {
+      force: 0,
+    };
+
+  },
+  methods: {
+    forceRendering(){
+    this.force +=1;
+    },
   }
+
+
 };
 </script>
 
@@ -51,12 +46,10 @@ export default {
 .tdcreatecategory{
   max-width: 45%;
   float: left;
-
 }
 .tdcreatecategory1{
   max-width: 45%;
   float: right;
-
 }
 .el-col {
   border-radius: 4px;
@@ -77,7 +70,6 @@ export default {
 .text {
   font-size: 14px;
 }
-
 .item {
   padding: 18px 0;
 }

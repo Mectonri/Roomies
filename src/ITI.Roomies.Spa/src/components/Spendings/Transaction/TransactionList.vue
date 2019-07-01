@@ -10,8 +10,6 @@
           <el-table-column label="Description" property="description"></el-table-column>
           <el-table-column label="Price" property="price"></el-table-column>
           <el-table-column label="Date"  property="date"></el-table-column>
-          <!-- <el-table-column label="BudgetId" poperty="budgetId"></el-table-column> -->
-
           <el-table-column label="RoomieId" property="roomieId"></el-table-column>
           <el-table-column label="Actions">
             <template slot-scope="scope">
@@ -85,7 +83,6 @@ export default {
     await this.refreshList();
   },
   methods: {
-    
     async refreshList() {
       try {
         this.transacBudgetList = await getAllTransacBudgetAsync();
@@ -125,4 +122,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+label{
+margin-right: 100px;
+}
+</style>
 
