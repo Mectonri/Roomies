@@ -186,28 +186,14 @@ export default {
           : laDate.getDate();
       let listeDay = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
       dayToDisplay = listeDay[laDate.getDay()] + " " + dayToDisplay;
-      // let monthToDisplay = laDate.getMonth() + 1;
-      // monthToDisplay =
-      //   monthToDisplay.toString().length == 1
-      //     ? "0" + monthToDisplay.toString()
-      //     : monthToDisplay;
+
       let monthToDisplay = this.monthList.monthFr[laDate.getMonth()];
-      // let hourToDisplay =
-      //   laDate.getHours().toString().length == 1
-      //     ? "0" + laDate.getHours().toString()
-      //     : laDate.getHours();
-      // let minutesToDisplay =
-      //   laDate.getMinutes().toString().length == 1
-      //     ? "0" + laDate.getMinutes().toString()
-      //     : laDate.getMinutes();
+
       return (
         dayToDisplay +
         " " +
         monthToDisplay
-        // + " " +
-        // hourToDisplay +
-        // "h" +
-        // minutesToDisplay
+       
       );
     }
   }
@@ -226,17 +212,7 @@ export default {
   /* border-left: 1px !important; */
   cursor: pointer;
 }
-/* .formDesc {
-  max-width: 30rem;
-  width: 30rem;
-  overflow: hidden;
-  word-break: break-all;
-  height: auto;
-  text-align: left;
-  border-right: 0px !important;
-  border-left: 0px !important;
-  cursor: pointer;
-} */
+
 .formBtn {
   max-width: 15rem;
   width: 15rem;

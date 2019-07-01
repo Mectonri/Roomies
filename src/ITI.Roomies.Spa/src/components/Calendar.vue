@@ -1,37 +1,48 @@
 <template>
   <div class="mainContainer">
-    <v-calendar is-dark is-expanded :rows="3" :columns="4" title-position="left" :attributes='attrs' year=2019>       
-    </v-calendar>
+    <FullCalendar defaultView="dayGridWeek"
+      :header="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }" 
+      :events="eventData" :plugins="calendarPlugins" :editable="true"  @dateClick="handleDateClick" />
   </div>
 </template>
 
 
 <script>
 import Vue from "vue";
-import VCalendar from "v-calendar";
 import {getTasksByCollocIdAsync} from "../api/TaskApi";
 import TaskCollocVue from './Task/TaskColloc.vue';
 
-Vue.use(VCalendar, {
-  componentPrefix: "v",
-});
+import FullCalendar from "@fullcalendar/vue";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from "@fullcalendar/interaction";
+import bootstrapPlugin from '@fullcalendar/bootstrap';
+
+Vue.component('FullCalendar', FullCalendar)
+
 
 export default {
   data() {
     return {
-      eventData:{ bar:true, popover:{label:'',},dates:'',},
-      TaskData:[],
-      attrs:[]
+      eventData:[{title: "All Day Event",start: "2019-06-30"}],
+      calendarPlugins: [ // plugins must be defined in the JS
+        dayGridPlugin,
+        timeGridPlugin,
+        interactionPlugin // needed for dateClick
+      ],
+      
     };
-  },
+  },    
   methods:{
-    CreateCalendarEvents(TaskData){
 
-    },
     sqlToJsDate(sqlDate) {
       sqlDate = sqlDate.replace("T", " ");
       //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
-      var sqlDateArr1 = sqlDate.split("-");
+      /*var sqlDateArr1 = sqlDate.split("-");
       //format of sqlDateArr1[] = ['yyyy','mm','dd hh:mm:ms']
       var sYear = sqlDateArr1[0];
       var sMonth = (Number(sqlDateArr1[1]) - 1).toString();
@@ -42,23 +53,39 @@ export default {
         sYear,
         sMonth,
         sDay
-      );
+      );*/
+      return sqlDate;
+    },
+    handleDateClick(arg) {
+      if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
+        this.eventData.push({ // add new event data
+          title: 'New Event',
+          start: arg.date,
+          allDay: arg.allDay
+        })
+      }
     }
   },
   async mounted(){
-    var TaskData = await getTasksByCollocIdAsync(this.$currColloc.collocId);
-    this.TaskData= TaskData;
-    var attrs=[];
+    var Task = await getTasksByCollocIdAsync(this.$currColloc.collocId);
+    var eventData=[];
+    var taskData={title:"",start:""};
     
-    for (var i=0; i<this.TaskData.length; i++){
-      window['eventData'+i] ={ bar:true, popover:{label:'',},dates:'',}
-      window['eventData'+i].dates = this.sqlToJsDate(this.TaskData[i].taskDate);
-      window['eventData'+i] .popover.label = 
-        this.TaskData[i].firstName+' '+this.TaskData[i].lastName+' : '+this.TaskData[i].taskDes;
-      attrs[i]=window['eventData'+i] ;
+    for (var i=0; i<Task.length; i++){
+      //window['eventData'+i] ={ bar:true, popover:{label:'',},dates:'',}
+      taskData.start =this.sqlToJsDate( Task[i].taskDate);
+      taskData.title = 
+        Task[i].firstName+' '+Task[i].lastName+' : '+Task[i].taskDes;
+      eventData[i] = taskData ;
+      console.log(taskData);
     }
-    this.attrs= attrs;
+    this.eventData= eventData;
   },
 }
 
 </script>
+<style lang="scss">
+@import"~@fullcalendar/core/main.css";
+@import"~@fullcalendar/daygrid/main.css";
+@import "~@fullcalendar/timegrid/main.css";
+</style>

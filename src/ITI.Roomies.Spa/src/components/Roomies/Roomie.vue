@@ -1,7 +1,6 @@
 <template>
   <div>
     <div v-if="this.collocName==''">
-      <!-- <el-aside width="200px">Menu</el-aside> -->
       <header>
         <h2>Bienvenue Roomie</h2>
       </header>
