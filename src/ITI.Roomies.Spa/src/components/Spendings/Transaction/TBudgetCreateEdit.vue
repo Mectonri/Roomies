@@ -53,7 +53,7 @@ import { createTransacBugetAsync, updateTransacBudgetAsync, getTransacBudgetAsyn
 import { getCategoriesAsync } from "../../../api/SpendingsApi/CategoryApi";
 
 export default {
-  data(){
+data(){
     return {
       errors: [],
       TBudget: {},

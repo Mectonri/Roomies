@@ -115,7 +115,12 @@ export default {
       this.collocId = this.$currColloc.collocId;
       this.categoryId = this.$route.params.id;
     },
-
+    show(){
+      this.$message({
+          showClose: true,
+          message: 'La catégorie '+ this.category.categoryName +' a bien été créée !',
+        });
+    },
     async edition() {
       if (this.mode == "edit") {
         try {
@@ -161,6 +166,7 @@ export default {
           console.error(errors);
         } finally {
           await this.refreshList();
+          this.show();
           this.$root.$emit("updateCategoryList");
           this.category = {};
           this.$router.replace("/category/create");
