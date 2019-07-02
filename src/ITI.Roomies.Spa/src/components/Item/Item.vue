@@ -262,3 +262,18 @@ export default {
   }
 };
 </script>
+<style scoped>
+.cardCurrentItem {
+  max-width: 90%;
+  min-height: 20rem;
+  flex: left;
+}
+.cardItemToAdd {
+  max-width: 90%;
+  min-height: 20rem;
+}
+
+.mainTable > tr {
+  vertical-align: top !important;
+}
+</style>

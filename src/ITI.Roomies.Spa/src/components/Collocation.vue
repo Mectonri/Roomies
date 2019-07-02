@@ -3,39 +3,41 @@
     <header>
       <h2>{{$t('colloc')}}</h2>
     </header>
-
-    <p>
-     {{$t('collocCreate')}}
-      <br>
-      <br>
-      <button
-        class="btn btn-dark"
-        @click="changeCreate()"
-        :disabled="!$setMenuItemDisabled.disableState"
-      >{{$t('create')}}</button>
-    </p>
-    <br>
-    <p>
-      {{$t('collocInvite')}}
-      <br>
-      <br>
-      <button
-        class="btn btn-dark"
-        @click="changeJoin()"
-        :disabled="!$setMenuItemDisabled.disableState"
-      >{{$t('join')}}</button>
-    </p>
-    <br>
-    <p>
-{{$t('collocInvite2')}}
-<br>
-      <br>
-      <button
-        class="btn btn-dark"
-        @click="changeInvite()"
-        :disabled="$setMenuItemDisabled.disableState"
-      >Inviter</button>
-    </p>
+    <span v-if="$setMenuItemDisabled.disableState">
+      <p>
+        {{$t('collocCreate')}}
+        <br />
+        <br />
+        <button
+          class="btn btn-dark"
+          @click="changeCreate()"
+          :disabled="!$setMenuItemDisabled.disableState"
+        >{{$t('create')}}</button>
+      </p>
+      <br />
+      <p>
+        {{$t('collocInvite')}}
+        <br />
+        <br />
+        <button
+          class="btn btn-dark"
+          @click="changeJoin()"
+          :disabled="!$setMenuItemDisabled.disableState"
+        >{{$t('join')}}</button>
+      </p>
+    </span>
+    <span v-else>
+      <p>
+        {{$t('collocInvite2')}}
+        <br />
+        <br />
+        <button
+          class="btn btn-dark"
+          @click="changeInvite()"
+          :disabled="$setMenuItemDisabled.disableState"
+        >Inviter</button>
+      </p>
+    </span>
     <div v-if="show1">
       <form @submit="onSubmit($event)">
         <div class="alert alert-danger" v-if="errors.length > 0">
@@ -48,10 +50,10 @@
 
         <div class="form-group">
           <label class="required">Nom de collocation</label>
-          <input class="form-control" type="text" v-model="item.CollocName" required>
+          <input class="form-control" type="text" v-model="item.CollocName" required />
         </div>
 
-        <br>
+        <br />
         <button class="btn btn-dark" native-type="submit" v-if="this.collocName==''">Sauvegarder</button>
         <p v-if="this.collocName!='' ">Vous avez déjà une collocation.</p>
       </form>
@@ -60,10 +62,10 @@
       <form @submit="onSubmitJoin($event)">
         <div class="form-group">
           <label class="required">Code :</label>
-          <input class="form-control" type="text" v-model="item.InviteKey" required>
+          <input class="form-control" type="text" v-model="item.InviteKey" required />
         </div>
 
-        <br>
+        <br />
         <button class="btn btn-dark" native-type="submit" v-if="this.collocName==''">Rejoindre</button>
         <p v-if="this.collocName!=''">Vous avez déjà une collocation.</p>
         <p v-if="this.checkjoin==0">Le code que vous avez rentré n'est pas valide.</p>
@@ -82,7 +84,7 @@
 
         <div class="form-group">
           <label class="required">Mail</label>
-          <input class="form-control" type="text" v-model="item.mail" required>
+          <input class="form-control" type="text" v-model="item.mail" required />
         </div>
 
         <button class="btn btn-dark" native-type="submit" v-if="this.collocName!=''">Envoyer</button>
@@ -95,23 +97,25 @@
     </div>
 
     <div v-if="this.collocName!='' && show4">
-      <br>
-      <br>
-      <br>
-      <button
-        class="btn btn-dark"
-        @click="onSubmitQuit($event)"
-        native-type="submit"
-      >Quitter la collocation</button>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <template
-        v-if="Admin==1 && !$setMenuItemDisabled.disableState"
-      >
-        <button class="btn btn-dark" @click="DestroyColloc()">Suppprimer la collocation</button>
-      </template>
+      <span v-if="!$setMenuItemDisabled.disableState">
+        <br />
+        <br />
+        <br />
+        <button
+          class="btn btn-dark"
+          @click="onSubmitQuit($event)"
+          native-type="submit"
+        >Quitter la collocation</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <template
+          v-if="Admin==1 && !$setMenuItemDisabled.disableState"
+        >
+          <button class="btn btn-dark" @click="DestroyColloc()">Suppprimer la collocation</button>
+        </template>
+      </span>
     </div>
   </div>
 </template>
@@ -246,15 +250,14 @@ export default {
 
     async DestroyColloc() {
       try {
-      DestroyCollocAsync(this.$currColloc.collocId);
-      this.$currColloc.setCollocId(-1);
-      this.$currColloc.setCollocName("");
-      // Désactive les boutons du menu
-      this.$setMenuItemDisabled.setDisableState(true);
-      this.$router.replace("/roomies");
-      
+        DestroyCollocAsync(this.$currColloc.collocId);
+        this.$currColloc.setCollocId(-1);
+        this.$currColloc.setCollocName("");
+        // Désactive les boutons du menu
+        this.$setMenuItemDisabled.setDisableState(true);
+        this.$router.replace("/roomies");
       } catch (e) {
-        console.log(e );
+        console.log(e);
       }
     }
   }

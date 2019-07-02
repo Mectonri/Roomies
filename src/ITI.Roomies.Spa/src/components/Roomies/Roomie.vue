@@ -5,11 +5,11 @@
         <h2>Bienvenue Roomie</h2>
       </header>
 
-      <v-calendar
+      <!-- <v-calendar
         :columns="$screens({ default: 1, lg: 2 })"
         :rows="$screens({ default: 1, lg: 2 })"
         :is-expanded="$screens({ default: true, lg: false })"
-      />
+      /> -->
     </div>
     <div v-if="this.collocName!=''">
       <h1>Collocation : {{collocName}}</h1>

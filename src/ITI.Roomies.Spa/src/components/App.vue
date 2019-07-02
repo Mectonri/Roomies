@@ -18,9 +18,9 @@
       </el-menu-item>
       <br>
       <br>
-      <el-button @click.native="expand_collapse">
+      <!-- <el-button @click.native="expand_collapse">
         <span class="navbar-toggler-icon el-icon-more"></span>
-      </el-button>
+      </el-button> -->
       <el-menu-item @click="clickRoute('/roomies/collocation')">
         <i class="el-icon-menu"></i>
         <span slot="title">Gestion collocation</span>
@@ -74,13 +74,6 @@
           <i class="el-icon-pie-chart"/>
           <span>Dépenses</span>
         </template>
-
-        <!-- <el-menu-item
-          class="el-submenu-item"
-          index="2-1"
-          @click="clickRoute('/chart')"
-          :disabled="$setMenuItemDisabled.disableState"
-        >Graphique</el-menu-item> -->
         <el-menu-item
           class="el-submenu-item"
           index="2-1"
@@ -155,7 +148,7 @@ export default {
       themeIdx: 0,
       message: "",
       state: true,
-      isCollapse: true
+      isCollapse: false
     };
   },
   computed: {
@@ -206,16 +199,16 @@ export default {
       await inviteRoomieAsync(this.message);
     },
     clickRoute(pathToRoute) {
-      if (!this.isCollapse) this.expand_collapse();
+      // if (!this.isCollapse) this.expand_collapse();
       this.$router.push(pathToRoute);
     },
-    expand_collapse() {
-      if (this.isCollapse) {
-        this.isCollapse = false;
-      } else {
-        this.isCollapse = true;
-      }
-    }
+    // expand_collapse() {
+    //   if (this.isCollapse) {
+    //     this.isCollapse = false;
+    //   } else {
+    //     this.isCollapse = true;
+    //   }
+    // }
   }
 };
 </script>
