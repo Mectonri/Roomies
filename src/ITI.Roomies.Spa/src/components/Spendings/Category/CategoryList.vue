@@ -1,7 +1,7 @@
 <template>
   <div>
 
-<div>
+<div v-if="categoryList.length >0">
   <h1>Liste des Categories</h1>
 </div>
 
@@ -11,8 +11,6 @@
           :span="6"
           v-for="(category, index) in categoryList"
           :key="index"
-        
-         
         >
           <div class="grid-content bg-purple">
             <p>
@@ -20,19 +18,12 @@
                 <el-popover
                   transition="el-fade-in-linear"
                   placement="bottom"
-                 
                   width="200"
                   trigger="click" 
                 >
-                
                   <CategoryInfo :Options="category"></CategoryInfo>   
                   <el-button slot="reference" >
-                    
-                    <img
-                      :src="iconPath + '/' + category.iconName + '.png'"
-                      width="50"
-                      height="50"
-                    >
+                    <img :src="iconPath + '/' + category.iconName + '.png'" width="50" height="50">
                   </el-button>
                   <div>
                     <el-popover placement="top" width="170" v-model="visible">
@@ -45,7 +36,7 @@
                     </el-popover>
                     <div>
                       <router-link :to="`edit/${category.categoryId}`">
-                      <el-button>edit</el-button>
+                      <el-button>Edit</el-button>
                       </router-link>
                     </div>
                    
@@ -53,7 +44,6 @@
                 </el-popover>
               </el-row>
             </p>
-            <div class="w-100"></div>
           </div>
         </el-col>
       </el-row>
@@ -112,36 +102,14 @@ export default {
 <style lang="scss" scoped>
 
 .el-button{
-  min-width: 10rem;
   max-width: 10rem;
+  display: flex;
 }
-
-
-// .el-row {
-//   margin-bottom: 20px;
-//   &:last-child {
-//     margin-bottom: 0;
-//   }
-// }
-// .el-col {
-//   border-radius: 4px;
-// }
-// .bg-purple-dark {
-//   background: #99a9bf;
-// }
-// .bg-purple {
-//   background: #d3dce6;
-// }
-// .bg-purple-light {
-//   background: #e5e9f2;
-// }
-// .grid-content {
-//   border-radius: 4px;
-//   min-height: 36px;
-// }
-// .row-bg {
-//   padding: 10px 0;
-//   background-color: #f9fafc;
-// }
-//
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+}
 </style>

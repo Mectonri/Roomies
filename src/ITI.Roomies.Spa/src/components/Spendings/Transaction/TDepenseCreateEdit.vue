@@ -88,7 +88,13 @@ export default {
     
   },
   methods: {
-
+    show(){
+      this.$message({
+          showClose: true,
+          message: 'La Transaction  a bien été ajoutée !',
+          type: 'success'
+        });
+    },
     async refreshList(){
       this.mode = this.$route.params.mode;
       this.TDepenseId = this.$route.params.id;
@@ -117,6 +123,7 @@ export default {
         this.$root.$emit('update');
         this.TDepense = {};
         this.$router.replace("/transaction/create");
+        this.show();
       }
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app"  v-bind:style="actualTheme.appStyle">
     <!-- Menu de navigation -->
     <el-menu
       id="navMenu"
@@ -94,9 +94,11 @@
         >Catégorie</el-menu-item>
       </el-submenu>
 
-      <el-menu-item @click="clickRoute('/')" disabled>
+      <el-menu-item @click="clickRoute('/')" >
+      <div v-bind:style="menustyle.style">
         <i class="el-icon-setting"></i>
         <span slot="title">Paramètres</span>
+      </div>
       </el-menu-item>
       <br />
       <br />
@@ -142,7 +144,18 @@ export default {
         {
           name: "Style2",
           style: "background-color: rgb(142, 142, 142);"
-        }
+        },
+        {
+          name: "Style3",
+          style:"background: white !important",
+          appStyle:"background: #0F2027 !important; background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027) !important;background: linear-gradient(to right, #2C5364, #203A43, #0F2027)!important;",
+        },
+        {
+          name: "Style4",
+          style: "",
+          appStyle:"background: #373B44 !important; background: -webkit-linear-gradient(to right, #4286f4, #373B44) !important; background: linear-gradient(to right, #4286f4, #373B44) !important;", 
+        },
+
       ],
       themeIdx: 0,
       message: "",
@@ -152,6 +165,9 @@ export default {
   },
   computed: {
     auth: () => AuthService,
+    menustyle() {
+      return this.styles[this.themeIdx];
+    },
     actualTheme() {
       return this.styles[this.themeIdx];
     },
