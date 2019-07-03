@@ -1,9 +1,13 @@
 <template>
   <div id="app">
     <div id="centered_container">
-      <h2 class="centered">Bienvenue sur Roomies</h2>
+      <h2 class="centered">Bienvenue sur </h2>
 
-      <button
+      <div>
+      <img src="https://i.ibb.co/wc1n3HF/Roomies-logo-long.png" alt="Roomies-logo-long" border="0">
+      
+
+      <button style="margin-top:16px"
         id="centered_container"
         @click="login('Google')"
         class="btn btn-lg btn-block btn-primary"
@@ -16,6 +20,7 @@
         @click="login('Base')"
         class="btn btn-block btn-lg btn-dark"
       >Se connecter via Roomies</button>
+      </div>
     </div>
     <div style="padding-top: 3rem;">
       <language/>

@@ -12,14 +12,12 @@ header{
 html, main, #app{
     // background-color: rgb(200,200,200) !important;
 }
-
 html, body, #app, content *{
     height: 100% !important;
 }
 body, #app, content *{
   min-height: 100% !important;
 }
-
 body{
     font-weight: 500;
 }
@@ -109,7 +107,6 @@ body, #app, content *{
   // background-color: #b18f5f;
   background-color: rgb(250,250,250);
 }
-
 
 .mainCard{
   // background-color: #b18f5f !important; 

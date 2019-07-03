@@ -1,79 +1,19 @@
 <template class='profile'>
-  <div v-if="!state">
-    <header>
-      <h2>{{$t('Profil')}}</h2>
-    </header>
-    <el-container>
-      <el-row>
-        <el-col>
-          <div class="centerBox">
-            <header style="padding-left: 2rem;">
-              <h5>{{$t('pic')}}</h5>
-            </header>
-            <img
-              width="200px"
-              height="200px"
-              class="profilePicture"
-              :src="this.env+'/'+this.roomiePic"
-              alt="Vous n'avez pas de photo de profil"
-            >
-            <br>
-          </div>
-        </el-col>
+  <div>
+    <div class="card">
+      <h2 style="text-align:center">{{$t('Profil')}}</h2>
+      <div v-if="roomiePic == null">
+        <img :src="this.env+'/Pictures/Icons/Default.png'" alt style="width:100%" />
+      </div>
+      <div v-else>
+        <img width="200px" height="200px" class="profilePicture" :src="this.env+'/'+this.roomiePic" />
+      </div>
 
-        <el-col>
-          <div v-if="roomie.description == null || ''">
-            <tr>{{$t("nullDesc")}}</tr>
-          </div>
-          <div v-else>
-            <tr>
-              <th>Description</th>
-              <td>{{roomie.description}}</td>
-            </tr>
-          </div>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col>
-          <table>
-            <div v-if="roomie == null">
-              <tr>
-                <h1>{{$t('erreur')}}</h1>
-              </tr>
-            </div>
-
-            <div v-else>
-              <br>
-              <br>
-              <tr>
-                <th>{{$t('Nom')}}</th>
-                <td>{{roomie.lastName}}</td>
-              </tr>
-              <tr>
-                <th>{{$t('Prenom')}}</th>
-                <td>{{roomie.firstName}}</td>
-              </tr>
-              <tr>
-                <th>{{$t('Bday')}}</th>
-                <td>{{roomie.birthDate}}</td>
-              </tr>
-              <tr>
-                <th>Email</th>
-                <td>{{roomie.email}}</td>
-              </tr>
-              <tr>
-                <th>{{$t("number")}}</th>
-                <td>{{roomie.phone}}</td>
-              </tr>
-            </div>
-          </table>
-        </el-col>
-      </el-row>
-    </el-container>
-  </div>
-  <div v-else>
-    <loading/>
+      <h1>{{roomie.firstName}} {{roomie.lastName}}</h1>
+      <p>{{roomie.birthDate}}</p>
+      <p> <a :href="'mailto:'+roomie.email">{{roomie.email}}</a></p>
+      <p><a :href="'tel:'+roomie.phone">{{roomie.phone}}</a></p>
+    </div>
   </div>
 </template>
 
@@ -94,7 +34,7 @@ export default {
       env: process.env.VUE_APP_BACKEND,
       roomieId: null,
       roomie: null,
-      roomiePic: "",
+      roomiePic: null,
       defaultPic: null,
       state: true
     };
@@ -110,7 +50,7 @@ export default {
       );
       this.roomiePic = await getRoomiePicAsync();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.state = false;
     }
@@ -166,7 +106,22 @@ export default {
   }
 };
 </script>
-<style scoped>
 
+<style scoped>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+a:hover {
+  opacity: 0.7;
+}
 </style>
 

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
@@ -89,9 +90,22 @@ namespace ITI.Roomies.WebApp.Controllers
 
             using( MailMessage mail = new MailMessage() )
             {
+
+
+                //const string fileName = "invitationRoomie.html";
+                ////Read HTML from file
+                //var content = System.IO.File.ReadAllText( fileName );
+                ////Replace all values in the HTML
+                //content = content.Replace( "{MY_TITLE}", titleTextBox.Text );
+                ////Write new HTML string to file
+                //System.IO.File.WriteAllText( fileName, content );
+                ////Show it in the default application for handling .html files
+                //Process.Start( fileName );
+
+
                 mail.From = new MailAddress( emailFromAddress );
                 mail.To.Add( email );
-                mail.Subject = "Testing";
+                mail.Subject = "Bienvenue sur Roomie";
                 mail.Body = body;
                 mail.IsBodyHtml = true;
 
