@@ -66,7 +66,7 @@
         </div>
       </form>
 
-      <el-button type="primary"  @click="onSubmit">Sauvegarder</el-button>
+      <button class="btn btn-dark" type="primary"  @click="onSubmit">Sauvegarder</button>
     </div>
 
 

@@ -100,6 +100,14 @@ data(){
       }
    }  
     },
+       show(){
+      this.$message({
+          showClose: true,
+          message: 'La Transaction  a bien été ajoutée !',
+          type: 'success'
+        });
+    },
+
     async onSubmit(){
       event.preventDefault();
 
@@ -123,6 +131,7 @@ data(){
         this.$root.$emit('update');
         this.TBudget = {};
         this.$router.replace("/transaction/create");
+        this.show();
       }
       }
     },

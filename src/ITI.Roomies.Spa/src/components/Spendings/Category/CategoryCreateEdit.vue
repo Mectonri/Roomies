@@ -119,6 +119,7 @@ export default {
       this.$message({
           showClose: true,
           message: 'La catégorie '+ this.category.categoryName +' a bien été créée !',
+          type: 'success'
         });
     },
     async edition() {

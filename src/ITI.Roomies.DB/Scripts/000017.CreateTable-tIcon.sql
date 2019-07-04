@@ -27,7 +27,18 @@ insert into rm.tIcon(IconName) values ('Icon16');
 insert into rm.tIcon(IconName) values ('Icon17');
 insert into rm.tIcon(IconName) values ('Icon18');
 insert into rm.tIcon(IconName) values ('Icon19');
-
-
-
-
+insert into rm.tIcon(IconName) values ('Icon20');
+insert into rm.tIcon(IconName) values ('Icon21');
+insert into rm.tIcon(IconName) values ('Icon22');
+insert into rm.tIcon(IconName) values ('Icon23');
+insert into rm.tIcon(IconName) values ('Icon24');
+insert into rm.tIcon(IconName) values ('Icon25');
+insert into rm.tIcon(IconName) values ('Icon26');
+insert into rm.tIcon(IconName) values ('Icon27');
+insert into rm.tIcon(IconName) values ('Icon28');
+insert into rm.tIcon(IconName) values ('Icon29');
+insert into rm.tIcon(IconName) values ('Icon30');
+insert into rm.tIcon(IconName) values ('Icon31');
+insert into rm.tIcon(IconName) values ('Icon32');
+insert into rm.tIcon(IconName) values ('Icon33');
+insert into rm.tIcon(IconName) values ('Icon34');
