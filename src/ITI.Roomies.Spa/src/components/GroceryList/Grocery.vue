@@ -112,7 +112,8 @@ import {
 import {
   createItem,
   getSavedItemListFromCollocAsync,
-  deleteItemAsync
+  deleteItemAsync,
+  deleteSavedItemAsync
 } from "../../api/ItemApi.js";
 import createItemForm from "../../components/Item/createItemForm.vue";
 // import monthFr from "../../components/Utility/month.js";
@@ -244,7 +245,7 @@ export default {
     },
     async deleteItem(itemId) {
       try {
-        await deleteItemAsync(itemId);
+        await deleteSavedItemAsync(itemId);
         await this.refreshList();
       } catch (e) {
         console.log(e);
