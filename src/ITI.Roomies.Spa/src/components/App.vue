@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <!-- Menu de navigation -->
     <el-menu
       id="navMenu"
@@ -9,14 +8,21 @@
       :collapse="isCollapse"
       v-bind:style="actualTheme.style"
     >
-      <!-- TO DO : Remplacer par l'image de la Colloc -->
-      Name : {{$currColloc.collocName}}
       <br />
-      <el-menu-item @click="clickRoute('/roomies')">
-        <i class="el-icon-star-on">
-          <span slot="title">Accueil</span>
-        </i>
-      </el-menu-item>
+      <button>
+        <img
+          class="form-control"
+          @click="clickRoute('/roomies')"
+          src="../../public/logo_800_300.png"
+          style="width: 11rem;height: 4rem;"
+        />
+      </button>
+
+      <!-- TO DO : Remplacer par l'image de la Colloc -->
+      Collocation :
+      <br />
+
+      {{$currColloc.collocName}}
       <br />
       <br />
       <!-- <el-button @click.native="expand_collapse">
@@ -107,11 +113,10 @@
         <span slot="title">Se déconnecter</span>
       </el-menu-item>
     </el-menu>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style='height: 3rem;'>
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style='height: 3rem;'>
   
-</nav>
+    </nav>-->
 
-    
     <template>
       <div id="globalContainer">
         <main v-if="state == true " role="main">
@@ -131,6 +136,7 @@ import "../directives/requiredProviders";
 import { inviteRoomieAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
 import Loading from "../components/Utility/Loading.vue";
+import aodaod from "../../public/logo_800_300.png";
 
 export default {
   components: {
@@ -152,7 +158,8 @@ export default {
       themeIdx: 0,
       message: "",
       state: true,
-      isCollapse: false
+      isCollapse: false,
+      aodaod: "../../public/logo_800_300.png"
     };
   },
   computed: {
@@ -260,5 +267,10 @@ export default {
 
   top: 2.5rem;
   padding-left: 12rem;
+}
+
+.form-control {
+  padding: 0;
+  margin-left: 0.5rem;
 }
 </style>

@@ -35,7 +35,7 @@
         </div>
 
         <div>
-          <label class="required">Phone</label>
+          <label class="required">Téléphone</label>
           <input class="form-control" type="text" v-model="item.phone" required>
         </div>
         <br>
