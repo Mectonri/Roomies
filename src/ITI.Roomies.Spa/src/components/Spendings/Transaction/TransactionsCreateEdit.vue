@@ -5,7 +5,7 @@
     </div>
 
     <div>
-      <el-tabs type="border-card">
+      <el-tabs type="card">
         
       <el-tab-pane label="Roomie">
          <TDepenseCreateEdit :key="force"></TDepenseCreateEdit>

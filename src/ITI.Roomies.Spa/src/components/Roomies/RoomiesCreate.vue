@@ -5,7 +5,7 @@
       <el-step title="Photo" icon="el-icon-picture"></el-step>
       <el-step class="flex_basis_0" title="Collocation"></el-step>
     </el-steps>
-    </div>
+    
     
     <header class="header_steps">
       <h2>S'inscrire</h2>

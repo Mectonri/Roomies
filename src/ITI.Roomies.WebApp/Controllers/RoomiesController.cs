@@ -86,7 +86,7 @@ namespace ITI.Roomies.WebApp.Controllers
             bool enableSSL = true;
             string emailFromAddress = "ITI.Roomies@gmail.com"; //Sender Email Address
             string password = "0123456789A@"; //Sender Password
-            string body = "Test";
+            string body = "Bienvenue sur Roomies";
 
             using( MailMessage mail = new MailMessage() )
             {

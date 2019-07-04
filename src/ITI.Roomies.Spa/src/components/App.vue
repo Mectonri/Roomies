@@ -9,6 +9,7 @@
       v-bind:style="actualTheme.style"
     >
       <!-- TO DO : Remplacer par l'image de la Colloc -->
+     
       Name : {{$currColloc.collocName}}
       <br />
       <el-menu-item @click="clickRoute('/roomies')">
@@ -94,12 +95,22 @@
         >Catégorie</el-menu-item>
       </el-submenu>
 
-      <el-menu-item @click="clickRoute('/')" >
-      <div v-bind:style="menustyle.style">
-        <i class="el-icon-setting"></i>
-        <span slot="title">Paramètres</span>
-      </div>
-      </el-menu-item>
+      <el-submenu index="3">
+          <template slot="title">
+            <i class="el-icon-setting"></i>
+            <span slot="title">Paramètres</span>
+          </template>
+
+          <el-submenu index="3-1">
+            <template slot="title">Thèmes</template>
+            <el-menu-item
+              index="3-1-1"
+              v-for="(i, idx) in styles"
+              :key="i.name"
+              @click="setTheme(idx),menustyle()"
+            >{{i.name}}</el-menu-item>
+          </el-submenu>
+        </el-submenu>
       <br />
       <br />
       <br />
@@ -125,7 +136,7 @@
 <script>
 import AuthService from "../services/AuthService";
 import "../directives/requiredProviders";
-import { inviteRoomieAsync } from "../api/RoomiesApi.js";
+import { inviteRoomieAsync, getCollocPicAsync } from "../api/RoomiesApi.js";
 import { getCollocNameIdByRoomieIdAsync } from "../api/CollocationApi";
 import Loading from "../components/Utility/Loading.vue";
 
@@ -136,25 +147,41 @@ export default {
 
   data() {
     return {
+      env: process.env.VUE_APP_BACKEND,
+      picPath: null,
+      defaultPic: null,
       styles: [
         {
-          name: "Style1",
-          style: "background-color: white;"
+          name: "Light",
+          style: "background-color: white !important;",
+          appStyle: "background-color: white!important"
         },
         {
-          name: "Style2",
-          style: "background-color: rgb(142, 142, 142);"
+          name: "Dark",
+          style: "background-color: #8f9196 !important;",
+          appStyle: "background-color: #8f9196 !important;"
         },
         {
-          name: "Style3",
-          style:"background: white !important",
-          appStyle:"background: #0F2027 !important; background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027) !important;background: linear-gradient(to right, #2C5364, #203A43, #0F2027)!important;",
+          name: "Azur Lane",
+          style:
+            "background: #7F7FD5!important; background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)!important;background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)!important;",
+          appStyle:
+            "body, #app, content *{background: #7F7FD5!important; background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)!important;background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5)!important;}"
         },
         {
-          name: "Style4",
-          style: "",
-          appStyle:"background: #373B44 !important; background: -webkit-linear-gradient(to right, #4286f4, #373B44) !important; background: linear-gradient(to right, #4286f4, #373B44) !important;", 
+          name: "Royal Blue Petrol",
+          style:
+            "background: #BBD2C5 !important;background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5)!important;background: linear-gradient(to right, #292E49, #536976, #BBD2C5)!important;",
+          appStyle:
+            "body, #app, content *{background: #BBD2C5 !important;background: -webkit-linear-gradient(to right, #292E49, #536976, #BBD2C5)!important;background: linear-gradient(to right, #292E49, #536976, #BBD2C5)!important;background-color: #fafafa;}"
         },
+        {
+          name: "Lizo",
+          style:
+            "background: #654ea3;background: -webkit-linear-gradient(to right, #eaafc8, #654ea3);background: linear-gradient(to right, #eaafc8, #654ea3);",
+          appStyle:
+            "body, #app, content *{background: #654ea3;background: -webkit-linear-gradient(to right, #eaafc8, #654ea3);background: linear-gradient(to right, #eaafc8, #654ea3);}"
+        }
 
       ],
       themeIdx: 0,
@@ -177,6 +204,7 @@ export default {
   },
   async mounted() {
     this.state = true;
+    
     //Cache le menu de navigation si l'utilisateur n'est pas connecté
     try {
       if (!AuthService.isConnected) {
