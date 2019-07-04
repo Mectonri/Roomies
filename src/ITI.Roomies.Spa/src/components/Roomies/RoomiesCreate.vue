@@ -6,6 +6,7 @@
       <el-step class="flex_basis_0" title="Collocation"></el-step>
     </el-steps>
     
+    
     <header class="header_steps">
       <h2>S'inscrire</h2>
     </header>

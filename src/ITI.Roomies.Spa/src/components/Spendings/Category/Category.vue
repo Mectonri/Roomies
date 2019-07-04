@@ -2,9 +2,9 @@
   <div>
  
   <div>
-   <table>
+   <table class="category">
      <th><td align="center"></td>
-     <td align="center"></td></th>
+     <td align="center" ></td></th>
      <tr>
        <td align="center" class="card tdcreatecategory"><CategoryCreateEdit :key="force"></CategoryCreateEdit></td>
        <td align="center" class="card tdcreatecategory1"><CategoryList></CategoryList></td>
@@ -42,13 +42,16 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.category{
+  width: 82vw;
+}
 .tdcreatecategory{
   max-width: 45%;
   float: left;
 }
 .tdcreatecategory1{
   max-width: 45%;
+  height: 30vh;
   float: right;
 }
 .el-col {
