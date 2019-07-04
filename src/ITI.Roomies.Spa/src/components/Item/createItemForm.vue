@@ -71,7 +71,7 @@ export default {
         try {
           this.item.collocId = this.$currColloc.collocId;
           this.item.itemSaved = true;
-
+          this.item.itemPrice = this.item.itemPrice * 100;
           await createItem(this.item);
 
           window.alert("Objet enregistré");

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+
     <!-- Menu de navigation -->
     <el-menu
       id="navMenu"
@@ -106,7 +107,11 @@
         <span slot="title">Se déconnecter</span>
       </el-menu-item>
     </el-menu>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style='height: 3rem;'>
+  
+</nav>
 
+    
     <template>
       <div id="globalContainer">
         <main v-if="state == true " role="main">

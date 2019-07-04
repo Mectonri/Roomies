@@ -87,6 +87,23 @@ namespace ITI.Roomies.WebApp.Controllers
             Result result = await _itemGateway.Delete( itemId );
             return this.CreateResult( result );
         }
+  
+        [HttpDelete( "deleteSavedItem/{itemId}" )]
+        public async Task<IActionResult> DeleteSavedItem( int itemId )
+        {
+            Result resultFind = await _itemGateway.FindItemByIdInCourse( itemId );
+            if( resultFind.Status == Status.NotFound )
+            {
+                Result result = await _itemGateway.Delete( itemId );
+                return this.CreateResult( result );
+            }
+            else
+            {
+                Result result = await _itemGateway.UpdateTaskState( itemId, false );
+                return this.CreateResult( result );
+            }
+
+        }
         
         [HttpDelete( "deleteFromCourse/{itemId}/{courseId}/{roomieId}/{itemSaved}" )]
         public async Task<IActionResult> DeleteFromCourseItem( int itemId, int courseId, int roomieId, bool itemSaved )
