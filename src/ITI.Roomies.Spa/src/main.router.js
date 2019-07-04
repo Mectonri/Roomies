@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 import requireAuth from './helpers/requireAuth';
 
 // Components
-// import Home from   './components/Home.vue'
+import Home from   './components/Home.vue'
 import Login from  './components/Login.vue'
 import Logout from './components/Logout.vue'
 import Calendar from './components/Calendar.vue'
@@ -40,7 +40,7 @@ import TransactionsCreateEditList from './components/Spendings/Transaction/Trans
 
 
 const routes = [
-    // { path: '/', component: Home, beforeEnter: requireAuth },
+    { path: '/', component: Home, beforeEnter: requireAuth },
     
     { path: '/login', component: Login },
     { path: '/logout', component: Logout, beforeEnter: requireAuth },

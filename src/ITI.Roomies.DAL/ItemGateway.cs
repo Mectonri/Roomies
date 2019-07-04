@@ -34,6 +34,21 @@ namespace ITI.Roomies.DAL
                 return Result.Success( item );
             }
         }
+        
+        public async Task<Result<ItemData>> FindItemByIdInCourse( int itemId )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                ItemData item = await con.QueryFirstOrDefaultAsync<ItemData>(
+                    @"select i.itemId
+                      from rm.tiItemCourse i
+                      where i.ItemId = @ItemId;",
+                    new { ItemId = itemId } );
+
+                if( item == null ) return Result.Failure<ItemData>( Status.NotFound, "Item not found." );
+                return Result.Success( item );
+            }
+        }
 
         //public async Task<Result<RItemData>> FindRItemById( int rItemId )
         //{
@@ -257,6 +272,23 @@ namespace ITI.Roomies.DAL
                 p.Add( "@RoomieId", roomieId );
                 p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
                 await con.ExecuteAsync( "rm.sItemUpdate", p, commandType: CommandType.StoredProcedure );
+                int status = p.Get<int>( "@Status" );
+                if( status == 1 ) return Result.Failure( Status.NotFound, "Item not found." );
+                Debug.Assert( status == 0 );
+                return Result.Success( Status.Ok );
+            }
+        }
+
+
+        public async Task<Result> UpdateTaskState( int itemId, bool itemSaved )
+        {
+            using( SqlConnection con = new SqlConnection( _connectionString ) )
+            {
+                var p = new DynamicParameters();
+                p.Add( "@ItemId", itemId );
+                p.Add( "@ItemSaved", itemSaved );
+                p.Add( "@Status", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue );
+                await con.ExecuteAsync( "rm.sItemUpdateState", p, commandType: CommandType.StoredProcedure );
                 int status = p.Get<int>( "@Status" );
                 if( status == 1 ) return Result.Failure( Status.NotFound, "Item not found." );
                 Debug.Assert( status == 0 );

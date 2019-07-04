@@ -43,6 +43,10 @@ export async function deleteItemAsync(itemId){
   return await deleteAsync(`${endpoint}/${itemId}`);
 }
 
+export async function deleteSavedItemAsync(itemId){
+  return await deleteAsync(`${endpoint}/deleteSavedItem/${itemId}`);
+}
+
 export async function deleteItemFromListAsync(itemId, courseId, roomieId, itemSaved){
   return await deleteAsync(`${endpoint}/deleteFromCourse/${itemId}/${courseId}/${roomieId}/${itemSaved}`);
 }

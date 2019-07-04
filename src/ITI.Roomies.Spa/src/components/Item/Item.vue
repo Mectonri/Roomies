@@ -68,9 +68,6 @@
                   </td>
                   <td>{{i.itemName}}</td>
                   <td>{{i.itemPrice}} €</td>
-                  <!-- <td> -->
-                  <!-- <button class="btn btn-dark" @click="deleteItem(i.itemId)">A modifier</button> -->
-                  <!-- </td> -->
                 </tr>
               </tbody>
             </table>
@@ -130,6 +127,7 @@
 import {
   getSavedItemListFromCollocAsync,
   deleteItemFromListAsync,
+  deleteSavedItemAsync,
   getItemListAsync,
   createItemInListAsync,
   createItem
