@@ -1,6 +1,4 @@
 <template>
-  <div >
-    <header>
   <div id="app">
     <el-steps class="el-steps_header" space="50%" :active="0">
       <el-step title="Informations" icon="el-icon-edit"></el-step>

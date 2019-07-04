@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <template v-if="create">
       <el-steps class="el-steps_header" space="50%" :active="1">
         <el-step title="Informations" icon="el-icon-edit"></el-step>
@@ -10,24 +10,24 @@
     <header class="header_steps">
       <h2>Ajouter une photo</h2>
     </header>
-    <br>
+    <br />
 
     <main v-if="picPath != null">
       <template v-if="!defaultPic">
         <!-- <div v-if="route == 'colloc'"> -->
         <form enctype="multipart/form-data">
-          <img :src="env+'/'+this.picPath" width="200px" height="200px">
-          <br>
+          <img :src="env+'/'+this.picPath" width="200px" height="200px" />
+          <br />
           <input
             type="file"
             class="btn"
             name="image"
             accept="image/x-png, image/jpg, image/jpeg"
             @change="handleImageUpload($event.target.files)"
-          >
-          <br>
-          <br>
-          <br>
+          />
+          <br />
+          <br />
+          <br />
           <button
             class="btn btn-dark"
             @click="submitImage()"
@@ -50,13 +50,13 @@
             name="image"
             accept="image/x-png, image/jpg, image/jpeg"
             @change="handleImageUpload($event.target.files)"
-          >
-          <br>
-          <br>Image actuelle :
-          <br>
-          <img src="../../../public/default_profile_pic.png" width="200" height="200">
-          <br>
-          <br>
+          />
+          <br />
+          <br />Image actuelle :
+          <br />
+          <img src="../../../public/default_profile_pic.png" width="200" height="200" />
+          <br />
+          <br />
           <button
             class="btn btn-dark"
             @click="submitImage()"
@@ -81,7 +81,7 @@
       </template>
     </main>
     <main v-else>
-      <loading/>
+      <loading />
     </main>
   </div>
 </template>
@@ -89,7 +89,11 @@
 <script>
 import axios from "axios";
 import AuthService from "../../services/AuthService";
-import { getRoomiePicAsync, getRoomieByIdAsync, getCollocPicAsync} from "../../api/RoomiesApi";
+import {
+  getRoomiePicAsync,
+  getRoomieByIdAsync,
+  getCollocPicAsync
+} from "../../api/RoomiesApi";
 import default_pic from "../../../public/default_profile_pic.png";
 import Loading from "../../components/Utility/Loading.vue";
 
@@ -112,43 +116,40 @@ export default {
       object: null,
       collocId: null,
       isRoomie: null,
-      id: null,
+      id: null
     };
   },
 
   async mounted() {
-      await this.refresh();
+    await this.refresh();
 
-      if(this.mode == "edit"){
-        this.create = false;
-       
+    if (this.mode == "edit") {
+      this.create = false;
+    } else {
+      if (this.object == "roomie") {
+        this.isRoomie = true;
+      } else {
+        this.isRoomie = false;
+        this.id = this.collocId;
       }
-      else{
-        if(this.object=='roomie'){
-          this.isRoomie = true;
-        }else{
-          this.isRoomie = false;
-          this.id = this.collocId}
-        try {
-          if(this.object == "roomie" ){ this.picPath = await getRoomiePicAsync();}
-          else{
-            this.picPath = await getCollocPicAsync(this.collocId); 
-          }
-           
-     
-      this.defaultPic = false;
-    } catch (e) {
-      console.error(e);
-      if (e.message == "ERROR 404 (Not Found): Roomie has no pictures") {
-        this.picPath = "../default_profile_pic.png";
-        // console.log(this.env + "api/Roomies/0/default_profile_pic.png");
+      try {
+        if (this.object == "roomie") {
+          this.picPath = await getRoomiePicAsync();
+        } else {
+          this.picPath = await getCollocPicAsync(this.collocId);
+        }
+
+        this.defaultPic = false;
+      } catch (e) {
+        console.error(e);
+        if (e.message == "ERROR 404 (Not Found): Roomie has no pictures") {
+          this.picPath = "../default_profile_pic.png";
+          // console.log(this.env + "api/Roomies/0/default_profile_pic.png");
+        }
+        this.defaultPic = true;
       }
-      this.defaultPic = true;
-    }
-    
     }
 
-   
     // if (this.$route.path.includes("create")) this.create = true;
     // else this.create = false;
     // console.log(this.create);
@@ -167,8 +168,7 @@ export default {
   },
 
   methods: {
-
-    async refresh(){
+    async refresh() {
       this.mode = this.$route.params.mode;
       this.object = this.$route.params.object;
       this.roomieId = this.$route.params.id;
@@ -185,13 +185,17 @@ export default {
       var isRoomie = this.isRoomie;
       console.log(this.isRoomie);
       console.log(this.id);
-      let data = await axios.post(`${endpoint}/uploadImage/${id}/${isRoomie}`, this.file, {
-        headers: {
-          "Content-type": "multipart/form-data",
-          Authorization: `Bearer ${AuthService.accessToken}`
-        },
-        responseType: "application/json"
-      });
+      let data = await axios.post(
+        `${endpoint}/uploadImage/${id}/${isRoomie}`,
+        this.file,
+        {
+          headers: {
+            "Content-type": "multipart/form-data",
+            Authorization: `Bearer ${AuthService.accessToken}`
+          },
+          responseType: "application/json"
+        }
+      );
     },
 
     handleImageUpload(files) {

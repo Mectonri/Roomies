@@ -10,17 +10,17 @@
     >
       <!-- TO DO : Remplacer par l'image de la Colloc -->
       Name : {{$currColloc.collocName}}
-      <br>
+      <br />
       <el-menu-item @click="clickRoute('/roomies')">
         <i class="el-icon-star-on">
           <span slot="title">Accueil</span>
         </i>
       </el-menu-item>
-      <br>
-      <br>
+      <br />
+      <br />
       <!-- <el-button @click.native="expand_collapse">
         <span class="navbar-toggler-icon el-icon-more"></span>
-      </el-button> -->
+      </el-button>-->
       <el-menu-item @click="clickRoute('/roomies/collocation')">
         <i class="el-icon-menu"></i>
         <span slot="title">Gestion collocation</span>
@@ -36,7 +36,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">Calendrier</span>
       </el-menu-item>
-<!-- 
+      <!-- 
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-document"/>
@@ -50,7 +50,7 @@
           :key="i.name"
           @click="setTheme(idx)"
         >{{i.name}}</el-menu-item>
-      </el-submenu> -->
+      </el-submenu>-->
 
       <el-menu-item
         @click="clickRoute('/task/colloc')"
@@ -67,11 +67,11 @@
       <!-- <el-menu-item @click="clickRoute('/spendings')">
         <i class="el-icon-pie-chart"></i>
         <span slot="title">Dépense</span>
-      </el-menu-item> -->
+      </el-menu-item>-->
 
       <el-submenu index="2" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
-          <i class="el-icon-pie-chart"/>
+          <i class="el-icon-pie-chart" />
           <span>Dépenses</span>
         </template>
         <el-menu-item
@@ -98,9 +98,9 @@
         <i class="el-icon-setting"></i>
         <span slot="title">Paramètres</span>
       </el-menu-item>
-      <br>
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
       <el-menu-item @click="clickRoute('/logout')">
         <i class="el-icon-circle-close"></i>
         <span slot="title">Se déconnecter</span>
@@ -110,14 +110,13 @@
     <template>
       <div id="globalContainer">
         <main v-if="state == true " role="main">
-          <loading/>
+          <loading />
         </main>
         <main v-else class="card containerCard">
           <router-view id="pageContent" class="child"></router-view>
         </main>
       </div>
     </template>
-
   </div>
 </template>
 
@@ -174,7 +173,6 @@ export default {
           this.$currColloc.setCollocName(collocData.collocName);
           this.$setMenuItemDisabled.setDisableState(false);
         }
-
       }
     } catch (e) {
       console.log(e);
@@ -201,7 +199,7 @@ export default {
     clickRoute(pathToRoute) {
       // if (!this.isCollapse) this.expand_collapse();
       this.$router.push(pathToRoute);
-    },
+    }
     // expand_collapse() {
     //   if (this.isCollapse) {
     //     this.isCollapse = false;
