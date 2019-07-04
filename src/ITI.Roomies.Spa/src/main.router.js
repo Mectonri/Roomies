@@ -47,10 +47,10 @@ const routes = [
 
     {path: '/roomies/calendar', component: Calendar, beforeEnter: requireAuth},
 
-    {path: '/roomies/upload/roomie/edit', component: ImageUploader, beforeEnter: requireAuth},
-    {path: '/roomies/upload/roomie/create', component: ImageUploader, beforeEnter: requireAuth},
-    {path: '/roomies/upload/colloc/edit/:id', component: ImageUploader, beforeEnter: requireAuth},
-    {path: '/rommies/upload/colloc/create/:id', component: ImageUploader, beforeEnter: requireAuth},
+    //{path: '/roomies/upload/:id/:isRoomie', component: ImageUploader, beforeEnter: requireAuth},
+    // {path: '/roomies/upload/roomie/create', component: ImageUploader, beforeEnter: requireAuth},
+    // {path: '/roomies/upload/colloc/edit/:id', component: ImageUploader, beforeEnter: requireAuth},
+    // {path: '/rommies/upload/colloc/create/:id', component: ImageUploader, beforeEnter: requireAuth},
     { path: '/upload/:object(colloc|roomie)/:mode(create|edit)/:id?', component: ImageUploader, beforeEnter: requireAuth},
 
     {path: '/roomies/collocation', component: Collocation, beforeEnter: requireAuth},
@@ -81,7 +81,6 @@ const routes = [
     { path: '/category/info', component: CategoryInfo, beforeEnter: requireAuth },
     
     { path: '/transaction/:mode(create|edit)/:id?', component: TransactionsCreateEditList, beforeEnter: requireAuth },
-
 ];
 
 export default new VueRouter({

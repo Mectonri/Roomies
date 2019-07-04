@@ -200,7 +200,8 @@ export default {
           // Active les boutons du menu
           this.$setMenuItemDisabled.setDisableState(false);
 
-          this.$router.replace("/roomies");
+          document.getElementById("navMenu").style.display = "block";
+          this.$router.push("/roomies");
         } catch (e) {
           console.error(e);
         }

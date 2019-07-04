@@ -68,9 +68,9 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <button
             v-if="create"
-            class="btn btn-dark align-bottom-right"
+            class="btn btn-dark"
             @click="clickRoute('/roomies/collocation')"
-          >Passer cette étape</button>
+          >Valider</button>
           <button
             v-else
             class="btn btn-dark align-bottom-right"
@@ -172,6 +172,7 @@ export default {
       this.mode = this.$route.params.mode;
       this.object = this.$route.params.object;
       this.roomieId = this.$route.params.id;
+      
       this.collocId = this.$currColloc.collocId;
     },
 
@@ -181,7 +182,8 @@ export default {
 
       const file = this.file;
       file.append("roomieId", parseInt(this.roomieId));
-      var id = this.id;
+      
+      var id = this.roomieId;
       var isRoomie = this.isRoomie;
       console.log(this.isRoomie);
       console.log(this.id);
@@ -196,6 +198,11 @@ export default {
           responseType: "application/json"
         }
       );
+     
+        
+      
+      this.$router.replace("../../../roomies/collocation");
+      
     },
 
     handleImageUpload(files) {

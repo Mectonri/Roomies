@@ -80,7 +80,7 @@ export default {
       if (errors.length == 0) {
         try {
           var idRoomie = await createRoomieAsync(this.item);
-          this.$router.replace("/roomies/upload/create/" + idRoomie);
+          this.$router.replace("/upload/roomie/create/"+idRoomie);
         } catch (e) {
           console.error(e);
         }
