@@ -93,7 +93,7 @@
               <td>{{i.itemName}}</td>
               <td>{{i.itemPrice / 100}} €</td>
               <td>
-                <button class="btn btn-dark" @click="deleteSavedItemAsync(i.itemId)">Supprimer</button>
+                <button class="btn btn-dark" @click="deleteItem(i.itemId)">Supprimer</button>
               </td>
             </tr>
           </tbody>
@@ -245,7 +245,7 @@ export default {
     },
     async deleteItem(itemId) {
       try {
-        await deleteItemAsync(itemId);
+        await deleteSavedItemAsync(itemId);
         await this.refreshList();
       } catch (e) {
         console.log(e);

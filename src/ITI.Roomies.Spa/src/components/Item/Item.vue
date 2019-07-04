@@ -27,7 +27,7 @@
               <tbody>
                 <tr v-for="i of itemList" :key="i.itemId">
                   <td>{{i.itemName}}</td>
-                  <td>{{i.itemPrice}}</td>
+                  <td>{{i.itemPrice / 100}}</td>
                   <td>{{i.itemQuantite}}</td>
                   <td>{{i.firstName}}</td>
                   <td>
@@ -67,7 +67,7 @@
                     <button class="btn btn-dark" @click="addItemToList(i.itemId, 0, 1)">+</button>
                   </td>
                   <td>{{i.itemName}}</td>
-                  <td>{{i.itemPrice}} €</td>
+                  <td>{{i.itemPrice / 100}} €</td>
                 </tr>
               </tbody>
             </table>
@@ -219,6 +219,8 @@ export default {
           this.item.collocId = this.$currColloc.collocId;
           if (mode != "ajouter") this.item.itemSaved = true;
           else this.item.itemSaved = false;
+
+          this.item.itemPrice = this.item.itemPrice * 100;
           let newItemId = await createItem(this.item);
           // console.log(newItemId);
           // this.item.roomieId = 1;
