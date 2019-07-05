@@ -19,7 +19,7 @@
       </button>
 
       <!-- TO DO : Remplacer par l'image de la Colloc -->
-      Collocation :
+      {{$t("colloc")}} :
       <br />
 
       {{$currColloc.collocName}}
@@ -30,7 +30,7 @@
       </el-button>-->
       <el-menu-item @click="clickRoute('/roomies/collocation')">
         <i class="el-icon-menu"></i>
-        <span slot="title">Gestion collocation</span>
+        <span slot="title">{{$t("manageFlat")}}</span>
       </el-menu-item>
       <el-menu-item @click="clickRoute('/roomies/profile')">
         <i class="el-icon-s-custom"></i>
@@ -41,7 +41,7 @@
         :disabled="$setMenuItemDisabled.disableState"
       >
         <i class="el-icon-menu"></i>
-        <span slot="title">Calendrier</span>
+        <span slot="title">{{$t("cal")}}</span>
       </el-menu-item>
       <!-- 
       <el-submenu index="2">
@@ -64,12 +64,12 @@
         :disabled="$setMenuItemDisabled.disableState"
       >
         <i class="el-icon-document"></i>
-        <span slot="title">Tâches</span>
+        <span slot="title">{{$t("task")}}</span>
       </el-menu-item>
 
       <el-menu-item @click="clickRoute('/course')" :disabled="$setMenuItemDisabled.disableState">
         <i class="el-icon-location"></i>
-        <span slot="title">Listes de courses</span>
+        <span slot="title">{{$t("groceryL")}}</span>
       </el-menu-item>
       <!-- <el-menu-item @click="clickRoute('/spendings')">
         <i class="el-icon-pie-chart"></i>
@@ -79,7 +79,7 @@
       <el-submenu index="2" :disabled="$setMenuItemDisabled.disableState">
         <template slot="title">
           <i class="el-icon-pie-chart" />
-          <span>Dépenses</span>
+          <span>{{$t("spendings")}}</span>
         </template>
         <el-menu-item
           class="el-submenu-item"
@@ -98,17 +98,17 @@
           index="2-3"
           @click="clickRoute('/Category/create')"
           :disabled="$setMenuItemDisabled.disableState"
-        >Catégorie</el-menu-item>
+        >{{$t("category")}}</el-menu-item>
       </el-submenu>
 
       <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-setting"></i>
-            <span slot="title">Paramètres</span>
+            <span slot="title">{{$t("settings")}}</span>
           </template>
 
           <el-submenu index="3-1">
-            <template slot="title">Thèmes</template>
+            <template slot="title">{{$t("thèmes")}}</template>
             <el-menu-item
               index="3-1-1"
               v-for="(i, idx) in styles"
@@ -122,7 +122,7 @@
       <br />
       <el-menu-item @click="clickRoute('/logout')">
         <i class="el-icon-circle-close"></i>
-        <span slot="title">Se déconnecter</span>
+        <span slot="title">{{$t("deco")}}</span>
       </el-menu-item>
     </el-menu>
     <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style='height: 3rem;'>

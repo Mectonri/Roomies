@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="centered_container">
-      <h2 class="centered">Bienvenue sur </h2>
+      <h2 class="centered">{{$t("Welcome")}} </h2>
 
       <div>
       <img src="https://i.ibb.co/wc1n3HF/Roomies-logo-long.png" alt="Roomies-logo-long" border="0">
@@ -12,14 +12,14 @@
         @click="login('Google')"
         class="btn btn-lg btn-block btn-primary"
       >
-        <i class="fa fa-google" aria-hidden="true"></i> Se connecter via Google
+        <i class="fa fa-google" aria-hidden="true"></i> {{$t("connectvia")}}
       </button>
       <br>
       <button
         id="centered_container"
         @click="login('Base')"
         class="btn btn-block btn-lg btn-dark"
-      >Se connecter via Roomies</button>
+      >{{$t("connectvia2")}}</button>
       </div>
     </div>
     <div style="padding-top: 3rem;">

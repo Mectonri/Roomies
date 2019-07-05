@@ -12,7 +12,7 @@
       /> -->
     </div>
     <div v-if="this.collocName!=''">
-      <h1>Collocation : {{collocName}}</h1>
+      <h1>Colocation : {{collocName}}</h1>
       <td>
         <tr>Membres</tr>
         <tr v-for="collocInfo in collocInfo">{{collocInfo.roomiesName}}</tr>

@@ -10,18 +10,24 @@ const messages = {
         //B
         Bday: 'Date de naissance',
         //C
-        colloc: 'Collocation',
-        collocCreate: ' Créer une collocation puis inviter vos Roomies :',
-        collocInvite: 'Rejoigner une collocation à partir d\'un code reçu par email :',
-        collocInvite2: 'Inviter de nouveaux Roomies à votre collocation :',
+        cal: 'Calendrier',
+        category: "Categories",
+        colloc: 'Colocation',
+        collocCreate: ' Créer une colocation puis inviter vos Roomies :',
+        collocInvite: 'Rejoigner une colocation à partir d\'un code reçu par email :',
+        collocInvite2: 'Inviter de nouveaux Roomies à votre colocation :',
+        connectvia:  "Se connecter via Google",
+        connectvia2: "Se connecter via Roomies",
         create: 'Création',
         //D
+        deco: "Se déconnecter",
         description: 'Description',
         //E
         erreur: 'ERREUR',
         //F
         //G
         greeting: "Bienvenue Roomie",
+        groceryL: "Liste de courses",
         //H
         //I
         //J
@@ -32,6 +38,7 @@ const messages = {
         //M
         mouth: 'mois',
         modifier: 'Modifier',
+        manageFlat: "Gestion de colocation",
         //N
         nullDesc: "Vous n'avez pas de description",
         number: 'Téléphone',
@@ -44,8 +51,12 @@ const messages = {
         //Q
         //R
         //S
+        spendings: "Dépenses",
+        settings: "Paramètres",
         //T
+        task: 'Tâches',
         testMsg: 'Bienvenue sur votre application Vus.js',
+        thèmes: "Thèmes",
         //U
         //V
         //WXYZ
@@ -62,14 +73,19 @@ const messages = {
         Bday: 'Birthday',
 
         //C
+        cal: 'Calendar',
+        category: "Categories",
         colloc: 'Flatsharing',
         collocCreate: 'Create a flatsharing to invite your Roomies',
         collocInvite: 'Join a flatsharing using the code revieved by email : ',
         collocInvite2: 'Invite new Roomies :',
+        connectvia: "Connect via Google",
+        connectvia2: "Connect via Roomies",
         create: 'Create',
 
         //D
         day: 'Day',
+        deco: 'Disconnect',
         description: 'About you',
 
         //E
@@ -77,6 +93,7 @@ const messages = {
 
         //G
         greeting: "Welcome Rommie",
+        groceryL: "Grorecy List",
 //J
 join :'Join',
         //L
@@ -85,6 +102,7 @@ join :'Join',
         //M
         modifier: 'Modifier',
         mouth: 'mouth',
+        manageFlat: "Manage flatsharing",
         number: 'Phone number',
 
         //N
@@ -95,9 +113,14 @@ join :'Join',
         Prenom: 'Firstname',
         Profil: 'Your Profile',
         pic: 'Profile picture',
+        //S
+        spendings: 'Spendings',
+        settings: "Settings",
 
         //T
+        task: "Tasks",
         testMsg: 'Welcome to your Vue.js app',
+        thèmes: "Themes",
 
         //WXYZ
         Welcome: 'Welcome to',

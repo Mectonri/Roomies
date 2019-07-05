@@ -11,16 +11,16 @@
             <table class="table table-dark">
               <div v-if="itemList == 0">
                 <tr>
-                  <td>Il n'y as pas d'item dans {{courseName}}</td>
+                  <td>Il n'y as pas d'article dans {{courseName}}</td>
                 </tr>
               </div>
 
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Quantite</th>
-                  <th>Owner</th>
+                  <th>Nom</th>
+                  <th>Prix</th>
+                  <th>Quantité</th>
+                  <th>Roomie</th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -50,15 +50,15 @@
             <table class="table table-dark">
               <div v-if="savedItemList == 0">
                 <tr>
-                  <td>Il n'y as pas d'objets enregistrés.</td>
+                  <td>Il n'y as pas d'articles enregistrés.</td>
                 </tr>
               </div>
 
               <thead>
                 <tr>
                   <th></th>
-                  <th>Name</th>
-                  <th>Price</th>
+                  <th>Nom</th>
+                  <th>Prix</th>
                 </tr>
               </thead>
               <tbody>
@@ -78,7 +78,7 @@
     <div>
       <form>
         <header>
-          <h2>Ajouter un nouvel objet</h2>
+          <h2>Ajouter un nouvel article</h2>
         </header>
         <div>
           <label class="required">Nom</label>
@@ -92,7 +92,7 @@
         </div>
 
         <div>
-          <label>Quantite</label>
+          <label>Quantité</label>
           <br>
           <input class="form-control" type="text" v-model="item.itemQuantite">
         </div>

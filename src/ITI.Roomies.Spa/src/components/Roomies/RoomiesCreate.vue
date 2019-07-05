@@ -3,7 +3,7 @@
     <el-steps class="el-steps_header" space="50%" :active="0">
       <el-step title="Informations" icon="el-icon-edit"></el-step>
       <el-step title="Photo" icon="el-icon-picture"></el-step>
-      <el-step class="flex_basis_0" title="Collocation"></el-step>
+      <el-step class="flex_basis_0" title="Colocation"></el-step>
     </el-steps>
     
     
